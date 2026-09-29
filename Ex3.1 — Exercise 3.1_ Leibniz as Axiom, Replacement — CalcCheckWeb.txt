@@ -1,0 +1,562 @@
+[1]
+
+Before getting into this notebook, you should have worked through Homework 5.
+In this notebook, as in Homework 5, you will occasionally need to use the following theorem, which is implicitly used in LADM:
+Theorem “Definition of ≡”:
+
+(p ≡ q) = (p = q)
+
+Propositional calculus up to implication (Ex2.1–2.4) as well as the equational theory of integers including also “Cancellation of +” are preloaded
+here.
+
+[2]
+
+[3]
+
+[4]
+
+The following axiom version of the inference rule (1.5) “Leibniz” is presented in the last part of LADM Section 3.6 (pp. 60–61):
+
+Axiom (3.83) “Leibniz”: e = f ⇒ E[z ≔ e] = E[z ≔ f]
+
+Axiom (3.83) “Leibniz”: e = f ⇒ E[z ≔ e] = E[z ≔ f]
+
+This is an implication; all the theorems derived from it in that LADM subsection are equivalences — fill in their proofs.
+
+
+[5]
+
+[6]
+
+[7]
+
+
+Theorem (3.84) (3.84a) “Replacement”:
+(e = f) ∧ E[z ≔ e] ≡ (e = f) ∧ E[z ≔ f]
+Proof:
+(e = f) ∧ E[z ≔ e] ≡ (e = f) ∧ E[z ≔ f]
+≡ ⟨(3.62)⟩
+(e = f) ⇒ (E[z ≔ e] ≡ E[z ≔ f])
+≡⟨ “Definition of ≡” ⟩
+e = f ⇒ E[z ≔ e] = E[z ≔ f] — This is “Leibniz”
+
+Theorem (3.84) (3.84a) “Replacement”: e = f ∧ E[z ≔ e] ≡ e = f ∧
+E[z ≔ f]
+Proof:
+Calculation for expected goal `e = f ∧ E[z ≔ e] ≡ e = f ∧ E[z ≔ f]`:
+e = f ∧ E[z ≔ e] ≡ e = f ∧ E[z ≔ f]
+≡ ⟨ (3.62) ⟩
+— CalcCheck: Found (3.62) `p ⇒ (q ≡ r) ≡ (p ∧ q ≡ p ∧ r)`
+— CalcCheck: ─ OK
+e = f ⇒ (E[z ≔ e] ≡ E[z ≔ f])
+≡ ⟨ “Definition of ≡” ⟩
+— CalcCheck: Found “Definition of ≡”
+— CalcCheck: ─ OK
+e = f ⇒ E[z ≔ e] = E[z ≔ f] — This is “Leibniz”
+— CalcCheck: Found (1.5) “Leibniz”, (3.83) “Leibniz”
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem (3.84) (3.84b) “Replacement”:
+(e = f) ⇒ E[z ≔ e] ≡ (e = f) ⇒ E[z ≔ f]
+Proof:
+(e = f) ⇒ E[z ≔ e] ≡ (e = f) ⇒ E[z ≔ f]
+≡ ⟨(3.63)⟩
+(e = f) ⇒ (E[z ≔ e] ≡ E[z ≔ f])
+≡ ⟨“Definition of ≡”⟩
+(e = f) ⇒ E[z ≔ e] = E[z ≔ f]
+≡ ⟨“Leibniz”⟩
+true
+
+Theorem (3.84) (3.84b) “Replacement”: e = f ⇒ E[z ≔ e] ≡ e = f ⇒
+E[z ≔ f]
+Proof:
+Calculation for expected goal `e = f ⇒ E[z ≔ e] ≡ e = f ⇒ E[z ≔
+f]`:
+e = f ⇒ E[z ≔ e] ≡ e = f ⇒ E[z ≔ f]
+≡ ⟨ (3.63) ⟩
+— CalcCheck: Found (3.63) “Distributivity of ⇒ over ≡”
+— CalcCheck: ─ OK
+e = f ⇒ (E[z ≔ e] ≡ E[z ≔ f])
+≡ ⟨ “Definition of ≡” ⟩
+— CalcCheck: Found “Definition of ≡”
+— CalcCheck: ─ OK
+e = f ⇒ E[z ≔ e] = E[z ≔ f]
+≡ ⟨ “Leibniz” ⟩
+— CalcCheck: Found (1.5) “Leibniz”, (3.83) “Leibniz”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Typical applications of these theorems require preparation via a reverse Substitution step, as you have seen in H5.
+
+
+Try this again here:
+
+[8]
+
+Fact (Ex3.1.a): d = 3 ⇒ 5 · d = 15
+Proof:
+d = 3 ⇒ 5 · d = 15
+≡ ⟨Fact `15 = 5 · 3` ⟩
+d = 3 ⇒ 5 · d = 5 · 3
+≡ ⟨Substitution ⟩
+d = 3 ⇒ (5 · z)[z ≔ d] = (5 · z)[z ≔ 3] — This is “Leibniz”
+
+
+Fact (Ex3.1.a): d = 3 ⇒ 5 · d = 15
+Proof:
+Calculation for expected goal `d = 3 ⇒ 5 · d = 15`:
+d = 3 ⇒ 5 · d = 15
+≡ ⟨ Fact `15 = 5 · 3` ⟩
+— CalcCheck: ─ OK
+d=3⇒5·d=5·3
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+d = 3 ⇒ (5 · z)[z ≔ d] = (5 · z)[z ≔ 3] — This is
+“Leibniz”
+— CalcCheck: Found (1.5) “Leibniz”, (3.83) “Leibniz”
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[9]
+
+
+Fact (Ex3.1.b): k = i + 1 ∧ (i - 1) · k = i · i - 1 ≡ i = k - 1
+Proof:
+Calculation for expected goal `k = i + 1 ∧ (i - 1) · k = i · i - 1 ≡ i = k - 1`:
+k = i + 1 ∧ (i - 1) · k = i · i - 1
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+k = i + 1 ∧ ((i - 1) · z = i · i - 1)[z ≔ k]
+≡ ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”,
+(3.51) “Replacement”
+— CalcCheck: ─ OK
+k = i + 1 ∧ ((i - 1) · z = i · i - 1)[z ≔ i + 1]
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+k = i + 1 ∧ (i - 1) · (i + 1) = i · i - 1
+≡ ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of · over +”
+— CalcCheck: ─ OK
+k = i + 1 ∧ (i - 1) · i + (i - 1) · 1 = i · i - 1
+≡ ⟨ “Multiplicative identity” ⟩
+— CalcCheck: Found (15.4) “Multiplicative identity”
+— CalcCheck: ─ OK
+k = i + 1 ∧ (i - 1) · i + (i - 1) = i · i - 1
+≡ ⟨ “Distributivity of · over -” ⟩
+— CalcCheck: Found (15.29) “Distributivity of · over -”
+— CalcCheck: ─ OK
+k = i + 1 ∧ (i · i - 1 · i) + (i - 1) = i · i - 1
+≡ ⟨ “Multiplicative identity” ⟩
+— CalcCheck: Found (15.4) “Multiplicative identity”
+— CalcCheck: ─ OK
+k = i + 1 ∧ (i · i - i) + (i - 1) = i · i - 1
+≡ ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+k = i + 1 ∧ (i · i + - i) + (i + - 1) = i · i - 1
+≡ ⟨ “Associativity of +” ⟩
+— CalcCheck: Found (15.1a) “Associativity of +”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+k = i + 1 ∧ ((i · i + - i) + i) + - 1 = i · i - 1
+≡ ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+
+
+Fact (Ex3.1.b):
+k = i + 1 ∧ (i - 1) · k = i · i - 1
+≡ i = k - 1
+Proof:
+k = i + 1 ∧ (i - 1) · k = i · i - 1
+≡ ⟨Substitution⟩
+(k = i + 1) ∧ ((i - 1) · z = i · i - 1)[z ≔ k]
+≡ ⟨“Replacement”⟩
+(k = i + 1) ∧ ((i - 1) · z = i · i - 1)[z ≔ i + 1]
+≡ ⟨Substitution⟩
+(k = i + 1) ∧ (((i - 1) · (i + 1)) = (i · i) - 1)
+≡ ⟨“Distributivity of · over +”⟩
+(k = i + 1) ∧ (((i - 1) · i + (i - 1) · 1) = (i · i)
+≡ ⟨“Multiplicative identity”⟩
+(k = i + 1) ∧ (((i - 1) · i + (i - 1)) = (i · i) - 1)
+≡ ⟨“Distributivity of · over -”⟩
+(k = i + 1) ∧ (((i · i) - (1 · i) + (i - 1)) = (i · i
+≡ ⟨“Multiplicative identity”⟩
+(k = i + 1) ∧ (((i · i) - (i) + (i - 1)) = (i · i) ≡ ⟨“Subtraction”⟩
+(k = i + 1) ∧ (((i · i) + (- i)) + (i + (- 1)) = (i ·
+≡ ⟨“Associativity of +”⟩
+(k = i + 1) ∧ (((i · i) + (- i) + (i) + (- 1)) = (i ·
+≡ ⟨“Unary minus”⟩
+(k = i + 1) ∧ (((i · i) + 0 + (- 1)) = (i · i) - 1)
+≡ ⟨“Additive identity”⟩
+(k = i + 1) ∧ (((i · i) + (- 1)) = (i · i) - 1)
+≡ ⟨“Subtraction”⟩
+(k = i + 1) ∧ (((i · i) + (- 1)) = (i · i) + (- 1))
+≡ ⟨“Cancellation of +”⟩
+(k = i + 1) ∧ (((i · i)) = (i · i))
+≡ ⟨“Reflexivity of =”⟩
+(k = i + 1) ∧ true
+≡ ⟨“Identity of ∧”⟩
+k = i + 1
+≡ ⟨“Additive identity”⟩
+0 + k = i + 1
+≡ ⟨“Unary minus”⟩
+- 1 + 1 + k = i + 1
+≡ ⟨“Cancellation of +”⟩
+
+— CalcCheck: ─ OK
+k = i + 1 ∧ (i · i + 0) + - 1 = i · i - 1
+≡ ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+k = i+ 1 ∧ i· i+ - 1 = i· i- 1
+≡ ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+k = i+ 1 ∧ i· i+ - 1 = i· i+ - 1
+≡ ⟨ “Cancellation of +” ⟩
+— CalcCheck: Found (15.8) “Cancellation of +”
+— CalcCheck: ─ OK
+k = i+ 1 ∧ i· i= i· i
+≡ ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+k = i + 1 ∧ true
+≡ ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+k = i+ 1
+≡ ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+0 + k = i+ 1
+≡ ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: ─ OK
+(- 1 + 1) + k = i + 1
+≡ ⟨ “Cancellation of +” ⟩
+— CalcCheck: Found (15.8) “Cancellation of +”
+— CalcCheck: ─ OK
+-1+k=i
+≡ ⟨ “Symmetry of =” ⟩
+— CalcCheck: Found (1.3) “Symmetry of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+i= - 1 + k
+≡ ⟨ “Symmetry of +” ⟩
+— CalcCheck: Found (15.2a) “Symmetry of +”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+
+
+- 1 + k = i
+≡ ⟨“Symmetry of =”⟩
+i = - 1 + k
+≡ ⟨“Symmetry of +”⟩
+i = k + (- 1)
+≡ ⟨“Subtraction”⟩
+i = k - 1
+i= k + - 1
+≡ ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+i= k - 1
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[10]
+
+
+Below, you can prove the remaining “Replacement” theorems from LADM chapter 3:
+
+
+[11]
+
+
+Theorem (3.84) (3.84c) “Replacement”: q ∧ e = f ⇒ E[z ≔ e] ≡ q ∧ e = f ⇒ E[z ≔ f]
+Theorem (3.84) (3.84c) “Replacement”:
+Proof:
+q ∧ (e = f) ⇒ E[z ≔ e] ≡ q ∧ (e = f) ⇒ E[z ≔ f]
+Calculation for expected goal `q ∧ e = f ⇒ E[z ≔ e] ≡ q ∧ e = f ⇒ E[z ≔ f]`:
+Proof:
+q ∧ e = f ⇒ E[z ≔ e] ≡ q ∧ e = f ⇒ E[z ≔ f]
+q ∧ (e = f) ⇒ E[z ≔ e] ≡ q ∧ (e = f) ⇒ E[z ≔ f]
+≡ ⟨ “Shunting” ⟩
+≡⟨“Shunting”⟩
+— CalcCheck: Found (3.65) “Shunting”
+q ⇒ ((e = f) ⇒ E[z ≔ e]) ≡ q ⇒ ((e = f) ⇒ E[z ≔ f
+— CalcCheck: ─ OK
+≡⟨(3.63)⟩
+q ⇒ (e = f ⇒ E[z ≔ e]) ≡ q ⇒ (e = f ⇒ E[z ≔ f])
+q ⇒ ((e = f) ⇒ E[z ≔ e] ≡ (e = f) ⇒ E[z ≔ f])
+≡ ⟨ (3.63) ⟩
+≡⟨(3.63)⟩
+— CalcCheck: Found (3.63) “Distributivity of ⇒ over ≡”
+q ⇒ ((e = f) ⇒ (E[z ≔ e] ≡ E[z ≔ f]))
+— CalcCheck: ─ OK
+≡⟨“Definition of ≡”⟩
+q ⇒ (e = f ⇒ E[z ≔ e] ≡ e = f ⇒ E[z ≔ f])
+q ⇒ ((e = f) ⇒ (E[z ≔ e] = E[z ≔ f]))
+≡ ⟨ (3.63) ⟩
+≡⟨“Leibniz”⟩
+— CalcCheck: Found (3.63) “Distributivity of ⇒ over ≡”
+q ⇒ (true)
+— CalcCheck: ─ OK
+q ⇒ (e = f ⇒ (E[z ≔ e] ≡ E[z ≔ f]))
+≡⟨“Definition of implication”⟩
+≡ ⟨ “Definition of ≡” ⟩
+¬ q ∨ (true)
+— CalcCheck: Found “Definition of ≡”
+≡⟨“Zero of ∨”⟩
+— CalcCheck: ─ OK
+true
+q ⇒ (e = f ⇒ E[z ≔ e] = E[z ≔ f])
+≡ ⟨ “Leibniz” ⟩
+— CalcCheck: Found (1.5) “Leibniz”, (3.83) “Leibniz”
+— CalcCheck: ─ OK
+q ⇒ true
+≡ ⟨ “Definition of implication” ⟩
+— CalcCheck: Found (3.59) “Material implication”, (3.60) “Definition of ⇒ via
+∧”, (3.57) “Definition of ⇒ via ∨”
+— CalcCheck: ─ OK
+¬ q ∨ true
+≡ ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[12]
+
+
+Theorem (3.85) (3.85a) “Replace by `true`”: p ⇒ E[z ≔
+Proof:
+p ⇒ E[z ≔ p] ≡ p ⇒ E[z ≔ true]
+≡⟨ (3.63) ⟩
+p ⇒ (E[z ≔ p] ≡ E[z ≔ true])
+≡⟨“Identity of ≡”⟩
+(p ≡ true) ⇒ (E[z ≔ p] ≡ E[z ≔ true])
+≡⟨“Replacement”⟩
+true
+
+Theorem (3.85) (3.85a) “Replace by `true`”: p ⇒ E[z ≔ p] ≡ p ⇒ E[z ≔ true]
+Proof:
+Calculation for expected goal `p ⇒ E[z ≔ p] ≡ p ⇒ E[z ≔ true]`:
+p ⇒ E[z ≔ p] ≡ p ⇒ E[z ≔ true]
+≡ ⟨ (3.63) ⟩
+— CalcCheck: Found (3.63) “Distributivity of ⇒ over ≡”
+— CalcCheck: ─ OK
+p ⇒ (E[z ≔ p] ≡ E[z ≔ true])
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+(p ≡ true) ⇒ (E[z ≔ p] ≡ E[z ≔ true])
+≡ ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84c) “Replacement”, (3.84b) “Replacement”, (3.84a)
+“Replacement”, (3.51) “Replacement”
+— CalcCheck: Could not justify this step!
+true
+— CalcCheck: 1 out of 3 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+[13]
+
+Theorem (3.85) (3.85b) “Replace by `true`”: q ∧ p ⇒ E[z ≔ p] ≡ q Theorem (3.85) (3.85b) “Replace by `true`”: q ∧ p ⇒ E[z ≔ p] ≡ q ∧ p
+⇒ E[z ≔ true]
+Proof:
+Proof:
+q ∧ p ⇒ E[z ≔ p]
+Calculation for expected goal `q ∧ p ⇒ E[z ≔ p] ≡ q ∧ p ⇒ E[z ≔
+≡⟨ “Identity of ≡” ⟩
+true]`:
+(q ∧ (p ≡ true)) ⇒ E[z ≔ p]
+q ∧ p ⇒ E[z ≔ p]
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+q ∧ (p ≡ true) ⇒ E[z ≔ p]
+— CalcCheck: Could not match calculation with stated goal.
+
+[14]
+
+Theorem (3.85c) “Replace by `false`”: ¬ p ⇒ E[z ≔ p] ≡ ¬ p ⇒ E[z ≔ Theorem (3.85c) “Replace by `false`”: ¬ p ⇒ E[z ≔ p] ≡ ¬ p ⇒ E[z
+≔ false]
+Proof:
+Proof:
+— CalcCheck: Proof: No proof there!
+
+
+[15]
+
+
+Theorem (3.86) (3.86a) “Replace by `false`”: E[z ≔ p] ⇒ p ≡ E[z ≔ Theorem (3.86) (3.86a) “Replace by `false`”: E[z ≔ p] ⇒ p ≡ E[z ≔
+false] ⇒ p
+Proof:
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[16]
+
+Theorem (3.86) (3.86b) “Replace by `false`”: E[z ≔ p] ⇒ p ∨ q ≡ Theorem (3.86) (3.86b) “Replace by `false`”: E[z ≔ p] ⇒ p ∨ q ≡ E[z ≔
+false] ⇒ p ∨ q
+Proof:
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[17]
+
+Theorem (3.87) “Replace by `true`”: p ∧ E[z ≔ p] ≡ p ∧ E[z ≔ true]
+Proof:
+
+Theorem (3.87) “Replace by `true`”: p ∧ E[z ≔ p] ≡ p ∧ E[z ≔
+true]
+Proof:
+— CalcCheck: Proof: No proof there!
+
+
+[18]
+
+
+Theorem (3.88) “Replace by `false`”: p ∨ E[z ≔ p] ≡ p ∨ E[z ≔ false]
+Proof:
+Calculation for expected goal `p ∨ E[z ≔ p] ≡ p ∨ E[z ≔ false]`:
+p ∨ E[z ≔ p]
+≡ ⟨ “Double negation” ⟩
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+¬ (¬ p) ∨ E[z ≔ p]
+≡ ⟨ “Material implication” ⟩
+— CalcCheck: Found (3.59) “Material implication”
+— CalcCheck: ─ OK
+¬ p ⇒ E[z ≔ p]
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+— CalcCheck: Found (3.15) “Definition of ¬ from ≡”
+— CalcCheck: ─ OK
+(p ≡ false) ⇒ E[z ≔ p]
+≡ ⟨ “Definition of ≡” ⟩
+— CalcCheck: Found “Definition of ≡”
+— CalcCheck: ─ OK
+p = false ⇒ E[z ≔ p]
+≡ ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84c) “Replacement”, (3.84b) “Replacement”, (3.84a)
+“Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+p = false ⇒ E[z ≔ false]
+≡ ⟨ “Definition of ≡” ⟩
+— CalcCheck: Found “Definition of ≡”
+— CalcCheck: ─ OK
+(p ≡ false) ⇒ E[z ≔ false]
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+— CalcCheck: Found (3.15) “Definition of ¬ from ≡”
+— CalcCheck: ─ OK
+¬ p ⇒ E[z ≔ false]
+≡ ⟨ “Material implication” ⟩
+— CalcCheck: Found (3.59) “Material implication”
+— CalcCheck: ─ OK
+¬ (¬ p) ∨ E[z ≔ false]
+≡ ⟨ “Double negation” ⟩
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+p ∨ E[z ≔ false]
+
+
+Theorem (3.88) “Replace by `false`”: p ∨ E[z ≔ p] ≡ p
+Proof:
+p ∨ E[z ≔ p]
+≡⟨ “Double negation” ⟩
+¬ ¬ p ∨ E[z ≔ p]
+≡⟨ “Material implication” ⟩
+¬ p ⇒ E[z ≔ p]
+≡⟨ “Definition of ¬ from ≡” ⟩
+(p ≡ false) ⇒ E[z ≔ p]
+≡⟨ “Definition of ≡” ⟩
+(p = false) ⇒ E[z ≔ p]
+≡⟨ “Replacement” ⟩
+(p = false) ⇒ E[z ≔ false]
+≡⟨ “Definition of ≡” ⟩
+(p ≡ false) ⇒ E[z ≔ false]
+≡⟨ “Definition of ¬ from ≡” ⟩
+¬ p ⇒ E[z ≔ false]
+≡⟨ “Material implication” ⟩
+¬ ¬ p ∨ E[z ≔ false]
+≡⟨ “Double negation” ⟩
+p ∨ E[z ≔ false]
+
+
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[19]
+
+1,1
+
+
+Theorem (3.89) “Shannon”: E[z ≔ p] ≡ (p ∧ E[z ≔ tr Theorem (3.89) “Shannon”: E[z ≔ p] ≡ (p ∧ E[z ≔ true]) ∨ (¬ p ∧ E[z ≔ false])
+— CalcCheck: Correctness of this proof depends on the not-yet-proven theorem (3.87)
+Proof:
+“Replace
+by `true`”: `p ∧ E[z ≔ p] ≡ p ∧ E[z ≔ true]`.
+E[z ≔ p]
+Proof:
+=⟨ “Identity of ∧”⟩
+Calculation for expected goal `E[z ≔ p] ≡ (p ∧ E[z ≔ true]) ∨ (¬ p ∧ E[z ≔ false])`:
+true ∧ E[z ≔ p]
+E[z ≔ p]
+=⟨ “LEM”⟩
+= ⟨ “Identity of ∧” ⟩
+(p ∨ ¬ p) ∧ E[z ≔ p]
+— CalcCheck: Found (3.39) “Identity of ∧”
+=⟨ “Distributivity of ∧ over ∨”⟩
+— CalcCheck: ─ OK
+(p ∧ E[z ≔ p]) ∨ (¬ p ∧ E[z ≔ p])
+true ∧ E[z ≔ p]
+=⟨ “Replace by `true`” (3.87)⟩
+= ⟨ “LEM” ⟩
+(p ∧ E[z ≔ true]) ∨ (¬ p ∧ E[z ≔ p])
+— CalcCheck: Found (3.28) “Excluded middle”
+=⟨ “Definition of ¬ from ≡”⟩
+— CalcCheck: ─ OK
+(p ∨ ¬ p) ∧ E[z ≔ p]
+(p ∧ E[z ≔ true]) ∨ ((p ≡ false) ∧ E[z ≔ p])
+= ⟨ “Distributivity of ∧ over ∨” ⟩
+=⟨ “Replacement” (3.84a) with “Definition of ≡”⟩
+— CalcCheck: Found (3.46) “Distributivity of ∧ over ∨”
+(p ∧ E[z ≔ true]) ∨ ((p ≡ false) ∧ E[z ≔ false
+— CalcCheck: ─ OK
+=⟨ “Definition of ¬ from ≡” ⟩
+(p
+∧ E[z ≔ p]) ∨ (¬ p ∧ E[z ≔ p])
+(p ∧ E[z ≔ true]) ∨ (¬ p ∧ E[z ≔ false])
+= ⟨ “Replace by `true`” (3.87) ⟩
+— CalcCheck: Found (3.87) “Replace by `true`”
+— CalcCheck: ─ OK
+(p ∧ E[z ≔ true]) ∨ (¬ p ∧ E[z ≔ p])
+= ⟨ “Definition of ¬ from ≡” ⟩
+— CalcCheck: Found (3.15) “Definition of ¬ from ≡”
+— CalcCheck: ─ OK
+(p ∧ E[z ≔ true]) ∨ ((p ≡ false) ∧ E[z ≔ p])
+= ⟨ “Replacement” (3.84a) with “Definition of ≡” ⟩
+— CalcCheck: Found (3.84a) “Replacement”
+— CalcCheck: Found “Definition of ≡”
+— CalcCheck: ─ OK
+(p ∧ E[z ≔ true]) ∨ ((p ≡ false) ∧ E[z ≔ false])
+= ⟨ “Definition of ¬ from ≡” ⟩
+— CalcCheck: Found (3.15) “Definition of ¬ from ≡”
+— CalcCheck: ─ OK
+(p ∧ E[z ≔ true]) ∨ (¬ p ∧ E[z ≔ false])
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

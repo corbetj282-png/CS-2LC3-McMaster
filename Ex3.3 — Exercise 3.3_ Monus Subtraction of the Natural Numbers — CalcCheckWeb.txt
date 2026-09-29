@@ -1,0 +1,455 @@
+[1]
+
+The setup here is the same as at the end of Exercise 3.2, including all material from there and from H7.
+As there, Evaluation is not available here, but “Fact `3 = suc 2`” etc. are available.
+Only one item is allowed per hint.
+
+[2]
+
+Monus (Subtraction)
+[3]
+
+Unlike the integers, which satisfy LADM Axiom (15.6) “Additive inverse” (∃ x : ℤ • x + a = 0 ), addition on the natural numbers has no
+inverse. In particular, unary minus is not available on the natural numbers.
+Under these circumstances, subtraction behaves differently, and subtraction with properties like those of the operator _-_ we are defining here is
+also called more precisely monus.
+
+[4]
+
+Declaration: _-_ : ℕ → ℕ → ℕ
+
+
+Declaration: _-_ : ℕ → (ℕ → ℕ)
+— CalcCheck: Operator _-_: Associating to the left; precedence
+100
+
+
+[5]
+
+[6]
+
+
+Axiom “Subtraction from zero”: 0 - n = 0
+Axiom “Subtraction of zero from successor”: (suc m) - 0 = suc m
+Axiom “Subtraction of successor from successor”: (suc m) - (suc n)
+
+Axiom “Subtraction from zero”: 0 - n = 0
+Axiom “Subtraction of zero from successor”: suc m - 0 = suc m
+Axiom “Subtraction of successor from successor”: suc m - suc n
+= m- n
+
+Note that this defines “capped subtraction”:
+
+
+[7]
+
+[8]
+
+
+Fact: 2 - 5 = 0
+Proof:
+2 - 5
+=⟨Fact `2 = suc(1)`⟩
+suc (1) - 5
+=⟨Fact `5 = suc(4)`⟩
+suc (1) - suc (4)
+=⟨“Subtraction of successor from successor”⟩
+1 - 4
+=⟨Fact `1 = suc(0)`⟩
+suc (0) - 4
+=⟨Fact `4 = suc(3)`⟩
+suc (0) - suc (3)
+=⟨“Subtraction of successor from successor”⟩
+0 - 3
+=⟨“Subtraction from zero”⟩
+0
+
+Fact: 2 - 5 = 0
+Proof:
+Calculation for expected goal `2 - 5 = 0`:
+2-5
+= ⟨ Fact `2 = suc 1` ⟩
+— CalcCheck: ─ OK
+suc 1 - 5
+= ⟨ Fact `5 = suc 4` ⟩
+— CalcCheck: ─ OK
+suc 1 - suc 4
+= ⟨ “Subtraction of successor from successor” ⟩
+— CalcCheck: Found “Subtraction of successor from
+successor”
+— CalcCheck: ─ OK
+1-4
+= ⟨ Fact `1 = suc 0` ⟩
+— CalcCheck: ─ OK
+suc 0 - 4
+= ⟨ Fact `4 = suc 3` ⟩
+— CalcCheck: ─ OK
+suc 0 - suc 3
+= ⟨ “Subtraction of successor from successor” ⟩
+— CalcCheck: Found “Subtraction of successor from
+successor”
+— CalcCheck: ─ OK
+0-3
+= ⟨ “Subtraction from zero” ⟩
+— CalcCheck: Found “Subtraction from zero”
+— CalcCheck: ─ OK
+0
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+In contexts where we have order available we will be able to prove:
+m < n ⇒ m - n = 0
+m ≥ n ⇒ (m - n) + n = m
+In the second case, subtraction therefore coincides with subtraction on the embedding of ℕ in ℤ.
+
+
+[9]
+
+[10]
+
+
+Nevertheless, many useful properties do hold for the monus operation _-_; these will usually require induction proofs.
+
+Theorem “Right-identity of subtraction”: m - 0 = m
+Proof:
+By induction on `m : ℕ`:
+Base case:
+0 - 0
+=⟨“Subtraction from zero”⟩
+0
+Induction step:
+suc (m) - 0
+=⟨“Subtraction of zero from successor”⟩
+suc m
+
+
+Theorem “Right-identity of subtraction”: m - 0 = m
+Proof:
+By induction on `m : ℕ`:
+Base case:
+Calculation for expected goal `0 - 0 = 0`:
+0-0
+= ⟨ “Subtraction from zero” ⟩
+— CalcCheck: Found “Subtraction from zero”
+— CalcCheck: ─ OK
+0
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `suc m - 0 = suc m`:
+suc m - 0
+= ⟨ “Subtraction of zero from successor” ⟩
+— CalcCheck: Found “Subtraction of zero from
+successor”
+— CalcCheck: ─ OK
+suc m
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[11]
+
+[12]
+
+
+Theorem “Self-cancellation of subtraction”: m - m = 0
+Proof:
+By induction on `m : ℕ`:
+Base case:
+0 - 0
+=⟨“Subtraction from zero”⟩
+0
+Induction step:
+suc (m) - suc (m)
+=⟨“Subtraction of successor from successor”⟩
+m - m
+=⟨Induction hypothesis⟩
+0
+
+Theorem “Self-cancellation of subtraction”: m - m = 0
+Proof:
+By induction on `m : ℕ`:
+Base case:
+Calculation for expected goal `0 - 0 = 0`:
+0-0
+= ⟨ “Subtraction from zero” ⟩
+— CalcCheck: Found “Subtraction from zero”
+— CalcCheck: ─ OK
+0
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `suc m - suc m = 0`:
+suc m - suc m
+= ⟨ “Subtraction of successor from successor” ⟩
+— CalcCheck: Found “Subtraction of successor from
+successor”
+— CalcCheck: ─ OK
+m- m
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `m - m = 0`
+— CalcCheck: ─ OK
+0
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+Each of the above two proofs will most likely only have used two of the subtraction axioms, and instantiating the single variable m via induction
+always was sufficient to enable use of one of these axioms.
+For “Subtraction after addition”, this is not the case anymore, and nested induction is needed; note that in nested induction steps, you have to
+make it explicit which of the available induction hypotheses you are using, by writing:
+Induction hypothesis `YourInductionHypothesisExpression`
+Since induction proofs are just another kind of proofs (the main kind of proofs you have seen so far is calculations), they can go wherever a
+proof can go — arbitrarily-deep nesting is possible.
+
+
+[13]
+
+
+Theorem “Subtraction after addition”: (m + n) - n = m
+Proof:
+By induction on `m : ℕ`:
+Base case:
+Calculation for expected goal `(0 + n) - n = 0`:
+(0 + n) - n
+= ⟨ “Left-identity of +” ⟩
+— CalcCheck: Found “Definition of + for 0”
+— CalcCheck: ─ OK
+n- n
+= ⟨ “Self-cancellation of subtraction” ⟩
+— CalcCheck: Found “Self-cancellation of subtraction”
+— CalcCheck: ─ OK
+0
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+By induction on `n : ℕ`:
+Base case:
+Calculation for expected goal `(suc m + 0) - 0 = suc m`:
+(suc m + 0) - 0
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+((m + 1) + 0) - 0
+= ⟨ “Right-identity of +” ⟩
+— CalcCheck: Found “Right-identity of +”
+— CalcCheck: ─ OK
+(m + 1) - 0
+= ⟨ “Right-identity of subtraction” ⟩
+— CalcCheck: Found “Right-identity of subtraction”
+— CalcCheck: ─ OK
+m+ 1
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+suc m
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `(suc m + suc n) - suc n = suc
+m`:
+(suc m + suc n) - suc n
+
+
+Theorem “Subtraction after addition”: (m + n) - n = m
+Proof:
+By induction on `m : ℕ`:
+Base case:
+(0 + n) - n
+=⟨“Left-identity of +”⟩
+n - n
+=⟨“Self-cancellation of subtraction”⟩
+0
+Induction step:
+By induction on `n : ℕ`:
+Base case:
+(suc m + 0) - 0
+= ⟨“Successor”⟩
+((m + 1) + 0) - 0
+= ⟨“Right-identity of +”⟩
+(m + 1) - 0
+= ⟨“Right-identity of subtraction”⟩
+(m + 1)
+= ⟨“Successor”⟩
+suc m
+Induction step:
+(suc m + suc n) - (suc n)
+= ⟨“Successor”⟩
+(suc m + (n + 1)) - (suc n)
+= ⟨“Definition of + for `suc`”⟩
+suc(m + (n + 1)) - (suc n)
+= ⟨“Subtraction of successor from successor”⟩
+(m + (n + 1)) - n
+= ⟨“Successor”⟩
+(m + (suc n)) - n
+= ⟨“Symmetry of +”⟩
+((suc n) + m) - n
+= ⟨“Shifting `suc` over +”⟩
+(n + suc m) - n
+= ⟨“Symmetry of +”⟩
+((suc m) + n) - n
+= ⟨Induction hypothesis `(suc (m) + n) - n = suc m`⟩
+(suc m)
+
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+(suc m + (n + 1)) - suc n
+= ⟨ “Definition of + for `suc`” ⟩
+— CalcCheck: Found “Definition of + for `suc`”
+— CalcCheck: ─ OK
+suc (m + (n + 1)) - suc n
+= ⟨ “Subtraction of successor from successor” ⟩
+— CalcCheck: Found “Subtraction of successor from
+successor”
+— CalcCheck: ─ OK
+(m + (n + 1)) - n
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+(m + suc n) - n
+= ⟨ “Symmetry of +” ⟩
+— CalcCheck: Found “Symmetry of +”
+— CalcCheck: ─ OK
+(suc n + m) - n
+= ⟨ “Shifting `suc` over +” ⟩
+— CalcCheck: Found “Shifting `suc` over +”
+— CalcCheck: ─ OK
+(n + suc m) - n
+= ⟨ “Symmetry of +” ⟩
+— CalcCheck: Found “Symmetry of +”
+— CalcCheck: ─ OK
+(suc m + n) - n
+= ⟨ Induction hypothesis `(suc m + n) - n = suc m` ⟩
+— CalcCheck: Found induction hypothesis `(suc m + n)
+- n = suc m`
+— CalcCheck: ─ OK
+suc m
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[14]
+
+[15]
+
+
+Just like you already had to decide yourself whether to use induction, and which variable to induct on, you will also have to decide yourself in
+each case whether to use nested induction.
+
+Theorem “Subtraction from multiplication with successor”: m · (suc
+Proof:
+m · suc (n) - m
+= ⟨“Successor”⟩
+m · (n + 1) - m
+= ⟨“Symmetry of ·”⟩
+((n + 1) · m) - m
+= ⟨“Distributivity of · over +”⟩
+(n · m + 1 · m) - m
+= ⟨“Left-identity of ·”⟩
+(n · m + m) - m
+= ⟨“Subtraction after addition”⟩
+n · m
+= ⟨“Symmetry of ·”⟩
+m · n
+
+
+Theorem “Subtraction from multiplication with successor”: m · suc n m= m· n
+Proof:
+Calculation for expected goal `m · suc n - m = m · n`:
+m · suc n - m
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+m · (n + 1) - m
+= ⟨ “Symmetry of ·” ⟩
+— CalcCheck: Found “Symmetry of ·”
+— CalcCheck: ─ OK
+(n + 1) · m - m
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found “Distributivity of · over +”
+— CalcCheck: ─ OK
+(n · m + 1 · m) - m
+= ⟨ “Left-identity of ·” ⟩
+— CalcCheck: Found “Left-identity of ·”
+— CalcCheck: ─ OK
+(n · m + m) - m
+= ⟨ “Subtraction after addition” ⟩
+— CalcCheck: Found “Subtraction after addition”
+— CalcCheck: ─ OK
+n·m
+= ⟨ “Symmetry of ·” ⟩
+— CalcCheck: Found “Symmetry of ·”
+— CalcCheck: ─ OK
+m· n
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[16]
+
+
+Theorem “Subtraction of sum”: k - (m + n) = (k - m) - n
+Proof:
+k - (m + n)
+= ⟨“Subtraction of successor from successor”⟩
+suc(k) - suc(m + n)
+= ⟨“Successor”⟩
+suc(k) - suc(m + n)
+= ⟨“Definition of + for `suc`”⟩
+suc(k) - (suc(m) + n)
+
+Theorem “Subtraction of sum”: k - (m + n) = (k - m) - n
+Proof:
+Calculation for expected goal `k - (m + n) = (k - m) - n`:
+k - (m + n)
+= ⟨ “Subtraction of successor from successor” ⟩
+— CalcCheck: Found “Subtraction of successor from
+successor”
+— CalcCheck: ─ OK
+suc k - suc (m + n)
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+suc k - suc (m + n)
+= ⟨ “Definition of + for `suc`” ⟩
+— CalcCheck: Found “Definition of + for `suc`”
+— CalcCheck: ─ OK
+suc k - (suc m + n)
+— CalcCheck: Could not match calculation with stated goal.
+
+Theorem “Distributivity of · over subtraction”: k · (m - n) = k · m Proof:
+
+Theorem “Distributivity of · over subtraction”: k · (m - n) = k · m
+-k·n
+Proof:
+
+1,1
+
+[17]
+
+— CalcCheck: Proof: No proof there!
+
+[18]
+
+Theorem “Monus exchange”: m + (n - m) = n + (m - n)
+Proof:
+
+Theorem “Monus exchange”: m + (n - m) = n + (m - n)
+Proof:
+— CalcCheck: Proof: No proof there!
+
+Check and Save
+
+
+Save
+
+

@@ -1,0 +1,320 @@
+Boolean Variables
+
+[1]
+
+The set-up here for commands and dynamic-logic assertions about command correctness is the same as
+in H3:
+We use the type Cmd for commands of a simple imperative language.
+Assignment commands are constructed using _:=_ : t → t → Cmd, and currently have to have a single
+variable as first argument.
+Note that the assignment symbol “:=” used here consists of the two characters : and =, and is different
+from the “≔” used for substitutions.
+Sequential composition of commands is expressed using the binary sequencing operator _⍮_ : Cmd →
+Cmd → Cmd; type “\;_” to obtain that underlined semicolon symbol. Sequencing _⍮_ is associative, and
+that associativity is activated, so that parentheses in commands like “C₁ ⍮ C₂ ⍮ C₃” are not necessary.
+Instead of writing Hoare triples “❴ P ❵ C ❴ Q ❵” as you see them in LADM, we use the mixfix operator
+_⇒⁅_⁆_ to write them as “P ⇒⁅ C ⁆ Q” in the style of dynamic logic.
+Since the simple square brackets are reserved for substitution, the brackets in this operator have “quills”,
+and are obtained by typing “\[-” for “⁅” and “\]-” for “⁆”.
+The assignment axiom therefore takes the following shape:
+“Assignment”:
+
+[2]
+
+Q[x ≔ E] ⇒⁅ x := E ⁆ Q
+
+For illustration, the following simple correctness proof is repeated here from H3.
+Note that this is performed by working from the bottom to the top (as seen in the lecture) to calculate
+the “real” precondition from the one obtained via the “Assignment” rule:
+
+
+[3]
+
+[4]
+
+
+Lemma (1): x + y = 13
+⇒⁅ x := x + 7 ⁆
+Proof:
+x + y = 13
+≡⟨ “Cancellation of +” ⟩
+x + y + 7 = 13 + 7
+≡⟨ Fact `20 = 13 + 7` ⟩
+x + 7 + y = 20
+≡⟨ Substitution ⟩
+(x + y = 20)[x ≔ x + 7]
+⇒⁅ x := x + 7 ⁆ ⟨ “Assignment” ⟩
+x + y = 20
+
+x +
+
+Lemma (1): x + y = 13 ⇒⁅ (x := x + 7) ⁆ x + y = 20
+Proof:
+Calculation for expected goal `x + y = 13 ⇒⁅ (x := x +
+7) ⁆ x + y = 20`:
+x + y = 13
+≡ ⟨ “Cancellation of +” ⟩
+— CalcCheck: Found (15.8) “Cancellation of +”
+— CalcCheck: ─ OK
+(x + y) + 7 = 13 + 7
+≡ ⟨ Fact `20 = 13 + 7` ⟩
+— CalcCheck: ─ OK
+(x + 7) + y = 20
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(x + y = 20)[x ≔ x + 7]
+⇒⁅ x := x + 7 ⁆ ⟨ “Assignment” ⟩
+— CalcCheck: Found “Assignment”
+— CalcCheck: ─ OK
+x + y = 20
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Perform similar calculations for the following commands, which operate on variables of type 𝔹.
+For calculating with Booleans, all the material of Exercises 2.1 to 2.3 (LAND chapter 3 up to conjunction)
+is preloaded.
+
+[5]
+
+[6]
+
+Proceed again from the bottom up, starting from the postcondition written at the bottom of your
+calculation, and adding lines on top of that until finally arriving at the provided preconditions:
+
+Lemma (Ex3.4a):
+(p ∧ q) ∨ r ⇒⁅ q := (p ∧ q)
+Proof:
+(p ∧ q) ∨ r
+≡⟨ Substitution ⟩
+(q ∨ r)[q ≔ (p ∧ q)]
+⇒⁅ q := (p ∧ q) ⁆ ⟨ “Assignment” ⟩
+(q ∨ r)
+
+
+Lemma (Ex3.4a): (p ∧ q) ∨ r ⇒⁅ (q := p ∧ q) ⁆ q ∨ r
+Proof:
+Calculation for expected goal `(p ∧ q) ∨ r ⇒⁅ (q := p
+∧ q) ⁆ q ∨ r`:
+(p ∧ q) ∨ r
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(q ∨ r)[q ≔ p ∧ q]
+⇒⁅ q := p ∧ q ⁆ ⟨ “Assignment” ⟩
+— CalcCheck: Found “Assignment”
+— CalcCheck: ─ OK
+q∨r
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[7]
+
+
+Lemma (Ex3.4b):
+(p ∨ q) ⇒⁅ q := (¬ p ∧ q) ⁆
+Proof:
+(p ∨ q)
+≡⟨ “Identity of ∧” ⟩
+true ∧ (p ∨ q)
+≡⟨ “Excluded middle” ⟩
+(p ∨ ¬ p) ∧ (p ∨ q)
+≡⟨ “Distributivity of ∨ over ∧” ⟩
+(p ∨ (¬ p ∧ q))
+≡⟨ Substitution ⟩
+(p ∨ q)[q ≔ (¬ p ∧ q)]
+⇒⁅ q := (¬ p ∧ q) ⁆ ⟨ “Assignment” ⟩
+(p ∨ q)
+
+
+Lemma (Ex3.4b): p ∨ q ⇒⁅ (q := ¬ p ∧ q) ⁆ p ∨ q
+Proof:
+Calculation for expected goal `p ∨ q ⇒⁅ (q := ¬ p
+∧ q) ⁆ p ∨ q`:
+p∨q
+≡ ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+true ∧ (p ∨ q)
+≡ ⟨ “Excluded middle” ⟩
+— CalcCheck: Found (3.28) “Excluded
+middle”
+— CalcCheck: ─ OK
+(p ∨ ¬ p) ∧ (p ∨ q)
+≡ ⟨ “Distributivity of ∨ over ∧” ⟩
+— CalcCheck: Found (3.45) “Distributivity of
+∨ over ∧”
+— CalcCheck: ─ OK
+p ∨ (¬ p ∧ q)
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(p ∨ q)[q ≔ ¬ p ∧ q]
+⇒⁅ q := ¬ p ∧ q ⁆ ⟨ “Assignment” ⟩
+— CalcCheck: Found “Assignment”
+— CalcCheck: ─ OK
+p∨q
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[8]
+
+
+Lemma (Ex3.4c):
+true ⇒⁅ q := (¬ p ∨ q) ⁆
+Proof:
+true
+≡⟨ “Zero of ∨” ⟩
+true ∨ (p ∨ q)
+≡⟨ “Excluded middle” ⟩
+(p ∨ ¬ p) ∨ (p ∨ q)
+≡⟨ “Distributivity of ∨ over ∨” ⟩
+(p ∨ (¬ p ∨ q))
+≡⟨ Substitution ⟩
+(p ∨ q)[q ≔ (¬ p ∨ q)]
+⇒⁅ q := (¬ p ∨ q) ⁆ ⟨ “Assignment” ⟩
+(p ∨ q)
+
+
+(p ∨ Lemma (Ex3.4c): true ⇒⁅ (q := ¬ p ∨ q) ⁆ p ∨ q
+Proof:
+Calculation for expected goal `true ⇒⁅ (q := ¬ p ∨
+q) ⁆ p ∨ q`:
+true
+≡ ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+true ∨ (p ∨ q)
+≡ ⟨ “Excluded middle” ⟩
+— CalcCheck: Found (3.28) “Excluded
+middle”
+— CalcCheck: ─ OK
+(p ∨ ¬ p) ∨ (p ∨ q)
+≡ ⟨ “Distributivity of ∨ over ∨” ⟩
+— CalcCheck: Found (3.31) “Distributivity of
+∨ over ∨”
+— CalcCheck: ─ OK
+p ∨ (¬ p ∨ q)
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(p ∨ q)[q ≔ ¬ p ∨ q]
+⇒⁅ q := ¬ p ∨ q ⁆ ⟨ “Assignment” ⟩
+— CalcCheck: Found “Assignment”
+— CalcCheck: ─ OK
+p∨q
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[9]
+
+1,1
+
+
+Lemma (Ex3.4d): s ⇒⁅ (q := ¬ p ∧ s ⍮ r := p ∧ s) ⁆ (p ∨ q) ∧ (¬
+p ∨ r)
+Proof:
+Calculation for expected goal `s ⇒⁅ (q := ¬ p ∧ s ⍮ r := p ∧
+s) ⁆ (p ∨ q) ∧ (¬ p ∨ r)`:
+s
+≡ ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+false ∨ s
+≡ ⟨ “Contradiction” ⟩
+— CalcCheck: Found (3.42) “Contradiction”
+— CalcCheck: ─ OK
+(p ∧ ¬ p) ∨ s
+≡ ⟨ “Distributivity of ∨ over ∧” ⟩
+— CalcCheck: Found (3.45) “Distributivity of ∨ over
+∧”
+— CalcCheck: ─ OK
+(p ∨ s) ∧ (¬ p ∨ s)
+≡ ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+(true ∧ (p ∨ s)) ∧ (¬ p ∨ s)
+≡ ⟨ “Excluded middle” ⟩
+— CalcCheck: Found (3.28) “Excluded middle”
+— CalcCheck: ─ OK
+((p ∨ ¬ p) ∧ (p ∨ s)) ∧ (¬ p ∨ s)
+≡ ⟨ “Distributivity of ∨ over ∧” ⟩
+— CalcCheck: Found (3.45) “Distributivity of ∨ over
+∧”
+— CalcCheck: ─ OK
+(p ∨ (¬ p ∧ s)) ∧ (¬ p ∨ s)
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+((p ∨ q) ∧ (¬ p ∨ s))[q ≔ ¬ p ∧ s]
+⇒⁅ q := ¬ p ∧ s ⁆ ⟨ “Assignment” ⟩
+— CalcCheck: Found “Assignment”
+— CalcCheck: ─ OK
+(p ∨ q) ∧ (¬ p ∨ s)
+≡ ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+(p ∨ q) ∧ (true ∧ (¬ p ∨ s))
+≡ ⟨ “Excluded middle” ⟩
+— CalcCheck: Found (3.28) “Excluded middle”
+— CalcCheck: ─ OK
+(p ∨ q) ∧ ((¬ p ∨ p) ∧ (¬ p ∨ s))
+≡ ⟨ “Distributivity of ∨ over ∧” ⟩
+— CalcCheck: Found (3.45) “Distributivity of ∨ over
+∧”
+— CalcCheck: ─ OK
+(p ∨ q) ∧ (¬ p ∨ (p ∧ s))
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+((p ∨ q) ∧ (¬ p ∨ r))[r ≔ p ∧ s]
+⇒⁅ r := p ∧ s ⁆ ⟨ “Assignment” ⟩
+
+
+Lemma (Ex3.4d):
+
+
+s
+⇒⁅ q := (¬ p ∧ s)
+⍮ r := (p ∧ s)
+⁆
+(p ∨ q) ∧ (¬ p ∨ r)
+
+— CalcCheck: Found “Assignment”
+— CalcCheck: ─ OK
+(p ∨ q) ∧ (¬ p ∨ r)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Proof:
+s
+≡⟨ “Identity of ∨” ⟩
+false ∨ s
+≡⟨ “Contradiction” ⟩
+(p ∧ ¬ p) ∨ s
+≡⟨ “Distributivity of ∨ over ∧” ⟩
+(p ∨ s) ∧ (¬ p ∨ s)
+≡⟨ “Identity of ∧” ⟩
+(true ∧ (p ∨ s)) ∧ (¬ p ∨ s)
+≡⟨ “Excluded middle” ⟩
+((p ∨ ¬ p) ∧ (p ∨ s)) ∧ (¬ p ∨ s)
+≡⟨ “Distributivity of ∨ over ∧” ⟩
+(p ∨ (¬ p ∧ s)) ∧ (¬ p ∨ s)
+≡⟨ Substitution ⟩
+((p ∨ q) ∧ (¬ p ∨ s))[q ≔ (¬ p ∧ s)]
+⇒⁅ q := (¬ p ∧ s) ⁆ ⟨ “Assignment” ⟩
+(p ∨ q) ∧ (¬ p ∨ s)
+≡⟨ “Identity of ∧” ⟩
+(p ∨ q) ∧ (true ∧ (¬ p ∨ s))
+≡⟨ “Excluded middle” ⟩
+(p ∨ q) ∧ ((¬ p ∨ p) ∧ (¬ p ∨ s))
+≡⟨ “Distributivity of ∨ over ∧” ⟩
+(p ∨ q) ∧ (¬ p ∨ (p ∧ s))
+≡⟨ Substitution ⟩
+((p ∨ q) ∧ (¬ p ∨ r))[r ≔ (p ∧ s)]
+⇒⁅ r := (p ∧ s) ⁆ ⟨ “Assignment” ⟩
+(p ∨ q) ∧ (¬ p ∨ r)
+
+Check and Save
+
+
+Save
+
+

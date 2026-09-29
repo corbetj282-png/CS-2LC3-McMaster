@@ -1,0 +1,320 @@
+[1]
+
+[2]
+
+Preloaded here is all set theory from the Reference Notebook “Set Theory”.
+
+The pair consisting of the two constituents b and c, in that order, is written ⟨ b , c ⟩.
+Pairs are equal exactly if their respective constituents are equal:
+
+[3]
+
+[4]
+
+Axiom (14.2) “Pair equality”: ⟨ b, c ⟩ =
+
+⟨ b', c' ⟩
+
+≡
+
+b = b' ∧ c = c'
+
+Axiom (14.2) “Pair equality”: ⟨b, c⟩ = ⟨b', c'⟩ ≡ b = b' ∧ c =
+c'
+
+If t and u are types, the type of pairs with first constituent in t and second constituent in u is written ❰ t, u ❱. (You type \<! for ❰ and \>!
+for ❱, but you will probably not need these a lot.)
+The pair projections work for pairs with any constituent types, so both t and u are type variables here:
+
+
+[5]
+
+[6]
+
+[7]
+
+[8]
+
+[9]
+
+[10]
+
+
+Declaration: fst : ❰ t , u ❱ → t
+Declaration: snd : ❰ t , u ❱ → u
+Axiom “Definition of `fst`”: fst ⟨ x, y ⟩ = x
+Axiom “Definition of `snd`”: snd ⟨ x, y ⟩ = y
+
+Axiom “Pair equality”: p = q
+
+≡
+
+fst p = fst q
+
+Declaration: fst : ❰ t, u ❱ → t
+Declaration: snd : ❰ t, u ❱ → u
+Axiom “Definition of `fst`”: fst ⟨x, y⟩ = x
+Axiom “Definition of `snd`”: snd ⟨x, y⟩ = y
+
+∧
+
+snd p = snd q
+
+Axiom “Pair equality”: p = q ≡ fst p = fst q ∧ snd p = snd q
+
+We use _×_ (type \x or \times for this symbol) for Cartesian product of sets only, not for types:
+
+Declaration: _×_ : set t → set u → set ❰ t , u ❱
+
+Declaration: _×_ : set t → (set u → set ❰ t, u ❱)
+— CalcCheck: Operator _×_: Associating to the right; precedence
+100
+
+Instead of from (14.3) in LADM, we start from the following equivalent, but easier-to-use characterisation of product sets:
+
+Axiom “Membership in ×”:
+p ∈ S × T ≡ fst p ∈ S ∧ snd p ∈ T
+
+
+Axiom “Membership in ×”: p ∈ S × T ≡ fst p ∈ S ∧ snd p ∈
+T
+
+
+[11]
+
+[12]
+
+
+Theorem (14.4) “Membership in ×”:
+⟨ x , y ⟩ ∈ S × T ≡ x ∈ S ∧ y ∈ T
+Proof:
+⟨ x , y ⟩ ∈ S × T
+=⟨“Membership in ×” ⟩
+fst ⟨ x , y ⟩ ∈ S ∧ snd ⟨ x , y ⟩ ∈ T
+=⟨“Definition of `fst`” , “Definition of `snd`” ⟩
+x ∈ S ∧ y ∈ T
+
+Theorem (14.4) “Membership in ×”: ⟨x, y⟩ ∈ S × T ≡ x ∈ S ∧ y
+∈T
+Proof:
+Calculation for expected goal `⟨x, y⟩ ∈ S × T ≡ x ∈ S ∧ y ∈ T`:
+⟨x, y⟩ ∈ S × T
+= ⟨ “Membership in ×” ⟩
+— CalcCheck: Found “Membership in ×”
+— CalcCheck: ─ OK
+fst ⟨x, y⟩ ∈ S ∧ snd ⟨x, y⟩ ∈ T
+= ⟨ “Definition of `fst`”, “Definition of `snd`” ⟩
+— CalcCheck: Found “Definition of `fst`”
+— CalcCheck: Found “Definition of `snd`”
+— CalcCheck: ─ OK
+x∈ S ∧y∈ T
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+(One proof of “Pair extensionality” is shown on the lecture slides.)
+
+
+[13]
+
+[14]
+
+
+Theorem “Pair extensionality”: p = ⟨ fst p , snd p ⟩
+Proof:
+p = ⟨ fst p , snd p ⟩
+=⟨“Pair equality”⟩
+fst p = fst ⟨ fst p , snd p ⟩ ∧ snd p = snd ⟨ fst p , snd p ⟩
+=⟨“Definition of `fst`”⟩
+(fst p = fst p) ∧ snd p = snd ⟨ fst p , snd p ⟩
+=⟨“Definition of `snd`”⟩
+(fst p = fst p) ∧ (snd p = snd p)
+=⟨“Reflexivity of =” , “Idempotency of ∧”⟩
+true
+
+Theorem (14.5) “Membership in swapped ×”:
+⟨ x , y ⟩ ∈ S × T ≡ ⟨ y , x ⟩ ∈ T × S
+Proof:
+⟨ x , y ⟩ ∈ S × T
+=⟨“Membership in ×” , “Symmetry of ∧” , “Membership in ×”⟩
+⟨ y , x ⟩ ∈ T × S
+
+
+Theorem “Pair extensionality”: p = ⟨fst p, snd p⟩
+Proof:
+Calculation for expected goal `p = ⟨fst p, snd p⟩`:
+p = ⟨fst p, snd p⟩
+= ⟨ “Pair equality” ⟩
+— CalcCheck: Found “Pair equality”, (14.2) “Pair
+equality”
+— CalcCheck: ─ OK
+fst p = fst ⟨fst p, snd p⟩ ∧ snd p = snd ⟨fst p, snd p⟩
+= ⟨ “Definition of `fst`” ⟩
+— CalcCheck: Found “Definition of `fst`”
+— CalcCheck: ─ OK
+fst p = fst p ∧ snd p = snd ⟨fst p, snd p⟩
+= ⟨ “Definition of `snd`” ⟩
+— CalcCheck: Found “Definition of `snd`”
+— CalcCheck: ─ OK
+fst p = fst p ∧ snd p = snd p
+= ⟨ “Reflexivity of =”, “Idempotency of ∧” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem (14.5) “Membership in swapped ×”: ⟨x, y⟩ ∈ S × T ≡ ⟨y, x⟩
+∈T×S
+Proof:
+Calculation for expected goal `⟨x, y⟩ ∈ S × T ≡ ⟨y, x⟩ ∈ T × S`:
+⟨x, y⟩ ∈ S × T
+= ⟨ “Membership in ×”, “Symmetry of ∧”, “Membership in ×” ⟩
+— CalcCheck: Found (14.4) “Membership in ×”, “Membership
+in ×”
+— CalcCheck: Found (3.36) “Symmetry of ∧”
+— CalcCheck: ─ OK
+⟨y, x⟩ ∈ T × S
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[15]
+
+[16]
+
+
+Theorem (14.6) “Empty factor in ×”:
+S = {} ⇒ S × T = {}
+Proof:
+Assuming `S = {}`:
+Using “Set extensionality”:
+For any `e`:
+e ∈ (S × T) ≡ e ∈ {}
+=⟨ “Pair extensionality” ⟩
+⟨ fst e , snd e ⟩ ∈ (S × T) ≡ e ∈ {}
+=⟨ “Membership in ×” ⟩
+fst e ∈ S ∧ snd e ∈ T ≡ e ∈ {}
+=⟨ Assumption `S = {}` ⟩
+fst e ∈ {} ∧ snd e ∈ T ≡ e ∈ {}
+=⟨ “Empty set” ⟩
+false ∧ snd e ∈ T ≡ false
+=⟨ “Zero of ∧” , “Identity of ≡” ⟩
+true
+
+Declaration: swap-× : ❰ t, u ❱ → ❰ u, t ❱
+Axiom “Definition of `swap-×`”: swap-× ⟨ x, y ⟩ = ⟨ y, x ⟩
+
+
+Theorem (14.6) “Empty factor in ×”: S = {} ⇒ S × T = {}
+Proof:
+Assuming `S = {}`:
+— CalcCheck: Assumption matches goal
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof establishing `(∀ e • e ∈ S × T ≡ e ∈ {} )`:
+For any ` e`:
+Calculation establishing `e ∈ S × T ≡ e ∈ {}`:
+e ∈ S × T ≡ e ∈ {}
+= ⟨ “Pair extensionality” ⟩
+— CalcCheck: Found “Pair extensionality”
+— CalcCheck: ─ OK
+⟨fst e, snd e⟩ ∈ S × T ≡ e ∈ {}
+= ⟨ “Membership in ×” ⟩
+— CalcCheck: Found (14.4) “Membership in ×”,
+“Membership in ×”
+— CalcCheck: ─ OK
+fst e ∈ S ∧ snd e ∈ T ≡ e ∈ {}
+= ⟨ Assumption `S = {}` ⟩
+— CalcCheck: Found assumption `S = {}`
+— CalcCheck: ─ OK
+fst e ∈ {} ∧ snd e ∈ T ≡ e ∈ {}
+= ⟨ “Empty set” ⟩
+— CalcCheck: Found “Empty set”
+— CalcCheck: ─ OK
+false ∧ snd e ∈ T ≡ false
+= ⟨ “Zero of ∧”, “Identity of ≡” ⟩
+— CalcCheck: Found (3.40) “Zero of ∧”
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+
+Declaration: swap-× : ❰ t, u ❱ → ❰ u, t ❱
+Axiom “Definition of `swap-×`”: swap-× ⟨x, y⟩ = ⟨y, x⟩
+
+
+[17]
+
+
+Theorem “fst after swap-×”: fst (swap-× p) = snd p
+Proof:
+fst (swap-× p) = snd p
+=⟨ “Pair extensionality”⟩
+fst (swap-× ⟨ fst p , snd p ⟩ ) = snd p
+=⟨ “Definition of `swap-×`”⟩
+fst (⟨ snd p , fst p ⟩ ) = snd p
+=⟨ “Definition of `fst`” , “Reflexivity of =”⟩
+true
+
+Theorem “fst after swap-×”: fst (swap-× p) = snd p
+Proof:
+Calculation for expected goal `fst (swap-× p) = snd p`:
+fst (swap-× p) = snd p
+= ⟨ “Pair extensionality” ⟩
+— CalcCheck: Found “Pair extensionality”
+— CalcCheck: ─ OK
+fst (swap-× ⟨fst p, snd p⟩) = snd p
+= ⟨ “Definition of `swap-×`” ⟩
+— CalcCheck: Found “Definition of `swap-×`”
+— CalcCheck: ─ OK
+fst ⟨snd p, fst p⟩ = snd p
+= ⟨ “Definition of `fst`”, “Reflexivity of =” ⟩
+— CalcCheck: Found “Definition of `fst`”
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem “snd after swap-×”: snd (swap-× p) = fst p
+Proof:
+snd (swap-× p) = fst p
+=⟨ “Pair extensionality”⟩
+snd (swap-× ⟨ fst p , snd p ⟩ ) = fst p
+=⟨ “Definition of `swap-×`”⟩
+snd (⟨ snd p , fst p ⟩ ) = fst p
+=⟨ “Definition of `snd`” , “Reflexivity of =”⟩
+true
+
+Theorem “snd after swap-×”: snd (swap-× p) = fst p
+Proof:
+Calculation for expected goal `snd (swap-× p) = fst p`:
+snd (swap-× p) = fst p
+= ⟨ “Pair extensionality” ⟩
+— CalcCheck: Found “Pair extensionality”
+— CalcCheck: ─ OK
+snd (swap-× ⟨fst p, snd p⟩) = fst p
+= ⟨ “Definition of `swap-×`” ⟩
+— CalcCheck: Found “Definition of `swap-×`”
+— CalcCheck: ─ OK
+snd ⟨snd p, fst p⟩ = fst p
+= ⟨ “Definition of `snd`”, “Reflexivity of =” ⟩
+— CalcCheck: Found “Definition of `snd`”
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+1,1
+
+[18]
+
+
+Check and Save
+
+
+Save
+
+

@@ -1,0 +1,618 @@
+[1]
+
+Preloaded here are Propositional logic, predicate logic, program correctness material, sequence material from Ex6.1 and Ex6.2, and integers.
+Four hint items are allowed per hint.
+We port the Haskell prelude functions any and all to our sequence setting:
+Declaration: any, all : (A → 𝔹) → Seq A → 𝔹
+Axiom “Definition of `any`”:
+Axiom “Definition of `any`”:
+
+any p 𝜖
+≡ false
+any p (x ◃ xs) ≡ p x ∨ any p xs
+
+Axiom “Definition of `all`”:
+Axiom “Definition of `all`”:
+
+all p 𝜖
+≡ true
+all p (x ◃ xs) ≡ p x ∧ all p xs
+
+Prove the following theorems. Here, _∈_ is the sequence membership defined in Ex6.2 via “Membership in …” theorems. This can be shown
+with “proof length” under 15.
+
+
+[2]
+
+
+Theorem “Specification of `any`”: (any p) xs ≡ (∃ x ❙ x ∈ xs • p x )
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+Calculation for expected goal `(any p) 𝜖 ≡ (∃ x ❙ x ∈ 𝜖 • p x )`:
+(any p) 𝜖 ≡ (∃ x ❙ x ∈ 𝜖 • p x )
+= ⟨ “Definition of `any`” ⟩
+— CalcCheck: Found “Definition of `any`”
+— CalcCheck: ─ OK
+false ≡ (∃ x ❙ x ∈ 𝜖 • p x )
+= ⟨ “Trading for ∃” ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading for
+∃”
+— CalcCheck: ─ OK
+false ≡ (∃ x • x ∈ 𝜖 ∧ p x )
+= ⟨ “Membership in 𝜖”, “Zero of ∧”, “False ∃ body”, “Identity of ≡” ⟩
+— CalcCheck: Found (13.10) “Membership in 𝜖”
+— CalcCheck: Found (3.40) “Zero of ∧”
+— CalcCheck: Found (9.24) “False ∃ body”
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ y : A • (any p) (y ◃ xs) ≡ (∃ x ❙ x ∈ y ◃ xs • p x )
+)`:
+For any ` y : A`:
+Calculation for expected goal `(any p) (y ◃ xs) ≡ (∃ x ❙ x ∈ y ◃ xs
+• p x )`:
+(any p) (y ◃ xs) ≡ (∃ x ❙ x ∈ y ◃ xs • p x )
+= ⟨ “Definition of `any`” ⟩
+— CalcCheck: Found “Definition of `any`”
+— CalcCheck: ─ OK
+p y ∨ (any p) xs ≡ (∃ x ❙ x ∈ y ◃ xs • p x )
+= ⟨ Induction hypothesis, “Trading for ∃” ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading
+for ∃”
+— CalcCheck: Found induction hypothesis `(any p) xs ≡ (∃ x
+❙ x ∈ xs • p x )`
+— CalcCheck: ─ OK
+p y ∨ (∃ x ❙ x ∈ xs • p x ) ≡ (∃ x ❙ x ∈ y ◃ xs • p x )
+
+
+Theorem “Specification of `any`”: any p xs ≡ (∃ x ❙ x ∈ xs •
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+any p 𝜖 ≡ (∃ x ❙ x ∈ 𝜖 • p x)
+=⟨ “Definition of `any`”⟩
+false ≡ (∃ x ❙ x ∈ 𝜖 • p x)
+=⟨ “Trading for ∃”⟩
+false ≡ (∃ x • x ∈ 𝜖 ∧ p x)
+=⟨ “Membership in 𝜖” , “Zero of ∧” , “False ∃ body” , “I
+true
+Induction step `∀ y : A • any p (y ◃ xs) ≡ (∃ x ❙ x ∈ (y
+For any `y : A`:
+any p (y ◃ xs) ≡ (∃ x ❙ x ∈ (y ◃ xs) • p x)
+=⟨ “Definition of `any`”⟩
+((p y) ∨ (any p xs)) ≡ (∃ x ❙ x ∈ (y ◃ xs) • p x)
+=⟨ induction hypothesis , “Trading for ∃” ⟩
+((p y) ∨ (∃ x ❙ x ∈ xs • p x) ) ≡ (∃ x ❙ x ∈ (y ◃ xs
+=⟨ “Trading for ∃” , “Membership in ◃” , substitution
+(((p x) [x ≔ y]) ∨ (∃ x • x ∈ xs ∧ p x) ) ≡ (∃ x •
+=⟨ “One-point rule for ∃” , “Trading for ∃” , “Distrib
+(∃ x • (x = y ∨ x ∈ xs) ∧ p x) ≡ (∃ x • (x = y ∨ x
+=⟨ “Identity of ≡” ⟩
+true
+
+
+= ⟨ “Trading for ∃”, “Membership in ◃”, Substitution ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading
+for ∃”
+— CalcCheck: Found (13.11) “Membership in ◃”
+— CalcCheck: ─ OK
+(p x)[x ≔ y] ∨ (∃ x • x ∈ xs ∧ p x ) ≡ (∃ x • (x = y ∨ x ∈ xs) ∧ p
+x)
+= ⟨ “One-point rule for ∃”, “Trading for ∃”, “Distributivity of ∃ over
+∨” ⟩
+— CalcCheck: Found (8.14) “One-point rule for ∃”
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading
+for ∃”
+— CalcCheck: Found (8.15) “Distributivity of ∃ over ∨”
+— CalcCheck: ─ OK
+(∃ x • (x = y ∨ x ∈ xs) ∧ p x ) ≡ (∃ x • (x = y ∨ x ∈ xs) ∧ p x )
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[3]
+
+
+Theorem “`any` in concatenation”: (any p) (xs ⌢ ys) ≡ (any p) xs ∨ (any p) ys
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+Calculation for expected goal `(any p) (𝜖 ⌢ ys) ≡ (any p) 𝜖 ∨ (any p) ys`:
+(any p) (𝜖 ⌢ ys) ≡ (any p) 𝜖 ∨ (any p) ys
+= ⟨ “Left-identity of ⌢” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: ─ OK
+(any p) ys ≡ (any p) 𝜖 ∨ (any p) ys
+= ⟨ “Identity of ∨”, “Definition of `any`”, “Identity of ≡” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: Found “Definition of `any`”
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ y : A • (any p) ((y ◃ xs) ⌢ ys) ≡ (any p) (y ◃ xs) ∨
+(any p) ys )`:
+For any ` y : A`:
+Calculation for expected goal `(any p) ((y ◃ xs) ⌢ ys) ≡ (any p) (y ◃
+xs) ∨ (any p) ys`:
+(any p) ((y ◃ xs) ⌢ ys) ≡ (any p) (y ◃ xs) ∨ (any p) ys
+= ⟨ “Mutual associativity of ◃ with ⌢” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with ⌢”
+— CalcCheck: ─ OK
+(any p) (y ◃ (xs ⌢ ys)) ≡ (any p) (y ◃ xs) ∨ (any p) ys
+= ⟨ “Definition of `any`”, Induction hypothesis, “Associativity of ∨”,
+“Definition of `any`” ⟩
+— CalcCheck: Found “Definition of `any`”
+— CalcCheck: Found (3.25) “Associativity of ∨”
+— CalcCheck: Found induction hypothesis `(any p) (xs ⌢ ys) ≡
+(any p) xs ∨ (any p) ys`
+— CalcCheck: ─ OK
+(any p) (y ◃ xs) ∨ (any p) ys ≡ (any p) (y ◃ xs) ∨ (any p) ys
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+Theorem “`any` in concatenation”: any p (xs ⌢ ys) ≡ any p
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+any p ( 𝜖 ⌢ ys ) ≡ any p 𝜖 ∨ any p ys
+=⟨ “Left-identity of ⌢”⟩
+any p ( ys ) ≡ any p 𝜖 ∨ any p ys
+=⟨ “Identity of ∨” , “Definition of `any`” , “Identit
+true
+Induction step `∀ y : A • ((any p) ((y ◃ xs) ⌢ ys) ≡
+For any `y : A`:
+(any p) ((y ◃ xs) ⌢ ys) ≡ (any p) (y ◃ xs) ∨ (a
+=⟨ “Mutual associativity of ◃ with ⌢”⟩
+(any p) (y ◃ (xs ⌢ ys)) ≡ (any p) (y ◃ xs) ∨ (a
+=⟨ “Definition of `any`” , induction hypothesis , “
+(any p) (y ◃ xs) ∨ (any p ys) ≡ (any p) (y ◃ xs)
+=⟨ “Identity of ≡”⟩
+true
+
+
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[4]
+
+
+Theorem “Specification of `all`”: (all p) xs ≡ (∀ x ❙ x ∈ xs • p x )
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+Calculation for expected goal `(all p) 𝜖 ≡ (∀ x ❙ x ∈ 𝜖 • p x )`:
+(all p) 𝜖 ≡ (∀ x ❙ x ∈ 𝜖 • p x )
+= ⟨ “Definition of `all`”, “Membership in 𝜖”, “Trading for ∀”, “ex falso quodlibet” ⟩
+— CalcCheck: Found “Definition of `all`”
+— CalcCheck: Found (13.10) “Membership in 𝜖”
+— CalcCheck: Found (9.3a) “Trading for ∀”, (9.3b) “Trading for ∀”, (9.3c) “Trading for ∀”, (9.4a)
+“Trading for ∀”, (9.4b) “Trading for ∀”, (9.4c) “Trading for ∀”, (9.4d) “Trading for ∀”, (9.2) “Trading for ∀”
+— CalcCheck: Found (3.75) “ex falso quodlibet”
+— CalcCheck: ─ OK
+true ≡ (∀ x • true )
+= ⟨ “True ∀ body”, “Identity of ≡” ⟩
+— CalcCheck: Found (9.8) “True ∀ body”
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ y : A • (all p) (y ◃ xs) ≡ (∀ x ❙ x ∈ y ◃ xs • p x ) )`:
+For any ` y : A`:
+Calculation for expected goal `(all p) (y ◃ xs) ≡ (∀ x ❙ x ∈ y ◃ xs • p x )`:
+(all p) (y ◃ xs) ≡ (∀ x ❙ x ∈ y ◃ xs • p x )
+= ⟨ “Definition of `all`”, Induction hypothesis ⟩
+— CalcCheck: Found “Definition of `all`”
+— CalcCheck: Found induction hypothesis `(all p) xs ≡ (∀ x ❙ x ∈ xs • p x )`
+— CalcCheck: ─ OK
+p y ∧ (∀ x ❙ x ∈ xs • p x ) ≡ (∀ x ❙ x ∈ y ◃ xs • p x )
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(p x)[x ≔ y] ∧ (∀ x ❙ x ∈ xs • p x ) ≡ (∀ x ❙ x ∈ y ◃ xs • p x )
+= ⟨ “One-point rule for ∀” ⟩
+— CalcCheck: Found (8.14) “One-point rule for ∀”
+— CalcCheck: ─ OK
+(∀ x ❙ x = y • p x ) ∧ (∀ x ❙ x ∈ xs • p x ) ≡ (∀ x ❙ x ∈ y ◃ xs • p x )
+= ⟨ “Trading for ∀” ⟩
+— CalcCheck: Found (9.3a) “Trading for ∀”, (9.3b) “Trading for ∀”, (9.3c) “Trading for ∀”,
+(9.4a) “Trading for ∀”, (9.4b) “Trading for ∀”, (9.4c) “Trading for ∀”, (9.4d) “Trading for ∀”, (9.2) “Trading for ∀”
+— CalcCheck: ─ OK
+
+
+Theorem “Specification of `all`”: all
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+all p 𝜖 ≡ (∀ x ❙ x ∈ 𝜖 • p x)
+=⟨ “Definition of `all`” , “Memb
+true ≡ (∀ x • true)
+=⟨ “True ∀ body” , “Identity of
+true
+Induction step `∀ y : A • all p (y
+For any `y : A`:
+all p (y ◃ xs) ≡ (∀ x ❙ x ∈
+=⟨ “Definition of `all`” , in
+(p y) ∧ ((∀ x ❙ x ∈ xs • (p
+=⟨ substitution ⟩
+(p x)[x ≔ y] ∧ ((∀ x ❙ x ∈
+=⟨ “One-point rule for ∀” ⟩
+(∀ x ❙ x = y • p x) ∧ ((∀ x
+=⟨ “Trading for ∀” ⟩
+(∀ x • x = y ⇒ p x) ∧ ((∀ x
+=⟨ “Contrapositive” ⟩
+(∀ x • ¬ p x ⇒ ¬ (x = y)) ∧
+=⟨ “Trading for ∀” ⟩
+(∀ x ❙ ¬ p x • ¬ (x = y)) ∧
+=⟨ “Distributivity of ∀ over ∧
+(∀ x • ((x = y) ∨ (x ∈ xs))
+=⟨ “Trading for ∀”⟩
+(∀ x ❙ ((x = y) ∨ (x ∈ xs))
+=⟨ “Membership in ◃”⟩
+(∀ x ❙ x ∈ (y ◃ xs) • p x)
+=⟨ “Identity of ≡” ⟩
+true
+
+[5]
+
+
+(∀ x • x = y ⇒ p x ) ∧ (∀ x • x ∈ xs ⇒ p x ) ≡ (∀ x ❙ x ∈ y ◃ xs • p x )
+= ⟨ “Contrapositive” ⟩
+— CalcCheck: Found (3.61) “Contrapositive”
+— CalcCheck: ─ OK
+(∀ x • ¬ p x ⇒ ¬ (x = y) ) ∧ (∀ x • ¬ p x ⇒ ¬ (x ∈ xs) ) ≡ (∀ x ❙ x ∈ y ◃ xs • p x )
+= ⟨ “Trading for ∀” ⟩
+— CalcCheck: Found (9.3a) “Trading for ∀”, (9.3b) “Trading for ∀”, (9.3c) “Trading for ∀”,
+(9.4a) “Trading for ∀”, (9.4b) “Trading for ∀”, (9.4c) “Trading for ∀”, (9.4d) “Trading for ∀”, (9.2) “Trading for ∀”
+— CalcCheck: ─ OK
+(∀ x ❙ ¬ p x • ¬ (x = y) ) ∧ (∀ x ❙ ¬ p x • ¬ (x ∈ xs) ) ≡ (∀ x ❙ x ∈ y ◃ xs • p x )
+= ⟨ “Distributivity of ∀ over ∧”, “De Morgan”, “Trading for ∀”, “Contrapositive” ⟩
+— CalcCheck: Found (8.15) “Distributivity of ∀ over ∧”
+— CalcCheck: Found (3.47a) “De Morgan”, (3.47b) “De Morgan”, (3.47c) “De Morgan”,
+(3.47d) “De Morgan”
+— CalcCheck: Found (9.3a) “Trading for ∀”, (9.3b) “Trading for ∀”, (9.3c) “Trading for ∀”,
+(9.4a) “Trading for ∀”, (9.4b) “Trading for ∀”, (9.4c) “Trading for ∀”, (9.4d) “Trading for ∀”, (9.2) “Trading for ∀”
+— CalcCheck: Found (3.61) “Contrapositive”
+— CalcCheck: ─ OK
+(∀ x • x = y ∨ x ∈ xs ⇒ p x ) ≡ (∀ x ❙ x ∈ y ◃ xs • p x )
+= ⟨ “Trading for ∀” ⟩
+— CalcCheck: Found (9.3a) “Trading for ∀”, (9.3b) “Trading for ∀”, (9.3c) “Trading for ∀”,
+(9.4a) “Trading for ∀”, (9.4b) “Trading for ∀”, (9.4c) “Trading for ∀”, (9.4d) “Trading for ∀”, (9.2) “Trading for ∀”
+— CalcCheck: ─ OK
+(∀ x ❙ x = y ∨ x ∈ xs • p x ) ≡ (∀ x ❙ x ∈ y ◃ xs • p x )
+= ⟨ “Membership in ◃” ⟩
+— CalcCheck: Found (13.11) “Membership in ◃”
+— CalcCheck: ─ OK
+(∀ x ❙ x ∈ y ◃ xs • p x ) ≡ (∀ x ❙ x ∈ y ◃ xs • p x )
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+We also port the Haskell prelude function sum to our sequence setting:
+
+
+Declaration: sum : Seq ℤ → ℤ
+Axiom “Definition of `sum`”:
+Axiom “Definition of `sum`”:
+
+[6]
+
+sum 𝜖
+= 0
+sum (x ◃ xs) = x + sum xs
+
+Theorem “`sum` of snoc”: sum (xs ▹ y) = sum xs + y
+Theorem “`sum` of snoc”: sum (xs ▹ y) = sum xs + y
+Proof:
+Proof:
+By induction on `xs : Seq ℤ`:
+By induction on `xs : Seq ℤ`:
+Base case:
+Base case:
+Calculation for expected goal `sum (𝜖 ▹ y) = sum 𝜖 + y`:
+sum (𝜖 ▹ y)
+sum (𝜖 ▹ y)
+=⟨ “Definition of ▹ for 𝜖” , “Definition of `sum`” , “
+= ⟨ “Definition of ▹ for 𝜖”, “Definition of `sum`”, “Symmetry of +” ⟩
+sum (𝜖) + y
+— CalcCheck: Found (13.12) “Definition of ▹ for 𝜖”
+Induction step `(∀ b : ℤ • sum ((b ◃ xs) ▹ y) = sum (b
+— CalcCheck: Found “Definition of `sum`”
+For any `b : ℤ`:
+— CalcCheck: Found (15.2a) “Symmetry of +”
+sum ((b ◃ xs) ▹ y)
+— CalcCheck: ─ OK
+=⟨ “Definition of ▹ for ◃” , “Definition of `sum`” ,
+sum 𝜖 + y
+— CalcCheck: All steps OK
+sum (b ◃ xs) + y
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ b : ℤ • sum ((b ◃ xs) ▹ y) = sum (b ◃ xs) + y )`:
+For any ` b : ℤ`:
+Calculation for expected goal `sum ((b ◃ xs) ▹ y) = sum (b ◃ xs) + y`:
+sum ((b ◃ xs) ▹ y)
+= ⟨ “Definition of ▹ for ◃”, “Definition of `sum`”, Induction hypothesis,
+“Definition of `sum`” ⟩
+— CalcCheck: Found (13.13) “Definition of ▹ for ◃”
+— CalcCheck: Found “Definition of `sum`”
+— CalcCheck: Found induction hypothesis `sum (xs ▹ y) = sum xs
++ y`
+— CalcCheck: ─ OK
+sum (b ◃ xs) + y
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[7]
+
+[8]
+
+
+Theorem “`sum` of concatenation”: sum (xs ⌢ ys) = sum xs Theorem “`sum` of concatenation”: sum (xs ⌢ ys) = sum xs + sum ys
+Proof:
+Proof:
+By induction on `xs : Seq ℤ`:
+By induction on `xs : Seq ℤ`:
+Base case:
+Base case:
+Calculation for expected goal `sum (𝜖 ⌢ ys) = sum 𝜖 + sum ys`:
+sum (𝜖 ⌢ ys)
+sum (𝜖 ⌢ ys)
+=⟨ “Left-identity of ⌢” , “Additive identity” , “De
+= ⟨ “Left-identity of ⌢”, “Additive identity”, “Definition of `sum`”, “Symmetry
+sum (𝜖) + sum ys
+of +” ⟩
+Induction step`(∀ y : ℤ • sum ((y ◃ xs) ⌢ ys) = sum
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+For any `y : ℤ`:
+— CalcCheck: Found (15.3) “Additive identity”
+sum ((y ◃ xs) ⌢ ys)
+— CalcCheck: Found “Definition of `sum`”
+=⟨ “Mutual associativity of ◃ with ⌢” , “Definiti
+— CalcCheck: Found (15.2a) “Symmetry of +”
+— CalcCheck: ─ OK
+sum (y ◃ xs) + sum ys
+sum 𝜖 + sum ys
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ y : ℤ • sum ((y ◃ xs) ⌢ ys) = sum (y ◃ xs) + sum ys )`:
+For any ` y : ℤ`:
+Calculation for expected goal `sum ((y ◃ xs) ⌢ ys) = sum (y ◃ xs) + sum
+ys`:
+sum ((y ◃ xs) ⌢ ys)
+= ⟨ “Mutual associativity of ◃ with ⌢”, “Definition of `sum`”, Induction
+hypothesis, “Definition of `sum`” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with ⌢”
+— CalcCheck: Found “Definition of `sum`”
+— CalcCheck: Found induction hypothesis `sum (xs ⌢ ys) = sum xs +
+sum ys`
+— CalcCheck: ─ OK
+sum (y ◃ xs) + sum ys
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+The preloaded “Replacement” theorems now include also the following, corresponding to inference rule (1.8) “Leibniz” in LADM:
+“Leibniz” (3.83.1):
+
+d=e⇒fd=fe
+
+In addition you also have the following “Replacement” variant (with similar usage pattern, between explicit Substitution steps) available:
+“Conditional replacement”:
+
+(p ⇒ e = f) ⇒ (p ∧ E[z ≔ e] ≡ p ∧ E[z ≔ f])
+
+
+Note that for sequences, you have in particular
+“Non-empty-sequence decomposition”:
+
+xs ≠ 𝜖 ⇒ xs = head xs ◃ tail xs
+
+from Ex6.1. Using “Conditional replacement” (from above) with this may be useful for proving the theorem below.
+Complete the correctness proof below by replacing all question marks with appropriate material.
+As usual, “⇒⟨ ? ⟩” may need to be expanded into a longer calculation containing any numbers of ≡-steps and ⇒-steps.
+In addition, “?⟨ ? ⟩” may need to be expanded into a longer calculation containing any numbers of ≡-steps, ⇒-steps, and correctness statement
+steps ⇒⁅ command ⁆ ⟨ ? ⟩.
+
+
+[9]
+
+
+Theorem “Correctness of `sum` implementation”: xs = xs₀ ⇒⁅ (s := 0 ⍮ while (xs ≠ 𝜖) do (s := s + head
+xs ⍮ xs := tail xs) od) ⁆ s = sum xs₀
+Proof:
+Calculation for expected goal `xs = xs₀ ⇒⁅ (s := 0 ⍮ while (xs ≠ 𝜖) do (s := s + head xs ⍮ xs := tail xs)
+od) ⁆ s = sum xs₀`:
+xs = xs₀
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+xs = xs₀ ∧ true
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+xs = xs₀ ∧ sum xs = sum xs
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+xs = xs₀ ∧ (sum xs = sum z)[z ≔ xs]
+= ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+xs = xs₀ ∧ (sum xs = sum z)[z ≔ xs₀]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+xs = xs₀ ∧ sum xs = sum xs₀
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”, (3.76b)
+“Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+sum xs = sum xs₀
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+0 + sum xs = sum xs₀
+⇒⁅ s := 0 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+s + sum xs = sum xs₀
+⇒⁅ while (xs ≠ 𝜖) do (s := s + head xs ⍮ xs := tail xs) od ⁆ ⟨ “While” with Subproof establishing `xs ≠ 𝜖 ∧
+s + sum xs = sum xs₀ ⇒⁅ (s := s + head xs ⍮ xs := tail xs) ⁆ s + sum xs = sum xs₀`:
+xs ≠ 𝜖 ∧ s + sum xs = sum xs₀
+⇒ ⟨ “Weakening” ⟩
+
+
+Theorem “Correctness of `sum` implementati
+xs = xs₀
+⇒⁅ s := 0 ⍮
+while xs ≠ 𝜖
+do
+s := s + head xs ⍮
+xs := tail xs
+od
+⁆
+s = sum xs₀
+Proof:
+xs = xs₀
+╍╍╍ Precon
+=⟨“Identity of ∧”⟩
+(xs = xs₀) ∧ true
+=⟨“Reflexivity of =”⟩
+(xs = xs₀) ∧ (sum xs = sum xs)
+=⟨ substitution ⟩
+(xs = xs₀) ∧ (sum xs = sum z) [z ≔ xs
+=⟨ “Replacement” ⟩
+(xs = xs₀) ∧ (sum xs = sum z) [z ≔ xs
+=⟨ substitution ⟩
+(xs = xs₀) ∧ (sum xs = sum xs₀)
+⇒⟨ “Weakening” ⟩
+sum xs = sum xs₀
+=⟨“Additive identity”⟩
+0 + sum xs = sum xs₀
+⇒⁅ s := 0 ⁆ ⟨ “Assignment” with substitut
+s + sum xs = sum xs₀
+╍╍╍ Invari
+⇒⁅ while xs ≠ 𝜖 do
+s := s + head xs ⍮
+xs := tail xs
+od ⁆ ⟨ “While” with subproof:
+( xs ≠ 𝜖 ) ∧ (s + sum xs = sum
+⇒⟨ “Weakening” ⟩
+(s + sum xs = sum xs₀)
+=⟨“Additive identity” , “Unary mi
+(s + head xs + (- head xs) + su
+⇒⁅ s := s + head xs ⁆ ⟨ “Assignmen
+(s + (- head xs) + sum (xs) =
+=⟨?⟩
+
+
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”,
+(3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+s + sum xs = sum xs₀
+= ⟨ “Additive identity”, “Unary minus” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: ─ OK
+((s + head xs) + - head xs) + sum xs = sum xs₀
+⇒⁅ s := s + head xs ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+(s + - head xs) + sum xs = sum xs₀
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+s + sum (tail xs) = sum xs₀
+⇒⁅ xs := tail xs ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+s + sum xs = sum xs₀
+— CalcCheck: 1 out of 5 steps not justified
+
+⟩
+— CalcCheck: Found “While”
+¬ (xs ≠ 𝜖) ∧ s + sum xs = sum xs₀
+= ⟨ “Definition of ≠”, “Double negation” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+xs = 𝜖 ∧ s + sum xs = sum xs₀
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+xs = 𝜖 ∧ (s + sum z = sum xs₀)[z ≔ xs]
+= ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+xs = 𝜖 ∧ (s + sum z = sum xs₀)[z ≔ 𝜖]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+xs = 𝜖 ∧ s + sum 𝜖 = sum xs₀
+= ⟨ “Definition of `sum`”, “Additive identity” ⟩
+— CalcCheck: Found “Definition of `sum`”
+— CalcCheck: Found (15.3) “Additive identity”
+
+
+(s + sum (tail xs) = sum xs₀)
+⇒⁅ xs := tail xs ⁆ ⟨ “Assignment”
+(s + sum xs = sum xs₀)
+⟩
+¬(xs ≠ 𝜖) ∧ (s + sum xs = sum xs₀)
+=⟨ “Definition of ≠” , “Double negation”
+(xs = 𝜖) ∧ (s + sum xs = sum xs₀)
+=⟨ substitution ⟩
+(xs = 𝜖) ∧ (s + sum z = sum xs₀) [z ≔
+=⟨ “Replacement” ⟩
+(xs = 𝜖) ∧ (s + sum z = sum xs₀) [z ≔
+=⟨ substitution ⟩
+(xs = 𝜖) ∧ (s + sum 𝜖 = sum xs₀)
+=⟨ “Definition of `sum`” , “Additive ide
+(xs = 𝜖) ∧ (s = sum xs₀)
+⇒⟨ “Weakening” ⟩
+s = sum xs₀
+1,1
+
+
+╍╍╍
+
+Postcondit
+— CalcCheck: ─ OK
+xs = 𝜖 ∧ s = sum xs₀
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”, (3.76b)
+“Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+s = sum xs₀
+— CalcCheck: 1 out of 15 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+
+Check and Save
+
+
+Save
+
+

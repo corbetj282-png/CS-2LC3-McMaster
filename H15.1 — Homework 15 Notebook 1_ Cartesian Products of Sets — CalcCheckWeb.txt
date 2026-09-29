@@ -1,0 +1,317 @@
+[1]
+
+[2]
+
+Preloaded here is the pair material from Ex7.2 and all set theory from the Reference Notebook “Set theory”.
+
+Short straight-forward equivalence calculations can be used to prove “Empty sets” and then “Non-empty sets”:
+
+
+[3]
+
+Theorem “Empty sets”: S = {} ≡
+Proof:
+S = {}
+≡⟨ “Set extensionality” ⟩
+∀ x • x ∈ S ≡ x ∈ {}
+≡⟨ “Empty set” ⟩
+∀ x • x ∈ S ≡ false
+≡⟨ “Definition of `false`”⟩
+∀ x • x ∈ S ≡ ¬ true
+≡⟨ “¬ connection”⟩
+∀ x • ¬ (x ∈ S) ≡ true
+≡⟨ “Identity of ≡”⟩
+∀ x • ¬ (x ∈ S)
+
+
+(∀ x • ¬ (x ∈ S))
+
+Theorem “Empty sets”: S = {} ≡ (∀ x • ¬ (x ∈ S) )
+— CalcCheck: Proviso: ¬occurs(`x`, `S`)
+Proof:
+Calculation for expected goal `S = {} ≡ (∀ x • ¬ (x ∈ S)
+)`:
+S = {}
+≡ ⟨ “Set extensionality” ⟩
+— CalcCheck: Found (11.4) “Set extensionality”
+— CalcCheck: ─ OK
+(∀ x • x ∈ S ≡ x ∈ {} )
+≡ ⟨ “Empty set” ⟩
+— CalcCheck: Found “Empty set”
+— CalcCheck: ─ OK
+(∀ x • x ∈ S ≡ false )
+≡ ⟨ “Definition of `false`” ⟩
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: ─ OK
+(∀ x • x ∈ S ≡ ¬ true )
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+(∀ x • ¬ (x ∈ S) ≡ true )
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+(∀ x • ¬ (x ∈ S) )
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[4]
+
+
+Theorem “Non-empty sets”: S ≠ {} ≡ (∃ x • x ∈ S)
+Proof:
+S ≠ {}
+=⟨“Definition of ≠”⟩
+¬ ( S = {})
+=⟨“Set extensionality”⟩
+¬ (∀ x • x ∈ S ≡ x ∈ {})
+=⟨“Empty set”⟩
+¬ (∀ x • x ∈ S ≡ false)
+=⟨“Definition of `false`”⟩
+¬ (∀ x • x ∈ S ≡ ¬ true)
+=⟨“¬ connection”⟩
+¬ (∀ x • ¬ (x ∈ S) ≡ true)
+=⟨“Identity of ≡”⟩
+¬ (∀ x • ¬ (x ∈ S))
+=⟨(9.17)⟩
+(∃ x • (x ∈ S))
+
+
+Theorem “Non-empty sets”: S ≠ {} ≡ (∃ x • x ∈ S )
+— CalcCheck: Proviso: ¬occurs(`x`, `S`)
+Proof:
+Calculation for expected goal `S ≠ {} ≡ (∃ x • x ∈ S )`:
+S ≠ {}
+= ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of
+≠”
+— CalcCheck: ─ OK
+¬ (S = {})
+= ⟨ “Set extensionality” ⟩
+— CalcCheck: Found (11.4) “Set extensionality”
+— CalcCheck: ─ OK
+¬ (∀ x • x ∈ S ≡ x ∈ {} )
+= ⟨ “Empty set” ⟩
+— CalcCheck: Found “Empty set”
+— CalcCheck: ─ OK
+¬ (∀ x • x ∈ S ≡ false )
+= ⟨ “Definition of `false`” ⟩
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: ─ OK
+¬ (∀ x • x ∈ S ≡ ¬ true )
+= ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+¬ (∀ x • ¬ (x ∈ S) ≡ true )
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+¬ (∀ x • ¬ (x ∈ S) )
+= ⟨ (9.17) ⟩
+— CalcCheck: Found (9.17) “Generalised De
+Morgan”
+— CalcCheck: ─ OK
+(∃ x • x ∈ S )
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[5]
+
+
+For proving the following theorems, besides “Non-empty sets”, the theorem “Pair dummy splitting for ∃” from the ““General Quantification
+Instance for ∃” may also come in useful. Again, a short straight-forward equivalence calculation is sufficient.
+
+
+[6]
+
+
+Theorem “Non-emptiness of ×”: S × T ≠ {} ≡ S ≠
+Proof:
+S ≠ {} ∧ T ≠ {}
+=⟨“Non-empty sets”⟩
+(∃ x • x ∈ S) ∧ (∃ y • y ∈ T)
+=⟨“Distributivity of ∧ over ∃”⟩
+(∃ x • ∃ y • x ∈ S ∧ y ∈ T)
+=⟨“Membership in ×”⟩
+(∃ x • ∃ y • ⟨x, y⟩ ∈(S × T))
+=⟨“Pair dummy splitting for ∃”⟩
+(∃ k • k ∈(S × T))
+=⟨“Double negation”⟩
+(∃ k • ¬ ¬ (k ∈(S × T)))
+=⟨“Generalised De Morgan”⟩
+¬ (∀ k • ¬ (k ∈(S × T)))
+=⟨“Empty sets”⟩
+¬ ((S × T) = {})
+=⟨“Definition of ≠”⟩
+((S × T) ≠ {})
+
+
+Theorem “Non-emptiness of ×”: S × T ≠ {} ≡ S ≠ {} ∧ T ≠ {}
+Proof:
+Calculation for expected goal `S × T ≠ {} ≡ S ≠ {} ∧ T ≠ {}`:
+S ≠ {} ∧ T ≠ {}
+= ⟨ “Non-empty sets” ⟩
+— CalcCheck: Found “Non-empty sets”
+— CalcCheck: ─ OK
+(∃ x • x ∈ S ) ∧ (∃ y • y ∈ T )
+= ⟨ “Distributivity of ∧ over ∃” ⟩
+— CalcCheck: Found (9.21) “Distributivity of ∧ over ∃”
+— CalcCheck: ─ OK
+(∃ x • (∃ y • x ∈ S ∧ y ∈ T ) )
+= ⟨ “Membership in ×” ⟩
+— CalcCheck: Found (14.4) “Membership in ×”, “Membership in ×”
+— CalcCheck: ─ OK
+(∃ x • (∃ y • ⟨x, y⟩ ∈ S × T ) )
+= ⟨ “Pair dummy splitting for ∃” ⟩
+— CalcCheck: Found “Pair dummy splitting for ∃”
+— CalcCheck: ─ OK
+(∃ k • k ∈ S × T )
+= ⟨ “Double negation” ⟩
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+(∃ k • ¬ (¬ (k ∈ S × T)) )
+= ⟨ “Generalised De Morgan” ⟩
+— CalcCheck: Found (9.18b) “Generalised De Morgan”, (9.18a) “Generalised De Morgan”,
+(9.18c) “Generalised De Morgan”, (9.17) “Generalised De Morgan”
+— CalcCheck: ─ OK
+¬ (∀ k • ¬ (k ∈ S × T) )
+= ⟨ “Empty sets” ⟩
+— CalcCheck: Found “Empty sets”
+— CalcCheck: ─ OK
+¬ (S × T = {})
+= ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+S × T ≠ {}
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[7]
+
+
+For proving the following theorems, use of “Non-empty sets” will be essentional, and this means that you will probably also need a direct or
+indirect use of theorem “Witness”.
+(For example, via “Assuming witness `x` satisfying `...` by `...`”.)
+The pattern “Assuming ... and using with ...” may also be useful here.
+
+
+[8]
+
+1,1
+
+
+Theorem (14.7ii): T ≠ {} ⇒ (S × T = T × S ⇒ S ⊆ T)
+Proof:
+Assuming `T ≠ {}`:
+— CalcCheck: Assumption matches goal
+Assuming witness ` t` satisfying `t ∈ T`
+by “Non-empty sets” with Assumption `T ≠ {}`
+— CalcCheck: Found “Non-empty sets”
+— CalcCheck: Found assumption `T ≠ {}`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `S × T = T × S ⇒ S ⊆ T`:
+S×T=T×S
+= ⟨ “Set extensionality” ⟩
+— CalcCheck: Found (11.4) “Set extensionality”
+— CalcCheck: ─ OK
+(∀ e • e ∈ S × T ≡ e ∈ T × S )
+= ⟨ “Membership in ×” ⟩
+— CalcCheck: Found (14.4) “Membership in ×”, “Membership in ×”
+— CalcCheck: ─ OK
+(∀ e • fst e ∈ S ∧ snd e ∈ T ≡ fst e ∈ T ∧ snd e ∈ S )
+= ⟨ “Pair dummy splitting for ∀” ⟩
+— CalcCheck: Found “Pair dummy splitting for ∀”
+— CalcCheck: ─ OK
+(∀ a • (∀ b • fst ⟨a, b⟩ ∈ S ∧ snd ⟨a, b⟩ ∈ T ≡ fst ⟨a, b⟩ ∈ T ∧ snd ⟨a, b⟩ ∈ S ) )
+= ⟨ “Definition of `fst`” ⟩
+— CalcCheck: Found “Definition of `fst`”
+— CalcCheck: ─ OK
+(∀ a • (∀ b • a ∈ S ∧ snd ⟨a, b⟩ ∈ T ≡ a ∈ T ∧ snd ⟨a, b⟩ ∈ S ) )
+= ⟨ “Definition of `snd`” ⟩
+— CalcCheck: Found “Definition of `snd`”
+— CalcCheck: ─ OK
+(∀ a • (∀ b • a ∈ S ∧ b ∈ T ≡ a ∈ T ∧ b ∈ S ) )
+⇒ ⟨ “Monotonicity of ∀” with “Instantiation” ⟩
+— CalcCheck: Found (9.12) “Monotonicity of ∀”
+— CalcCheck: Found (9.13) “Instantiation”, (9.13.2) “Instantiation”, (9.13.1)
+“Instantiation”
+— CalcCheck: ─ OK
+(∀ a • (a ∈ S ∧ b ∈ T ≡ a ∈ T ∧ b ∈ S)[b ≔ t] )
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(∀ a • a ∈ S ∧ t ∈ T ≡ a ∈ T ∧ t ∈ S )
+= ⟨ Assumption `t ∈ T` ⟩
+— CalcCheck: Found assumption `t ∈ T`
+
+
+Theorem (14.7ii): T ≠ {} ⇒ S × T = T × S ⇒ S
+Proof:
+Assuming `T ≠ {}`:
+Assuming witness `t` satisfying `t ∈ T` by
+S × T = T × S
+=⟨“Set extensionality”⟩
+∀ e • e ∈ S × T ≡ e ∈ T × S
+=⟨“Membership in ×”⟩
+∀ e • fst e ∈ S ∧ snd e ∈ T ≡ fst e ∈
+=⟨“Pair dummy splitting for ∀”⟩
+∀ a • ∀ b • fst ⟨a, b⟩ ∈ S ∧ snd ⟨a, b⟩
+=⟨“Definition of `fst`”⟩
+∀ a • ∀ b • a ∈ S ∧ snd ⟨a, b⟩ ∈ T ≡ a
+=⟨“Definition of `snd`”⟩
+∀ a • ∀ b • a ∈ S ∧ b ∈ T ≡ a ∈ T ∧ b
+⇒⟨“Monotonicity of ∀” with “Instantiatio
+∀ a • (a ∈ S ∧ b ∈ T ≡ a ∈ T ∧ b ∈ S)
+=⟨ Substitution ⟩
+∀ a • (a ∈ S ∧ t ∈ T ≡ a ∈ T ∧ t ∈ S)
+=⟨ Assumption `t ∈ T`⟩
+∀ a • (a ∈ S ∧ true ≡ a ∈ T ∧ t ∈ S)
+=⟨“Identity of ∧”⟩
+∀ a • a ∈ S ≡ a ∈ T ∧ t ∈ S
+=⟨“Mutual implication”⟩
+∀ a • ((a ∈ S ⇒ a ∈ T ∧ t ∈ S) ∧ (a ∈
+⇒⟨“Monotonicity of ∀” with “Weakening”⟩
+∀ a • (a ∈ S ⇒ a ∈ T ∧ t ∈ S)
+⇒⟨“Monotonicity of ∀” with “Right-monoto
+∀ a • (a ∈ S ⇒ a ∈ T )
+=⟨“Subset”⟩
+S ⊆ T
+
+— CalcCheck: ─ OK
+(∀ a • a ∈ S ∧ true ≡ a ∈ T ∧ t ∈ S )
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+(∀ a • a ∈ S ≡ a ∈ T ∧ t ∈ S )
+= ⟨ “Mutual implication” ⟩
+— CalcCheck: Found (3.80) “Mutual implication”
+— CalcCheck: ─ OK
+(∀ a • (a ∈ S ⇒ a ∈ T ∧ t ∈ S) ∧ (a ∈ T ∧ t ∈ S ⇒ a ∈ S) )
+⇒ ⟨ “Monotonicity of ∀” with “Weakening” ⟩
+— CalcCheck: Found (9.12) “Monotonicity of ∀”
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a)
+“Weakening”, (3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+(∀ a • a ∈ S ⇒ a ∈ T ∧ t ∈ S )
+⇒ ⟨ “Monotonicity of ∀” with “Right-monotonicity of ⇒” with “Weakening” ⟩
+— CalcCheck: Found (9.12) “Monotonicity of ∀”
+— CalcCheck: Found “Monotonicity of ⇒”
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a)
+“Weakening”, (3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+(∀ a • a ∈ S ⇒ a ∈ T )
+= ⟨ “Subset” ⟩
+— CalcCheck: Found (11.13b) “Set inclusion”, (11.13) “Set inclusion”
+— CalcCheck: ─ OK
+S⊆T
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

@@ -1,0 +1,663 @@
+Closure
+
+[1]
+
+Preloaded here are abstract relation algebra up to union union and least relations ⊥, and the usual natural number material.
+Also preloaded is the union quantification material from Reference Notebook “Abstract RA: Arbitrary Unions”, providing the “big operator” ⋃.
+
+[2]
+
+Relation Powers
+[3]
+
+[4]
+
+Precedence 115 for: _**_
+Associating to the right: _**_
+Declaration: _**_ : (A ↔ A) →
+
+Axiom “Definition of **”:
+Axiom “Definition of **”:
+
+
+ℕ
+
+→
+
+(A ↔ A)
+
+R ** 0
+= 𝕀
+R ** suc i = R ⨾ R ** i
+
+Precedence 115 for: _**_
+Associating to the right: _**_
+Declaration: _**_ : A ↔ A → (ℕ → A ↔ A)
+— CalcCheck: Operator _**_: Associating to the right; precedence
+115
+
+Axiom “Definition of **”: R ** 0 = 𝕀
+— CalcCheck: Metavariables: R = R〖〗
+Axiom “Definition of **”: R ** suc i = R ⨾ R ** i
+— CalcCheck: Metavariables: R = R〖〗
+
+
+[5]
+
+
+Theorem “Right-identity of **”: R ** 1 = R
+Proof:
+R ** 1
+=⟨ Fact `1 = suc 0`⟩
+R ** suc 0
+=⟨ “Definition of **”⟩
+R ⨾ R ** 0
+=⟨ “Definition of **” , “Identity of ⨾”⟩
+R
+
+Theorem “Right-identity of **”: R ** 1 = R
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+Calculation for expected goal `R ** 1 = R`:
+R ** 1
+= ⟨ Fact `1 = suc 0` ⟩
+— CalcCheck: ─ OK
+R ** suc 0
+= ⟨ “Definition of **” ⟩
+— CalcCheck: Found “Definition of **”
+— CalcCheck: ─ OK
+R ⨾ R ** 0
+= ⟨ “Definition of **”, “Identity of ⨾” ⟩
+— CalcCheck: Found “Definition of **”
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+R
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[6]
+
+[7]
+
+
+[8]
+
+
+Theorem “Addition in **”: R ** (i + j) = R ** i ⨾ R ** j
+Theorem “Addition in **”: R ** (i + j) = R ** i ⨾ R ** j
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+Proof:
+By induction on `i : ℕ`:
+By induction on `i : ℕ`:
+Base case `R ** (0 + j) = R ** 0 ⨾ R ** j`:
+Base case `R ** (0 + j) = R ** 0 ⨾ R ** j`:
+R ** (0 + j)
+Calculation for expected goal `R ** (0 + j) = R ** 0 ⨾ R ** j`:
+=⟨ “Definition of +” , “Identity of ⨾” , “Definition of *
+R ** (0 + j)
+R ** 0 ⨾ R ** j
+= ⟨ “Definition of +”, “Identity of ⨾”, “Definition of **” ⟩
+Induction step `R ** (suc (i) + j) = (R ** suc i) ⨾ R ** j
+— CalcCheck: Found “Definition of +”
+R ** (suc (i) + j)
+— CalcCheck: Found “Identity of ⨾”
+=⟨ “Definition of + for `suc`” , “Definition of **” , in
+— CalcCheck: Found “Definition of **”
+(R ⨾ R ** i) ⨾ R ** j
+— CalcCheck: ─ OK
+R ** 0 ⨾ R ** j
+=⟨ “Definition of **”⟩
+— CalcCheck: All steps OK
+(R ** suc i) ⨾ R ** j
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `R ** (suc i + j) = R ** suc i ⨾ R ** j`:
+Calculation for expected goal `R ** (suc i + j) = R ** suc i ⨾ R ** j`:
+R ** (suc i + j)
+= ⟨ “Definition of + for `suc`”, “Definition of **”, Induction hypothesis,
+“Associativity of ⨾” ⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: Found “Definition of **”
+— CalcCheck: Found “Associativity of ⨾”
+— CalcCheck: Found induction hypothesis `R ** (i + j) = R ** i ⨾
+R ** j`
+— CalcCheck: ─ OK
+(R ⨾ R ** i) ⨾ R ** j
+= ⟨ “Definition of **” ⟩
+— CalcCheck: Found “Definition of **”
+— CalcCheck: ─ OK
+R ** suc i ⨾ R ** j
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+[9]
+
+Reflexive-transitive Closure
+
+
+[10]
+
+[11]
+
+[12]
+
+
+Declaration: _* : A ↔ A
+
+→
+
+Axiom “Definition of `_*`”:
+
+A ↔ A
+
+Declaration: _* : A ↔ A → A ↔ A
+— CalcCheck: Operator _*: Non-associating; precedence
+140
+
+╍╍╍ type `*`
+
+Axiom “Definition of `_*`”: R * = (⋃ i : ℕ • R ** i )
+— CalcCheck: Metavariables: R = R〖〗
+— CalcCheck: Proviso: ¬occurs(`i`, `R`)
+
+R * = (⋃ i : ℕ • R ** i)
+
+For showing that this defines indeed the reflexive-transitive closure of R, the proof ideas of LADM pp. 275–276 can be used also in the abstract
+setting here.
+Some fluency with quantifier manipulation and care with bound variables are required; in particular remember that ⋃ satisfies the following
+specific laws:
+“Characterisation of ⋃”:
+“Distributivity of ⨾ over ⋃”:
+“Distributivity of ⨾ over ⋃”:
+
+[13]
+
+(∀ x ❙ P • Q ⊆ R)
+Q ⨾ (⋃ x ❙ P • R)
+(⋃ x ❙ P • Q) ⨾ R
+
+≡
+=
+=
+
+(⋃ x ❙ P • Q) ⊆ R
+(⋃ x ❙ P • Q ⨾ R)
+(⋃ x ❙ P • Q ⨾ R)
+
+For the first two theorems, the big union contains one component that “does the job”; if the index of that component is k, you can use “Zero of
+∨” to change the range to “true ∨ i = k”, and then apply the following:
+“Range split for ⋃”:
+
+
+(⋃ x ❙ R ∨ S • P) = (⋃ x ❙ R • P) ∪ (⋃ x ❙ S • P)
+
+
+[14]
+
+
+Theorem “Characterisation of `_*`: Expanding”: R ⊆ R *
+Proof:
+R *
+=⟨ “Definition of `_*`” ⟩
+⋃ i : ℕ • R ** i
+=⟨ “Zero of ∨” ⟩
+⋃ i : ℕ ❙ i = 1 ∨ true • R ** i
+=⟨ “Range split for ⋃” ⟩
+(⋃ i : ℕ ❙ true • R ** i) ∪ (⋃ i : ℕ ❙ i = 1 • R ** i)
+=⟨ “One-point rule for ⋃”, Substitution ⟩
+(⋃ i : ℕ ❙ true • R ** i) ∪ R ** 1
+=⟨ “Right-identity of **” ⟩
+(⋃ i : ℕ ❙ true • R ** i) ∪ R
+⊇⟨ “Weakening for ∪” ⟩
+R
+
+
+Theorem “Characterisation of `_*`: Expanding”: R ⊆ R *
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+Calculation for expected goal `R ⊆ R *`:
+R*
+= ⟨ “Definition of `_*`” ⟩
+— CalcCheck: Found “Definition of `_*`”
+— CalcCheck: ─ OK
+(⋃ i : ℕ • R ** i )
+= ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+(⋃ i : ℕ ❙ i = 1 ∨ true • R ** i )
+= ⟨ “Range split for ⋃” ⟩
+— CalcCheck: Found (8.18) “Range split for ⋃”
+— CalcCheck: ─ OK
+(⋃ i : ℕ ❙ true • R ** i ) ∪ (⋃ i : ℕ ❙ i = 1 • R ** i )
+= ⟨ “One-point rule for ⋃”, Substitution ⟩
+— CalcCheck: Found (8.14) “One-point rule for ⋃”
+— CalcCheck: ─ OK
+(⋃ i : ℕ ❙ true • R ** i ) ∪ R ** 1
+= ⟨ “Right-identity of **” ⟩
+— CalcCheck: Found “Right-identity of **”
+— CalcCheck: ─ OK
+(⋃ i : ℕ ❙ true • R ** i ) ∪ R
+⊇ ⟨ “Weakening for ∪” ⟩
+— CalcCheck: Found “Weakening for ∪”
+— CalcCheck: ─ OK
+R
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[15]
+
+
+Theorem “Characterisation of `_*`: Reflexivity”:
+reflexive (R *)
+Proof:
+Using “Definition of reflexivity”:
+R *
+=⟨“Definition of `_*`”⟩
+(⋃ i : ℕ • R ** i )
+=⟨“Zero of ∨”⟩
+( ⋃ i : ℕ ❙ i = 0 ∨ true • R ** i)
+=⟨“Range split for ⋃”⟩
+(( ⋃ i : ℕ ❙ i = 0 • R ** i) ∪ ( ⋃ i : ℕ ❙ true • R ** i))
+=⟨ “One-point rule for ⋃”, Substitution , “Definition of **” ⟩
+(( 𝕀) ∪ ( ⋃ i : ℕ ❙ true • R ** i))
+⊇⟨ “Weakening for ∪” ⟩
+𝕀
+
+Theorem “Characterisation of `_*`: Reflexivity”: reflexive (R
+*)
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+Using “Definition of reflexivity”:
+— CalcCheck: Found “Definition of reflexivity”
+Subproof establishing `R * ⊇ 𝕀`:
+R*
+= ⟨ “Definition of `_*`” ⟩
+— CalcCheck: Found “Definition of `_*`”
+— CalcCheck: ─ OK
+(⋃ i : ℕ • R ** i )
+= ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+(⋃ i : ℕ ❙ i = 0 ∨ true • R ** i )
+= ⟨ “Range split for ⋃” ⟩
+— CalcCheck: Found (8.18) “Range split for ⋃”
+— CalcCheck: ─ OK
+(⋃ i : ℕ ❙ i = 0 • R ** i ) ∪ (⋃ i : ℕ ❙ true • R ** i )
+= ⟨ “One-point rule for ⋃”, Substitution, “Definition of **”
+
+⟩
+— CalcCheck: Found (8.14) “One-point rule for ⋃”
+— CalcCheck: Found “Definition of **”
+— CalcCheck: ─ OK
+𝕀 ∪ (⋃ i : ℕ ❙ true • R ** i )
+⊇ ⟨ “Weakening for ∪” ⟩
+— CalcCheck: Found “Weakening for ∪”
+— CalcCheck: ─ OK
+𝕀
+— CalcCheck: All steps OK
+
+[16]
+
+A generalisation of the same idea will be useful for proving transitivity:
+
+
+[17]
+
+
+Theorem “Characterisation of `_*`: Transitivity”: transitive (R *)
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+Using “Definition of transitivity”:
+— CalcCheck: Found “Definition of transitivity”
+Subproof for `R * ⨾ R * ⊆ R *`:
+R*⨾R*⊆R*
+= ⟨ “Definition of `_*`” ⟩
+— CalcCheck: Found “Definition of `_*`”
+— CalcCheck: ─ OK
+(⋃ i : ℕ • R ** i ) ⨾ (⋃ j : ℕ • R ** j ) ⊆ (⋃ k : ℕ • R ** k
+)
+= ⟨ “Distributivity of ⨾ over ⋃” ⟩
+— CalcCheck: Found “Distributivity of ⨾ over ⋃”
+— CalcCheck: ─ OK
+(⋃ i : ℕ • R ** i ⨾ (⋃ j : ℕ • R ** j ) ) ⊆ (⋃ k : ℕ • R ** k
+)
+= ⟨ “Distributivity of ⨾ over ⋃” ⟩
+— CalcCheck: Found “Distributivity of ⨾ over ⋃”
+— CalcCheck: ─ OK
+(⋃ i : ℕ • (⋃ j : ℕ • R ** i ⨾ R ** j ) ) ⊆ (⋃ k : ℕ • R ** k
+)
+= ⟨ “Characterisation of ⋃” ⟩
+— CalcCheck: Found “Characterisation of ⋃”
+— CalcCheck: ─ OK
+(∀ i : ℕ • (⋃ j : ℕ • R ** i ⨾ R ** j ) ⊆ (⋃ k : ℕ • R ** k )
+)
+= ⟨ “Characterisation of ⋃” ⟩
+— CalcCheck: Found “Characterisation of ⋃”
+— CalcCheck: ─ OK
+(∀ i : ℕ • (∀ j : ℕ • R ** i ⨾ R ** j ⊆ (⋃ k : ℕ • R ** k ) ) )
+= ⟨ “Addition in **” ⟩
+— CalcCheck: Found “Addition in **”
+— CalcCheck: ─ OK
+(∀ i : ℕ • (∀ j : ℕ • R ** (i + j) ⊆ (⋃ k : ℕ • R ** k ) ) )
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Proof for this:
+For any ` i : ℕ`:
+For any ` j : ℕ`:
+Calculation for expected goal `R ** (i + j) ⊆ (⋃ k : ℕ •
+
+
+Theorem “Characterisation of `_*`: Transitivity”:
+transitive (R *)
+Proof:
+Using “Definition of transitivity”:
+Subproof for `R * ⨾ R * ⊆ R *`:
+R * ⨾ R * ⊆ R *
+=⟨ “Definition of `_*`” ⟩
+(⋃ i : ℕ • R ** i) ⨾ (⋃ j : ℕ • R ** j)
+⊆ (⋃ k : ℕ • R ** k)
+=⟨ “Distributivity of ⨾ over ⋃” ⟩
+(⋃ i : ℕ • R ** i ⨾ (⋃ j : ℕ • R ** j))
+⊆ (⋃ k : ℕ • R ** k)
+=⟨ “Distributivity of ⨾ over ⋃” ⟩
+(⋃ i : ℕ • (⋃ j : ℕ • R ** i ⨾ R ** j))
+⊆ (⋃ k : ℕ • R ** k)
+=⟨ “Characterisation of ⋃” ⟩
+∀ i : ℕ • (⋃ j : ℕ • R ** i ⨾ R ** j)
+⊆ (⋃ k : ℕ • R ** k)
+=⟨ “Characterisation of ⋃” ⟩
+∀ i : ℕ • ∀ j : ℕ • R ** i ⨾ R ** j
+⊆ ⋃ k : ℕ • R ** k
+=⟨ “Addition in **” ⟩
+∀ i : ℕ • ∀ j : ℕ • R ** (i + j)
+⊆ ⋃ k : ℕ • R ** k
+Proof for this:
+For any `i : ℕ`, `j : ℕ`:
+⋃ k : ℕ • R ** k
+=⟨ “Zero of ∨” ⟩
+⋃ k : ℕ ❙ true ∨ k = i + j • R ** k
+=⟨ “Range split for ⋃” ⟩
+(⋃ k : ℕ ❙ true • R ** k) ∪ (⋃ k : ℕ ❙ k = i + j • R
+⊇⟨ “Weakening for ∪” ⟩
+⋃ k : ℕ ❙ k = i + j • R ** k
+=⟨ “One-point rule for ⋃” ⟩
+(R ** k)[k ≔ i + j]
+=⟨ Substitution ⟩
+R ** (i + j)
+
+
+R ** k )`:
+(⋃ k : ℕ • R ** k )
+= ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+(⋃ k : ℕ ❙ true ∨ k = i + j • R ** k )
+= ⟨ “Range split for ⋃” ⟩
+— CalcCheck: Found (8.18) “Range split for ⋃”
+— CalcCheck: ─ OK
+(⋃ k : ℕ ❙ true • R ** k ) ∪ (⋃ k : ℕ ❙ k = i + j • R **
+k)
+⊇ ⟨ “Weakening for ∪” ⟩
+— CalcCheck: Found “Weakening for ∪”
+— CalcCheck: ─ OK
+(⋃ k : ℕ ❙ k = i + j • R ** k )
+= ⟨ “One-point rule for ⋃” ⟩
+— CalcCheck: Found (8.14) “One-point rule for
+⋃”
+— CalcCheck: ─ OK
+(R ** k)[k ≔ i + j]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+R ** (i + j)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[18]
+
+
+An auxiliary theorem that will be useful for proving minimality probably requires a proof by induction at some point.
+
+
+[19]
+
+
+Theorem “Characterisation of `_*`: Expansion of powers”: R ⊆ S ⇒ (reflexive S ⇒
+(transitive S ⇒ R ** i ⊆ S))
+— CalcCheck: Metavariables: R = R〖〗, S = S〖〗
+Proof:
+Assuming `R ⊆ S`:
+— CalcCheck: Assumption matches goal
+Assuming `reflexive S` and using with “Definition of reflexivity”
+— CalcCheck: Found “Definition of reflexivity”:
+— CalcCheck: Assumption matches goal
+Assuming `transitive S` and using with “Definition of transitivity”
+— CalcCheck: Found “Definition of transitivity”:
+— CalcCheck: Assumption matches goal
+By induction on `i : ℕ`:
+Base case:
+Calculation for expected goal `R ** 0 ⊆ S`:
+R ** 0
+= ⟨ “Definition of **” ⟩
+— CalcCheck: Found “Definition of **”
+— CalcCheck: ─ OK
+𝕀
+⊆ ⟨ Assumption `reflexive S` ⟩
+— CalcCheck: Found assumption `reflexive S`
+— CalcCheck: ─ OK
+S
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `R ** suc i ⊆ S`:
+R ** suc i
+= ⟨ “Definition of **” ⟩
+— CalcCheck: Found “Definition of **”
+— CalcCheck: ─ OK
+R ⨾ R ** i
+⊆ ⟨ “Monotonicity of ⨾” with Induction hypothesis ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Rightmonotonicity of ⨾”, “Monotonicity of ⨾”
+— CalcCheck: Found induction hypothesis `R ** i ⊆ S`
+— CalcCheck: ─ OK
+R⨾S
+⊆ ⟨ “Monotonicity of ⨾” with Assumption `R ⊆ S` ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Rightmonotonicity of ⨾”, “Monotonicity of ⨾”
+— CalcCheck: Found assumption `R ⊆ S`
+
+
+Theorem “Characterisation of `_*`: Expansion of powers”
+R ⊆ S ⇒ reflexive S ⇒ transitive S ⇒ R ** i
+Proof:
+Assuming `R ⊆ S`:
+Assuming `reflexive S` and using with “Definition o
+Assuming `transitive S` and using with “Definitio
+By induction on `i : ℕ`:
+Base case:
+R ** 0
+=⟨“Definition of **”⟩
+𝕀
+⊆⟨ assumption `reflexive S`⟩
+S
+Induction step:
+R ** (suc i)
+=⟨ “Definition of **”⟩
+R ⨾ R ** i
+⊆⟨ “Monotonicity of ⨾” with induction hypot
+R ⨾ S
+⊆⟨ “Monotonicity of ⨾” with assumption `R ⊆
+S ⨾ S
+⊆⟨ assumption `transitive S`⟩
+S
+
+
+— CalcCheck: ─ OK
+S⨾S
+⊆ ⟨ Assumption `transitive S` ⟩
+— CalcCheck: Found assumption `transitive S`
+— CalcCheck: ─ OK
+S
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[20]
+
+[21]
+
+
+Theorem “Characterisation of `_*`: Minimality”: R ⊆ S ⇒ (reflexive S ⇒ (transitive S ⇒ R
+Theorem “Characterisation of `_*`: Minimality”:
+R ⊆ S ⇒ reflexive S ⇒ transitive S ⇒ R * * ⊆ S))
+— CalcCheck: Metavariables: R = R〖〗, S = S〖〗
+Proof:
+Proof:
+Assuming `R ⊆ S`, `reflexive S`, `transitive S`:
+Assuming `R ⊆ S` , `reflexive S` , `transitive S`:
+R * ⊆ S
+— CalcCheck: Assumptions match goal
+=⟨ “Definition of `_*`” ⟩
+Calculation for expected goal `R * ⊆ S`:
+(⋃ i : ℕ • R ** i) ⊆ S
+R*⊆S
+=⟨ “Characterisation of ⋃” ⟩
+= ⟨ “Definition of `_*`” ⟩
+∀ i : ℕ • R ** i ⊆ S
+— CalcCheck: Found “Definition of `_*`”
+=⟨ “Characterisation of `_*`: Expansion of powe
+— CalcCheck: ─ OK
+with Assumption `R ⊆ S` and Assumption `ref
+(⋃ i : ℕ • R ** i ) ⊆ S
+Assumption `transitive S` ⟩
+= ⟨ “Characterisation of ⋃” ⟩
+∀ i : ℕ • true
+— CalcCheck: Found “Characterisation of ⋃”
+=⟨ “True ∀ body” ⟩
+— CalcCheck: ─ OK
+(∀ i : ℕ • R ** i ⊆ S )
+true
+= ⟨ “Characterisation of `_*`: Expansion of powers” with Assumption `R ⊆ S` and
+Assumption `reflexive S` and Assumption `transitive S` ⟩
+— CalcCheck: Found “Characterisation of `_*`: Expansion of powers”
+— CalcCheck: Found assumption `R ⊆ S`
+— CalcCheck: Found assumption `reflexive S`
+— CalcCheck: Found assumption `transitive S`
+— CalcCheck: ─ OK
+(∀ i : ℕ • true )
+= ⟨ “True ∀ body” ⟩
+— CalcCheck: Found (9.8) “True ∀ body”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Finally we can prove that these theorems actually constitute the properties of a well-defined reflexive-and-transitive closure.
+To be able to use the _is_closure-of_ predicate from Ref.95, we define:
+
+
+[22]
+
+[23]
+
+
+Declaration: reflexive-transitive : A ↔ A → 𝔹
+Axiom “Definition of `reflexive-transitive`”:
+reflexive-transitive R ≡ reflexive R ∧ transitive R
+
+Declaration: reflexive-transitive : A ↔ A → 𝔹
+Axiom “Definition of `reflexive-transitive`”: reflexive-transitive R ≡ reflexive
+R ∧ transitive R
+— CalcCheck: Metavariables: R = R〖〗
+
+With that and all the preparation above, the proof that R * is indeed the reflexive and transitive closure of R should be quite straight-forward:
+
+
+[24]
+
+1,1
+
+
+Theorem “Reflexive-transitive closure”: R * is reflexive-transitive closure-of R
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+Using “Relation closure”:
+— CalcCheck: Found “Relation closure”
+Subproof establishing `R ⊆ R * ∧ (reflexive-transitive (R *) ∧ (∀ P • R ⊆ P ∧
+reflexive-transitive P ⇒ R * ⊆ P )) ⇒ true`:
+R ⊆ R * ∧ (reflexive-transitive (R *) ∧ (∀ P • R ⊆ P ∧ reflexive-transitive P ⇒ R
+* ⊆ P ))
+= ⟨ “Definition of `reflexive-transitive`” ⟩
+— CalcCheck: Found “Definition of `reflexive-transitive`”
+— CalcCheck: ─ OK
+R ⊆ R * ∧ (reflexive (R *) ∧ (transitive (R *) ∧ (∀ P • R ⊆ P ∧ (reflexive P ∧
+transitive P) ⇒ R * ⊆ P )))
+= ⟨ “Characterisation of `_*`: Reflexivity”, “Characterisation of `_*`: Transitivity”,
+“Idempotency of ∧”, “Identity of ∧” ⟩
+— CalcCheck: Found “Characterisation of `_*`: Reflexivity”
+— CalcCheck: Found “Characterisation of `_*`: Transitivity”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+R ⊆ R * ∧ (∀ P • R ⊆ P ∧ (reflexive P ∧ transitive P) ⇒ R * ⊆ P )
+⇒ ⟨ “Monotonicity of ∧” with “Instantiation” ⟩
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Left-monotonicity of ∧”
+— CalcCheck: Found (9.13) “Instantiation”, (9.13.2) “Instantiation”, (9.13.1)
+“Instantiation”
+— CalcCheck: ─ OK
+R ⊆ R * ∧ (R ⊆ P ∧ (reflexive P ∧ transitive P) ⇒ R * ⊆ P)[P ≔ R *]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+R ⊆ R * ∧ (R ⊆ R * ∧ (reflexive (R *) ∧ transitive (R *)) ⇒ R * ⊆ R *)
+= ⟨ “Characterisation of `_*`: Reflexivity”, “Characterisation of `_*`: Transitivity”,
+“Idempotency of ∧”, “Identity of ∧” ⟩
+— CalcCheck: Found “Characterisation of `_*`: Reflexivity”
+— CalcCheck: Found “Characterisation of `_*`: Transitivity”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+R ⊆ R * ∧ (R ⊆ R * ⇒ R * ⊆ R *)
+= ⟨ “Reflexivity of ⊆”, “Right-zero of ⇒”, “Identity of ∧” ⟩
+— CalcCheck: Found “Reflexivity of ⊆”, “Reflexivity of ⊆”
+— CalcCheck: Found (3.72) “Right-zero of ⇒”
+
+
+Theorem “Reflexive-transitive closure”:
+R * is reflexive-transitive closure-of R
+Proof:
+Using “Relation closure”:
+R ⊆ R * ∧ (reflexive-transitive (R *) ∧ (∀ P
+=⟨“Definition of `reflexive-transitive`” ⟩
+R ⊆ R * ∧ (reflexive(R *) ∧ transitive (R *) ∧
+=⟨“Characterisation of `_*`: Reflexivity” , “Char
+R ⊆ R * ∧ (∀ P • R ⊆ P ∧ (reflexive P ∧ transi
+⇒⟨ “Monotonicity of ∧” with “Instantiation” ⟩
+R ⊆ R * ∧ (R ⊆ P ∧ (reflexive P ∧ transitive P
+=⟨ substitution ⟩
+R ⊆ R * ∧ (R ⊆ R * ∧ (reflexive (R *) ∧ transi
+=⟨“Characterisation of `_*`: Reflexivity” , “Char
+R ⊆ R * ∧ (R ⊆ R * ⇒ R * ⊆ R *)
+=⟨ “Reflexivity of ⊆” , “Right-zero of ⇒” , “Ide
+R ⊆ R *
+=⟨ “Characterisation of `_*`: Expanding” ⟩
+true
+
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+R⊆R*
+= ⟨ “Characterisation of `_*`: Expanding” ⟩
+— CalcCheck: Found “Characterisation of `_*`: Expanding”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Could not justify this `Using` application!
+
+Check and Save
+
+
+Save
+
+

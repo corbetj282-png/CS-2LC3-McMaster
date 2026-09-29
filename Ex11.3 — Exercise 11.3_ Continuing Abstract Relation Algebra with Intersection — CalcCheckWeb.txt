@@ -1,0 +1,631 @@
+Intersection
+
+[1]
+
+In Exercises 11.1 and 11.2 (and the Reference Notebooks “Abstract RA: Starting from Inclusion and Composition” and “Abstract RA:
+Continuing with Converse”), we started the development of abstract relation algebra with the introduction of the inclusion order _⊆_ and the
+converse ˘_ and composition _⨾_ operators.
+Four hint items per hint are allowed here, so many simple proofs can be straight-forward ”By”-invocation. If you don’t “see” how these proofs
+work, spell them out!
+For practice, the keyword Monotonicity is disabled here.
+Now we add an intersection operator, and with it the assumption that any two relations R and S of the same type A ↔ B have R ∩ S as their
+greatest lower bound in the inclusion order:
+
+[2]
+
+[3]
+
+Declaration: _∩_ : A ↔ B → (A ↔ B → A ↔ B)
+— CalcCheck: Operator _∩_: Associating to the right; precedence
+100
+
+Declaration: _∩_ : A ↔ B → A ↔ B → A ↔ B
+
+Axiom “Characterisation of ∩”: Q ⊆ R ∩ S
+
+
+≡
+
+Q ⊆ R
+
+∧ Q ⊆ S
+
+Axiom “Characterisation of ∩”: Q ⊆ R ∩ S ≡ Q ⊆ R ∧ Q ⊆
+S
+
+
+[4]
+
+[5]
+
+[6]
+
+
+All relevant properties can easily be shown from this characterisation, frequently with a simple “By” proof:
+
+Theorem “Weakening for ∩”: Q ∩ R ⊆ Q
+Proof:
+Q ∩ R ⊆ Q ∧ Q ∩ R ⊆ R
+=⟨ “Characterisation of ∩”⟩
+Q ∩ R ⊆ Q ∩ R
+=⟨ “Reflexivity of ⊆”⟩
+true
+
+∧
+
+Q ∩ R ⊆ R
+
+Theorem “Symmetry of ∩”: Q ∩ R ⊆ R ∩ Q
+Proof:
+Q ∩ R ⊆ R ∩ Q
+=⟨ “Characterisation of ∩” , “Symmetry of ∧” , “Weakening for ∩”⟩
+true
+
+
+Theorem “Weakening for ∩”: Q ∩ R ⊆ Q ∧ Q ∩ R ⊆ R
+Proof:
+Calculation for expected goal `Q ∩ R ⊆ Q ∧ Q ∩ R ⊆ R`:
+Q ∩R⊆Q ∧Q ∩R⊆R
+= ⟨ “Characterisation of ∩” ⟩
+— CalcCheck: Found “Characterisation of ∩”
+— CalcCheck: ─ OK
+Q ∩R⊆Q ∩R
+= ⟨ “Reflexivity of ⊆” ⟩
+— CalcCheck: Found “Reflexivity of ⊆”, “Reflexivity of
+⊆”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem “Symmetry of ∩”: Q ∩ R ⊆ R ∩ Q
+Proof:
+Calculation for expected goal `Q ∩ R ⊆ R ∩ Q`:
+Q ∩R⊆R∩Q
+= ⟨ “Characterisation of ∩”, “Symmetry of ∧”, “Weakening for
+∩” ⟩
+— CalcCheck: Found “Characterisation of ∩”
+— CalcCheck: Found (3.36) “Symmetry of ∧”
+— CalcCheck: Found “Weakening for ∩”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[7]
+
+[8]
+
+[9]
+
+
+Corollary “Symmetry of ∩”: Q ∩ R = R ∩ Q
+Proof:
+Q ∩ R = R ∩ Q
+=⟨ “Mutual inclusion”⟩
+Q ∩ R ⊆ R ∩ Q ∧ R ∩ Q ⊆ Q ∩ R
+=⟨ “Symmetry of ∩” , “Idempotency of ∧” , “Weakening for ∩”⟩
+true
+
+Activate symmetry property “Symmetry of ∩”
+
+Corollary “Symmetry of ∩”: Q ∩ R = R ∩ Q
+Proof:
+Calculation for expected goal `Q ∩ R = R ∩ Q`:
+Q ∩R=R∩Q
+= ⟨ “Mutual inclusion” ⟩
+— CalcCheck: Found “Mutual inclusion”
+— CalcCheck: ─ OK
+Q ∩R⊆R∩Q ∧R∩Q ⊆Q ∩R
+= ⟨ “Symmetry of ∩”, “Idempotency of ∧”, “Weakening for
+∩” ⟩
+— CalcCheck: Found “Symmetry of ∩”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: Found “Weakening for ∩”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Activate symmetry property “Symmetry of ∩”
+— CalcCheck: Found symmetry of `_∩_`
+
+Theorem “Associativity of ∩”: (Q ∩ R) ∩ S ⊆ Q ∩ (R ∩ S)
+Theorem “Associativity of ∩”: (Q ∩ R) ∩ S ⊆ Q ∩ (R ∩ S)
+Proof:
+Proof:
+Calculation for expected goal `(Q ∩ R) ∩ S ⊆ Q ∩ (R ∩ S)`:
+(Q ∩ R) ∩ S ⊆ Q ∩ (R ∩ S)
+(Q ∩ R) ∩ S ⊆ Q ∩ (R ∩ S)
+=⟨ “Characterisation of ∩” , “Characterisation of ∩” , “Asso
+= ⟨ “Characterisation of ∩”, “Characterisation of ∩”, “Associativity of ∧”,
+( ((Q ∩ R) ∩ S ⊆ Q ∩ R) ) ∧ ((Q ∩ R) ∩ S ⊆ S)
+“Characterisation of ∩” ⟩
+=⟨ “Weakening for ∩”⟩
+— CalcCheck: Found “Characterisation of ∩”
+true
+— CalcCheck: Found (3.37) “Associativity of ∧”
+— CalcCheck: ─ OK
+(Q ∩ R) ∩ S ⊆ Q ∩ R ∧ (Q ∩ R) ∩ S ⊆ S
+= ⟨ “Weakening for ∩” ⟩
+— CalcCheck: Found “Weakening for ∩”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[10]
+
+[11]
+
+
+Corollary “Associativity of ∩”: (Q ∩ R) ∩ S = Q ∩ (R ∩ S)
+Corollary “Associativity of ∩”: (Q ∩ R) ∩ S = Q ∩ (R ∩ S)
+Proof:
+Proof:
+Calculation for expected goal `(Q ∩ R) ∩ S = Q ∩ (R ∩ S)`:
+(Q ∩ R) ∩ S = Q ∩ (R ∩ S)
+(Q ∩ R) ∩ S = Q ∩ (R ∩ S)
+=⟨“Mutual inclusion”⟩
+= ⟨ “Mutual inclusion” ⟩
+(Q ∩ R) ∩ S ⊆ Q ∩ (R ∩ S) ∧ Q ∩ (R ∩ S) ⊆ (Q ∩ R) ∩ S
+— CalcCheck: Found “Mutual inclusion”
+=⟨ “Associativity of ∩” ⟩
+— CalcCheck: ─ OK
+true ∧ Q ∩ (R ∩ S) ⊆ (Q ∩ R) ∩ S
+(Q ∩ R) ∩ S ⊆ Q ∩ (R ∩ S) ∧ Q ∩ (R ∩ S) ⊆ (Q ∩ R) ∩ S
+=⟨ “Characterisation of ∩” , “Characterisation of ∩” , “Asso
+= ⟨ “Associativity of ∩” ⟩
+true ∧
+Q ∩ (R ∩ S) ⊆ Q ∧ Q ∩ (R ∩ S) ⊆ R ∩ S
+— CalcCheck: Found “Associativity of ∩”
+=⟨ “Weakening for ∩” , “Idempotency of ∧”⟩
+— CalcCheck: ─ OK
+true ∧ Q ∩ (R ∩ S) ⊆ (Q ∩ R) ∩ S
+true
+= ⟨ “Characterisation of ∩”, “Characterisation of ∩”, “Associativity of ∧”,
+“Characterisation of ∩” ⟩
+— CalcCheck: Found “Characterisation of ∩”
+— CalcCheck: Found (3.37) “Associativity of ∧”
+— CalcCheck: ─ OK
+true ∧ (Q ∩ (R ∩ S) ⊆ Q ∧ Q ∩ (R ∩ S) ⊆ R ∩ S)
+= ⟨ “Weakening for ∩”, “Idempotency of ∧” ⟩
+— CalcCheck: Found “Weakening for ∩”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Activate associativity property “Associativity of ∩”
+
+
+Activate associativity property “Associativity of ∩”
+— CalcCheck: Found associativity of `_∩_`
+
+
+[12]
+
+
+Theorem “Idempotency of ∩”: R ∩ R = R
+Proof:
+Using “Mutual inclusion”:
+Subproof for `R ∩ R ⊆ R`:
+By “Weakening for ∩”
+Subproof for `R ⊆ R ∩ R`:
+By “Characterisation of ∩”, “Reflexivity of ⊆”,
+“Idempotency of ∧”
+
+Theorem “Idempotency of ∩”: R ∩ R = R
+Proof:
+Using “Mutual inclusion”:
+— CalcCheck: Found “Mutual inclusion”
+Subproof for `R ∩ R ⊆ R`:
+By “Weakening for ∩”
+— CalcCheck: Found “Weakening for ∩”
+Subproof for `R ⊆ R ∩ R`:
+By “Characterisation of ∩”, “Reflexivity of ⊆”, “Idempotency of ∧”
+— CalcCheck: Found “Characterisation of ∩”
+— CalcCheck: Found “Reflexivity of ⊆”, “Reflexivity of ⊆”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+
+
+[13]
+
+[14]
+
+
+Theorem “Monotonicity of ∩”: Q ⊆ R
+Proof:
+Assuming `Q ⊆ R`:
+Using “Characterisation of ∩”:
+Subproof for `Q ∩ S ⊆ R`:
+Q ∩ S
+⊆⟨ “Weakening for ∩”⟩
+Q
+⊆⟨ Assumption `Q ⊆ R`⟩
+R
+Subproof for `Q ∩ S ⊆ S`:
+Q ∩ S
+=⟨ “Symmetry of ∩”⟩
+S ∩ Q
+⊆⟨ “Weakening for ∩”⟩
+S
+
+⇒
+
+Q ∩ S ⊆ R ∩ S
+
+Theorem “Monotonicity of ∩”: Q ⊆ R ⇒ Q ∩ S ⊆ R ∩ S
+Proof:
+Assuming `Q ⊆ R`:
+— CalcCheck: Assumption matches goal
+Using “Characterisation of ∩”:
+— CalcCheck: Found “Characterisation of ∩”
+Subproof for `Q ∩ S ⊆ R`:
+Q∩S
+⊆ ⟨ “Weakening for ∩” ⟩
+— CalcCheck: Found “Weakening for ∩”
+— CalcCheck: ─ OK
+Q
+⊆ ⟨ Assumption `Q ⊆ R` ⟩
+— CalcCheck: Found assumption `Q ⊆ R`
+— CalcCheck: ─ OK
+R
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `Q ∩ S ⊆ S`:
+Q∩S
+= ⟨ “Symmetry of ∩” ⟩
+— CalcCheck: Found “Symmetry of ∩”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+S∩Q
+⊆ ⟨ “Weakening for ∩” ⟩
+— CalcCheck: Found “Weakening for ∩”
+— CalcCheck: ─ OK
+S
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+For proving “Inclusion via ∩”, using “Mutual implication” is a plausible approach, but there are nicer, shorter proofs using other methods.
+
+
+[15]
+
+
+Theorem “Inclusion via ∩”: Q ⊆ R ≡ Q ∩ R = Q
+Proof:
+Using “Mutual implication”:
+— CalcCheck: Found (3.80) “Mutual implication”
+Subproof for `Q ⊆ R ⇒ Q ∩ R = Q`:
+Assuming `Q ⊆ R`:
+— CalcCheck: Assumption matches goal
+Using “Mutual inclusion”:
+— CalcCheck: Found “Mutual inclusion”
+Subproof for `Q ∩ R ⊆ Q`:
+Q∩R
+⊆ ⟨ “Weakening for ∩” ⟩
+— CalcCheck: Found “Weakening for ∩”
+— CalcCheck: ─ OK
+Q
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `Q ⊆ Q ∩ R`:
+Q⊆Q∩R
+= ⟨ “Characterisation of ∩”, “Reflexivity of ⊆”, Assumption `Q ⊆
+R`, “Idempotency of ∧” ⟩
+— CalcCheck: Found “Characterisation of ∩”
+— CalcCheck: Found “Reflexivity of ⊆”, “Reflexivity of ⊆”
+— CalcCheck: Found assumption `Q ⊆ R`
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `Q ∩ R = Q ⇒ Q ⊆ R`:
+Assuming `Q ∩ R = Q`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `Q ⊆ R`:
+Q⊆R
+= ⟨ Assumption `Q ∩ R = Q` ⟩
+— CalcCheck: Found assumption `Q ∩ R = Q`
+— CalcCheck: ─ OK
+Q ∩R⊆R
+= ⟨ “Weakening for ∩” ⟩
+— CalcCheck: Found “Weakening for ∩”
+— CalcCheck: ─ OK
+true
+
+
+Theorem “Inclusion via ∩”: Q ⊆ R ≡ Q ∩ R = Q
+Proof:
+Using “Mutual implication”:
+Subproof for `Q ⊆ R ⇒ Q ∩ R = Q`:
+Assuming `Q ⊆ R`:
+Using “Mutual inclusion”:
+Subproof for `Q ∩ R ⊆ Q`:
+Q ∩ R
+⊆⟨ “Weakening for ∩”⟩
+Q
+Subproof for `Q ⊆ Q ∩ R`:
+Q ⊆ Q ∩ R
+=⟨ “Characterisation of ∩” , “Reflexivity of ⊆
+true
+
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Subproof for `Q ∩ R = Q ⇒ Q ⊆ R`:
+Assuming `Q ∩ R = Q`:
+Q ⊆ R
+=⟨ assumption `Q ∩ R = Q`⟩
+Q ∩ R ⊆ R
+=⟨ “Weakening for ∩”⟩
+true
+
+
+[16]
+
+
+Theorem “Converse of ∩”:
+(R ∩ S) ˘ ⊆ R ˘ ∩ S ˘
+Proof:
+(R ∩ S) ˘ ⊆ R ˘ ∩ S ˘
+=⟨ “Characterisation of ∩”⟩
+(R ∩ S) ˘ ⊆ R ˘ ∧ (R ∩ S) ˘ ⊆ S ˘
+=⟨ “Isotonicity of ˘”⟩
+(R ∩ S)
+⊆ R ∧ (R ∩ S)
+⊆ S
+=⟨ “Weakening for ∩” , “Idempotency of ∧”⟩
+true
+
+
+Theorem “Converse of ∩”: (R ∩ S) ˘ ⊆ R ˘ ∩ S ˘
+Proof:
+Calculation for expected goal `(R ∩ S) ˘ ⊆ R ˘ ∩ S ˘`:
+(R ∩ S) ˘ ⊆ R ˘ ∩ S ˘
+= ⟨ “Characterisation of ∩” ⟩
+— CalcCheck: Found “Characterisation of ∩”
+— CalcCheck: ─ OK
+(R ∩ S) ˘ ⊆ R ˘ ∧ (R ∩ S) ˘ ⊆ S ˘
+= ⟨ “Isotonicity of ˘” ⟩
+— CalcCheck: Found “Isotonicity of ˘”
+— CalcCheck: ─ OK
+R∩S⊆R∧R∩S⊆S
+= ⟨ “Weakening for ∩”, “Idempotency of ∧” ⟩
+— CalcCheck: Found “Weakening for ∩”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[17]
+
+[18]
+
+
+Theorem “Converse of ∩”:
+(R ∩ S) ˘ = R ˘ ∩ S ˘
+Proof:
+Using “Mutual inclusion”:
+Subproof for `(R ∩ S) ˘ ⊆ (R ˘ ∩ S ˘)`:
+(R ∩ S) ˘
+⊆⟨ “Converse of ∩” ⟩
+(R ˘ ∩ S ˘)
+Subproof for `R ˘ ∩ S ˘ ⊆ (R ∩ S) ˘`:
+R ˘ ∩ S ˘ ⊆ (R ∩ S) ˘
+=⟨ “Self-inverse of ˘” ⟩
+(R ˘ ∩ S ˘) ˘ ˘ ⊆ (R ∩ S) ˘
+=⟨ “Isotonicity of ˘” ⟩
+(R ˘ ∩ S ˘) ˘ ⊆ (R ∩ S)
+Proof for this:
+(R ˘ ∩ S ˘) ˘
+⊆⟨ “Converse of ∩” ⟩
+R ˘ ˘ ∩ S ˘ ˘
+=⟨ “Self-inverse of ˘” ⟩
+R ∩ S
+
+Theorem “Converse of ∩”: (R ∩ S) ˘ = R ˘ ∩ S ˘
+Proof:
+Using “Mutual inclusion”:
+— CalcCheck: Found “Mutual inclusion”
+Subproof for `(R ∩ S) ˘ ⊆ R ˘ ∩ S ˘`:
+(R ∩ S) ˘
+⊆ ⟨ “Converse of ∩” ⟩
+— CalcCheck: Found “Converse of ∩”
+— CalcCheck: ─ OK
+R˘∩S˘
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `R ˘ ∩ S ˘ ⊆ (R ∩ S) ˘`:
+R ˘ ∩ S ˘ ⊆ (R ∩ S) ˘
+= ⟨ “Self-inverse of ˘” ⟩
+— CalcCheck: Found “Self-inverse of ˘”
+— CalcCheck: ─ OK
+((R ˘ ∩ S ˘) ˘) ˘ ⊆ (R ∩ S) ˘
+= ⟨ “Isotonicity of ˘” ⟩
+— CalcCheck: Found “Isotonicity of ˘”
+— CalcCheck: ─ OK
+(R ˘ ∩ S ˘) ˘ ⊆ R ∩ S
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Proof for this:
+Calculation for expected goal `(R ˘ ∩ S ˘) ˘ ⊆ R ∩
+S`:
+(R ˘ ∩ S ˘) ˘
+⊆ ⟨ “Converse of ∩” ⟩
+— CalcCheck: Found “Converse of ∩”
+— CalcCheck: ─ OK
+(R ˘) ˘ ∩ (S ˘) ˘
+= ⟨ “Self-inverse of ˘” ⟩
+— CalcCheck: Found “Self-inverse of ˘”
+— CalcCheck: ─ OK
+R∩S
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+For proving “Sub-distributivity of ⨾ over ∩”, the natural approach is to use an inclusion chain starting from the left-hand side with a reverse
+“Idempotency of ∩” step, as shown in class.
+
+
+You are used to CalcCheck performing multiple equational rewrites in a single calculation step; note that CalcCheck currently does not chain
+several inclusion ⊆ steps in one calculation hint in a similar way. So in doubt, split your complex steps into simpler pieces, in particular
+inclusion ⊆ steps.
+
+[19]
+
+Theorem “Sub-distributivity of ⨾ over ∩”:
+Q ⨾ (R ∩ S) ⊆ Q ⨾ R ∩ Q ⨾ S
+Proof:
+Using “Characterisation of ∩”:
+Subproof for `Q ⨾ (R ∩ S) ⊆ Q ⨾ R`:
+Q ⨾ (R ∩ S) ⊆ Q ⨾ R
+⇐⟨ “Monotonicity of ⨾”⟩
+(R ∩ S) ⊆ R
+=⟨ “Weakening for ∩”⟩
+true
+Subproof for `Q ⨾ (R ∩ S) ⊆ Q ⨾ S`:
+Q ⨾ (R ∩ S) ⊆ Q ⨾ S
+⇐⟨ “Monotonicity of ⨾”⟩
+(R ∩ S) ⊆ S
+=⟨ “Weakening for ∩”⟩
+true
+
+Theorem “Sub-distributivity of ⨾ over ∩”: Q ⨾ (R ∩ S) ⊆ Q ⨾ R ∩ Q ⨾ S
+Proof:
+Using “Characterisation of ∩”:
+— CalcCheck: Found “Characterisation of ∩”
+Subproof for `Q ⨾ (R ∩ S) ⊆ Q ⨾ R`:
+Q ⨾ (R ∩ S) ⊆ Q ⨾ R
+⇐ ⟨ “Monotonicity of ⨾” ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of
+⨾”, “Monotonicity of ⨾”
+— CalcCheck: ─ OK
+R∩S⊆R
+= ⟨ “Weakening for ∩” ⟩
+— CalcCheck: Found “Weakening for ∩”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `Q ⨾ (R ∩ S) ⊆ Q ⨾ S`:
+Q ⨾ (R ∩ S) ⊆ Q ⨾ S
+⇐ ⟨ “Monotonicity of ⨾” ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of
+⨾”, “Monotonicity of ⨾”
+— CalcCheck: ─ OK
+R∩S⊆S
+= ⟨ “Weakening for ∩” ⟩
+— CalcCheck: Found “Weakening for ∩”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[20]
+
+Homogeneous Relation Properties (continued)
+
+
+[21]
+
+[22]
+
+[23]
+
+
+Declaration: antisymmetric, order : A ↔ A
+
+Axiom “Definition of antisymmetry”:
+Axiom “Definition of ordering”:
+
+→
+
+Declaration: antisymmetric , order : A ↔ A → 𝔹
+
+𝔹
+
+antisymmetric R
+order R
+
+≡
+≡
+
+R ∩ R ˘ Axiom “Definition of antisymmetry”: antisymmetric R ≡ R ∩ R ˘ ⊆ 𝕀
+reflexi Axiom “Definition of ordering”: order R ≡ reflexive R ∧ (antisymmetric R
+∧ antis ∧ transitive R)
+∧ trans
+
+Theorem “Antisymmetry of converse”: antisymmetric R ≡ antisymmetr
+Proof:
+antisymmetric R
+=⟨ “Definition of antisymmetry”⟩
+R ∩ R ˘ ⊆ 𝕀
+=⟨ “Self-inverse of ˘” , “Symmetry of ∩” , “Definition of antisymm
+antisymmetric (R ˘)
+
+1,1
+
+
+Theorem “Antisymmetry of converse”: antisymmetric R ≡
+antisymmetric (R ˘)
+Proof:
+Calculation for expected goal `antisymmetric R ≡ antisymmetric (R
+˘)`:
+antisymmetric R
+= ⟨ “Definition of antisymmetry” ⟩
+— CalcCheck: Found “Definition of antisymmetry”
+— CalcCheck: ─ OK
+R∩R˘⊆𝕀
+= ⟨ “Self-inverse of ˘”, “Symmetry of ∩”, “Definition of
+antisymmetry” ⟩
+— CalcCheck: Found “Self-inverse of ˘”
+— CalcCheck: Found “Symmetry of ∩”
+— CalcCheck: Found “Definition of antisymmetry”
+— CalcCheck: ─ OK
+antisymmetric (R ˘)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[24]
+
+
+Theorem “Converse of an order”: order E ≡ order (E ˘)
+Theorem “Converse of an order”: order E ≡ order (E ˘)
+Proof:
+Proof:
+Calculation for expected goal `order E ≡ order (E ˘)`:
+order E
+order E
+=⟨ “Definition of ordering”⟩
+= ⟨ “Definition of ordering” ⟩
+reflexive E ∧ antisymmetric E ∧ transitive E
+— CalcCheck: Found “Definition of ordering”
+=⟨ “Reflexivity of converse” , “Antisymmetry of converse”
+— CalcCheck: ─ OK
+order (E ˘)
+reflexive E ∧ (antisymmetric E ∧ transitive E)
+= ⟨ “Reflexivity of converse”, “Antisymmetry of converse”, “Transitivity of
+converse”, “Definition of ordering” ⟩
+— CalcCheck: Found “Reflexivity of converse”
+— CalcCheck: Found “Antisymmetry of converse”
+— CalcCheck: Found “Transitivity of converse”
+— CalcCheck: Found “Definition of ordering”
+— CalcCheck: ─ OK
+order (E ˘)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

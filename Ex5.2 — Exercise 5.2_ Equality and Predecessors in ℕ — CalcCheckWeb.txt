@@ -1,0 +1,711 @@
+[1]
+
+Propositional logic up to conjunction as presented in Ex2.1–2.3 is preloaded here.
+In this notebook, you still are restricted to one hint item per hint.
+Concerning the natural numbers, the setup here is based on that at the end of Ex3.3, including all previous natural number material.
+The symmetry and associativity properties of + and · are activated here.
+We also make simpler names for the “one-sided” properties (like “Left-identity of ·”) available — proofs for properties that are direct
+consequences of some other theorem can be abbreviated to
+By “Other theorem”
+instead of writing a full calculation:
+new theorem expression
+≡⟨ “Other theorem” ⟩
+true
+The construct
+By HintItem
+is now a further way to write proofs; this can therefore also be used also in base cases and induction steps of induction proofs (where
+appropriate) — anywhere where a proof is expected.
+
+
+A “corollary” is an “easy consequence of an already-shown theorem or lemma”.
+[2]
+
+[3]
+
+[4]
+
+Corollary “Identity of +”: 0 + a = a
+Proof:
+By “Definition of + for 0”
+
+Corollary “Identity of +”: 0 + a = a
+Proof:
+By “Definition of + for 0”
+— CalcCheck: Found “Definition of + for 0”
+
+Corollary “Identity of ·”: 1 · a = a
+Proof:
+By “Left-identity of ·”
+
+Corollary “Identity of ·”: 1 · a = a
+Proof:
+By “Left-identity of ·”
+— CalcCheck: Found “Left-identity of ·”
+
+Corollary “Zero of ·”: 0 · a = 0
+Proof:
+By “Definition of · for 0”
+
+Corollary “Zero of ·”: 0 · a = 0
+Proof:
+By “Definition of · for 0”
+— CalcCheck: Found “Definition of · for 0”
+
+[5]
+
+Equality and Inequality of Natural Numbers
+[6]
+
+[7]
+
+[8]
+
+So far we have seen only equational properties of the natural numbers — but it was mentioned in class, that two natural numbers are equal
+exactly if they are constructed in the same way. This means in particular that zero cannot be equal to any successor:
+
+Axiom “Zero is not successor”:
+
+0 = suc n
+
+≡
+
+false
+
+Axiom “Zero is not successor”: 0 = suc n ≡ false
+
+The following different shapes and instances will frequently come in handy:
+
+
+[9]
+
+[10]
+
+
+Theorem “Zero is not successor”: 0 ≠ suc n
+Proof:
+0 ≠ suc n
+=⟨“Definition of ≠”⟩
+¬ (0 = suc n)
+=⟨“Zero is not successor”⟩
+¬ false
+=⟨“Negation of `false`”⟩
+true
+
+Theorem “Zero is not one”: 0 ≠ 1
+Proof:
+0 ≠ 1
+=⟨Fact `(0 ≠ 1)`⟩
+true
+
+
+Theorem “Zero is not successor”: 0 ≠ suc n
+Proof:
+Calculation for expected goal `0 ≠ suc n`:
+0 ≠ suc n
+= ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of
+≠”
+— CalcCheck: ─ OK
+¬ (0 = suc n)
+= ⟨ “Zero is not successor” ⟩
+— CalcCheck: Found “Zero is not successor”
+— CalcCheck: ─ OK
+¬ false
+= ⟨ “Negation of `false`” ⟩
+— CalcCheck: Found (3.13) “Negation of `false`”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem “Zero is not one”: 0 ≠ 1
+Proof:
+Calculation for expected goal `0 ≠ 1`:
+0≠1
+= ⟨ Fact `0 ≠ 1` ⟩
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[11]
+
+[12]
+
+[13]
+
+[14]
+
+Theorem “Zero is not one”: 0 = 1
+Proof:
+0 = 1
+=⟨“Double negation”⟩
+¬ ¬ (0 = 1)
+=⟨“Definition of ≠”⟩
+¬ (0 ≠ 1)
+=⟨“Zero is not one”⟩
+¬ (true)
+=⟨“Definition of `false`”⟩
+false
+
+≡
+
+Theorem “Zero is not one”: 0 = 1 ≡ false
+Proof:
+Calculation for expected goal `0 = 1 ≡ false`:
+0=1
+= ⟨ “Double negation” ⟩
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+¬ (¬ (0 = 1))
+= ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of
+≠”
+— CalcCheck: ─ OK
+¬ (0 ≠ 1)
+= ⟨ “Zero is not one” ⟩
+— CalcCheck: Found “Zero is not one”
+— CalcCheck: ─ OK
+¬ true
+= ⟨ “Definition of `false`” ⟩
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: ─ OK
+false
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+false
+
+It remains to formalise when two applications of successor are equal:
+
+Axiom “Cancellation of `suc`”: suc m = suc n
+
+≡
+
+m = n
+
+Axiom “Cancellation of `suc`”: suc m = suc n ≡ m = n
+
+A simple induction proof then establishes cancellation of addition:
+
+
+[15]
+
+[16]
+
+Theorem “Cancellation of +”:
+k + m = k + n ≡ m = n
+Proof:
+By induction on `k : ℕ`:
+Base case:
+0 + m = 0 + n
+=⟨“Left-identity of +”⟩
+m = n
+Induction step:
+suc(k) + m = suc(k) + n
+=⟨“Definition of + for `suc`”⟩
+suc(k + m) = suc(k + n)
+=⟨“Cancellation of `suc`”⟩
+k + m = k + n
+=⟨Induction hypothesis⟩
+m = n
+
+
+Theorem “Cancellation of +”: k + m = k + n ≡ m = n
+Proof:
+By induction on `k : ℕ`:
+Base case:
+Calculation for expected goal `0 + m = 0 + n ≡ m = n`:
+0 + m= 0 + n
+= ⟨ “Left-identity of +” ⟩
+— CalcCheck: Found “Definition of + for 0”
+— CalcCheck: ─ OK
+m= n
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `suc k + m = suc k + n ≡ m = n`:
+suc k + m = suc k + n
+= ⟨ “Definition of + for `suc`” ⟩
+— CalcCheck: Found “Definition of + for `suc`”
+— CalcCheck: ─ OK
+suc (k + m) = suc (k + n)
+= ⟨ “Cancellation of `suc`” ⟩
+— CalcCheck: Found “Cancellation of `suc`”
+— CalcCheck: ─ OK
+k + m= k + n
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `k + m = k + n
+≡ m = n`
+— CalcCheck: ─ OK
+m= n
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+Proving that an addition results in zero if and only if both arguments are zero is also a straight-forward induction proof containing two
+equivalence calculations:
+
+
+[17]
+
+
+Theorem “Zero sum”: 0 = a + b ≡ 0 = a ∧ 0 = b
+Proof:
+By induction on `a : ℕ`:
+Base case:
+Calculation for expected goal `0 = 0 + b ≡ 0 = 0 ∧ 0 = b`:
+0=0+b
+= ⟨ “Left-identity of +” ⟩
+— CalcCheck: Found “Definition of + for 0”
+— CalcCheck: ─ OK
+0=b
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+true ∧ 0 = b
+= ⟨ Fact `0 = 0`
+— CalcCheck: OK (no change)
+
+⟩
+— CalcCheck: ─ OK
+0=0∧0=b
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+By induction on `b : ℕ`:
+Base case:
+Calculation for expected goal `0 = suc a + 0 ≡ 0 = suc a ∧ 0
+= 0`:
+0 = suc a + 0
+= ⟨ “Right-identity of +” ⟩
+— CalcCheck: Found “Right-identity of +”
+— CalcCheck: ─ OK
+0 = suc a
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+0 = suc a ∧ true
+= ⟨ Fact `0 = 0`
+— CalcCheck: OK (no change)
+
+⟩
+— CalcCheck: ─ OK
+0 = suc a ∧ 0 = 0
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+
+
+Theorem “Zero sum”:
+0 = a + b ≡ 0 = a ∧ 0 = b
+Proof:
+By induction on `a : ℕ`:
+Base case:
+0 = 0 + b
+=⟨“Left-identity of +”⟩
+0 = b
+=⟨“Identity of ∧”⟩
+true ∧ 0 = b
+=⟨Fact `0 = 0`⟩
+0 = 0 ∧ 0 = b
+Induction step:
+By induction on `b : ℕ`:
+Base case:
+0 = suc(a) + 0
+=⟨“Right-identity of +”⟩
+0 = suc(a)
+=⟨“Identity of ∧”⟩
+0 = suc(a) ∧ true
+=⟨Fact `0 = 0`⟩
+0 = suc(a) ∧ 0 = 0
+Induction step:
+0 = suc(a) + suc(b)
+=⟨“Successor”⟩
+0 = suc(a) + b + 1
+=⟨“Definition of + for `suc`”⟩
+0 = suc(a + b + 1)
+=⟨“Zero is not successor”⟩
+false
+=⟨“Zero is not successor”⟩
+0 = suc (a)
+=⟨“Identity of ∨”⟩
+(0 = suc (a)) ∨ false
+=⟨“Zero is not successor”⟩
+(0 = suc (a)) ∨ (0 = suc(b))
+=⟨“Golden rule”⟩
+(0 = suc (a)) ∧ (0 = suc(b)) ≡ (0 = suc(a)) ≡ (0
+=⟨“Zero is not successor”⟩
+(0 = suc (a)) ∧ (0 = suc(b)) ≡ false ≡ false
+
+Calculation for expected goal `0 = suc a + suc b ≡ 0 = suc a ∧
+0 = suc b`:
+0 = suc a + suc b
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+0 = (suc a + b) + 1
+= ⟨ “Definition of + for `suc`” ⟩
+— CalcCheck: Found “Definition of + for `suc`”
+— CalcCheck: ─ OK
+0 = suc ((a + b) + 1)
+= ⟨ “Zero is not successor” ⟩
+— CalcCheck: Found “Zero is not successor”, “Zero is
+not successor”
+— CalcCheck: ─ OK
+false
+= ⟨ “Zero is not successor” ⟩
+— CalcCheck: Found “Zero is not successor”, “Zero is
+not successor”
+— CalcCheck: ─ OK
+0 = suc a
+= ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+0 = suc a ∨ false
+= ⟨ “Zero is not successor” ⟩
+— CalcCheck: Found “Zero is not successor”, “Zero is
+not successor”
+— CalcCheck: ─ OK
+0 = suc a ∨ 0 = suc b
+= ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+0 = suc a ∧ 0 = suc b ≡ (0 = suc a ≡ 0 = suc b)
+= ⟨ “Zero is not successor” ⟩
+— CalcCheck: Found “Zero is not successor”, “Zero is
+not successor”
+— CalcCheck: ─ OK
+0 = suc a ∧ 0 = suc b ≡ (false ≡ false)
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+0 = suc a ∧ 0 = suc b ≡ true
+
+
+=⟨“Identity of ≡”⟩
+(0 = suc (a)) ∧ (0 = suc(b)) ≡ true
+=⟨“Identity of ≡”⟩
+(0 = suc (a)) ∧ (0 = suc(b))
+
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+0 = suc a ∧ 0 = suc b
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[18]
+
+
+A single induction on one of the two variables is sufficient for “Zero product”:
+
+
+[19]
+
+
+Theorem “Zero product”: 0 = a · b ≡ 0 = a ∨ 0 = b
+Proof:
+By induction on `a : ℕ`:
+Base case:
+Calculation for expected goal `0 = 0 · b ≡ 0 = 0 ∨ 0 = b`:
+0=0·b≡0=0∨0=b
+= ⟨ “Zero of ·” ⟩
+— CalcCheck: Found “Zero of ·”
+— CalcCheck: ─ OK
+0=0≡0=0∨0=b
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+true ≡ true ∨ 0 = b
+= ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+true ≡ true
+= ⟨ “Reflexivity of ≡” ⟩
+— CalcCheck: Found (3.5) “Reflexivity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `0 = suc a · b ≡ 0 = suc a ∨ 0 = b`:
+0 = suc a · b ≡ 0 = suc a ∨ 0 = b
+= ⟨ “Definition of · for `suc`” ⟩
+— CalcCheck: Found “Definition of · for `suc`”
+— CalcCheck: ─ OK
+0 = a · b + b ≡ 0 = suc a ∨ 0 = b
+= ⟨ “Zero sum” ⟩
+— CalcCheck: Found “Zero sum”
+— CalcCheck: ─ OK
+0 = a · b ∧ 0 = b ≡ 0 = suc a ∨ 0 = b
+= ⟨ “Zero is not successor” ⟩
+— CalcCheck: Found “Zero is not successor”, “Zero is not successor”
+— CalcCheck: ─ OK
+0 = a · b ∧ 0 = b ≡ false ∨ 0 = b
+= ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+
+
+Theorem “Zero product”: 0 = a · b ≡ 0 = a ∨
+Proof:
+By induction on `a : ℕ`:
+Base case:
+0 = 0 · b ≡ 0 = 0 ∨ 0 = b
+=⟨“Zero of ·”⟩
+0 = 0 ≡ 0 = 0 ∨ 0 = b
+=⟨“Reflexivity of =”⟩
+true ≡ true ∨ 0 = b
+=⟨“Zero of ∨”⟩
+true ≡ true
+=⟨“Reflexivity of ≡”⟩
+true
+Induction step:
+0 = (suc a) · b ≡ 0 = (suc a) ∨ 0 =
+=⟨“Definition of · for `suc`”⟩
+0 = a · b + b ≡ 0 = (suc a) ∨ 0 = b
+=⟨“Zero sum”⟩
+(0 = a · b ∧ 0 = b) ≡ 0 = (suc a) ∨
+=⟨“Zero is not successor”⟩
+(0 = a · b ∧ 0 = b) ≡ false ∨ 0 = b
+=⟨“Identity of ∨”⟩
+(0 = a · b ∧ 0 = b) ≡ 0 = b
+=⟨Induction hypothesis⟩
+((0 = a ∨ 0 = b) ∧ 0 = b) ≡ 0 = b
+=⟨“Distributivity of ∧ over ∨”⟩
+((0 = a ∧ 0 = b) ∨ (0 = b ∧ 0 = b))
+=⟨“Idempotency of ∧”⟩
+((0 = a ∧ 0 = b) ∨ 0 = b) ≡ 0 = b
+=⟨“Absorption”⟩
+0 = b ≡ 0 = b
+=⟨“Reflexivity of ≡”⟩
+true
+
+[20]
+
+0=a·b∧0=b≡0=b
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `0 = a · b ≡ 0 = a ∨ 0 = b`
+— CalcCheck: ─ OK
+(0 = a ∨ 0 = b) ∧ 0 = b ≡ 0 = b
+= ⟨ “Distributivity of ∧ over ∨” ⟩
+— CalcCheck: Found (3.46) “Distributivity of ∧ over ∨”
+— CalcCheck: ─ OK
+(0 = a ∧ 0 = b) ∨ (0 = b ∧ 0 = b) ≡ 0 = b
+= ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+(0 = a ∧ 0 = b) ∨ 0 = b ≡ 0 = b
+= ⟨ “Absorption” ⟩
+— CalcCheck: Found (3.44a) “Absorption”, (3.44b) “Absorption”, (3.43b) “Absorption”,
+(3.43a) “Absorption”, (3.44c) “Absorption”, (3.44d) “Absorption”
+— CalcCheck: ─ OK
+0=b≡0=b
+= ⟨ “Reflexivity of ≡” ⟩
+— CalcCheck: Found (3.5) “Reflexivity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+The Predecessor Function pred
+
+
+[21]
+
+[22]
+
+[23]
+
+
+We define the predecessor function pred on natural numbers, and since it has to be defined for all natural numbers, we let it map 0 to 0:
+
+Declaration: pred : ℕ → ℕ
+Axiom “Predecessor of zero”:
+Axiom “Predecessor of successor”:
+
+pred 0
+= 0
+pred (suc n) = n
+
+Declaration: pred : ℕ → ℕ
+Axiom “Predecessor of zero”: pred 0 = 0
+Axiom “Predecessor of successor”: pred (suc n) = n
+
+Corresponding to the “Successor” theorem suc n = n + 1, we also have a “Predecessor” theorem:
+
+
+[24]
+
+[25]
+
+Theorem “Predecessor”: pred n = n - 1
+Proof:
+By induction on `n : ℕ`:
+Base case:
+pred 0
+=⟨“Predecessor of zero”⟩
+0
+=⟨“Subtraction from zero”⟩
+0 - 1
+Induction step:
+pred (suc n)
+= ⟨“Predecessor of successor”⟩
+n
+= ⟨“Subtraction after addition”⟩
+(n + 1) - 1
+= ⟨“Successor”⟩
+(suc n) - 1
+
+Theorem “Predecessor”: pred n = n - 1
+Proof:
+By induction on `n : ℕ`:
+Base case:
+Calculation for expected goal `pred 0 = 0 - 1`:
+pred 0
+= ⟨ “Predecessor of zero” ⟩
+— CalcCheck: Found “Predecessor of zero”
+— CalcCheck: ─ OK
+0
+= ⟨ “Subtraction from zero” ⟩
+— CalcCheck: Found “Subtraction from zero”
+— CalcCheck: ─ OK
+0-1
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `pred (suc n) = suc n 1`:
+pred (suc n)
+= ⟨ “Predecessor of successor” ⟩
+— CalcCheck: Found “Predecessor of
+successor”
+— CalcCheck: ─ OK
+n
+= ⟨ “Subtraction after addition” ⟩
+— CalcCheck: Found “Subtraction after addition”
+— CalcCheck: ─ OK
+(n + 1) - 1
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+suc n - 1
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+Note that we have the following:
+suc (pred 0) = suc 0 = 1
+
+
+But exactly the non-zero natural numbers are unaffected by applying suc after applying pred:
+
+
+[26]
+
+
+Theorem “Predecessor of non-zero”: n ≠ 0 ≡ suc pred n = n
+Proof:
+By induction on `n : ℕ`:
+Base case:
+Calculation for expected goal `0 ≠ 0 ≡ suc pred 0 = 0`:
+suc pred 0 = 0
+≡ ⟨ “Predecessor of zero” ⟩
+— CalcCheck: Found “Predecessor of zero”
+— CalcCheck: ─ OK
+suc 0 = 0
+≡ ⟨ “Zero is not successor” ⟩
+— CalcCheck: Found “Zero is not successor”, “Zero is not
+successor”
+— CalcCheck: ─ OK
+false
+≡ ⟨ “Definition of `false`” ⟩
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: ─ OK
+¬ true
+≡ ⟨ Fact `0 = 0`
+— CalcCheck: OK (no change)
+
+⟩
+— CalcCheck: ─ OK
+¬ (0 = 0)
+≡ ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+0≠0
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `suc n ≠ 0 ≡ suc pred (suc n) = suc
+
+1,1
+
+n`:
+suc n ≠ 0 ≡ suc pred (suc n) = suc n
+≡ ⟨ “Zero is not successor” ⟩
+— CalcCheck: Found “Zero is not successor”, “Zero is not
+successor”
+— CalcCheck: ─ OK
+true ≡ suc pred (suc n) = suc n
+≡ ⟨ “Predecessor of successor” ⟩
+— CalcCheck: Found “Predecessor of successor”
+— CalcCheck: ─ OK
+true ≡ suc n = suc n
+
+
+Theorem “Predecessor of non-zero”:
+n ≠ 0 ≡ suc (pred n) = n
+Proof:
+By induction on `n : ℕ`:
+Base case:
+suc (pred 0) = 0
+≡⟨“Predecessor of zero” ⟩
+suc (0) = 0
+≡⟨ “Zero is not successor” ⟩
+false
+≡⟨ “Definition of `false`”⟩
+¬ true
+≡⟨ Fact `0 = 0`⟩
+¬(0 = 0)
+≡⟨“Definition of ≠”⟩
+(0 ≠ 0)
+Induction step:
+suc n ≠ 0 ≡ suc (pred (suc n)) = suc n
+≡⟨ “Zero is not successor”⟩
+true ≡ suc (pred (suc n)) = suc n
+≡⟨ “Predecessor of successor”⟩
+true ≡ suc n = suc n
+≡⟨ “Reflexivity of =” ⟩
+true ≡ true
+≡⟨ “Reflexivity of ≡” ⟩
+true
+
+≡ ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+true ≡ true
+≡ ⟨ “Reflexivity of ≡” ⟩
+— CalcCheck: Found (3.5) “Reflexivity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+Check and Save
+
+
+Save
+
+

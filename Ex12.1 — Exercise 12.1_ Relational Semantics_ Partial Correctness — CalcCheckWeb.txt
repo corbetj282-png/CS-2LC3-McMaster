@@ -1,0 +1,545 @@
+[1]
+
+Predicate logic, sets and relations, including everything up to Ex11.5, Ref. “Abstract RA: Arbitrary Unions”, and Ref. “Subidentity Relations in
+Set Theory” are all preloaded here.
+This notebook contains the relational semantics material from the lectures, and a bit more, with some opportunity of practicing reasoning across
+relation algebra, set theory, and predicate logic.
+
+[2]
+
+The Programming Language: Expressions and Commands
+[3]
+
+The type Cmd is an abstract syntax tree (AST) type with the five constructors below, it uses the two different expression types from Ex11.6:
+ExprV for expressions that evaluate to storable values, and
+Expr𝔹 for Boolean expressions used as loop conditions and as if-conditions.
+
+
+[4]
+
+Declaration:
+Declaration:
+Declaration:
+Declaration:
+Declaration:
+Declaration:
+
+
+Cmd
+: Type
+skip
+: Cmd
+_⍮_
+: Cmd → Cmd → Cmd
+_:=_
+: Var → ExprV → Cmd
+if_then_else_fi : Expr𝔹 → Cmd → Cmd → Cmd
+while_do_od
+: Expr𝔹 → Cmd → Cmd
+
+Declaration: Cmd : Type
+Declaration: skip : Cmd
+Declaration: _⍮_ : Cmd → (Cmd → Cmd)
+— CalcCheck: Operator _⍮_: Associating to the right;
+precedence 5
+Declaration: _:=_ : Var → (ExprV → Cmd)
+— CalcCheck: Operator _:=_: Non-associating; precedence 9
+Declaration: if_then_else_fi : Expr𝔹 → (Cmd → (Cmd → Cmd))
+Declaration: while_do_od : Expr𝔹 → (Cmd → Cmd)
+
+[5]
+
+The Programming Language Semantics
+[6]
+
+States
+
+[7]
+
+[8]
+
+[9]
+
+[10]
+
+States assign values to variables — we use a plain function type for this here, for simplicity:
+
+Declaration: Value : Type
+Axiom “Definition of `Value`”: Value = ℤ
+
+Declaration: Value : Type
+Axiom “Definition of `Value`”: Value = ℤ
+
+Activate type-abbreviation property “Definition of `Value`”
+
+Activate type-abbreviation property “Definition of `Value`”
+— CalcCheck: Found type-abbreviation for `Value`
+
+Declaration: State : Type
+Axiom “Definition of `State`”: State = Var → Value
+
+Declaration: State : Type
+Axiom “Definition of `State`”: State = Var → Value
+
+
+[11]
+
+
+Activate type-abbreviation property “Definition of `State`”
+
+Activate type-abbreviation property “Definition of `State`”
+— CalcCheck: Found type-abbreviation for `State`
+
+[12]
+
+Command Semantics
+
+[13]
+
+[14]
+
+[15]
+
+[16]
+
+[17]
+
+The “semantics brackets” ⟦_⟧ assign each command its meaning, understanding it as a so-called “input-output relation”, that is, a relation that
+relates the start states of a command with its possible end states.
+
+Declaration: ⟦_⟧ : Cmd → (State ↔ State)
+
+Declaration: ⟦_⟧ : Cmd → State ↔ State
+
+(This can be seen as capturing non-deterministic programs, but it only captures them to some degree, since it does not allow to distinguish
+programs that have both terminating and non-terminating behaviours from programs that always terminate. A more complex semantics type
+would be needed for that.)
+
+Axiom “Semantics of `skip`”: ⟦ skip ⟧ = 𝕀
+Axiom “Semantics of :=”:
+⟦ x := e ⟧ = { s : State • ⟨ s , s ⊕′ ⟨ x , eval s e ⟩ ⟩ }
+Axiom “Semantics of ⍮”:
+⟦ C₁ ⍮ C₂ ⟧ = ⟦ C₁ ⟧ ⨾ ⟦ C₂ ⟧
+Axiom “Semantics of `if`”:
+⟦ if B then C₁ else C₂ fi ⟧ = (sat B ◁ ⟦ C₁ ⟧)
+∪ (sat B ⩤ ⟦ C₂ ⟧)
+
+Axiom “Semantics of `while`”:
+⟦ while B do C od ⟧ = (sat B ◁ ⟦ C ⟧) * ⩥ sat B
+
+
+Axiom “Semantics of `skip`”: ⟦ skip ⟧ = 𝕀
+Axiom “Semantics of :=”: ⟦ (x := e) ⟧ = { s : State • ⟨s, s ⊕′ ⟨x, (eval s) e⟩⟩
+}
+Axiom “Semantics of ⍮”: ⟦ (C₁ ⍮ C₂) ⟧ = ⟦ C₁ ⟧ ⨾ ⟦ C₂ ⟧
+Axiom “Semantics of `if`”: ⟦ (if B then C₁ else C₂ fi) ⟧ = (sat B ◁ ⟦ C₁ ⟧) ∪
+(sat B ⩤ ⟦ C₂ ⟧)
+
+Axiom “Semantics of `while`”: ⟦ (while B do C od) ⟧ = (sat B ◁ ⟦ C ⟧)
+* ⩥ sat B
+
+
+[18]
+
+Correctness Statements
+[19]
+
+[20]
+
+[21]
+
+Declaration: _⇒⁅_⁆_ : Expr𝔹 → (Cmd → (Expr𝔹 → 𝔹))
+— CalcCheck: Operator _⇒⁅_⁆_: Associating to the right;
+precedence 20
+
+Declaration: _⇒⁅_⁆_ : Expr𝔹 → Cmd → Expr𝔹 → 𝔹
+
+Axiom “Partial correctness”:
+
+(P ⇒⁅ C ⁆ Q)
+
+≡
+
+⟦ C ⟧ ⦇ sat P ⦈ ⊆ sat Q
+
+Axiom “Partial correctness”: P ⇒⁅ C ⁆ Q ≡ ⟦ C ⟧ ⦇ sat P ⦈ ⊆
+sat Q
+
+Translating “Partial correctness” into predicate logic is a reasonably straight-forward exercise in reasoning about relations via predicate logic —
+everybody should be able to prove that:
+
+
+[22]
+
+[23]
+
+
+Theorem “Partial correctness via ∀”:
+(P ⇒⁅ C ⁆ Q)
+≡ ∀ s₁, s₂ • s₁ ∈ sat P ∧ s₁ ⦗ ⟦ C ⟧ ⦘ s₂ ⇒ s₂ ∈ sat Q
+Proof:
+P ⇒⁅ C ⁆ Q
+=⟨ “Partial correctness” ⟩
+⟦ C ⟧ ⦇ sat P ⦈ ⊆ sat Q
+=⟨ “Set inclusion” ⟩
+∀ y • y ∈ ⟦ C ⟧ ⦇ sat P ⦈ ⇒ y ∈ sat Q
+=⟨ “Relational image” ⟩
+∀ y • (∃ x ❙ x ∈ sat P • x ⦗ ⟦ C ⟧ ⦘ y) ⇒ y ∈ sat Q
+=⟨ “Witness” ⟩
+∀ y • ∀ x • x ∈ sat P ∧ x ⦗ ⟦ C ⟧ ⦘ y ⇒ y ∈ sat Q
+=⟨ “Interchange of dummies for ∀” , “Nesting for ∀” ⟩
+∀ x , y • x ∈ sat P ∧ x ⦗ ⟦ C ⟧ ⦘ y ⇒ y ∈ sat Q
+
+Theorem “Partial correctness via ∀”: P ⇒⁅ C ⁆ Q ≡ (∀ s₁, s₂ • s₁ ∈ sat P ∧ s₁ ⦗ ⟦
+C ⟧ ⦘ s₂ ⇒ s₂ ∈ sat Q )
+— CalcCheck: Proviso: ¬occurs(`s₁, s₂`, `C, P, Q`)
+Proof:
+Calculation for expected goal `P ⇒⁅ C ⁆ Q ≡ (∀ s₁, s₂ • s₁ ∈ sat P ∧ s₁ ⦗ ⟦ C ⟧ ⦘
+s₂ ⇒ s₂ ∈ sat Q )`:
+P ⇒⁅ C ⁆ Q
+= ⟨ “Partial correctness” ⟩
+— CalcCheck: Found “Partial correctness”
+— CalcCheck: ─ OK
+⟦ C ⟧ ⦇ sat P ⦈ ⊆ sat Q
+= ⟨ “Set inclusion” ⟩
+— CalcCheck: Found (11.13b) “Set inclusion”, (11.13) “Set inclusion”
+— CalcCheck: ─ OK
+(∀ y • y ∈ ⟦ C ⟧ ⦇ sat P ⦈ ⇒ y ∈ sat Q )
+= ⟨ “Relational image” ⟩
+— CalcCheck: Found (14.302) “Relational image”
+— CalcCheck: ─ OK
+(∀ y • (∃ x ❙ x ∈ sat P • x ⦗ ⟦ C ⟧ ⦘ y ) ⇒ y ∈ sat Q )
+= ⟨ “Witness” ⟩
+— CalcCheck: Found (9.30.1) “Witness”, (9.30.2) “Witness”
+— CalcCheck: ─ OK
+(∀ y • (∀ x • x ∈ sat P ∧ x ⦗ ⟦ C ⟧ ⦘ y ⇒ y ∈ sat Q ) )
+= ⟨ “Interchange of dummies for ∀”, “Nesting for ∀” ⟩
+— CalcCheck: Found (8.19) “Interchange of dummies for ∀”
+— CalcCheck: Found (8.20.2) “Nesting for ∀”, (8.20.1) “Nesting for ∀”,
+(8.20) “Nesting for ∀”
+— CalcCheck: ─ OK
+(∀ x, y • x ∈ sat P ∧ x ⦗ ⟦ C ⟧ ⦘ y ⇒ y ∈ sat Q )
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+We can now easily calculate that while loops with true as loop condition satisfy all pre-post-condition specifications wrt. partial correctness:
+
+
+[24]
+
+
+Theorem “Partial correctness of `while true`”: P ⇒⁅ while true′ do C od ⁆
+Q
+Proof:
+Calculation for expected goal `P ⇒⁅ while true′ do C od ⁆ Q`:
+P ⇒⁅ while true′ do C od ⁆ Q
+= ⟨ “Partial correctness” ⟩
+— CalcCheck: Found “Partial correctness”
+— CalcCheck: ─ OK
+⟦ (while true′ do C od) ⟧ ⦇ sat P ⦈ ⊆ sat Q
+= ⟨ “Semantics of `while`” ⟩
+— CalcCheck: Found “Semantics of `while`”
+— CalcCheck: ─ OK
+((sat true′ ◁ ⟦ C ⟧) * ⩥ sat true′) ⦇ sat P ⦈ ⊆ sat Q
+= ⟨ “Definition of `sat`”, “Definition of `eval𝔹`”, “Universal set” ⟩
+— CalcCheck: Found “Definition of `sat`”
+— CalcCheck: Found “Definition of `eval𝔹`”
+— CalcCheck: Found “Universal set”, “Universal set”
+— CalcCheck: ─ OK
+((𝐔 ◁ ⟦ C ⟧) * ⩥ 𝐔) ⦇ sat P ⦈ ⊆ sat Q
+= ⟨ “Definition of ◁”, “Cartesian product of universal sets”, “Identity of
+∩” ⟩
+— CalcCheck: Found (14.201) “Definition of ◁”
+— CalcCheck: Found “Cartesian product of universal sets”
+— CalcCheck: Found (11.37) “Identity of ∩”
+— CalcCheck: ─ OK
+(⟦ C ⟧ * ⩥ 𝐔) ⦇ sat P ⦈ ⊆ sat Q
+= ⟨ “Definition of *” ⟩
+— CalcCheck: Found (KA.1) “Definition of *”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(⟦ C ⟧ * ⩥ 𝐔) ⦇ sat P ⦈ ⊆ sat Q
+= ⟨ “⩥ 𝐔” ⟩
+— CalcCheck: Could not resolve theorem reference “⩥ 𝐔”!
+— CalcCheck: Could not justify this step!
+{} ⦇ sat P ⦈ ⊆ sat Q
+= ⟨ “Relational image under {}”, “Empty set is least” ⟩
+— CalcCheck: Found (14.303) “Relational image under ⨾”
+— CalcCheck: Found (11.60) “Empty set is least”
+— CalcCheck: Could not resolve theorem reference “Relational
+image under {}”!
+— CalcCheck: Misspelled theorem reference “Relational image
+under {}”?
+
+
+Theorem “Partial correctness of `while true`”:
+P ⇒⁅ while true′ do C od ⁆ Q
+Proof:
+P ⇒⁅ while true′ do C od ⁆ Q
+=⟨ “Partial correctness” ⟩
+⟦ while true′ do C od ⟧ ⦇ sat P ⦈ ⊆ sat Q
+=⟨ “Semantics of `while`” ⟩
+((sat true′ ◁ ⟦ C ⟧) * ⩥ sat (true′)) ⦇ sat P ⦈ ⊆ sat Q
+=⟨ “Definition of `sat`” , “Definition of `eval𝔹`” , “Univers
+((𝐔 ◁ ⟦ C ⟧) * ⩥ 𝐔) ⦇ sat P ⦈ ⊆ sat Q
+=⟨ “Definition of ◁” , “Cartesian product of universal sets”
+((⟦ C ⟧) * ⩥ 𝐔) ⦇ sat P ⦈ ⊆ sat Q
+=⟨ “Definition of *”⟩
+((⟦ C ⟧) * ⩥ 𝐔) ⦇ sat P ⦈ ⊆ sat Q
+=⟨ “⩥ 𝐔” ⟩
+{} ⦇ sat P ⦈ ⊆ sat Q
+=⟨ “Relational image under {}” , “Empty set is least” ⟩
+true
+
+[25]
+
+[26]
+
+[27]
+
+Trying “Relational image under ⨾” instead.
+— CalcCheck: Could not justify this step!
+true
+— CalcCheck: 2 out of 7 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+Soundness
+
+For being able to state the if and while rules, we need to construct expressions of type Expr𝔹 via conjunctions and negations; since we
+cannot use the Boolean ∧ and ¬ for that, we introduce “primed” variants (type \' or \'1 for the single “prime”).
+
+Proving soundness of the Hoare calculus rules means deriving them via their semantics.
+Proving soundness of the “Sequence” and “Conditional” rules should be not very hard, but may require quite a few auxiliary theorems.
+
+
+[28]
+
+Theorem “`skip` rule”:
+Proof:
+
+
+P ⇒⁅ skip ⁆ P
+
+Theorem “`skip` rule”: P ⇒⁅ skip ⁆ P
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[29]
+
+Derived inference rule “Sequence”:
+Derived inference rule “Sequence”:
+`P ⇒⁅ C₁ ⁆ Q`
+`P ⇒⁅ C₁ ⁆ Q`, `Q ⇒⁅ C₂ ⁆ R`
+, `Q ⇒⁅ C₂ ⁆ R`
+⊦————————————————————————————————
+⊦ `P ⇒⁅ (C₁ ⍮ C₂) ⁆ R`
+`P ⇒⁅ C₁ ⍮ C₂ ⁆ R`
+Proof:
+Proof:
+Assuming (C1) `P ⇒⁅ C₁ ⁆ Q` and using with “Partial correctness”
+Assuming (C1) `P ⇒⁅ C₁ ⁆ Q` and using with “Partial correc
+— CalcCheck: Found “Partial correctness” , (C2) `Q ⇒⁅ C₂ ⁆ R` and using with
+(C2) `Q ⇒⁅ C₂ ⁆ R` and using with “Partial correc
+“Partial correctness”
+P ⇒⁅ C₁ ⍮ C₂ ⁆ R
+— CalcCheck: Found “Partial correctness”:
+=⟨ “Partial correctness” ⟩
+— CalcCheck: Assumptions match goal
+⟦ C₁ ⍮ C₂ ⟧ ⦇ sat P ⦈ ⊆ sat R
+Calculation for expected goal `P ⇒⁅ (C₁ ⍮ C₂) ⁆ R`:
+=⟨ “Semantics of ⍮” ⟩
+P ⇒⁅ (C₁ ⍮ C₂) ⁆ R
+(⟦ C₁ ⟧ ⨾ ⟦ C₂ ⟧) ⦇ sat P ⦈ ⊆ sat R
+= ⟨ “Partial correctness” ⟩
+— CalcCheck: Found “Partial correctness”
+=⟨ “Relational image of ⨾” ⟩
+— CalcCheck: ─ OK
+⟦ C₂ ⟧ ⦇ ⟦ C₁ ⟧ ⦇ sat P ⦈ ⦈ ⊆ sat R
+⟦
+(C₁
+⍮ C₂) ⟧ ⦇ sat P ⦈ ⊆ sat R
+⇐⟨ Antitonicity with assumption (C1) ⟩
+= ⟨ “Semantics of ⍮” ⟩
+⟦ C₂ ⟧ ⦇ sat Q ⦈ ⊆ sat R
+— CalcCheck: Found “Semantics of ⍮”
+=⟨ assumption (C2) ⟩
+— CalcCheck: ─ OK
+(⟦ C₁ ⟧ ⨾ ⟦ C₂ ⟧) ⦇ sat P ⦈ ⊆ sat R
+true
+= ⟨ “Relational image of ⨾” ⟩
+— CalcCheck: Found (14.303) “Relational image under ⨾”
+— CalcCheck: ─ OK
+⟦ C₂ ⟧ ⦇ (⟦ C₁ ⟧ ⦇ sat P ⦈) ⦈ ⊆ sat R
+⇐ ⟨ Antitonicity with Assumption (C1) ⟩
+— CalcCheck: Found assumption (C1)
+— CalcCheck: Could not justify this step!
+⟦ C₂ ⟧ ⦇ sat Q ⦈ ⊆ sat R
+= ⟨ Assumption (C2) ⟩
+— CalcCheck: Found assumption (C2)
+— CalcCheck: ─ OK
+true
+— CalcCheck: 1 out of 5 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[30]
+
+[31]
+
+[32]
+
+(sat B ◁ ⟦ C ⟧) * ⩥ sat B
+
+
+Top-Level Reports:
+— CalcCheck: Parse error: (line 1, column 1): unexpected '(' expecting end of
+input, or «TLI»
+
+Derived inference rule “Conditional”:
+`B ∧′ P ⇒⁅ C₁ ⁆ Q`
+, `¬′ B ∧′ P ⇒⁅ C₂ ⁆ Q`
+`B ∧′ P ⇒⁅ C₁ ⁆ Q`,
+`¬′ B ∧′ P ⇒⁅ C₂ ⁆ Q`
+⊦ `P ⇒⁅ if B then C₁ else C₂ fi ⁆ Q`
+⊦————————————————————————————————————————————
+Proof:
+`P ⇒⁅ if B then C₁ else C₂ fi ⁆ Q`
+Assuming (C1) `B ∧′ P ⇒⁅ C₁ ⁆ Q` and using with “Partial correctness”
+— CalcCheck: Found “Partial correctness” , (C2) `¬′ B ∧′ P ⇒⁅ C₂ ⁆ Q` and using
+Proof:
+with “Partial correctness”
+Assuming (C1) `B ∧′ P ⇒⁅ C₁ ⁆ Q` and using with “Partial c
+— CalcCheck: Found “Partial correctness”:
+(C2) `¬′ B ∧′ P ⇒⁅ C₂ ⁆ Q` and using with “Partia
+— CalcCheck: Assumptions match goal
+P ⇒⁅ if B then C₁ else C₂ fi ⁆ Q
+Calculation for expected goal `P ⇒⁅ if B then C₁ else C₂ fi ⁆ Q`:
+P ⇒⁅ if B then C₁ else C₂ fi ⁆ Q
+=⟨ “Partial correctness”⟩
+= ⟨ “Partial correctness” ⟩
+⟦ if B then C₁ else C₂ fi ⟧ ⦇ sat P ⦈ ⊆ sat Q
+— CalcCheck: Found “Partial correctness”
+=⟨ “Semantics of `if`”⟩
+— CalcCheck: ─ OK
+((sat B ◁ ⟦ C₁ ⟧) ∪ (sat B ⩤ ⟦ C₂ ⟧)) ⦇ sat P ⦈ ⊆ sa
+⟦
+(if
+B then C₁ else C₂ fi) ⟧ ⦇ sat P ⦈ ⊆ sat Q
+=⟨?⟩
+= ⟨ “Semantics of `if`” ⟩
+true
+— CalcCheck: Found “Semantics of `if`”
+— CalcCheck: ─ OK
+((sat B ◁ ⟦ C₁ ⟧) ∪ (sat B ⩤ ⟦ C₂ ⟧)) ⦇ sat P ⦈ ⊆ sat Q
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+true
+— CalcCheck: 1 out of 3 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+Derived inference rule “Conditional”:
+
+Proving soundness of the while rule requires quite a lot of challenging work on proving “missing” auxiliary theorems, but it will still be
+instructive to just identify and state sufficient “missing theorems” so that the proof for the while rule is accepted:
+
+
+[33]
+
+[34]
+
+[35]
+
+
+Derived inference rule “While”:
+Derived inference rule “While”:
+`B ∧′ Q ⇒⁅ C ⁆ Q`
+`B ∧′ Q ⇒⁅ C ⁆ Q`
+⊦ `Q ⇒⁅ while B do C od ⁆ ¬′ B ∧′ Q`
+⊦—————————————————————————————————————
+Proof:
+`Q ⇒⁅ while B do C od ⁆ ¬′ B ∧′ Q`
+Assuming `B ∧′ Q ⇒⁅ C ⁆ Q` and using with “Partial correctness”
+Proof:
+— CalcCheck: Found “Partial correctness”:
+Assuming `B ∧′ Q ⇒⁅ C ⁆ Q` and using with “Partial corre
+— CalcCheck: Assumption matches goal
+Q ⇒⁅ while B do C od ⁆ ¬′ B ∧′ Q
+Calculation for expected goal `Q ⇒⁅ while B do C od ⁆ ¬′ B ∧′ Q`:
+=⟨ “Partial correctness via ∀” ⟩
+Q ⇒⁅ while B do C od ⁆ ¬′ B ∧′ Q
+∀ s₁, s₂ • s₁ ∈ sat Q ∧ s₁ ⦗ ⟦ while B do C od ⟧ ⦘ s₂
+= ⟨ “Partial correctness via ∀” ⟩
+=⟨ “Semantics of `while`”⟩
+— CalcCheck: Found “Partial correctness via ∀”
+∀ s₁, s₂ • s₁ ∈ sat Q ∧ s₁ ⦗ ((sat B ◁ ⟦ C ⟧) * ⩥ sat
+— CalcCheck: ─ OK
+=⟨ “Semantics of `while`”⟩
+(∀ s₁, s₂ • s₁ ∈ sat Q ∧ s₁ ⦗ ⟦ (while B do C od) ⟧ ⦘ s₂ ⇒ s₂ ∈ sat (¬′ B ∧′ Q)
+)
+= ⟨ “Semantics of `while`” ⟩
+— CalcCheck: Found “Semantics of `while`”
+=⟨?⟩
+— CalcCheck: ─ OK
+B ∧′ Q ⇒⁅ C ⁆ Q
+(∀ s₁, s₂ • s₁ ∈ sat Q ∧ s₁ ⦗ (sat B ◁ ⟦ C ⟧) * ⩥ sat B ⦘ s₂ ⇒ s₂ ∈ sat (¬′ B
+=⟨ assumption `B ∧′ Q ⇒⁅ C ⁆ Q`⟩
+∧′ Q) )
+true
+= ⟨ “Semantics of `while`” ⟩
+— CalcCheck: Found “Semantics of `while`”
+— CalcCheck: Due to parse error in the expression below, this calculation
+step cannot be checked.
+⟪ expecting «expression»! ⟫
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+B ∧′ Q ⇒⁅ C ⁆ Q
+= ⟨ Assumption `B ∧′ Q ⇒⁅ C ⁆ Q` ⟩
+— CalcCheck: Found assumption `B ∧′ Q ⇒⁅ C ⁆ Q`
+— CalcCheck: ─ OK
+true
+— CalcCheck: 2 out of 5 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+For being able to formulate the assignment rule, we need a substitution function that can be used on pre- and postconditions:
+
+Declaration: substE𝔹 : Expr𝔹 → Var → ExprV → Expr𝔹
+
+
+Declaration: substE𝔹 : Expr𝔹 → (Var → (ExprV → Expr𝔹))
+
+
+[36]
+
+[37]
+
+
+For proving soundness of the assignment rule, a considerable amount of additional material would be needed. You are invited to see how far you
+can get, and what you can figure out about that additional material:
+
+Theorem “Assignment”: substE𝔹 Q x E ⇒⁅ x := E ⁆ Q
+Proof:
+substE𝔹 Q x E ⇒⁅ x := E ⁆ Q
+≡⟨ “Partial correctness via ∀” ⟩
+∀ s₁, s₂ • s₁ ∈ sat (substE𝔹 Q x E) ∧ s₁ ⦗ ⟦ x := E
+Proof for this:
+
+Theorem “Assignment”: ((substE𝔹 Q) x) E ⇒⁅ (x := E) ⁆ Q
+Proof:
+Calculation for expected goal `((substE𝔹 Q) x) E ⇒⁅ (x := E) ⁆ Q`:
+((substE𝔹 Q) x) E ⇒⁅ (x := E) ⁆ Q
+≡ ⟨ “Partial correctness via ∀” ⟩
+— CalcCheck: Found “Partial correctness via ∀”
+— CalcCheck: ─ OK
+(∀ s₁, s₂ • s₁ ∈ sat (((substE𝔹 Q) x) E) ∧ s₁ ⦗ ⟦ (x := E) ⟧ ⦘ s₂ ⇒ s₂ ∈ sat Q )
+— CalcCheck: Calculation matches goal ─ OK
+Proof for this:
+Calculation for expected goal `(∀ s₁, s₂ • s₁ ∈ sat (((substE𝔹 Q) x) E) ∧ s₁ ⦗ ⟦ (x
+:= E) ⟧ ⦘ s₂ ⇒ s₂ ∈ sat Q )`:
+⟪ expecting «expression»! ⟫
+— CalcCheck: Could not match calculation with stated goal.
+
+Check and Save
+
+
+Save
+
+

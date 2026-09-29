@@ -1,0 +1,865 @@
+[1]
+
+Preloaded here is:
+All propositional logic, including monotonicity laws, and Leibniz as axiom and replacement laws
+Integers up to Ex4.4.
+The converse properties for > and ≥ are not activated here.
+
+[2]
+
+Some “Empty range” Theorems
+
+
+[3]
+
+[4]
+
+
+Theorem “Empty range <_<”: a < b < a ⇒ false
+Proof:
+a < b ∧ b < a ⇒ false
+=⟨“Definition of ¬ from ⇒”⟩
+¬(a < b ∧ b < a)
+=⟨“Asymmetry of <”⟩
+true
+
+Theorem “Empty range <_<”: a < b < a ⇒ false
+Proof:
+Calculation for expected goal `a < b < a ⇒ false`:
+a < b ∧ b < a ⇒ false
+= ⟨ “Definition of ¬ from ⇒” ⟩
+— CalcCheck: Found (3.74) “Definition of ¬ from
+⇒”
+— CalcCheck: ─ OK
+¬ (a < b ∧ b < a)
+= ⟨ “Asymmetry of <” ⟩
+— CalcCheck: Found “Asymmetry of <”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Corollary “Empty range <_<”: a < b < a ≡ false
+Proof:
+a < b ∧ b < a ≡ false
+=⟨“Definition of `false`”⟩
+a < b ∧ b < a ≡ ¬ true
+=⟨“¬ connection”⟩
+¬(a < b ∧ b < a) ≡ true
+=⟨“Asymmetry of <” , “Identity of ≡”⟩
+true
+
+Corollary “Empty range <_<”: a < b < a ≡ false
+Proof:
+Calculation for expected goal `a < b < a ≡ false`:
+a < b ∧ b < a ≡ false
+= ⟨ “Definition of `false`” ⟩
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: ─ OK
+a < b ∧ b < a ≡ ¬ true
+= ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+¬ (a < b ∧ b < a) ≡ true
+= ⟨ “Asymmetry of <”, “Identity of ≡” ⟩
+— CalcCheck: Found “Asymmetry of <”
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[5]
+
+
+Theorem “Empty range <_≤”: a < b ≤ a ≡ false
+Proof:
+Calculation for expected goal `a < b ≤ a ≡ false`:
+a<b∧b≤a
+= ⟨ “Less”, “At most” ⟩
+— CalcCheck: Found (15.36) “Less”
+— CalcCheck: Found (15.38) “At most”
+— CalcCheck: ─ OK
+pos (b - a) ∧ (pos (a - b) ∨ b = a)
+= ⟨ “Distributivity of ∧ over ∨” ⟩
+— CalcCheck: Found (3.46) “Distributivity of ∧ over ∨”
+— CalcCheck: ─ OK
+(pos (b - a) ∧ pos (a - b)) ∨ (pos (b - a) ∧ b = a)
+⇒ ⟨ “Monotonicity of ∨” with “Positivity under +” ⟩
+— CalcCheck: Found “Monotonicity of ∨”, “Left-monotonicity of ∨”
+— CalcCheck: Found (15.30a) “Positivity under +”, (15.30) “Positivity under +”
+— CalcCheck: ─ OK
+pos ((b - a) + (a - b)) ∨ (pos (b - a) ∧ b = a)
+= ⟨ “Associativity of +”, “Subtraction”, “Unary minus”, “Additive identity” ⟩
+— CalcCheck: Found (15.1a) “Associativity of +”
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+pos 0 ∨ (pos (b - a) ∧ b = a)
+= ⟨ “Symmetry of ∧”, “Double negation”, “Non-positivity of 0”, “Definition of `false`” ⟩
+— CalcCheck: Found (3.36) “Symmetry of ∧”
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: Found (15.32) “Non-positivity of 0”
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: ─ OK
+false ∨ (b = a ∧ pos (b - a))
+= ⟨ “Identity of ∨”, Substitution ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+b = a ∧ (pos (z - a))[z ≔ b]
+= ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+b = a ∧ (pos (z - a))[z ≔ a]
+= ⟨ Substitution, “Subtraction”, “Unary minus”, “Double negation” ⟩
+
+
+Theorem “Empty range <_≤”: a < b ≤ a ≡ false
+Proof:
+a < b ∧ (b ≤ a)
+=⟨“Less” , “At most”⟩
+pos(b - a) ∧ (pos(a - b) ∨ (b = a))
+=⟨“Distributivity of ∧ over ∨” ⟩
+(pos(b - a) ∧ pos(a - b)) ∨ (pos(b - a)
+⇒⟨“Monotonicity of ∨” with “Positivity und
+pos((b - a) + (a - b)) ∨ (pos(b - a) ∧ (
+=⟨“Associativity of +” , “Subtraction” , “
+pos(0) ∨ (pos(b - a) ∧ (b = a))
+=⟨“Symmetry of ∧” , “Double negation” , “N
+false ∨ ((b = a) ∧ pos(b - a))
+=⟨“Identity of ∨” , substitution⟩
+(b = a) ∧ (pos(z - a))[ z ≔ b ]
+=⟨“Replacement” ⟩
+(b = a) ∧ (pos(z - a))[ z ≔ a ]
+=⟨Substitution , “Subtraction” , “Unary mi
+((b = a) ∧ ¬ ¬ pos(0))
+=⟨“Non-positivity of 0” , “Definition of `
+false
+
+
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+b = a ∧ ¬ (¬ pos 0)
+= ⟨ “Non-positivity of 0”, “Definition of `false`”, “Zero of ∧” ⟩
+— CalcCheck: Found (15.32) “Non-positivity of 0”
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: Found (3.40) “Zero of ∧”
+— CalcCheck: ─ OK
+false
+— CalcCheck: Could not match calculation with stated goal.
+
+
+[6]
+
+
+Theorem “Empty range ≤_<”: a ≤ b < a ≡ false
+Proof:
+Calculation for expected goal `a ≤ b < a ≡ false`:
+a≤b∧b<a
+= ⟨ “Less”, “At most”, “Distributivity of ∧ over ∨” ⟩
+— CalcCheck: Found (15.36) “Less”
+— CalcCheck: Found (15.38) “At most”
+— CalcCheck: Found (3.46) “Distributivity of ∧ over ∨”
+— CalcCheck: ─ OK
+(pos (b - a) ∧ pos (a - b)) ∨ (a = b ∧ pos (a - b))
+⇒ ⟨ “Monotonicity of ∨” with “Positivity under +” ⟩
+— CalcCheck: Found “Monotonicity of ∨”, “Left-monotonicity of ∨”
+— CalcCheck: Found (15.30a) “Positivity under +”, (15.30) “Positivity under +”
+— CalcCheck: ─ OK
+pos ((b - a) + (a - b)) ∨ (a = b ∧ pos (a - b))
+= ⟨ “Associativity of +”, “Subtraction”, “Unary minus”, “Additive identity” ⟩
+— CalcCheck: Found (15.1a) “Associativity of +”
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+pos 0 ∨ (a = b ∧ pos (a - b))
+= ⟨ “Double negation”, “Non-positivity of 0”, “Definition of `false`”, “Identity of ∨” ⟩
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: Found (15.32) “Non-positivity of 0”
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+a = b ∧ pos (a - b)
+= ⟨ Substitution, “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+a = b ∧ (pos (z - b))[z ≔ b]
+= ⟨ Substitution, “Subtraction”, “Unary minus”, “Double negation” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+a = b ∧ ¬ (¬ pos 0)
+= ⟨ “Non-positivity of 0”, “Definition of `false`”, “Zero of ∧” ⟩
+— CalcCheck: Found (15.32) “Non-positivity of 0”
+— CalcCheck: Found (3.8) “Definition of `false`”
+
+
+Theorem “Empty range ≤_<”: a ≤ b < a ≡ false
+Proof:
+a ≤ b ∧ b < a
+=⟨“Less” , “At most” , “Distributivity of
+((pos(b - a)) ∧ (pos (a - b))) ∨ ((a = b
+⇒⟨“Monotonicity of ∨” with “Positivity und
+(((pos(b - a + (a - b)))) ∨ ((a = b) ∧ (
+=⟨“Associativity of +” , “Subtraction” , “
+((pos(0))) ∨ ((a = b) ∧ (pos (a - b)))
+=⟨“Double negation” , “Non-positivity of 0
+((a = b) ∧ (pos (a - b)))
+=⟨ Substitution , “Replacement”⟩
+(a = b) ∧ (pos (z - b))[ z ≔ b]
+=⟨ Substitution , “Subtraction” , “Unary m
+(a = b) ∧ ¬ ¬ pos (0)
+=⟨ “Non-positivity of 0” , “Definition of
+false
+
+— CalcCheck: Found (3.40) “Zero of ∧”
+— CalcCheck: ─ OK
+false
+— CalcCheck: Could not match calculation with stated goal.
+
+[7]
+
+Integrality
+[8]
+
+LADM has Theorem (15.50): In a well-ordered domain, there is no element between 0 and 1, together with Axiom (15.49) “Well ordering” for
+the set of natural numbers considered as a subset of the integers.
+Here we postulate that result directly:
+
+[9]
+
+[10]
+
+Axiom “Least positive”: pos a ≡ 1 ≤ a
+
+Axiom “Least positive”: pos a ≡ 1 ≤ a
+
+This allows us to switch between < and ≤ also mediated by _+ 1:
+
+
+[11]
+
+
+Theorem “Least greater element” “Successor at most” “Definition of < via
+Theorem “Least greater element”,
+successor and ≤”: a < b ≡ a + 1 ≤ b
+“Successor at most”,
+Proof:
+“Definition of < via successor and ≤”:
+By cases: `a + 1 < b`, `a + 1 = b`, `a + 1 > b`
+a < b ≡ a + 1 ≤ b
+Completeness:
+Proof:
+Calculation for expected goal `a + 1 < b ∨ (a + 1 = b ∨ a + 1 > b)`:
+By cases: `a + 1 < b` , `a + 1 = b` , `a + 1 > b`
+a + 1 < b ≡ (a + 1 = b ≡ a + 1 > b)
+Completeness:
+≡ ⟨ “Trichotomy — A” ⟩
+(((a + 1) < b) ≡ ((a + 1) = b) ≡ ((a + 1) > b))
+— CalcCheck: Found (15.44A) “Trichotomy — A”
+≡⟨“Trichotomy — A” ⟩
+— CalcCheck: ─ OK
+true
+true
+— CalcCheck: Could not match calculation with stated goal.
+Case `a + 1 < b` :
+Case
+`a + 1 < b`:
+a < b ≡ a + 1 ≤ b
+Calculation for expected goal `a < b ≡ a + 1 ≤ b`:
+=⟨“At most” , assumption `a + 1 < b` , “Zero of ∨”
+a<b≡a+1≤b
+a < b
+= ⟨ “At most”, Assumption `a + 1 < b`, “Zero of ∨”, “Identity of ≡” ⟩
+⇒⟨ assumption `a + 1 < b` , “Zero of ∨” , “Identity
+— CalcCheck: Found (15.38) “At most”
+a < b
+— CalcCheck: Found assumption `a + 1 < b`
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+a<b
+⇒ ⟨ Assumption `a + 1 < b`, “Zero of ∨”, “Identity of ≡” ⟩
+— CalcCheck: Found assumption `a + 1 < b`
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: A cycle of length 1 begins here.
+— CalcCheck: Could not justify this step!
+a<b
+— CalcCheck: 1 out of 2 steps not justified
+— CalcCheck: Could not match calculation with stated goal.
+— CalcCheck: Cases not covered: `a + 1 = b`, `a + 1 > b`
+
+[12]
+
+Corollary “At least successor”
+“Definition of > via ≥ and successor”: a > b
+Proof:
+
+≡
+
+a ≥ b
+
+Corollary “At least successor” “Definition of > via ≥ and successor”: a
+>b≡a≥b+1
+Proof:
+— CalcCheck: Proof: No proof there!
+
+
+[13]
+
+[14]
+
+
+Theorem “Less than successor”
+“Definition of ≤ via < and successor”:
+a < b + 1 ≡ a ≤ b
+Proof:
+
+Theorem “Less than successor” “Definition of ≤ via < and successor”: a
+<b+1≡a≤b
+Proof:
+
+Corollary “Successor greater”
+“Definition of ≥ via successor and >”: a + 1 > b
+Proof:
+
+Corollary “Successor greater” “Definition of ≥ via successor and >”: a
++1>b≡a≥b
+Proof:
+
+— CalcCheck: Proof: No proof there!
+
+≡
+
+a
+
+— CalcCheck: Proof: No proof there!
+
+[15]
+
+“Split-off term” Theorems for Ranges in ℤ
+[16]
+
+The following theorems will be required to prove “Split off term” theorems for quantifications:
+
+
+[17]
+
+
+Theorem “Split off ≤-<-suc range at top”: m ≤ n ⇒ (m ≤ i < n + 1 ≡ m ≤ i < n ∨ i = n)
+— CalcCheck: Correctness of this proof depends on the not-yet-proven theorem “Less
+than successor”: `a < b + 1 ≡ a ≤ b`.
+Proof:
+Assuming `m ≤ n`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `m ≤ i < n + 1 ≡ m ≤ i < n ∨ i = n`:
+m≤ i< n+ 1
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+m≤ i∧ i< n+ 1
+= ⟨ “Less than successor” ⟩
+— CalcCheck: Found “Less than successor”
+— CalcCheck: ─ OK
+m≤ i∧ i≤ n
+= ⟨ “At most” ⟩
+— CalcCheck: Found (15.38) “At most”
+— CalcCheck: ─ OK
+m ≤ i ∧ (i < n ∨ i = n)
+= ⟨ “Distributivity of ∧ over ∨” ⟩
+— CalcCheck: Found (3.46) “Distributivity of ∧ over ∨”
+— CalcCheck: ─ OK
+(m ≤ i ∧ i = n) ∨ (m ≤ i ∧ i < n)
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(m ≤ i ∧ i = n) ∨ m ≤ i < n
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+((m ≤ z)[z ≔ i] ∧ i = n) ∨ m ≤ i < n
+= ⟨ “Replacement” (3.84a), Substitution ⟩
+— CalcCheck: Found (3.84a) “Replacement”
+— CalcCheck: ─ OK
+(m ≤ n ∧ i = n) ∨ m ≤ i < n
+= ⟨ Assumption `m ≤ n` ⟩
+— CalcCheck: Found assumption `m ≤ n`
+— CalcCheck: ─ OK
+(true ∧ i = n) ∨ m ≤ i < n
+= ⟨ “Identity of ∧” ⟩
+
+
+Theorem “Split off ≤-<-suc range at top”:
+m ≤ n ⇒ (m ≤ i < n + 1 ≡ m ≤ i < n ∨
+Proof:
+Assuming `m ≤ n`:
+m ≤ i < n + 1
+=⟨ “Reflexivity of =” ⟩
+m ≤ i ∧ i < n + 1
+=⟨ “Less than successor” ⟩
+m ≤ i ∧ (i ≤ n)
+=⟨ “At most” ⟩
+m ≤ i ∧ ((i < n) ∨ (i = n))
+=⟨ “Distributivity of ∧ over ∨” ⟩
+(m ≤ i ∧ i = n) ∨ (m ≤ i ∧ i < n)
+=⟨ “Reflexivity of =” ⟩
+(m ≤ i ∧ i = n) ∨ (m ≤ i < n)
+=⟨ Substitution ⟩
+((m ≤ z)[z ≔ i] ∧ i = n) ∨ (m ≤ i < n)
+=⟨ “Replacement” (3.84a) , Substitution ⟩
+(m ≤ n ∧ i = n) ∨ (m ≤ i < n)
+=⟨ Assumption `m ≤ n` ⟩
+(true ∧ i = n) ∨ (m ≤ i < n)
+=⟨ “Identity of ∧” ⟩
+i = n ∨ (m ≤ i < n)
+
+
+i = n)
+
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+i= n∨ m≤ i< n
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[18]
+
+
+Theorem “Split off ≤-<-suc range at bottom”: m ≤ n ⇒ (m ≤ i < n + 1 ≡ m + 1 ≤ i < n + 1 ∨ i = m)
+— CalcCheck: Correctness of this proof depends on the following not-yet-proven theorems: “Less than
+successor”: `a < b + 1 ≡ a ≤ b`, “Least greater element”: `a < b ≡ a + 1 ≤ b`.
+Proof:
+Assuming `m ≤ n`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `m ≤ i < n + 1 ≡ m + 1 ≤ i < n + 1 ∨ i = m`:
+m≤ i< n+ 1
+≡ ⟨ “Definition of ≤” ⟩
+— CalcCheck: Found (15.38) “At most”
+— CalcCheck: ─ OK
+(m < i ∨ m = i) ∧ i < n + 1
+≡ ⟨ “Distributivity of ∧ over ∨” ⟩
+— CalcCheck: Found (3.46) “Distributivity of ∧ over ∨”
+— CalcCheck: ─ OK
+(m < i ∧ i < n + 1) ∨ (m = i ∧ i < n + 1)
+≡ ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(m < i ∧ i < n + 1) ∨ (i = m ∧ i < n + 1)
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(m < i ∧ i < n + 1) ∨ (i = m ∧ (z < n + 1)[z ≔ i])
+≡ ⟨ “Replacement”, Substitution ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+(m < i ∧ i < n + 1) ∨ (i = m ∧ m < n + 1)
+≡ ⟨ Assumption `m ≤ n`, “Less than successor” ⟩
+— CalcCheck: Found assumption `m ≤ n`
+— CalcCheck: Found “Less than successor”
+— CalcCheck: ─ OK
+(m < i ∧ i < n + 1) ∨ (i = m ∧ true)
+≡ ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+(m < i ∧ i < n + 1) ∨ i = m
+≡ ⟨ “Least greater element” ⟩
+— CalcCheck: Found “Least greater element”
+— CalcCheck: ─ OK
+(m + 1 ≤ i ∧ i < n + 1) ∨ i = m
+
+
+Theorem “Split off ≤-<-suc range at bottom”
+m ≤ n ⇒ (m ≤ i < n + 1 ≡ m + 1 ≤ i
+Proof:
+Assuming `m ≤ n`:
+m ≤ i < n + 1
+≡⟨ “Definition of ≤” ⟩
+(m < i ∨ m = i) ∧ i < n + 1
+≡⟨ “Distributivity of ∧ over ∨” ⟩
+(m < i ∧ i < n + 1) ∨ (m = i ∧ i < n
+≡⟨ “Reflexivity of =” ⟩
+(m < i ∧ i < n + 1) ∨ (i = m ∧ i < n
+≡⟨ Substitution ⟩
+(m < i ∧ i < n + 1) ∨ (i = m ∧ (z < n
+≡⟨ “Replacement” , substitution ⟩
+(m < i ∧ i < n + 1) ∨ (i = m ∧ m < n
+≡⟨ Assumption `m ≤ n` , “Less than succe
+(m < i ∧ i < n + 1) ∨ (i = m ∧ true)
+≡⟨ “Identity of ∧” ⟩
+(m < i ∧ i < n + 1) ∨ (i = m)
+≡⟨ “Least greater element” ⟩
+(m + 1 ≤ i ∧ i < n + 1) ∨ (i = m)
+≡⟨ “Reflexivity of =” ⟩
+m + 1 ≤ i < n + 1 ∨ i = m
+
+
+≡ ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+m+ 1 ≤ i< n+ 1 ∨ i= m
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[19]
+
+
+Theorem “Split off ≤-< range at bottom”: m < n ⇒ (m ≤ i < n ≡ m + 1 ≤ i < n ∨ i = m)
+— CalcCheck: Correctness of this proof depends on the not-yet-proven theorem “Least greater element”:
+`a < b ≡ a + 1 ≤ b`.
+Proof:
+Assuming `m < n`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `m ≤ i < n ≡ m + 1 ≤ i < n ∨ i = m`:
+m≤ i< n
+≡ ⟨ “Definition of ≤” ⟩
+— CalcCheck: Found (15.38) “At most”
+— CalcCheck: ─ OK
+(m < i ∨ m = i) ∧ i < n
+≡ ⟨ “Distributivity of ∧ over ∨” ⟩
+— CalcCheck: Found (3.46) “Distributivity of ∧ over ∨”
+— CalcCheck: ─ OK
+(m < i ∧ i < n) ∨ (m = i ∧ i < n)
+≡ ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(m < i ∧ i < n) ∨ (i = m ∧ i < n)
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(m < i ∧ i < n) ∨ (i = m ∧ (z < n)[z ≔ i])
+≡ ⟨ “Replacement”, Substitution ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+(m < i ∧ i < n) ∨ (i = m ∧ m < n)
+≡ ⟨ Assumption `m < n` ⟩
+— CalcCheck: Found assumption `m < n`
+— CalcCheck: ─ OK
+(m < i ∧ i < n) ∨ (i = m ∧ true)
+≡ ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+(m < i ∧ i < n) ∨ i = m
+≡ ⟨ “Least greater element” ⟩
+— CalcCheck: Found “Least greater element”
+— CalcCheck: ─ OK
+(m + 1 ≤ i ∧ i < n) ∨ i = m
+≡ ⟨ “Reflexivity of =” ⟩
+
+
+Theorem “Split off ≤-< range at bottom”:
+m < n ⇒ (m ≤ i < n ≡ m + 1 ≤ i < n
+Proof:
+Assuming `m < n`:
+m ≤ i < n
+≡⟨ “Definition of ≤” ⟩
+(m < i ∨ m = i) ∧ i < n
+≡⟨ “Distributivity of ∧ over ∨” ⟩
+(m < i ∧ i < n) ∨ (m = i ∧ i < n)
+≡⟨ “Reflexivity of =” ⟩
+(m < i ∧ i < n) ∨ (i = m ∧ i < n)
+≡⟨ Substitution ⟩
+(m < i ∧ i < n) ∨ (i = m ∧ (z < n)[z
+≡⟨ “Replacement” , substitution ⟩
+(m < i ∧ i < n) ∨ (i = m ∧ m < n)
+≡⟨ Assumption `m < n` ⟩
+(m < i ∧ i < n) ∨ (i = m ∧ true)
+≡⟨ “Identity of ∧” ⟩
+(m < i ∧ i < n) ∨ (i = m)
+≡⟨ “Least greater element” ⟩
+(m + 1 ≤ i ∧ i < n) ∨ (i = m)
+≡⟨ “Reflexivity of =” ⟩
+m + 1 ≤ i < n ∨ i = m
+
+
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+m+ 1 ≤ i< n∨ i= m
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[20]
+
+
+Theorem “Split off <-≤-suc range at top”: m ≤ n ⇒ (m < i ≤ n + 1 ≡ m < i ≤ n ∨ i = n + 1)
+Theorem “Split off <-≤-suc range at top”:
+m ≤ n ⇒ (m < i ≤ n + 1 ≡ m < i ≤ n ∨ i Proof:
+Assuming `m ≤ n`:
+Proof:
+— CalcCheck: Assumption matches goal
+Assuming `m ≤ n`:
+Calculation for expected goal `m < i ≤ n + 1 ≡ m < i ≤ n ∨ i = n + 1`:
+(m < i) ∧ (i ≤ n + 1)
+m< i∧ i≤ n+ 1
+=⟨“Definition of ≤”⟩
+= ⟨ “Definition of ≤” ⟩
+(m < i) ∧ ((i < n + 1) ∨ (i = n + 1))
+— CalcCheck: Found (15.38) “At most”
+=⟨“Less than successor”⟩
+— CalcCheck: ─ OK
+(m < i) ∧ ((i ≤ n) ∨ (i = n + 1))
+m < i ∧ (i < n + 1 ∨ i = n + 1)
+=⟨“Distributivity of ∧ over ∨”⟩
+= ⟨ “Less than successor” ⟩
+((m < i) ∧ (i ≤ n)) ∨ ((m < i) ∧ (i = n
+— CalcCheck: Found “Less than successor”
+=⟨ Substitution ⟩
+— CalcCheck: ─ OK
+m < i ∧ (i ≤ n ∨ i = n + 1)
+((m < i) ∧ (i ≤ n)) ∨ ((m < z) ∧ (i = n
+= ⟨ “Distributivity of ∧ over ∨” ⟩
+⇒⟨ “Monotonicity of ∨” with “Replacement”
+— CalcCheck: Found (3.46) “Distributivity of ∧ over ∨”
+((m < i) ∧ (i ≤ n)) ∨ ((m < z) ∧ (i = n
+— CalcCheck: ─ OK
+=⟨ Substitution ⟩
+(m
+< i ∧ i ≤ n) ∨ (m < i ∧ i = n + 1)
+((m < i) ∧ (i ≤ n)) ∨ ((m < (n + 1)) ∧
+= ⟨ Substitution ⟩
+=⟨“Less than successor” , assumption `m ≤
+— CalcCheck: ─ OK
+((m < i ≤ n)) ∨ ((i = n + 1))
+(m < i ∧ i ≤ n) ∨ (m < z ∧ i = n + 1)[z ≔ i]
+⇒ ⟨ “Monotonicity of ∨” with “Replacement” ⟩
+— CalcCheck: Found “Monotonicity of ∨”, “Left-monotonicity of ∨”
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: Could not justify this step!
+(m < i ∧ i ≤ n) ∨ (m < z ∧ i = n + 1)[z ≔ n + 1]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(m < i ∧ i ≤ n) ∨ (m < n + 1 ∧ i = n + 1)
+= ⟨ “Less than successor”, Assumption `m ≤ n`, “Identity of ∧” ⟩
+— CalcCheck: Found “Less than successor”
+— CalcCheck: Found assumption `m ≤ n`
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+m< i≤ n∨ i= n+ 1
+— CalcCheck: 1 out of 7 steps not justified
+— CalcCheck: Could not match calculation with stated goal.
+
+
+[21]
+
+
+Theorem “Split off <-≤ range at top”: m < n ⇒ (m < i ≤ n ≡ m < i < n ∨ i = n)
+Theorem “Split off <-≤ range at top”:
+m < n ⇒ (m < i ≤ n ≡ m < i < n ∨ i = n Proof:
+Assuming `m < n`:
+Proof:
+— CalcCheck: Assumption matches goal
+Assuming `m < n`:
+Calculation for expected goal `m < i ≤ n ≡ m < i < n ∨ i = n`:
+m < i ∧ i ≤ n
+m< i∧ i≤ n
+=⟨“At most”⟩
+= ⟨ “At most” ⟩
+(m < i) ∧ ((i < n) ∨ (i = n))
+— CalcCheck: Found (15.38) “At most”
+=⟨“Distributivity of ∧ over ∨”⟩
+— CalcCheck: ─ OK
+((m < i) ∧ (i < n)) ∨ ((m < i) ∧ (i = n
+m < i ∧ (i < n ∨ i = n)
+=⟨Substitution⟩
+= ⟨ “Distributivity of ∧ over ∨” ⟩
+((m < i) ∧ (i < n)) ∨ ((m < z)[z ≔ i] ∧
+— CalcCheck: Found (3.46) “Distributivity of ∧ over ∨”
+=⟨“Replacement”⟩
+— CalcCheck: ─ OK
+(m < i ∧ i < n) ∨ (m < i ∧ i = n)
+((m < i) ∧ (i < n)) ∨ ((m < z)[z ≔ n] ∧
+= ⟨ Substitution ⟩
+=⟨Substitution , assumption `m < n` , “Ide
+— CalcCheck: ─ OK
+((m < i < n)) ∨ (i = n)
+(m < i ∧ i < n) ∨ ((m < z)[z ≔ i] ∧ i = n)
+= ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+(m < i ∧ i < n) ∨ ((m < z)[z ≔ n] ∧ i = n)
+= ⟨ Substitution, Assumption `m < n`, “Identity of ∧” ⟩
+— CalcCheck: Found assumption `m < n`
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+m< i< n∨ i= n
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[22]
+
+
+Theorem “Split off <-≤-suc range at bottom”: m ≤ n ⇒ (m < i ≤ n + 1 ≡ m + 1 < i ≤ n + 1 ∨ i = m +
+1)
+— CalcCheck: Correctness of this proof depends on the not-yet-proven theorem “Least greater element”:
+`a < b ≡ a + 1 ≤ b`.
+Proof:
+Assuming `m ≤ n`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `m < i ≤ n + 1 ≡ m + 1 < i ≤ n + 1 ∨ i = m + 1`:
+m< i∧ i≤ n+ 1
+≡ ⟨ “Least greater element” ⟩
+— CalcCheck: Found “Least greater element”
+— CalcCheck: ─ OK
+m+ 1 ≤ i∧ i≤ n+ 1
+≡ ⟨ “Definition of ≤” ⟩
+— CalcCheck: Found (15.38) “At most”
+— CalcCheck: ─ OK
+(m + 1 < i ∨ m + 1 = i) ∧ i ≤ n + 1
+≡ ⟨ “Distributivity of ∧ over ∨” ⟩
+— CalcCheck: Found (3.46) “Distributivity of ∧ over ∨”
+— CalcCheck: ─ OK
+(m + 1 < i ∧ i ≤ n + 1) ∨ (m + 1 = i ∧ i ≤ n + 1)
+≡ ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+m + 1 < i ≤ n + 1 ∨ (m + 1 = i ∧ i ≤ n + 1)
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+m + 1 < i ≤ n + 1 ∨ (m + 1 = i ∧ (z ≤ n + 1)[z ≔ i])
+≡ ⟨ “Replacement”, Substitution ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+m + 1 < i ≤ n + 1 ∨ (m + 1 = i ∧ m + 1 ≤ n + 1)
+≡ ⟨ “≤-Isotonicity of +”, Assumption `m ≤ n` ⟩
+— CalcCheck: Found “≤-Isotonicity of +”
+— CalcCheck: Found assumption `m ≤ n`
+— CalcCheck: ─ OK
+m + 1 < i ≤ n + 1 ∨ (m + 1 = i ∧ true)
+≡ ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+
+
+Theorem “Split off <-≤-suc range at bottom”
+m ≤ n ⇒ (m < i ≤ n + 1 ≡ m + 1 < i ≤ n
+Proof:
+Assuming `m ≤ n`:
+m < i ∧ (i ≤ n + 1)
+≡⟨ “Least greater element” ⟩
+(m + 1 ≤ i) ∧ (i ≤ n + 1)
+≡⟨ “Definition of ≤” ⟩
+(m + 1 < i ∨ m + 1 = i) ∧ (i ≤ n + 1)
+≡⟨ “Distributivity of ∧ over ∨” ⟩
+(m + 1 < i ∧ i ≤ n + 1) ∨ (m + 1 = i
+≡⟨ “Reflexivity of =” ⟩
+(m + 1 < i ≤ n + 1) ∨ (m + 1 = i ∧ i
+≡⟨ Substitution ⟩
+(m + 1 < i ≤ n + 1) ∨ (m + 1 = i ∧ (z
+≡⟨ “Replacement” , substitution ⟩
+(m + 1 < i ≤ n + 1) ∨ (m + 1 = i ∧ m
+≡⟨ “≤-Isotonicity of +” , Assumption `m
+(m + 1 < i ≤ n + 1) ∨ (m + 1 = i ∧ tr
+≡⟨ “Identity of ∧” ⟩
+m + 1 < i ≤ n + 1 ∨ i = m + 1
+
+
+m+ 1 < i≤ n+ 1 ∨ i= m+ 1
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[23]
+
+1,1
+
+[24]
+
+
+Theorem “Split off ≤-≤ range at bottom”:
+m ≤ n ⇒ (m ≤ i ≤ n ≡ i = m ∨ m + 1 ≤
+Proof:
+Assuming `m ≤ n`:
+m ≤ i ∧ i ≤ n
+=⟨“Definition of ≤”⟩
+(m < i ∨ (i = m)) ∧ (i ≤ n)
+=⟨“Distributivity of ∧ over ∨”⟩
+((m < i) ∧ (i ≤ n)) ∨ ((i = m) ∧ (i ≤ n
+=⟨Substitution⟩
+((m < i) ∧ (i ≤ n)) ∨ ((i = m) ∧ (z ≤ n
+=⟨“Replacement” , substitution⟩
+((m < i) ∧ (i ≤ n)) ∨ ((i = m) ∧ (m ≤ n
+=⟨ assumption `m ≤ n` , “Identity of ∧”⟩
+((m < i) ∧ (i ≤ n)) ∨ (i = m)
+=⟨“Least greater element”⟩
+((m + 1 ≤ i) ∧ (i ≤ n)) ∨ (i = m)
+
+Theorem “Split off ≤-≤ range at bottom”: m ≤ n ⇒ (m ≤ i ≤ n ≡ i = m ∨ m + 1 ≤ i ≤ n)
+— CalcCheck: Correctness of this proof depends on the not-yet-proven theorem “Least greater element”:
+`a < b ≡ a + 1 ≤ b`.
+Proof:
+Assuming `m ≤ n`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `m ≤ i ≤ n ≡ i = m ∨ m + 1 ≤ i ≤ n`:
+m≤ i∧ i≤ n
+= ⟨ “Definition of ≤” ⟩
+— CalcCheck: Found (15.38) “At most”
+— CalcCheck: ─ OK
+(m < i ∨ i = m) ∧ i ≤ n
+= ⟨ “Distributivity of ∧ over ∨” ⟩
+— CalcCheck: Found (3.46) “Distributivity of ∧ over ∨”
+— CalcCheck: ─ OK
+(m < i ∧ i ≤ n) ∨ (i = m ∧ i ≤ n)
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(m < i ∧ i ≤ n) ∨ (i = m ∧ (z ≤ n)[z ≔ i])
+= ⟨ “Replacement”, Substitution ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+(m < i ∧ i ≤ n) ∨ (i = m ∧ m ≤ n)
+= ⟨ Assumption `m ≤ n`, “Identity of ∧” ⟩
+— CalcCheck: Found assumption `m ≤ n`
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+(m < i ∧ i ≤ n) ∨ i = m
+= ⟨ “Least greater element” ⟩
+— CalcCheck: Found “Least greater element”
+— CalcCheck: ─ OK
+(m + 1 ≤ i ∧ i ≤ n) ∨ i = m
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem “Split off ≤-≤ range at bottom”:
+m ≤ n ⇒ (m ≤ i ≤ n ≡ i = m ∨ m < i ≤ n)
+Proof:
+
+Theorem “Split off ≤-≤ range at bottom”: m ≤ n ⇒ (m ≤ i ≤ n ≡ i = m ∨
+m < i ≤ n)
+Proof:
+— CalcCheck: Proof: No proof there!
+
+
+[25]
+
+
+Theorem “Split off ≤-≤ range at top”:
+m ≤ n ⇒ (m ≤ i ≤ n ≡ m ≤ i < n ∨ i = n)
+Proof:
+
+Theorem “Split off ≤-≤ range at top”: m ≤ n ⇒ (m ≤ i ≤ n ≡ m ≤ i < n
+∨ i = n)
+Proof:
+— CalcCheck: Proof: No proof there!
+
+Check and Save
+
+
+Save
+
+

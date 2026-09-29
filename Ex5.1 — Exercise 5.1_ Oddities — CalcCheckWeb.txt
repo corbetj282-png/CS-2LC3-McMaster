@@ -1,0 +1,669 @@
+[1]
+
+Propositional logic following LADM chapter 3 is preloaded here, including the “Replacement” theorems, as presented in Ex2.1–2.4 and Ex3.1.
+Natural number material from Homework 7, Ex. 2.2, and Ex. 2.4 is preloaded here.
+With respect to correctness proofs, the setup here is the same as in Homework 9, to enable experimentation — only the setup from Homework
+3 is really needed here.
+Only one hint item is allowed per hint — but that could be a composed hint item, for example using “with”.
+
+[2]
+
+We define even and odd separately as inductive functions:
+Declaration: even, odd : ℕ → 𝔹
+Axiom “Zero is even”:
+even 0
+╍╍╍ read this also as: `even 0 ≡ true`
+Axiom “Even successor”:
+even (suc n) ≡ ¬ (even n)
+Axiom “Zero is not odd”: ¬ (odd 0)
+╍╍╍ read this also as: `¬ (odd 0) ≡ true`
+Axiom “Odd successor”:
+odd (suc n) ≡ ¬ (odd n)
+Prove the following properties — explore different ways of proving them independently or using earlier properties in the proofs of later ones.
+
+
+[3]
+
+Theorem “Even is not odd”:
+even n ≡ ¬ (odd n)
+Proof:
+By induction on `n : ℕ`:
+Base case:
+even 0
+=⟨“Zero is even”⟩
+true
+=⟨“Zero is not odd”⟩
+¬ (odd 0)
+Induction step:
+even (suc n)
+=⟨“Even successor”⟩
+¬ (even n)
+=⟨Induction hypothesis⟩
+¬ (¬ odd (n))
+=⟨“Odd successor”⟩
+¬ (odd (suc n))
+
+
+Theorem “Even is not odd”: even n ≡ ¬ odd n
+Proof:
+By induction on `n : ℕ`:
+Base case:
+Calculation for expected goal `even 0 ≡ ¬ odd 0`:
+even 0
+= ⟨ “Zero is even” ⟩
+— CalcCheck: Found “Zero is even”
+— CalcCheck: ─ OK
+true
+= ⟨ “Zero is not odd” ⟩
+— CalcCheck: Found “Zero is not odd”
+— CalcCheck: ─ OK
+¬ odd 0
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `even (suc n) ≡ ¬ odd (suc n)`:
+even (suc n)
+= ⟨ “Even successor” ⟩
+— CalcCheck: Found “Even successor”
+— CalcCheck: ─ OK
+¬ even n
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `even n ≡ ¬
+odd n`
+— CalcCheck: ─ OK
+¬ (¬ odd n)
+= ⟨ “Odd successor” ⟩
+— CalcCheck: Found “Odd successor”
+— CalcCheck: ─ OK
+¬ odd (suc n)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[4]
+
+Theorem “Odd is not even”: odd n ≡ ¬ (even n)
+Proof:
+By induction on `n : ℕ`:
+Base case:
+odd 0
+=⟨“Double negation”⟩
+¬ (¬ odd 0)
+=⟨“Zero is not odd”⟩
+¬ (true)
+=⟨“Zero is even”⟩
+¬ (even 0)
+Induction step:
+odd (suc n)
+=⟨“Odd successor”⟩
+¬ (odd (n))
+=⟨Induction hypothesis⟩
+¬ (¬ (even n))
+=⟨“Even successor”⟩
+¬ (even (suc n))
+
+
+Theorem “Odd is not even”: odd n ≡ ¬ even n
+Proof:
+By induction on `n : ℕ`:
+Base case:
+Calculation for expected goal `odd 0 ≡ ¬ even 0`:
+odd 0
+= ⟨ “Double negation” ⟩
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+¬ (¬ odd 0)
+= ⟨ “Zero is not odd” ⟩
+— CalcCheck: Found “Zero is not odd”
+— CalcCheck: ─ OK
+¬ true
+= ⟨ “Zero is even” ⟩
+— CalcCheck: Found “Zero is even”
+— CalcCheck: ─ OK
+¬ even 0
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `odd (suc n) ≡ ¬ even (suc n)`:
+odd (suc n)
+= ⟨ “Odd successor” ⟩
+— CalcCheck: Found “Odd successor”
+— CalcCheck: ─ OK
+¬ odd n
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `odd n ≡ ¬
+even n`
+— CalcCheck: ─ OK
+¬ (¬ even n)
+= ⟨ “Even successor” ⟩
+— CalcCheck: Found “Even successor”
+— CalcCheck: ─ OK
+¬ even (suc n)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[5]
+
+
+Theorem “Even addition”: even (m + n) ≡ (even m ≡ even n)
+Proof:
+By induction on `n : ℕ`:
+Base case:
+Calculation for expected goal `even (m + 0) ≡ (even m ≡ even 0)`:
+even (m + 0)
+= ⟨ “Right-identity of +” ⟩
+— CalcCheck: Found “Right-identity of +”
+— CalcCheck: ─ OK
+even m
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+even m ≡ true
+= ⟨ “Zero is even” ⟩
+— CalcCheck: Found “Zero is even”
+— CalcCheck: ─ OK
+even m ≡ even 0
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `even (m + suc n) ≡ (even m ≡ even
+(suc n))`:
+even (m + suc n)
+= ⟨ “Shifting `suc` over +” ⟩
+— CalcCheck: Found “Shifting `suc` over +”
+— CalcCheck: ─ OK
+even (suc m + n)
+= ⟨ “Definition of + for `suc`” ⟩
+— CalcCheck: Found “Definition of + for `suc`”
+— CalcCheck: ─ OK
+even (suc (m + n))
+= ⟨ “Even successor” ⟩
+— CalcCheck: Found “Even successor”
+— CalcCheck: ─ OK
+¬ even (m + n)
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `even (m + n) ≡
+(even m ≡ even n)`
+— CalcCheck: ─ OK
+¬ (even m ≡ even n)
+= ⟨ “Symmetry of ≡” ⟩
+— CalcCheck: Found (3.2) “Symmetry of ≡”
+
+
+Theorem “Even addition”:
+even (m + n) ≡ even m ≡ even n
+Proof:
+By induction on `n : ℕ`:
+Base case:
+even (m + 0)
+=⟨“Right-identity of +”⟩
+even (m)
+=⟨“Identity of ≡”⟩
+even (m) ≡ true
+=⟨“Zero is even”⟩
+even (m) ≡ even (0)
+Induction step:
+even (m + suc n)
+=⟨“Shifting `suc` over +”⟩
+even (suc (m) + n)
+=⟨“Definition of + for `suc`”⟩
+even (suc (m + n))
+=⟨“Even successor”⟩
+¬ (even (m + n))
+=⟨Induction hypothesis⟩
+¬ (even m ≡ even n)
+=⟨“Symmetry of ≡”⟩
+¬ (even n ≡ even m)
+=⟨“Commutativity of ¬ with ≡”⟩
+(¬ even n ≡ even m)
+=⟨“Even successor”⟩
+(even (suc n) ≡ even m)
+
+
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+¬ (even n ≡ even m)
+= ⟨ “Commutativity of ¬ with ≡” ⟩
+— CalcCheck: Found (3.9) “Commutativity of ¬ with ≡”
+— CalcCheck: ─ OK
+¬ even n ≡ even m
+= ⟨ “Even successor” ⟩
+— CalcCheck: Found “Even successor”
+— CalcCheck: ─ OK
+even (suc n) ≡ even m
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[6]
+
+
+Theorem “Even double”: even (n + n)
+Proof:
+By induction on `n : ℕ`:
+Base case:
+Calculation for expected goal `even (0 + 0)`:
+even (0 + 0)
+= ⟨ “Right-identity of +” ⟩
+— CalcCheck: Found “Right-identity of +”
+— CalcCheck: ─ OK
+even 0
+= ⟨ “Zero is even” ⟩
+— CalcCheck: Found “Zero is even”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `even (suc n + suc n)`:
+even (suc n + suc n)
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+even (suc n + (n + 1))
+= ⟨ “Definition of + for `suc`” ⟩
+— CalcCheck: Found “Definition of + for `suc`”
+— CalcCheck: ─ OK
+even (suc (n + (n + 1)))
+= ⟨ “Even successor” ⟩
+— CalcCheck: Found “Even successor”
+— CalcCheck: ─ OK
+¬ even (n + (n + 1))
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found “Associativity of +”
+— CalcCheck: ─ OK
+¬ even ((n + n) + 1)
+= ⟨ “Even addition” ⟩
+— CalcCheck: Found “Even addition”
+— CalcCheck: ─ OK
+¬ (even (n + n) ≡ even 1)
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `even (n
++ n)`
+— CalcCheck: ─ OK
+
+
+Theorem “Even double”: even (n + n)
+Proof:
+By induction on `n : ℕ`:
+Base case:
+even (0 + 0)
+=⟨“Right-identity of +”⟩
+even (0)
+=⟨“Zero is even”⟩
+true
+Induction step:
+even (suc n + suc n)
+=⟨“Successor”⟩
+even (suc n + (n + 1))
+=⟨“Definition of + for `suc`”⟩
+even (suc (n + (n + 1)))
+=⟨“Even successor”⟩
+¬ even (n + (n + 1))
+=⟨“Associativity of +”⟩
+¬ even ((n + n) + 1)
+=⟨“Even addition”⟩
+¬ (even (n + n) ≡ even 1)
+=⟨Induction hypothesis⟩
+¬ (true ≡ even 1)
+=⟨“Symmetry of ≡”⟩
+¬ (even 1 ≡ true)
+=⟨“Commutativity of ¬ with ≡”⟩
+¬ even 1 ≡ true
+=⟨“Odd is not even”⟩
+odd 1 ≡ true
+=⟨“Reflexivity of ≡”⟩
+true
+
+
+¬ (true ≡ even 1)
+= ⟨ “Symmetry of ≡” ⟩
+— CalcCheck: Found (3.2) “Symmetry of ≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+¬ (even 1 ≡ true)
+= ⟨ “Commutativity of ¬ with ≡” ⟩
+— CalcCheck: Found (3.9) “Commutativity of ¬ with
+≡”
+— CalcCheck: ─ OK
+¬ even 1 ≡ true
+= ⟨ “Odd is not even” ⟩
+— CalcCheck: Found “Odd is not even”
+— CalcCheck: ─ OK
+odd 1 ≡ true
+= ⟨ “Reflexivity of ≡” ⟩
+— CalcCheck: Found (3.5) “Reflexivity of ≡”
+— CalcCheck: Could not justify this step!
+true
+— CalcCheck: 1 out of 10 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof not fully justified:
+— CalcCheck: one inconclusive check
+
+
+[7]
+
+
+As mentoned in Quiz 1:
+For all correctness proofs, proceed again from the bottom up, starting from the postcondition written at the bottom of your calculation, and
+adding lines on top of that until finally arriving at the provided preconditions.
+Note that you are expected to be able to write such proofs without having examples available!
+One last reminder: A calculational correctness argument will contain steps of the following shape (among others), where the command has to be
+surrounded by spaces:
+Pᵢ
+⇒⁅ command ⁆ ⟨ hint ⟩
+Pⱼ
+
+
+[8]
+
+
+Theorem “Qa”: k = m + n ⇒⁅ (q := suc n) ⁆ k = m + n ∧ suc k - q = m
+Proof:
+Calculation for expected goal `k = m + n ⇒⁅ (q := suc n) ⁆ k = m + n ∧ suc k - q = m`:
+k = m+ n
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+k = m + n ∧ true
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+k = m+ n∧ m= m
+= ⟨ “Subtraction after addition” ⟩
+— CalcCheck: Found “Subtraction after addition”
+— CalcCheck: ─ OK
+k = m + n ∧ (m + (n + 1)) - (n + 1) = m
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found “Associativity of +”
+— CalcCheck: ─ OK
+k = m + n ∧ ((m + n) + 1) - (n + 1) = m
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+k = m + n ∧ suc (m + n) - suc n = m
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+k = m + n ∧ (suc z - suc n = m)[z ≔ m + n]
+= ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+k = m + n ∧ (suc z - suc n = m)[z ≔ k]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+k = m + n ∧ suc k - suc n = m
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(k = m + n ∧ suc k - q = m)[q ≔ suc n]
+⇒⁅ q := suc n ⁆ ⟨ “Assignment” ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+k = m + n ∧ suc k - q = m
+
+
+Theorem “Qa”:
+k = m + n
+⇒⁅ q := suc n ⁆
+k = m + n ∧ suc k - q = m
+Proof:
+(k = m + n)
+=⟨“Identity of ∧”⟩
+(k = m + n) ∧ true
+=⟨“Reflexivity of =”⟩
+(k = m + n) ∧ m = m
+=⟨“Subtraction after addition”⟩
+(k = m + n) ∧ (m + (n + 1)) - (n + 1) =
+=⟨“Associativity of +”⟩
+(k = m + n) ∧ (m + n + 1) - (n + 1) = m
+=⟨“Successor”⟩
+(k = m + n) ∧ (suc (m + n)) - suc n = m
+=⟨ Substitution ⟩
+(k = m + n) ∧ (suc z - suc n = m)[z ≔ m
+=⟨ “Replacement” ⟩
+(k = m + n) ∧ (suc z - suc n = m)[z ≔ k
+=⟨ Substitution ⟩
+k = m + n ∧ suc k - suc n = m
+=⟨ Substitution ⟩
+(k = m + n ∧ suc k - q = m) [q ≔ suc n]
+⇒⁅ q := suc n ⁆ ⟨ “Assignment” ⟩
+k = m + n ∧ suc k - q = m
+
+
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[9]
+
+Theorem “Qb”:
+k = suc m
+⇒⁅ n := m ⁆
+k = suc m ∧ even (k + suc n)
+Proof:
+k = suc m
+=⟨ “Identity of ∧”⟩
+(k = suc m) ∧ true
+=⟨“Even double”⟩
+(k = suc m) ∧ even (suc m + suc m)
+=⟨Substitution⟩
+(k = suc m) ∧ (even (z + suc m))[ z ≔ suc
+=⟨“Replacement”⟩
+(k = suc m) ∧ (even (z + suc m))[ z ≔ k ]
+=⟨Substitution⟩
+(k = suc m) ∧ even (k + suc m)
+=⟨Substitution⟩
+(k = suc m ∧ even (k + suc n))[ n ≔ m ]
+⇒⁅ n := m ⁆ ⟨“Assignment”⟩
+k = suc m ∧ even (k + suc n)
+
+
+Theorem “Qb”: k = suc m ⇒⁅ (n := m) ⁆ k = suc m ∧ even (k + suc n)
+— CalcCheck: Correctness of this proof depends on the not-yet-proven theorem “Even double”: `even (n
++ n)`.
+Proof:
+Calculation for expected goal `k = suc m ⇒⁅ (n := m) ⁆ k = suc m ∧ even (k + suc n)`:
+k = suc m
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+k = suc m ∧ true
+= ⟨ “Even double” ⟩
+— CalcCheck: Found “Even double”
+— CalcCheck: ─ OK
+k = suc m ∧ even (suc m + suc m)
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+k = suc m ∧ (even (z + suc m))[z ≔ suc m]
+= ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+k = suc m ∧ (even (z + suc m))[z ≔ k]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+k = suc m ∧ even (k + suc m)
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(k = suc m ∧ even (k + suc n))[n ≔ m]
+⇒⁅ n := m ⁆ ⟨ “Assignment” ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+k = suc m ∧ even (k + suc n)
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[10]
+
+
+Theorem “Qc”: m = suc h ⇒⁅ (n := h) ⁆ m = suc h ∧ (even (m + n) ⇒ n = suc n)
+— CalcCheck: Correctness of this proof depends on the not-yet-proven theorem “Even double”: `even (n
++ n)`.
+Proof:
+Calculation for expected goal `m = suc h ⇒⁅ (n := h) ⁆ m = suc h ∧ (even (m + n) ⇒ n = suc n)`:
+m = suc h
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+m = suc h ∧ true
+= ⟨ “ex falso quodlibet” ⟩
+— CalcCheck: Found (3.75) “ex falso quodlibet”
+— CalcCheck: ─ OK
+m = suc h ∧ (false ⇒ h = suc h)
+= ⟨ “Definition of `false`” ⟩
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: ─ OK
+m = suc h ∧ (¬ true ⇒ h = suc h)
+= ⟨ “Even double” ⟩
+— CalcCheck: Found “Even double”
+— CalcCheck: ─ OK
+m = suc h ∧ (¬ even (h + h) ⇒ h = suc h)
+= ⟨ “Even successor” ⟩
+— CalcCheck: Found “Even successor”
+— CalcCheck: ─ OK
+m = suc h ∧ (even (suc (h + h)) ⇒ h = suc h)
+= ⟨ “Definition of + for `suc`” ⟩
+— CalcCheck: Found “Definition of + for `suc`”
+— CalcCheck: ─ OK
+m = suc h ∧ (even (suc h + h) ⇒ h = suc h)
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+m = suc h ∧ (even (z + h) ⇒ h = suc h)[z ≔ suc h]
+= ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+m = suc h ∧ (even (z + h) ⇒ h = suc h)[z ≔ m]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+m = suc h ∧ (even (m + h) ⇒ h = suc h)
+= ⟨ Substitution ⟩
+
+
+Theorem “Qc”:
+m = suc h
+⇒⁅ n := h ⁆
+m = suc h ∧ (even (m + n) ⇒ n = suc n)
+Proof:
+m = suc h
+= ⟨“Identity of ∧”⟩
+(m = suc h) ∧ true
+= ⟨“ex falso quodlibet”⟩
+(m = suc h) ∧ (false ⇒ h = suc h)
+= ⟨“Definition of `false`”⟩
+(m = suc h) ∧ (¬ true ⇒ h = suc h)
+= ⟨“Even double”⟩
+(m = suc h) ∧ (¬ even ((h + h)) ⇒ h = s
+= ⟨“Even successor”⟩
+(m = suc h) ∧ (even (suc (h + h)) ⇒ h =
+= ⟨“Definition of + for `suc`”⟩
+(m = suc h) ∧ (even (suc h + h) ⇒ h = s
+= ⟨Substitution⟩
+(m = suc h) ∧ (even (z + h) ⇒ h = suc h
+= ⟨“Replacement”⟩
+(m = suc h) ∧ (even (z + h) ⇒ h = suc h
+= ⟨Substitution⟩
+(m = suc h ∧ (even (m + h) ⇒ h = suc h)
+= ⟨Substitution⟩
+(m = suc h ∧ (even (m + n) ⇒ n = suc n)
+⇒⁅ n := h ⁆ ⟨“Assignment”⟩
+m = suc h ∧ (even (m + n) ⇒ n = suc n)
+
+
+— CalcCheck: ─ OK
+(m = suc h ∧ (even (m + n) ⇒ n = suc n))[n ≔ h]
+⇒⁅ n := h ⁆ ⟨ “Assignment” ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+m = suc h ∧ (even (m + n) ⇒ n = suc n)
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[11]
+
+1,1
+
+
+Theorem “Qd”: m = suc (h + h) ⇒⁅ (n := h) ⁆ m = suc (h + n) ∧ (even m ⇒ n = suc n)
+Theorem “Qd”:
+— CalcCheck: Correctness of this proof depends on the not-yet-proven theorem “Even double”: `even (n
+m = suc (h + h)
++
+n)`.
+⇒⁅ n := h ⁆
+Proof:
+m = suc (h + n) ∧ (even m ⇒ n = suc n)
+Calculation for expected goal `m = suc (h + h) ⇒⁅ (n := h) ⁆ m = suc (h + n) ∧ (even m ⇒ n = suc n)`:
+Proof:
+m = suc (h + h)
+m = suc (h + h)
+= ⟨ “Identity of ∧” ⟩
+=⟨“Identity of ∧”⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+m = suc (h + h) ∧ true
+— CalcCheck: ─ OK
+=⟨“ex falso quodlibet”⟩
+m = suc (h + h) ∧ true
+m = suc (h + h) ∧ (false ⇒ h = suc h)
+= ⟨ “ex falso quodlibet” ⟩
+=⟨“Definition of `false`”⟩
+— CalcCheck: Found (3.75) “ex falso quodlibet”
+m = suc (h + h) ∧ (¬ true ⇒ h = suc h)
+— CalcCheck: ─ OK
+m = suc (h + h) ∧ (false ⇒ h = suc h)
+=⟨“Even double”⟩
+= ⟨ “Definition of `false`” ⟩
+m = suc (h + h) ∧ (¬ even (h + h) ⇒ h = s
+— CalcCheck: Found (3.8) “Definition of `false`”
+=⟨“Even successor”⟩
+— CalcCheck: ─ OK
+m = suc (h + h) ∧ (even (suc (h + h)) ⇒ h
+m = suc (h + h) ∧ (¬ true ⇒ h = suc h)
+=⟨Substitution⟩
+= ⟨ “Even double” ⟩
+m = suc (h + h) ∧ (even (z) ⇒ h = suc h)[
+— CalcCheck: Found “Even double”
+=⟨“Replacement”⟩
+— CalcCheck: ─ OK
+m = suc (h + h) ∧ (even z ⇒ h = suc h)[ z
+m = suc (h + h) ∧ (¬ even (h + h) ⇒ h = suc h)
+=⟨Substitution⟩
+= ⟨ “Even successor” ⟩
+m = suc (h + h) ∧ (even m ⇒ h = suc h)
+— CalcCheck: Found “Even successor”
+⇒⁅ n := h ⁆ ⟨“Assignment” with substitution⟩
+— CalcCheck: ─ OK
+m = suc (h + n) ∧ (even m ⇒ n = suc n)
+m = suc (h + h) ∧ (even (suc (h + h)) ⇒ h = suc h)
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+m = suc (h + h) ∧ (even z ⇒ h = suc h)[z ≔ suc (h + h)]
+= ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+m = suc (h + h) ∧ (even z ⇒ h = suc h)[z ≔ m]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+m = suc (h + h) ∧ (even m ⇒ h = suc h)
+⇒⁅ n := h ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+m = suc (h + n) ∧ (even m ⇒ n = suc n)
+— CalcCheck: Calculation matches goal ─ OK
+
+
+Check and Save
+
+
+Save
+
+

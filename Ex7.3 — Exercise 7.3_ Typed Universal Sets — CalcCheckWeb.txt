@@ -1,0 +1,304 @@
+[1]
+
+Preloaded here is the pair and relations material from Ex7.2 and H15.2, and all set theory from Reference Notebook “Set Theory”.
+The latter in particular includes the introduction of the polymorphically-typed universal set constant 𝐔:
+Declaration: 𝐔 : set t
+Axiom
+“Universal set”: 𝐔 = {x ❙ true}
+Theorem “Universal set”: x ∈ 𝐔
+Reference Notebook “Set Theory” then proceeds to also introduce the “typed universe” operator ⌞_⌟, which, given a type t, lets ⌞ t ⌟
+denote the universal set containing all elements of type t:
+Declaration: ⌞_⌟ : Type → set t
+Axiom “Definition of ⌞_⌟”: ⌞ t ⌟ = { x : t • x }
+Theorem “Membership in ⌞_⌟”:
+Theorem “Subset of ⌞_⌟”:
+
+∀ x : t
+∀ S : set t
+
+•
+•
+
+x ∈ ⌞ t ⌟
+S ⊆ ⌞ t ⌟
+
+It is mentioned that “we will write ⌞ t ⌟ for (𝐔 : set t)”; you can also prove this equality:
+
+
+[2]
+
+[3]
+
+
+Theorem “Universal set ⌞_⌟”:
+⌞ t ⌟ = (𝐔 : set t)
+Proof:
+⌞ t ⌟ = (𝐔 : set t)
+=⟨ “Definition of ⌞_⌟” ⟩
+{ x : t • x } = (𝐔 : set t)
+=⟨ “Universal set” ⟩
+{ x : t • x } = { x ❙ true }
+=⟨ “Set extensionality” ⟩
+(∀ x : t • (x ∈ { x : t • x } ≡ x ∈ { x ❙ true }))
+=⟨ “Membership in ⌞_⌟” , “Universal set” ⟩
+(∀ x : t • (true ≡ true))
+=⟨ “Reflexivity of ≡” ⟩
+(∀ x : t • true)
+=⟨ “True ∀ body” ⟩
+true
+
+Theorem “Universal set ⌞_⌟”: ⌞ t ⌟ = 𝐔 : set t
+Proof:
+Calculation for expected goal `⌞ t ⌟ = 𝐔 : set t`:
+⌞ t ⌟ = 𝐔 : set t
+= ⟨ “Definition of ⌞_⌟” ⟩
+— CalcCheck: Found “Definition of ⌞_⌟”
+— CalcCheck: ─ OK
+{ x : t • x } = 𝐔 : set t
+= ⟨ “Universal set” ⟩
+— CalcCheck: Found “Universal set”, “Universal
+set”
+— CalcCheck: ─ OK
+{ x : t • x } = { x ❙ true }
+= ⟨ “Set extensionality” ⟩
+— CalcCheck: Found (11.4) “Set extensionality”
+— CalcCheck: ─ OK
+(∀ x : t • x ∈ { x : t • x } ≡ x ∈ { x ❙ true } )
+= ⟨ “Membership in ⌞_⌟”, “Universal set” ⟩
+— CalcCheck: Found “Membership in ⌞_⌟”
+— CalcCheck: Found “Universal set”, “Universal
+set”
+— CalcCheck: ─ OK
+(∀ x : t • true ≡ true )
+= ⟨ “Reflexivity of ≡” ⟩
+— CalcCheck: Found (3.5) “Reflexivity of ≡”
+— CalcCheck: ─ OK
+(∀ x : t • true )
+= ⟨ “True ∀ body” ⟩
+— CalcCheck: Found (9.8) “True ∀ body”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+For some type constructors 𝐂 : Type → Type, you can now calculate explicit representations for ⌞ 𝐂 t ⌟ typically in terms of ⌞ t ⌟.
+This works for the set type constructor:
+
+
+[4]
+
+[5]
+
+
+Theorem “Universe of sets” “Universe of `set`”:
+⌞ set t ⌟ = ℙ ⌞ t ⌟
+Proof:
+⌞ set t ⌟ = ℙ ⌞ t ⌟
+=⟨ “Definition of ℙ” ⟩
+⌞ set t ⌟ = { x ❙ x ⊆ ⌞ t ⌟ }
+=⟨ “Definition of ⌞_⌟” ⟩
+{ x : set t • x } = { x ❙ x ⊆ ⌞ t ⌟ }
+=⟨ “Set extensionality” ⟩
+∀ x : set t • (x ∈ { x : set t • x } ≡ x ∈ { x ❙ x ⊆ ⌞ t
+=⟨ “Membership in ⌞_⌟”, “Simple membership” ⟩
+∀ x : set t • (true ≡ x ⊆ ⌞ t ⌟)
+=⟨ “Subset of ⌞_⌟” ⟩
+∀ x : set t • (true ≡ true)
+=⟨ “Identity of ≡” ⟩
+∀ x : set t • true
+=⟨ “True ∀ body” ⟩
+true
+
+Theorem “Universe of sets” “Universe of `set`”: ⌞ (set t) ⌟ = ℙ ⌞ t ⌟
+Proof:
+Calculation for expected goal `⌞ (set t) ⌟ = ℙ ⌞ t ⌟`:
+⌞ (set t) ⌟ = ℙ ⌞ t ⌟
+= ⟨ “Definition of ℙ” ⟩
+— CalcCheck: Found (11.72.1) “Definition of ℙ”
+— CalcCheck: ─ OK
+⌞ (set t) ⌟ = { x ❙ x ⊆ ⌞ t ⌟ }
+= ⟨ “Definition of ⌞_⌟” ⟩
+— CalcCheck: Found “Definition of ⌞_⌟”
+— CalcCheck: ─ OK
+{ x : set t • x } = { x ❙ x ⊆ ⌞ t ⌟ }
+= ⟨ “Set extensionality” ⟩
+— CalcCheck: Found (11.4) “Set extensionality”
+— CalcCheck: ─ OK
+(∀ x : set t • x ∈ { x : set t • x } ≡ x ∈ { x ❙ x ⊆ ⌞ t ⌟ } )
+= ⟨ “Membership in ⌞_⌟”, “Simple membership” ⟩
+— CalcCheck: Found “Membership in ⌞_⌟”
+— CalcCheck: Found (11.7b) “Simple membership”, (11.7∀)
+“Simple membership”
+— CalcCheck: ─ OK
+(∀ x : set t • true ≡ x ⊆ ⌞ t ⌟ )
+= ⟨ “Subset of ⌞_⌟” ⟩
+— CalcCheck: Found “Subset of ⌞_⌟”
+— CalcCheck: ─ OK
+(∀ x : set t • true ≡ true )
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+(∀ x : set t • true )
+= ⟨ “True ∀ body” ⟩
+— CalcCheck: Found (9.8) “True ∀ body”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+It also works for the binary pair type constructor:
+
+
+[6]
+
+
+Theorem “Universe of pairs”: ⌞ ❰ t₁, t₂ ❱ ⌟ = ⌞ t₁ ⌟ × ⌞ t₂ ⌟
+Theorem “Universe of pairs”:
+Proof:
+⌞ ❰ t₁, t₂ ❱ ⌟ = ⌞ t₁ ⌟ × ⌞ t₂ ⌟
+Calculation for expected goal `⌞ ❰ t₁, t₂ ❱ ⌟ = ⌞ t₁ ⌟ × ⌞ t₂ ⌟`:
+Proof:
+⌞ ❰ t₁, t₂ ❱ ⌟ = ⌞ t₁ ⌟ × ⌞ t₂ ⌟
+⌞ ❰ t₁, t₂ ❱ ⌟ = ⌞ t₁ ⌟ × ⌞ t₂ ⌟
+= ⟨ “Definition of ⌞_⌟” ⟩
+=⟨ “Definition of ⌞_⌟” ⟩
+— CalcCheck: Found “Definition of ⌞_⌟”
+{ x : ❰ t₁, t₂ ❱ • x } = ⌞ t₁ ⌟ × ⌞ t₂ ⌟
+— CalcCheck: ─ OK
+=⟨ “Set extensionality” ⟩
+{
+x
+: ❰ t₁, t₂ ❱ • x } = ⌞ t₁ ⌟ × ⌞ t₂ ⌟
+∀ x : ❰ t₁, t₂ ❱ • ( x ∈ { x : ❰ t₁, t₂ ❱ • x } ≡ x ∈ (⌞ t₁ ⌟
+= ⟨ “Set extensionality” ⟩
+=⟨ “Definition of ⌞_⌟”, “Membership in ×” ⟩
+— CalcCheck: Found (11.4) “Set extensionality”
+∀ x : ❰ t₁, t₂ ❱ • ( x ∈ ⌞ ❰ t₁, t₂ ❱ ⌟ ≡ (fst x ∈ ⌞ t₁ ⌟ ∧ s
+— CalcCheck: ─ OK
+=⟨ “Membership in ⌞_⌟” ⟩
+(∀ x : ❰ t₁, t₂ ❱ • x ∈ { x : ❰ t₁, t₂ ❱ • x } ≡ x ∈ ⌞ t₁ ⌟ × ⌞ t₂ ⌟ )
+∀ x : ❰ t₁, t₂ ❱ • ( true ≡ (fst x ∈ ⌞ t₁ ⌟ ∧ snd x ∈ ⌞ t₂ ⌟)
+= ⟨ “Definition of ⌞_⌟”, “Membership in ×” ⟩
+=⟨ “Identity of ≡” ⟩
+— CalcCheck: Found “Definition of ⌞_⌟”
+∀ x : ❰ t₁, t₂ ❱ • ( (fst x ∈ ⌞ t₁ ⌟ ∧ snd x ∈ ⌞ t₂ ⌟) )
+— CalcCheck: Found (14.4) “Membership in ×”, “Membership in
+⇒⟨ “Body weakening for ∀” ⟩
+×”
+∀ x : ❰ t₁, t₂ ❱ • ( fst x ∈ ⌞ t₁ ⌟ )
+— CalcCheck: ─ OK
+=⟨ “Membership in ⌞_⌟” ⟩
+(∀ x : ❰ t₁, t₂ ❱ • x ∈ ⌞ ❰ t₁, t₂ ❱ ⌟ ≡ fst x ∈ ⌞ t₁ ⌟ ∧ snd x ∈ ⌞ t₂ ⌟ )
+∀ x : ❰ t₁, t₂ ❱ • ( true )
+= ⟨ “Membership in ⌞_⌟” ⟩
+=⟨ “True ∀ body” ⟩
+— CalcCheck: Found “Membership in ⌞_⌟”
+true
+— CalcCheck: ─ OK
+(∀ x : ❰ t₁, t₂ ❱ • true ≡ fst x ∈ ⌞ t₁ ⌟ ∧ snd x ∈ ⌞ t₂ ⌟ )
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+(∀ x : ❰ t₁, t₂ ❱ • fst x ∈ ⌞ t₁ ⌟ ∧ snd x ∈ ⌞ t₂ ⌟ )
+⇒ ⟨ “Body weakening for ∀” ⟩
+— CalcCheck: Found “Body weakening for ∀”, (9.11) “Body
+weakening for ∀”
+— CalcCheck: ─ OK
+(∀ x : ❰ t₁, t₂ ❱ • fst x ∈ ⌞ t₁ ⌟ )
+= ⟨ “Membership in ⌞_⌟” ⟩
+— CalcCheck: Found “Membership in ⌞_⌟”
+— CalcCheck: ─ OK
+(∀ x : ❰ t₁, t₂ ❱ • true )
+= ⟨ “True ∀ body” ⟩
+— CalcCheck: Found (9.8) “True ∀ body”
+— CalcCheck: ─ OK
+true
+— CalcCheck: Could not match calculation with stated goal.
+
+
+[7]
+
+
+For relation types, H10.3 introduced:
+Declaration: _↔_ : Type → Type → Type
+Axiom “Definition of ↔”: t₁ ↔ t₂ = set ❰ t₁ , t₂ ❱
+Therefore, (t₁ ↔ t₂) is type iff t₁ and t₂ are types.
+
+[8]
+
+[9]
+
+[10]
+
+The lectures also mentioned the operator _⥈_ that takes two sets B and C and calculates the set B ⥈ C of relations from B to C; since this is
+missing in H10.3, we define it here:
+
+Precedence 97 for: _⥈_
+Non-associating: _⥈_
+Declaration: _⥈_ : set t₁ → set t₂ → set (t₁ ↔ t₂)
+Axiom “Definition of ⥈”: B ⥈ C = ℙ (B × C)
+
+Precedence 97 for: _⥈_
+Non-associating: _⥈_
+Declaration: _⥈_ : set t₁ → (set t₂ → set (t₁ ↔ t₂))
+— CalcCheck: Operator _⥈_: Non-associating; precedence
+97
+Axiom “Definition of ⥈”: B ⥈ C = ℙ (B × C)
+
+A proof for “Universe of relations” was shown in the Oct. 23 lecture:
+
+
+[11]
+
+1,1
+
+
+Theorem “Universe of relations”:
+⌞ t₁ ↔ t₂ ⌟ = ⌞ t₁ ⌟ ⥈ ⌞ t₂ ⌟
+Proof:
+⌞ t₁ ↔ t₂ ⌟ = ⌞ t₁ ⌟ ⥈ ⌞ t₂ ⌟
+=⟨ “Definition of ⥈”⟩
+⌞ t₁ ↔ t₂ ⌟ = ℙ (⌞ t₁ ⌟ × ⌞ t₂ ⌟)
+=⟨ “Definition of ↔”⟩
+⌞ set ❰ t₁ , t₂ ❱ ⌟ = ℙ (⌞ t₁ ⌟ × ⌞ t₂ ⌟)
+=⟨ “Universe of sets”⟩
+ℙ ⌞ ❰ t₁ , t₂ ❱ ⌟ = ℙ (⌞ t₁ ⌟ × ⌞ t₂ ⌟)
+=⟨ “Universe of pairs”⟩
+ℙ ⌞ ❰ t₁ , t₂ ❱ ⌟ = ℙ ⌞ ❰ t₁ , t₂ ❱ ⌟
+=⟨ “Reflexivity of =”⟩
+true
+
+Theorem “Universe of relations”: ⌞ (t₁ ↔ t₂) ⌟ = ⌞ t₁ ⌟ ⥈ ⌞ t₂ ⌟
+— CalcCheck: Correctness of this proof depends on the not-yet-proven theorem “Universe of
+pairs”: `⌞ ❰ t₁, t₂ ❱ ⌟ = ⌞ t₁ ⌟ × ⌞ t₂ ⌟`.
+Proof:
+Calculation for expected goal `⌞ (t₁ ↔ t₂) ⌟ = ⌞ t₁ ⌟ ⥈ ⌞ t₂ ⌟`:
+⌞ (t₁ ↔ t₂) ⌟ = ⌞ t₁ ⌟ ⥈ ⌞ t₂ ⌟
+= ⟨ “Definition of ⥈” ⟩
+— CalcCheck: Found “Definition of ⥈”
+— CalcCheck: ─ OK
+⌞ (t₁ ↔ t₂) ⌟ = ℙ (⌞ t₁ ⌟ × ⌞ t₂ ⌟)
+= ⟨ “Definition of ↔” ⟩
+— CalcCheck: Found “Definition of ↔”
+— CalcCheck: ─ OK
+⌞ (set ❰ t₁, t₂ ❱) ⌟ = ℙ (⌞ t₁ ⌟ × ⌞ t₂ ⌟)
+= ⟨ “Universe of sets” ⟩
+— CalcCheck: Found “Universe of sets”
+— CalcCheck: ─ OK
+ℙ ⌞ ❰ t₁, t₂ ❱ ⌟ = ℙ (⌞ t₁ ⌟ × ⌞ t₂ ⌟)
+= ⟨ “Universe of pairs” ⟩
+— CalcCheck: Found “Universe of pairs”
+— CalcCheck: ─ OK
+ℙ ⌞ ❰ t₁, t₂ ❱ ⌟ = ℙ ⌞ ❰ t₁, t₂ ❱ ⌟
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+true
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

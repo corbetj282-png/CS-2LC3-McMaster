@@ -1,0 +1,371 @@
+[1]
+
+This exercise builds on the material in Homework 2, and assumes that you have worked through that and
+also started familiarising yourself with the pages “Getting Started with CalcCheckWeb”. and “Getting
+Started with the CalcCheck Language”.
+The set-up here is the same as in Homework 2, and the precedences and “associates to the left”
+conventions from there are in force here as well.
+
+[2]
+
+According to the rules presented in Homework 2, which of the following are subexpressions of the
+following expression?
+3 · x - y · 4 + 5 · x · z
+a.
+b.
+c.
+d.
+e.
+f.
+g.
+h.
+i.
+
+[3]
+
+3 · x
+3 · x - y
+x - y
+y · 4
+3 · x - y · 4
+4 + 5
+5 · x
+x · y
+y · 4 + 5 · x · z
+
+For clarifying terminology, here is an example calculation step:
+x + 2
+=⟨ “Symmetry of +” ⟩
+2 + x
+The part between the hint brackets “⟨” and “⟩” is called the hint for this calculation step, and it serves to
+justify that the expression before (x + 2) is related via the relation denoted by the calculation operator
+(=) with the expression after (2 + x). So, altogether, in this case the hint “Symmetry of +” is expected to
+justify the proposition x + 2 = 2 + x (and it does).
+In general, a hint may contain several hint items. For now, only one hint item will be allowed per hint, and
+the only kinds of hint you can use here are:
+
+
+Theorem references: These can be
+theorem names in pretty double quotes, such as “Unary minus”,
+theorem numbers, which are always enclosed in parentheses, such as (15.5b)
+combinations of both, which narrow down the selection of theorems to their intersection; this
+is currently mostly useful to disambiguate while still documenting the proof via the theorem
+name, as you can see below in the first hint:
+“Distributivity of · over -” (15.29b)
+In that particular case, omitting the number would still be accepted, but the system then may
+explore the unused (15.29a) before it is successful with (15.29b).
+Basic facts such as: Fact `5 · 6 = 30` . The expression between the backticks here has to
+consist entirely of literals and operators for which built-in evaluation is enabled (which it is here for
+the operators you have). In particular, expressions containing variables are not accepted for Fact;
+writing Fact `x · 0 = 0` will only get you an unjustified step.
+The keyword hint item Substitution, which performs substitutions, for example:
+(x + 2)[x ≔ 1]
+=⟨ Substitution ⟩
+1 + 2
+
+[4]
+
+Can you prove that addition does not distribute over multiplication?
+That is, can you find a substitution that proves that the equation
+a + (b · c) = (a + b) · (a + c)
+is not valid? Replace the question marks in the substitution with appropriate integers and simplify, turning
+the “=⟨ ? ⟩” into one or more good calculation steps. (There is a similar calculation in Homework 2.)
+
+
+[5]
+
+[6]
+
+
+Calculation:
+(a + (b · c) = (a + b) · (a + c))[a, b, c ≔
+=⟨ Substitution ⟩
+(1 + (2 · 3) = (1 + 2) · (1 + 3))
+=⟨Fact `2 · 3 = 6`⟩
+(1 + 6) = (1 + 2) · (1 + 3)
+=⟨Fact `(1 + 2) · (1 + 3) = 12 `⟩
+(1 + 6) = 12
+=⟨Fact `1 + 6 = 7`⟩
+7 = 12
+=⟨Fact `(7 = 12) = false`⟩
+false
+
+1
+
+Calculation:
+(a + b · c = (a + b) · (a + c))[a, b, c ≔ 1,
+2, 3]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+1 + 2 · 3 = (1 + 2) · (1 + 3)
+= ⟨ Fact `2 · 3 = 6` ⟩
+— CalcCheck: ─ OK
+1 + 6 = (1 + 2) · (1 + 3)
+= ⟨ Fact `(1 + 2) · (1 + 3) = 12` ⟩
+— CalcCheck: ─ OK
+1 + 6 = 12
+= ⟨ Fact `1 + 6 = 7` ⟩
+— CalcCheck: ─ OK
+7 = 12
+= ⟨ Fact `(7 = 12) = false` ⟩
+— CalcCheck: ─ OK
+false
+— CalcCheck: All steps OK
+
+Here is another fill-in-the-blanks calculation that can be done with the tools presented in Homework 2:
+
+
+[7]
+
+[8]
+
+
+Calculation:
+(6 + a) · (7 - a)
+=⟨ “Distributivity of · over -” ⟩
+(6 + a) · 7 - (6 + a) · a
+=⟨ “Distributivity of · over +” ⟩
+6 · 7 + a · 7 - (6 · a + a · a)
+=⟨ “Subtraction of addition” ⟩
+(6 · 7 + a · 7 - 6 · a) - a · a
+=⟨ “Subtraction” ⟩
+(6 · 7 + (a · 7 - 6 · a)) - a · a
+=⟨ “Distributivity of · over -” ⟩
+(6 · 7 + (7 - 6) · a) - a · a
+=⟨ Fact `7 - 6 = 1` ⟩
+(6 · 7 + 1 · a) - a · a
+=⟨ “Multiplicative identity” ⟩
+6 · 7 + a - a · a
+=⟨ Fact `6 · 7 = 42` ⟩
+42 + a - a · a
+
+Calculation:
+(6 + a) · (7 - a)
+= ⟨ “Distributivity of · over -” ⟩
+— CalcCheck: Found (15.29) “Distributivity of
+· over -”
+— CalcCheck: ─ OK
+(6 + a) · 7 - (6 + a) · a
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of ·
+over +”
+— CalcCheck: ─ OK
+(6 · 7 + a · 7) - (6 · a + a · a)
+= ⟨ “Subtraction of addition” ⟩
+— CalcCheck: Found (15.25b) “Subtraction of
+addition”
+— CalcCheck: ─ OK
+((6 · 7 + a · 7) - 6 · a) - a · a
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+(6 · 7 + (a · 7 - 6 · a)) - a · a
+= ⟨ “Distributivity of · over -” ⟩
+— CalcCheck: Found (15.29) “Distributivity of
+· over -”
+— CalcCheck: ─ OK
+(6 · 7 + (7 - 6) · a) - a · a
+= ⟨ Fact `7 - 6 = 1` ⟩
+— CalcCheck: ─ OK
+(6 · 7 + 1 · a) - a · a
+= ⟨ “Multiplicative identity” ⟩
+— CalcCheck: Found (15.4) “Multiplicative
+identity”
+— CalcCheck: ─ OK
+(6 · 7 + a) - a · a
+= ⟨ Fact `6 · 7 = 42` ⟩
+— CalcCheck: ─ OK
+(42 + a) - a · a
+— CalcCheck: All steps OK
+
+Try a few more simplifications yourself:
+
+
+[9]
+
+
+Calculation:
+(5 - a) · (4 + a)
+=⟨ “Distributivity of · over +” ⟩
+(5 - a) · 4 + (5 - a) · a
+=⟨ “Distributivity of · over -” ⟩
+((5 · 4) - (4 · a)) + ((5 · a) - (a · a))
+=⟨ Fact `5 · 4 = 20` ⟩
+20 - ( 4 · a ) + ((5 · a) - (a · a))
+=⟨ “Subtraction” ⟩
+20 + (5 · a) - (4 · a) - (a · a)
+=⟨ “Mutual associativity of + and -” ⟩
+20 + ((5 · a) - (4 · a)) - (a · a)
+=⟨ “Distributivity of · over -” ⟩
+20 + ((5 - 4) · a) - (a · a)
+=⟨ Fact `5 - 4 = 1` ⟩
+20 + (a · (1)) - (a · a)
+=⟨“Multiplicative identity”⟩
+20 + a - (a · a)
+
+
+Calculation:
+(5 - a) · (4 + a)
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of ·
+over +”
+— CalcCheck: ─ OK
+(5 - a) · 4 + (5 - a) · a
+= ⟨ “Distributivity of · over -” ⟩
+— CalcCheck: Found (15.29) “Distributivity of ·
+over -”
+— CalcCheck: ─ OK
+(5 · 4 - 4 · a) + (5 · a - a · a)
+= ⟨ Fact `5 · 4 = 20` ⟩
+— CalcCheck: ─ OK
+(20 - 4 · a) + (5 · a - a · a)
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+((20 + 5 · a) - 4 · a) - a · a
+= ⟨ “Mutual associativity of + and -” ⟩
+— CalcCheck: Found (15.25a) “Mutual
+associativity of + and -”
+— CalcCheck: ─ OK
+(20 + (5 · a - 4 · a)) - a · a
+= ⟨ “Distributivity of · over -” ⟩
+— CalcCheck: Found (15.29) “Distributivity of ·
+over -”
+— CalcCheck: ─ OK
+(20 + (5 - 4) · a) - a · a
+= ⟨ Fact `5 - 4 = 1` ⟩
+— CalcCheck: ─ OK
+(20 + a · 1) - a · a
+= ⟨ “Multiplicative identity” ⟩
+— CalcCheck: Found (15.4) “Multiplicative
+identity”
+— CalcCheck: ─ OK
+(20 + a) - a · a
+— CalcCheck: All steps OK
+
+
+[10]
+
+
+Calculation:
+(x + 1) · (x - 1)
+= ⟨ “Subtraction” ⟩
+(x + 1) · (x + (- 1))
+= ⟨ “Distributivity of · over +” ⟩
+(x + 1) · x + (x + 1) · (- 1)
+= ⟨ “Distributivity of · over +” ⟩
+(x · x) + ( 1 · x) + (- 1) · (x) + ( (- 1) ·
+= ⟨ “Multiplicative identity” ⟩
+(x · x) + (x) + (- 1) · (x) + (- 1)
+= ⟨ “Subtraction” ⟩
+(x · x + x) + (- 1 · x) - 1
+= ⟨ “Negation as multiplication” ⟩
+(x · x + x) + (- x) - 1
+= ⟨ “Associativity of +” ⟩
+(x · x + x + (- x)) - 1
+= ⟨ “Subtraction” ⟩
+(x · x + x - x) - 1
+
+
+Calculation:
+(x + 1) · (x - 1)
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+(x + 1) · (x + - 1)
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of ·
+over +”
+— CalcCheck: ─ OK
+(x + 1) · x + (x + 1) · - 1
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of ·
+over +”
+— CalcCheck: ─ OK
+((x · x + 1 · x) + - 1 · x) + - 1 · 1
+= ⟨ “Multiplicative identity” ⟩
+— CalcCheck: Found (15.4) “Multiplicative
+identity”
+— CalcCheck: ─ OK
+((x · x + x) + - 1 · x) + - 1
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+((x · x + x) + - 1 · x) - 1
+= ⟨ “Negation as multiplication” ⟩
+— CalcCheck: Found (15.20) “Negation as
+multiplication”
+— CalcCheck: ─ OK
+((x · x + x) + - x) - 1
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found (15.1a) “Associativity of
++”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+((x · x + x) + - x) - 1
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+((x · x + x) - x) - 1
+— CalcCheck: All steps OK
+
+
+[11]
+
+1,1
+
+
+Calculation:
+(2 · x + 5) · 3 - 4 · x
+= ⟨ “Subtraction” ⟩
+( (2 · x + 5) · 3 ) + (- (4 · x))
+= ⟨ “Distributivity of · over +” ⟩
+((2 · 3 · x) + (5 · 3) + (- (4 · x)))
+= ⟨ Fact `2 · 3 = 6` ⟩
+((6 · x) + (5 · 3) + (- ( 4 · x )))
+= ⟨ Fact `5 · 3 = 15` ⟩
+((6 · x) + (15) + (- ( 4 · x )))
+= ⟨ “Subtraction” ⟩
+( (6 · x) - ( 4 · x) + 15)
+= ⟨“Distributivity of · over -”⟩
+( x · ( 6 - 4) + 15)
+= ⟨ Fact `6 - 4 = 2` ⟩
+( x · 2 + 15)
+
+Calculation:
+(2 · x + 5) · 3 - 4 · x
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+(2 · x + 5) · 3 + - (4 · x)
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of ·
+over +”
+— CalcCheck: ─ OK
+((2 · 3) · x + 5 · 3) + - (4 · x)
+= ⟨ Fact `2 · 3 = 6` ⟩
+— CalcCheck: ─ OK
+(6 · x + 5 · 3) + - (4 · x)
+= ⟨ Fact `5 · 3 = 15` ⟩
+— CalcCheck: ─ OK
+(6 · x + 15) + - (4 · x)
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+(6 · x - 4 · x) + 15
+= ⟨ “Distributivity of · over -” ⟩
+— CalcCheck: Found (15.29) “Distributivity of
+· over -”
+— CalcCheck: ─ OK
+x · (6 - 4) + 15
+= ⟨ Fact `6 - 4 = 2` ⟩
+— CalcCheck: ─ OK
+x · 2 + 15
+— CalcCheck: All steps OK
+
+Check and Save
+
+
+Save
+
+

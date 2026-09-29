@@ -1,0 +1,608 @@
+Composition, and Identity
+
+[1]
+
+This notebook is the first is a sequence on abstract relation algebra, which is concerned with reasoning about relations without descending to
+the level of the related elements.
+Therefore, the relationship notation _⦗_⦘_ is not available here, and it the point of view of concrete relations, that is, of
+“a binary relation is a set of pairs”,
+is not relevant here.
+That said, concrete relations do form a model of the theory developed under the label “abstract relation algebra”. In other words, concrete
+relations, implemented as sets of pairs, and their operations satisfy the axioms presented here in abstract relation algebra, and therefore all the
+theorems developed in the abstract setting are valid for concrete relations as well.
+
+[2]
+
+This exercise contains a selection of the material in Reference Notebook “Abstract RA: Starting from Inclusion and Composition”.
+The setup here includes, beyond propositional logic and universal quantification, already the following material, appropriately activated for
+CalcCheck features:
+Axiom “Reflexivity of ⊆”:
+Axiom “Transitivity of ⊆”:
+Axiom “Antisymmetry of ⊆”:
+Theorem “Transitivity of ⊆”:
+
+
+Q ⊆ R
+R ⊆ S
+Q ⊆ R
+
+R ⊆ R
+⇒ R ⊆ S ⇒ Q ⊆ S
+⇒ S ⊆ R ⇒ R = S
+∧ R ⊆ S ⇒ Q ⊆ S
+
+
+Lemma “Flipped Transitivity of ⊆”:
+Axiom “Opposite inclusion”:
+Axiom “Associativity of ⨾”:
+
+R ⊆ S
+
+Q ⊆ R ⇒ Q ⊆ S
+R ⊇ S ≡ S ⊆ R
+(Q ⨾ R) ⨾ S = Q ⨾ (R ⨾ S)
+⇒
+
+Prove all lemmas and theorems below:
+
+[3]
+
+Lemma “Reflexivity of ⊆”: R = S
+Proof:
+Assuming `R = S`:
+R ⊆ S
+=⟨ assumption `R = S`⟩
+S ⊆ S
+=⟨ “Reflexivity of ⊆”⟩
+true
+
+
+⇒
+
+R ⊆ S
+
+Lemma “Reflexivity of ⊆”: R = S ⇒ R ⊆ S
+Proof:
+Assuming `R = S`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `R ⊆ S`:
+R⊆S
+= ⟨ Assumption `R = S` ⟩
+— CalcCheck: Found assumption `R = S`
+— CalcCheck: ─ OK
+S⊆S
+= ⟨ “Reflexivity of ⊆” ⟩
+— CalcCheck: Found “Reflexivity of ⊆”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[4]
+
+
+Theorem “Mutual inclusion”: R = S ≡ R ⊆ S ∧ S ⊆ R
+Proof:
+Using “Mutual implication”:
+Subproof for `R = S ⇒ R ⊆ S ∧ S ⊆ R`:
+Assuming `R = S`:
+R ⊆ S ∧ S ⊆ R
+=⟨ assumption `R = S` , “Idempotency of ∧”⟩
+S ⊆ S
+=⟨ “Reflexivity of ⊆” ⟩
+true
+Subproof for `R ⊆ S ∧ S ⊆ R ⇒ R = S`:
+By “Antisymmetry of ⊆” , “Shunting”
+
+
+Theorem “Mutual inclusion”: R = S ≡ R ⊆ S ∧ S ⊆ R
+Proof:
+Using “Mutual implication”:
+— CalcCheck: Found (3.80) “Mutual implication”
+Subproof for `R = S ⇒ R ⊆ S ∧ S ⊆ R`:
+Assuming `R = S`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `R ⊆ S ∧ S ⊆ R`:
+R⊆S∧S⊆R
+= ⟨ Assumption `R = S`, “Idempotency of ∧” ⟩
+— CalcCheck: Found assumption `R = S`
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+S⊆S
+= ⟨ “Reflexivity of ⊆” ⟩
+— CalcCheck: Found “Reflexivity of ⊆”, “Reflexivity
+of ⊆”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `R ⊆ S ∧ S ⊆ R ⇒ R = S`:
+By “Antisymmetry of ⊆”, “Shunting”
+— CalcCheck: Found “Antisymmetry of ⊆”
+— CalcCheck: Found (3.65) “Shunting”
+
+
+[5]
+
+
+Theorem “Indirect Relation Equality” “Indirect Relation Equality from below”: Q
+= R ≡ (∀ S • S ⊆ Q ≡ S ⊆ R )
+— CalcCheck: Proviso: ¬occurs(`S`, `Q, R`)
+Proof:
+Using “Mutual implication”:
+— CalcCheck: Found (3.80) “Mutual implication”
+Subproof for `Q = R ⇒ (∀ S • S ⊆ Q ≡ S ⊆ R )`:
+Assuming `Q = R`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `(∀ S • S ⊆ Q ≡ S ⊆ R )`:
+(∀ S • S ⊆ Q ≡ S ⊆ R )
+= ⟨ Assumption `Q = R` ⟩
+— CalcCheck: Found assumption `Q = R`
+— CalcCheck: ─ OK
+(∀ S • S ⊆ R ≡ S ⊆ R )
+= ⟨ “Reflexivity of ≡” ⟩
+— CalcCheck: Found (3.5) “Reflexivity of ≡”
+— CalcCheck: ─ OK
+(∀ S • true )
+= ⟨ “True ∀ body” ⟩
+— CalcCheck: Found (9.8) “True ∀ body”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `(∀ S • S ⊆ Q ≡ S ⊆ R ) ⇒ Q = R`:
+(∀ S • S ⊆ Q ≡ S ⊆ R )
+= ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+(∀ S • S ⊆ Q ≡ S ⊆ R ) ∧ (∀ S • S ⊆ Q ≡ S ⊆ R )
+⇒ ⟨ “Monotonicity of ∧” with “Instantiation” ⟩
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Left-monotonicity of ∧”
+— CalcCheck: Found (9.13) “Instantiation”, (9.13.2) “Instantiation”,
+(9.13.1) “Instantiation”
+— CalcCheck: ─ OK
+(S ⊆ Q ≡ S ⊆ R)[S ≔ Q] ∧ (S ⊆ Q ≡ S ⊆ R)[S ≔ R]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(Q ⊆ Q ≡ Q ⊆ R) ∧ (R ⊆ Q ≡ R ⊆ R)
+= ⟨ “Reflexivity of ⊆” ⟩
+— CalcCheck: Found “Reflexivity of ⊆”, “Reflexivity of ⊆”
+
+
+Theorem “Indirect Relation Equality”
+“Indirect Relation Equality from below”:
+Q = R ≡ (∀ S • S ⊆ Q ≡ S ⊆ R)
+Proof:
+Using “Mutual implication”:
+Subproof for `Q = R ⇒ (∀ S • S ⊆ Q ≡ S ⊆ R)`:
+Assuming `Q = R`:
+(∀ S • S ⊆ Q ≡ S ⊆ R)
+=⟨ Assumption `Q = R` ⟩
+(∀ S • S ⊆ R ≡ S ⊆ R)
+=⟨ “Reflexivity of ≡” ⟩
+(∀ S • true)
+=⟨ “True ∀ body” ⟩
+true
+
+— CalcCheck: ─ OK
+(true ≡ Q ⊆ R) ∧ (R ⊆ Q ≡ true)
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+Q ⊆R∧R⊆Q
+= ⟨ “Mutual inclusion” ⟩
+— CalcCheck: Found “Mutual inclusion”
+— CalcCheck: ─ OK
+Q=R
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Subproof for `(∀ S • S ⊆ Q ≡ S ⊆ R) ⇒ Q = R`:
+(∀ S • S ⊆ Q ≡ S ⊆ R)
+=⟨ “Idempotency of ∧” ⟩
+(∀ S • S ⊆ Q ≡ S ⊆ R) ∧ (∀ S • S ⊆ Q ≡
+⇒⟨ “Monotonicity of ∧” with “Instantiation” ⟩
+(S ⊆ Q ≡ S ⊆ R) [S ≔ Q] ∧ (S ⊆ Q ≡ S ⊆
+=⟨ Substitution ⟩
+(Q ⊆ Q ≡ Q ⊆ R) ∧ (R ⊆ Q ≡ R ⊆ R)
+=⟨ “Reflexivity of ⊆” ⟩
+(true ≡ Q ⊆ R) ∧ (R ⊆ Q ≡ true)
+=⟨ “Identity of ≡” ⟩
+(Q ⊆ R) ∧ (R ⊆ Q)
+=⟨ “Mutual inclusion” ⟩
+Q = R
+
+[6]
+
+Composition
+
+
+[7]
+
+
+Note that composition ⨾ has higher precedence than union ∪ and intersection ∩. We have
+Axiom “Associativity of ⨾”: (Q ⨾ R) ⨾ S = Q ⨾ (R ⨾ S)
+and this is activated.
+
+[8]
+
+Monotonicity of composition is activated as well, and explicitly available in the following shapes:
+Axiom “Monotonicity of ⨾”: P ⊆ Q ⇒ R ⊆ S ⇒ P ⨾ R ⊆ Q ⨾ S
+Theorem “Monotonicity of ⨾”: Q ⊆ R ⇒ Q ⨾ S ⊆ R ⨾ S
+Theorem “Monotonicity of ⨾”: R ⊆ S ⇒ Q ⨾ R ⊆ Q ⨾ S
+
+[9]
+
+[10]
+
+In our treatment of abstract relation algebra, we treat the constant “𝕀” for identity relations as polymorphic, so that for every type A it can be
+used at type A ↔ A, in the same way as we did in H14, Ex8, Ref8.1, etc. for concrete relations.
+
+Declaration: 𝕀 : A ↔ A
+Axiom “Identity of ⨾”: 𝕀 ⨾ R = R
+Axiom “Identity of ⨾”: R ⨾ 𝕀 = R
+
+Declaration: 𝕀 : A ↔ A
+Axiom “Identity of ⨾”: 𝕀 ⨾ R = R
+Axiom “Identity of ⨾”: R ⨾ 𝕀 = R
+
+[11]
+
+Homogeneous Relation Properties Involving only ⊆, ⨾, and 𝕀.
+[12]
+
+[13]
+
+Declaration: reflexive, coreflexive : A ↔ A
+Declaration: transitive, idempotent : A ↔ A
+Declaration: preorder : A ↔ A → 𝔹
+
+→
+→
+
+𝔹
+𝔹
+
+Declaration: reflexive , coreflexive : A ↔ A → 𝔹
+Declaration: transitive , idempotent : A ↔ A → 𝔹
+Declaration: preorder : A ↔ A → 𝔹
+
+Coreflexive relations may also be called “subidentities”.
+
+
+[14]
+
+[15]
+
+
+Axiom “Definition of reflexivity”:
+Axiom “Definition of coreflexivity”:
+Axiom “Definition of transitivity”:
+Axiom “Definition of idempotency”:
+Axiom “Definition of preorder”:
+
+reflexive R
+coreflexive R
+transitive R
+idempotent R
+preorder R
+
+≡
+≡
+≡
+≡
+≡
+
+Theorem “Reflexivity of 𝕀”: reflexive 𝕀
+Proof:
+reflexive 𝕀
+=⟨ “Definition of reflexivity” , “Reflexivity of ⊆” ⟩
+true
+
+
+𝕀 ⊆ R
+R ⊆ 𝕀
+R ⨾ R ⊆ R
+R ⨾ R = R
+reflexive R
+∧ transitive R
+
+Axiom “Definition of reflexivity”: reflexive R ≡ 𝕀 ⊆ R
+Axiom “Definition of coreflexivity”: coreflexive R ≡ R ⊆ 𝕀
+Axiom “Definition of transitivity”: transitive R ≡ R ⨾ R ⊆ R
+Axiom “Definition of idempotency”: idempotent R ≡ R ⨾ R = R
+Axiom “Definition of preorder”: preorder R ≡ reflexive R ∧
+transitive R
+
+Theorem “Reflexivity of 𝕀”: reflexive 𝕀
+Proof:
+Calculation for expected goal `reflexive 𝕀`:
+reflexive 𝕀
+= ⟨ “Definition of reflexivity”, “Reflexivity of ⊆” ⟩
+— CalcCheck: Found “Definition of reflexivity”
+— CalcCheck: Found “Reflexivity of ⊆”, “Reflexivity of
+⊆”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[16]
+
+
+Theorem “Reflexivity of ⨾”:
+reflexive R ⇒ reflexive S ⇒ reflexive (R ⨾ S)
+Proof:
+Assuming `reflexive R` and using with “Definition of reflexivity”:
+Assuming `reflexive S` and using with “Definition of reflexivity”
+reflexive (R ⨾ S)
+=⟨ “Definition of reflexivity” ⟩
+𝕀 ⊆ (R ⨾ S)
+=⟨“Identity of ⨾”⟩
+𝕀 ⨾ 𝕀 ⊆ (R ⨾ S)
+=⟨“Left-identity of ⇒”⟩
+true ⇒ true ⇒ 𝕀 ⨾ 𝕀 ⊆ (R ⨾ S)
+=⟨ assumption `reflexive R` , assumption `reflexive S`⟩
+𝕀 ⊆ R ⇒ 𝕀 ⊆ S ⇒ 𝕀 ⨾ 𝕀 ⊆ (R ⨾ S)
+=⟨ “Monotonicity of ⨾”⟩
+true
+
+
+Theorem “Reflexivity of ⨾”: reflexive R ⇒ (reflexive S ⇒ reflexive
+(R ⨾ S))
+Proof:
+Assuming `reflexive R` and using with “Definition of reflexivity”
+— CalcCheck: Found “Definition of reflexivity”:
+— CalcCheck: Assumption matches goal
+Assuming `reflexive S` and using with “Definition of reflexivity”
+— CalcCheck: Found “Definition of reflexivity”:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `reflexive (R ⨾ S)`:
+reflexive (R ⨾ S)
+= ⟨ “Definition of reflexivity” ⟩
+— CalcCheck: Found “Definition of reflexivity”
+— CalcCheck: ─ OK
+𝕀⊆R⨾S
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+𝕀⨾𝕀⊆R⨾S
+= ⟨ “Left-identity of ⇒” ⟩
+— CalcCheck: Found (3.73) “Left-identity of ⇒”
+— CalcCheck: ─ OK
+true ⇒ (true ⇒ 𝕀 ⨾ 𝕀 ⊆ R ⨾ S)
+= ⟨ Assumption `reflexive R`, Assumption `reflexive S` ⟩
+— CalcCheck: Found assumption `reflexive R`
+— CalcCheck: Found assumption `reflexive S`
+— CalcCheck: ─ OK
+𝕀 ⊆ R ⇒ (𝕀 ⊆ S ⇒ 𝕀 ⨾ 𝕀 ⊆ R ⨾ S)
+= ⟨ “Monotonicity of ⨾” ⟩
+— CalcCheck: Found “Monotonicity of ⨾”,
+“Monotonicity of ⨾”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[17]
+
+
+Theorem “Coreflexivity of ⨾”:
+coreflexive R ⇒ coreflexive S ⇒ coreflexive (R ⨾ S)
+Proof:
+Assuming `coreflexive R` and using with “Definition of coreflexi
+Assuming `coreflexive S` and using with “Definition of corefle
+coreflexive (R ⨾ S)
+=⟨ “Definition of coreflexivity” ⟩
+(R ⨾ S) ⊆ 𝕀
+=⟨ “Identity of ⨾” ⟩
+R ⨾ S ⊆ 𝕀 ⨾ 𝕀
+=⟨ “Left-identity of ⇒” ⟩
+true ⇒ true ⇒ R ⨾ S ⊆ 𝕀 ⨾ 𝕀
+=⟨ Assumption `coreflexive R`, Assumption `coreflexive S`⟩
+R ⊆ 𝕀 ⇒ S ⊆ 𝕀 ⇒ R ⨾ S ⊆ 𝕀 ⨾ 𝕀
+=⟨ “Monotonicity of ⨾” ⟩
+true
+
+Theorem “Coreflexivity of ⨾”: coreflexive R ⇒ (coreflexive S ⇒
+coreflexive (R ⨾ S))
+Proof:
+Assuming `coreflexive R` and using with “Definition of coreflexivity”
+— CalcCheck: Found “Definition of coreflexivity”:
+— CalcCheck: Assumption matches goal
+Assuming `coreflexive S` and using with “Definition of coreflexivity”
+— CalcCheck: Found “Definition of coreflexivity”:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `coreflexive (R ⨾ S)`:
+coreflexive (R ⨾ S)
+= ⟨ “Definition of coreflexivity” ⟩
+— CalcCheck: Found “Definition of coreflexivity”
+— CalcCheck: ─ OK
+R⨾S⊆𝕀
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+R⨾S⊆𝕀⨾𝕀
+= ⟨ “Left-identity of ⇒” ⟩
+— CalcCheck: Found (3.73) “Left-identity of ⇒”
+— CalcCheck: ─ OK
+true ⇒ (true ⇒ R ⨾ S ⊆ 𝕀 ⨾ 𝕀)
+= ⟨ Assumption `coreflexive R`, Assumption `coreflexive S` ⟩
+— CalcCheck: Found assumption `coreflexive R`
+— CalcCheck: Found assumption `coreflexive S`
+— CalcCheck: ─ OK
+R ⊆ 𝕀 ⇒ (S ⊆ 𝕀 ⇒ R ⨾ S ⊆ 𝕀 ⨾ 𝕀)
+= ⟨ “Monotonicity of ⨾” ⟩
+— CalcCheck: Found “Monotonicity of ⨾”, “Monotonicity of
+⨾”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[18]
+
+Inverses
+
+
+[19]
+
+[20]
+
+[21]
+
+[22]
+
+
+The concept of inverse does not involve the inclusion order, but is defined only via composition and identities:
+
+Precedence 50 for: _is-inverse-of_
+Conjunctional: _is-inverse-of_
+Declaration: _is-inverse-of_ : B ↔ A
+
+Axiom “Definition of inverse”:
+S is-inverse-of R ≡ S ⨾ R = 𝕀
+
+∧
+
+→
+
+A ↔ B
+
+→
+
+𝔹
+
+R ⨾ S = 𝕀
+
+Theorem “Inverse of 𝕀”: 𝕀 is-inverse-of 𝕀
+Proof:
+𝕀 is-inverse-of 𝕀
+=⟨ “Definition of inverse” , “Idempotency of ∧” , “Identity of ⨾”
+true
+
+Precedence 50 for: _is-inverse-of_
+Conjunctional: _is-inverse-of_
+Declaration: _is-inverse-of_ : B ↔ A → (A ↔ B → 𝔹)
+— CalcCheck: Operator _is-inverse-of_: Conjunctional;
+precedence 50
+
+Axiom “Definition of inverse”: S is-inverse-of R ≡ S ⨾ R = 𝕀 ∧ R ⨾
+S=𝕀
+
+Theorem “Inverse of 𝕀”: 𝕀 is-inverse-of 𝕀
+Proof:
+Calculation for expected goal `𝕀 is-inverse-of 𝕀`:
+𝕀 is-inverse-of 𝕀
+= ⟨ “Definition of inverse”, “Idempotency of ∧”, “Identity of ⨾”,
+“Reflexivity of =” ⟩
+— CalcCheck: Found “Definition of inverse”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[23]
+
+[24]
+
+
+[25]
+
+1,1
+
+
+Theorem “Inverse of ⨾”: S₁ is-inverse-of R₁ ∧ S₂ is-inverse-of R₂ ⇒ S₂ ⨾ S₁ isinverse-of R₁ ⨾ R₂
+Proof:
+Assuming (1) `S₁ is-inverse-of R₁` and using with “Definition of inverse”
+— CalcCheck: Found “Definition of inverse” , (2) `S₂ is-inverse-of R₂` and using
+with “Definition of inverse”
+— CalcCheck: Found “Definition of inverse”:
+— CalcCheck: Assumptions match goal
+Using “Definition of inverse”:
+— CalcCheck: Found “Definition of inverse”
+Subproof for `(S₂ ⨾ S₁) ⨾ (R₁ ⨾ R₂) = 𝕀`:
+(S₂ ⨾ S₁) ⨾ (R₁ ⨾ R₂)
+= ⟨ “Associativity of ⨾” ⟩
+— CalcCheck: Found “Associativity of ⨾”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(S₂ ⨾ (S₁ ⨾ R₁)) ⨾ R₂
+= ⟨ Assumption `S₁ is-inverse-of R₁` ⟩
+— CalcCheck: Found assumption `S₁ is-inverse-of R₁`
+— CalcCheck: ─ OK
+(S₂ ⨾ 𝕀) ⨾ R₂
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+S₂ ⨾ R₂
+= ⟨ Assumption `S₂ is-inverse-of R₂` ⟩
+— CalcCheck: Found assumption `S₂ is-inverse-of R₂`
+— CalcCheck: ─ OK
+𝕀
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `(R₁ ⨾ R₂) ⨾ (S₂ ⨾ S₁) = 𝕀`:
+(R₁ ⨾ R₂) ⨾ (S₂ ⨾ S₁)
+= ⟨ “Associativity of ⨾” ⟩
+— CalcCheck: Found “Associativity of ⨾”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(R₁ ⨾ (R₂ ⨾ S₂)) ⨾ S₁
+= ⟨ Assumption `S₂ is-inverse-of R₂` ⟩
+— CalcCheck: Found assumption `S₂ is-inverse-of R₂`
+— CalcCheck: ─ OK
+(R₁ ⨾ 𝕀) ⨾ S₁
+
+
+Theorem “Inverse of ⨾”:
+S₁ is-inverse-of R₁ ∧ S₂ is-inverse-of R₂
+⇒ (S₂ ⨾ S₁) is-inverse-of (R₁ ⨾ R₂)
+Proof:
+Assuming (1) `S₁ is-inverse-of R₁` and using with “Defi
+(2) `S₂ is-inverse-of R₂` and using with “Defi
+Using “Definition of inverse”:
+Subproof for `(S₂ ⨾ S₁) ⨾ (R₁ ⨾ R₂) = 𝕀`:
+(S₂ ⨾ S₁) ⨾ (R₁ ⨾ R₂)
+=⟨ “Associativity of ⨾” ⟩
+(S₂ ⨾ S₁ ⨾ R₁) ⨾ R₂
+=⟨ Assumption `S₁ is-inverse-of R₁` ⟩
+(S₂ ⨾ 𝕀) ⨾ R₂
+=⟨ “Identity of ⨾” ⟩
+S₂ ⨾ R₂
+=⟨ Assumption `S₂ is-inverse-of R₂` ⟩
+𝕀
+Subproof for `(R₁ ⨾ R₂) ⨾ (S₂ ⨾ S₁) = 𝕀`:
+(R₁ ⨾ R₂) ⨾ (S₂ ⨾ S₁)
+=⟨ “Associativity of ⨾” ⟩
+(R₁ ⨾ R₂ ⨾ S₂) ⨾ S₁
+=⟨ Assumption `S₂ is-inverse-of R₂` ⟩
+(R₁ ⨾ 𝕀) ⨾ S₁
+=⟨ “Identity of ⨾” ⟩
+R₁ ⨾ S₁
+=⟨ Assumption `S₁ is-inverse-of R₁` ⟩
+𝕀
+
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+R₁ ⨾ S₁
+= ⟨ Assumption `S₁ is-inverse-of R₁` ⟩
+— CalcCheck: Found assumption `S₁ is-inverse-of R₁`
+— CalcCheck: ─ OK
+𝕀
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

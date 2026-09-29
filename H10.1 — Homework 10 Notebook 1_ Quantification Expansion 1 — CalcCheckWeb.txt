@@ -1,0 +1,126 @@
+[1]
+
+Preloaded here is the inductive theory of natural numbers, as started in H7, with associativity and symmetry of addition and multiplication
+activated. In addition, order predicates
+_<_, _≤_, _>_, _≥_ : ℕ → ℕ → 𝔹
+are also preloaded — you won’t need any theorem names for any of these, since Evaluation is enabled here.
+This notebook in addition has “Quantification expansion” hint items enabled; the “Quantification expansion” feature will be
+available only if explicitly mentioned.
+With large ranges, “Quantification expansion” internally produces huge expressions, and therefore can easily lead to time-outs,
+especially in invalid steps.
+“Quantification expansion” works only for certain simple range predicates, namely conjunctions of applications of order predicates (<,
+≤, ≥, >) where one argument is one of the quantified variables and the other an expression that Evaluation can show to be equal to a value,
+that is, an expression built only from constants and operators registered for built-in functions. Together, all these predicates need to constrain all
+quantified variables to finite ranges.
+All the range predicates you will see here are obviously of that shape, since the operators <, ≤, ≥ and > are conjunctional (so that “1 ≤ i < 4”
+is just “syntactic sugar” for “1 ≤ i ∧ i < 4”).
+In this notebook, only one hint item is allowed in each hint.
+Quantifications with the kind of simple range predicates as described above can be simplified easily, as the following example shows:
+
+
+[2]
+
+[3]
+
+
+Calculation:
+∑ i : ℕ ❙ 1 ≤ i < 4 • i · i
+=⟨ Quantification expansion ⟩
+(i · i)[i ≔ 1]
++ (i · i)[i ≔ 2]
++ (i · i)[i ≔ 3]
+=⟨ Substitution ⟩
+1 · 1 + 2 · 2 + 3 · 3
+=⟨ Evaluation ⟩
+1 + 4 + 9
+=⟨ Evaluation ⟩
+14
+
+Calculation:
+(∑ i : ℕ ❙ 1 ≤ i < 4 • i · i )
+= ⟨ Quantification expansion ⟩
+— CalcCheck: ─ OK
+((i · i)[i ≔ 1] + (i · i)[i ≔ 2]) + (i · i)[i ≔ 3]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(1 · 1 + 2 · 2) + 3 · 3
+= ⟨ Evaluation ⟩
+— CalcCheck: ─ OK
+(1 + 4) + 9
+= ⟨ Evaluation ⟩
+— CalcCheck: ─ OK
+14
+— CalcCheck: All steps OK
+
+Remember that you can break long expressions over several lines, as shown here.
+Also be aware that the “big operator” ∑ for sum quantification is obtained by typing \sum, and ∏ for product is obtained by typing \product.
+(These are different Unicode codepoints from the Greek letters Σ obtained via \Sigma and Π obtained via \Pi.)
+For a (sum) quantification “∑ i : T ❙ R • E”, the symbol “❙” is obtained by typing “\with”, and the symbol “•” is obtained by typing
+“\spot”.
+Note that unlike the textbook, we do not require parentheses enclosing the whole quantification expression; following other formalisms, the
+scope of the dummies (here “i”) extends “as far as syntactically possible”.
+Now you try — and you are expected to be able to handle such questions without the aid of a calculator:
+
+
+[4]
+
+1,1
+
+[5]
+
+
+Calculation:
+∑ i : ℕ ❙ 5 ≤ i < 8 • i · (i + 1)
+=⟨ Quantification expansion ⟩
+(i · (i + 1))[i ≔ 5]
++ (i · (i + 1))[i ≔ 6]
++ (i · (i + 1))[i ≔ 7]
+=⟨ Substitution ⟩
+(5 · (5 + 1)) + (6 · (6 + 1)) + (7 · (7 + 1))
+=⟨ Evaluation ⟩
+128
+
+Calculation:
+(∑ i : ℕ ❙ 5 ≤ i < 8 • i · (i + 1) )
+= ⟨ Quantification expansion ⟩
+— CalcCheck: ─ OK
+((i · (i + 1))[i ≔ 5] + (i · (i + 1))[i ≔ 6]) + (i · (i + 1))[i ≔
+7]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(5 · (5 + 1) + 6 · (6 + 1)) + 7 · (7 + 1)
+= ⟨ Evaluation ⟩
+— CalcCheck: ─ OK
+128
+— CalcCheck: All steps OK
+
+Calculation:
+∏ i : ℕ ❙ 2 ≤ i < 5 • 4 + i
+=⟨ Quantification expansion ⟩
+(4 + i)[i ≔ 2]
+· (4 + i)[i ≔ 3]
+· (4 + i)[i ≔ 4]
+=⟨ Substitution ⟩
+(4 + 2) · (4 + 3) · (4 + 4)
+=⟨ Evaluation ⟩
+336
+
+Calculation:
+(∏ i : ℕ ❙ 2 ≤ i < 5 • 4 + i )
+= ⟨ Quantification expansion ⟩
+— CalcCheck: ─ OK
+((4 + i)[i ≔ 2] · (4 + i)[i ≔ 3]) · (4 + i)[i ≔ 4]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+((4 + 2) · (4 + 3)) · (4 + 4)
+= ⟨ Evaluation ⟩
+— CalcCheck: ─ OK
+336
+— CalcCheck: All steps OK
+
+Check and Save
+
+
+Save
+
+

@@ -1,0 +1,468 @@
+Propositional Calculus
+
+[1]
+
+Propositional logic up to (3.82), that is, up to Ex2.4, is preloaded here.
+This notebook collects monotonicity and antitonicity properties of propositional logic, and starts using
+the “relaxed proof style” of LADM chapter 4, in particular introducing the proof method of “assuming the
+antecedent”.
+
+[2]
+
+Each of the following four properties of implication can be shown within the setting of LADM chapter 3
+in less than five steps:
+
+
+[3]
+
+[4]
+
+
+Theorem “Monotonicity of ⇒” “Right(p ⇒ q) ⇒ ((r ⇒ p) ⇒ (r ⇒ q))
+Proof:
+(p ⇒ q) ⇒ ((r ⇒ p) ⇒ (r ⇒ q))
+≡ ⟨(3.64)⟩
+(p ⇒ q) ⇒ (r ⇒ (p ⇒ q))
+≡ ⟨“Definition of implication”⟩
+¬ (p ⇒ q) ∨ (¬ r ∨ (p ⇒ q))
+≡ ⟨“Associativity of ∨”⟩
+¬ r ∨ (¬ (p ⇒ q) ∨ (p ⇒ q))
+≡ ⟨“Excluded middle”⟩
+¬ r ∨ true
+≡ ⟨“Zero of ∨”⟩
+true
+
+Theorem “Monotonicity of ⇒” “Right-monotonicity of ⇒”: (p ⇒ q)
+⇒ ((r ⇒ p) ⇒ (r ⇒ q))
+Proof:
+Calculation for expected goal `(p ⇒ q) ⇒ ((r ⇒ p) ⇒ (r ⇒ q))`:
+(p ⇒ q) ⇒ ((r ⇒ p) ⇒ (r ⇒ q))
+≡ ⟨ (3.64) ⟩
+— CalcCheck: Found (3.64) “Self-distributivity of ⇒”
+— CalcCheck: ─ OK
+(p ⇒ q) ⇒ (r ⇒ (p ⇒ q))
+≡ ⟨ “Definition of implication” ⟩
+— CalcCheck: Found (3.59) “Material implication”, (3.60)
+“Definition of ⇒ via ∧”, (3.57) “Definition of ⇒ via ∨”
+— CalcCheck: ─ OK
+¬ (p ⇒ q) ∨ (¬ r ∨ (p ⇒ q))
+≡ ⟨ “Associativity of ∨” ⟩
+— CalcCheck: Found (3.25) “Associativity of ∨”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+¬ r ∨ (¬ (p ⇒ q) ∨ (p ⇒ q))
+≡ ⟨ “Excluded middle” ⟩
+— CalcCheck: Found (3.28) “Excluded middle”
+— CalcCheck: ─ OK
+¬ r ∨ true
+≡ ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem “Antitonicity of ⇒” “Left-a Theorem “Antitonicity of ⇒” “Left-antitonicity of ⇒”: (p ⇒ q) ⇒ ((q
+(p ⇒ q) ⇒ ((q ⇒ r) ⇒ (p ⇒ r)) ⇒ r) ⇒ (p ⇒ r))
+Proof:
+Proof:
+Calculation for expected goal `(p ⇒ q) ⇒ ((q ⇒ r) ⇒ (p ⇒ r))`:
+(p ⇒ q) ⇒ ((q ⇒ r) ⇒ (p ⇒ r))
+(p ⇒ q) ⇒ ((q ⇒ r) ⇒ (p ⇒ r))
+≡ ⟨“Definition of ⇒ from ∧”⟩
+≡ ⟨ “Definition of ⇒ from ∧” ⟩
+(p ⇒ q) ⇒ (((q ⇒ r) ∧ (p ⇒ r)
+— CalcCheck: Found (3.60) “Definition of ⇒ via ∧”
+≡ ⟨(3.78)⟩
+— CalcCheck: ─ OK
+(p ⇒ q) ⇒ ((p ∨ q ⇒ r ) ≡ (q ⇒
+(p ⇒ q) ⇒ ((q ⇒ r) ∧ (p ⇒ r) ≡ q ⇒ r)
+≡ ⟨“Definition of implication”⟩
+≡ ⟨ (3.78) ⟩
+(p ⇒ q) ⇒ ((¬ (p ∨ q) ∨ r ) ≡
+— CalcCheck: Found (3.78) “Case analysis”
+— CalcCheck: ─ OK
+(p ⇒ q) ⇒ (p ∨ q ⇒ r ≡ q ⇒ r)
+≡ ⟨ “Definition of implication” ⟩
+— CalcCheck: Found (3.59) “Material implication”, (3.60)
+“Definition of ⇒ via ∧”, (3.57) “Definition of ⇒ via ∨”
+— CalcCheck: ─ OK
+(p ⇒ q) ⇒ (¬ (p ∨ q) ∨ r ≡ q ⇒ r)
+— CalcCheck: Could not match calculation with stated goal.
+
+
+[5]
+
+[6]
+
+[7]
+
+
+Theorem “Distributivity of ∨ over ⇒”: p ∨ (q ⇒
+Proof:
+p ∨ (q ⇒ r)
+≡ ⟨“Definition of ⇒ from ∧”⟩
+p ∨ (q ∧ r ≡ q)
+≡ ⟨“Distributivity of ∨ over ≡”⟩
+(p ∨ (q ∧ r)) ≡ (p ∨ q)
+≡ ⟨“Distributivity of ∨ over ∧”⟩
+((p ∨ q) ∧ (p ∨ r)) ≡ (p ∨ q)
+≡ ⟨“Definition of ⇒ from ∧”⟩
+p ∨ q ⇒ p ∨ r
+
+Theorem “Distributivity of ∨ over ⇒”: p ∨ (q ⇒ r) ≡
+p∨q⇒p∨r
+Proof:
+Calculation for expected goal `p ∨ (q ⇒ r) ≡ p ∨ q
+⇒ p ∨ r`:
+p ∨ (q ⇒ r)
+≡ ⟨ “Definition of ⇒ from ∧” ⟩
+— CalcCheck: Found (3.60) “Definition of ⇒
+via ∧”
+— CalcCheck: ─ OK
+p ∨ (q ∧ r ≡ q)
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of ∨
+over ≡”
+— CalcCheck: ─ OK
+p ∨ (q ∧ r) ≡ p ∨ q
+≡ ⟨ “Distributivity of ∨ over ∧” ⟩
+— CalcCheck: Found (3.45) “Distributivity of ∨
+over ∧”
+— CalcCheck: ─ OK
+(p ∨ q) ∧ (p ∨ r) ≡ p ∨ q
+≡ ⟨ “Definition of ⇒ from ∧” ⟩
+— CalcCheck: Found (3.60) “Definition of ⇒
+via ∧”
+— CalcCheck: ─ OK
+p∨q⇒p∨r
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+LADM provides “Proof by contradiction” with theorem number (4.9) and discourages its use:
+
+Theorem “Proof by contradiction”:
+Proof:
+¬ p ⇒ false
+≡ ⟨“Definition of implication”⟩
+¬ ¬ p ∨ false
+≡ ⟨“Double negation”⟩
+p ∨ false
+≡ ⟨“Identity of ∨”⟩
+p
+
+
+¬ Theorem “Proof by contradiction”: ¬ p ⇒ false ≡ p
+Proof:
+Calculation for expected goal `¬ p ⇒ false ≡ p`:
+¬ p ⇒ false
+≡ ⟨ “Definition of implication” ⟩
+— CalcCheck: Found (3.59) “Material implication”, (3.60)
+“Definition of ⇒ via ∧”, (3.57) “Definition of ⇒ via ∨”
+— CalcCheck: ─ OK
+¬ (¬ p) ∨ false
+≡ ⟨ “Double negation” ⟩
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+p ∨ false
+≡ ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+p
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[8]
+
+Using Structured Proofs
+[9]
+
+[10]
+
+Using the proof patterns introduced in LADM chapter 4, explained in the Sept. 16 lecture, many different
+approaches to the proofs here become possible…
+
+Many of the proofs here have been shown to some degree in the Sep. 16 lecture.
+Try solving them here yourself before you look at the slides!
+
+[11]
+
+[12]
+
+[13]
+
+You can “assume the antecedent” for proving (4.1):
+
+Theorem (4.1): p ⇒ (q ⇒ p)
+Proof:
+p ⇒ (q ⇒ p)
+≡ ⟨“Definition of implication”⟩
+¬ p ∨ (¬ q ∨ p)
+≡ ⟨“Distributivity of ∨ over ∨”⟩
+¬ p ∨ ¬ q ∨ ¬ p ∨ p
+≡ ⟨“Excluded middle”⟩
+(¬ p ∨ ¬ q) ∨ true
+≡ ⟨“Zero of ∨”⟩
+true
+
+Theorem (4.1): p ⇒ (q ⇒ p)
+Proof:
+Calculation for expected goal `p ⇒ (q ⇒ p)`:
+p ⇒ (q ⇒ p)
+≡ ⟨ “Definition of implication” ⟩
+— CalcCheck: Found (3.59) “Material implication”, (3.60)
+“Definition of ⇒ via ∧”, (3.57) “Definition of ⇒ via ∨”
+— CalcCheck: ─ OK
+¬ p ∨ (¬ q ∨ p)
+≡ ⟨ “Distributivity of ∨ over ∨” ⟩
+— CalcCheck: Found (3.31) “Distributivity of ∨ over ∨”
+— CalcCheck: ─ OK
+¬ p ∨ (¬ q ∨ (¬ p ∨ p))
+≡ ⟨ “Excluded middle” ⟩
+— CalcCheck: Found (3.28) “Excluded middle”
+— CalcCheck: ─ OK
+(¬ p ∨ ¬ q) ∨ true
+≡ ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Prove (4.2) by case analysis, without changing the provided structure.
+(As usual, a calculation step containing a single question mark in the hint, for example “≡⟨ ? ⟩” or “⇒⟨ ?
+⟩” or “⇐⟨ ? ⟩”, may need to be turned into arbitrarily many calculation steps.)
+
+
+[14]
+
+[15]
+
+
+Theorem (4.2) “Left-monotonicity Theorem (4.2) “Left-monotonicity of ∨” “Monotonicity of ∨”: (p ⇒ q) ⇒ (p
+(p ⇒ q) ⇒ (p ∨ r) ⇒ (q ∨ r ∨ r ⇒ q ∨ r)
+Proof:
+Proof:
+Assuming `p ⇒ q` , `p ∨ r`:
+Assuming `p ⇒ q`, `p ∨ r`:
+— CalcCheck: Assumptions match goal
+By cases: `p`, `r`
+By cases: `p`, `r`
+Completeness: By Assumptio
+Completeness:
+Case `p`:
+By Assumption `p ∨ r`
+q ∨ r
+— CalcCheck: Found assumption `p ∨ r`
+⇐⟨ “Weakening” ⟩
+Case `p`:
+q
+Calculation for expected goal `q ∨ r`:
+q∨r
+⇐⟨ Assumption `p ⇒ q`⟩
+⇐ ⟨ “Weakening” ⟩
+p
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d)
+≡⟨ Assumption `p` ⟩
+“Weakening”,
+(3.76a)
+“Weakening”, (3.76b) “Weakening”, (3.76c) “Weakening”
+true
+—
+CalcCheck:
+─ OK
+Case `r`:
+q
+q ∨ r
+⇐ ⟨ Assumption `p ⇒ q` ⟩
+⇐⟨ (3.76a) ⟩
+— CalcCheck: Found assumption `p ⇒ q`
+r
+— CalcCheck: ─ OK
+≡⟨ Assumption `r` ⟩
+p
+true
+≡ ⟨ Assumption `p` ⟩
+— CalcCheck: Found assumption `p`
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Case `r`:
+Calculation for expected goal `q ∨ r`:
+q∨r
+⇐ ⟨ (3.76a) ⟩
+— CalcCheck: Found (3.76a) “Weakening”
+— CalcCheck: ─ OK
+r
+≡ ⟨ Assumption `r` ⟩
+— CalcCheck: Found assumption `r`
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: All cases covered.
+
+Prove (4.3) by assuming the antecedent and using the transformed assumption in one of the several ways
+available to you:
+
+
+[16]
+
+
+Theorem (4.3) “Left-monotonicity Theorem (4.3) “Left-monotonicity of ∧” “Monotonicity of ∧”: (p ⇒ q) ⇒
+(p ⇒ q) ⇒ ((p ∧ r) ⇒ (q ∧ r (p ∧ r ⇒ q ∧ r)
+Proof:
+Proof:
+Assuming `p ⇒ q`:
+Assuming `p ⇒ q`:
+— CalcCheck: Assumption matches goal
+p ∧ r
+Calculation for expected goal `p ∧ r ⇒ q ∧ r`:
+≡ ⟨ Assumption `p ⇒ q` with
+p∧r
+p ∧ q ∧ r
+≡ ⟨ Assumption `p ⇒ q` with “Implication via ∧” ⟩
+⇒ ⟨“Weakening”⟩
+— CalcCheck: Found assumption `p ⇒ q`
+q ∧ r
+— CalcCheck: Found (3.60=) “Implication via ∧”
+— CalcCheck: ─ OK
+p ∧ (q ∧ r)
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”,
+(3.76a) “Weakening”, (3.76b) “Weakening”, (3.76c) “Weakening”
+— CalcCheck: ─ OK
+q∧r
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[17]
+
+You may try this also for a direct proof of the two-sided monotonicity of disjunction:
+
+
+[18]
+
+[19]
+
+
+Theorem “Monotonicity of ∨”: (p ⇒ q) ⇒ ((r ⇒ s) ⇒ (p ∨ r ⇒ q ∨ s))
+Theorem “Monotonicity of ∨”:
+(p ⇒ q) ⇒ (r ⇒ s) ⇒ (p ∨ r Proof:
+Assuming `p ⇒ q` , `r ⇒ s`:
+Proof:
+— CalcCheck: Assumptions match goal
+Assuming `p ⇒ q` , `r ⇒ s`:
+Calculation for expected goal `p ∨ r ⇒ q ∨ s`:
+(p ∨ r)
+p∨r
+≡ ⟨ Assumption `p ⇒ q` with
+≡ ⟨ Assumption `p ⇒ q` with “Implication via ∧” ⟩
+((p ∧ q) ∨ r)
+— CalcCheck: Found assumption `p ⇒ q`
+≡ ⟨ Assumption `r ⇒ s` with
+— CalcCheck: Found (3.60=) “Implication via ∧”
+((p ∧ q) ∨ (r ∧ s))
+— CalcCheck: ─ OK
+≡ ⟨ “Distributivity of ∨ over
+(p ∧ q) ∨ r
+((p ∧ q) ∨ r) ∧ ((p ∧ q) ∨
+≡ ⟨ Assumption `r ⇒ s` with “Implication via ∧” ⟩
+≡ ⟨ “Symmetry of ∨” ⟩
+— CalcCheck: Found assumption `r ⇒ s`
+(r ∨ (p ∧ q)) ∧ (s ∨ (p ∧
+— CalcCheck: Found (3.60=) “Implication via ∧”
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: ─ OK
+(p ∧ q) ∨ (r ∧ s)
+(s ∨ (p ∧ q))
+≡ ⟨ “Distributivity of ∨ over ∧” ⟩
+≡ ⟨ “Distributivity of ∨ over
+— CalcCheck: Found (3.45) “Distributivity of ∨ over ∧”
+(s ∨ p) ∧ (q ∨ s)
+— CalcCheck: ─ OK
+⇒ ⟨ “Weakening” ⟩
+((p
+∧ q) ∨ r) ∧ ((p ∧ q) ∨ s)
+(q ∨ s)
+≡ ⟨ “Symmetry of ∨” ⟩
+— CalcCheck: Found (3.24) “Symmetry of ∨”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(r ∨ (p ∧ q)) ∧ (s ∨ (p ∧ q))
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”,
+(3.76a) “Weakening”, (3.76b) “Weakening”, (3.76c) “Weakening”
+— CalcCheck: ─ OK
+s ∨ (p ∧ q)
+≡ ⟨ “Distributivity of ∨ over ∧” ⟩
+— CalcCheck: Found (3.45) “Distributivity of ∨ over ∧”
+— CalcCheck: ─ OK
+(s ∨ p) ∧ (q ∨ s)
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”,
+(3.76a) “Weakening”, (3.76b) “Weakening”, (3.76c) “Weakening”
+— CalcCheck: ─ OK
+q∨s
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+If the required one-sided properties are available, such two-sided monotonicity properties can also be
+shown by just chaining those.
+You can try this for two-sided monotonicity of conjunction:
+
+
+[20]
+
+1,1
+
+
+Theorem “Monotonicity of ∧”: (p ⇒ p') ⇒ ((q ⇒ q') ⇒ (p ∧ q ⇒ p' ∧ q'))
+Theorem “Monotonicity of ∧”:
+(p ⇒ p') ⇒ (q ⇒ q') ⇒ ((p Proof:
+Assuming `p ⇒ p'` , `q ⇒ q'`:
+Proof:
+— CalcCheck: Assumptions match goal
+Assuming `p ⇒ p'` , `q ⇒ q'`:
+Calculation for expected goal `p ∧ q ⇒ p' ∧ q'`:
+(p ∧ q)
+p∧q
+≡ ⟨Assumption `p ⇒ p'` with
+≡ ⟨ Assumption `p ⇒ p'` with “Definition of ⇒ from ∧” ⟩
+((p ∧ p') ∧ q)
+— CalcCheck: Found assumption `p ⇒ p'`
+≡ ⟨Assumption `q ⇒ q'` with
+— CalcCheck: Found (3.60) “Definition of ⇒ via ∧”
+((p ∧ p') ∧ (q ∧ q'))
+— CalcCheck: ─ OK
+≡ ⟨“Associativity of ∧”⟩
+(p ∧ p') ∧ q
+((p ∧ q) ∧ (p' ∧ q'))
+≡ ⟨ Assumption `q ⇒ q'` with “Definition of ⇒ from ∧” ⟩
+⇒ ⟨“Weakening”⟩
+— CalcCheck: Found assumption `q ⇒ q'`
+(p' ∧ q')
+— CalcCheck: Found (3.60) “Definition of ⇒ via ∧”
+— CalcCheck: ─ OK
+(p ∧ p') ∧ (q ∧ q')
+≡ ⟨ “Associativity of ∧” ⟩
+— CalcCheck: Found (3.37) “Associativity of ∧”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(p ∧ q) ∧ (p' ∧ q')
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”,
+(3.76a) “Weakening”, (3.76b) “Weakening”, (3.76c) “Weakening”
+— CalcCheck: ─ OK
+p' ∧ q'
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

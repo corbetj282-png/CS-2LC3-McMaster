@@ -1,0 +1,495 @@
+[1]
+
+[2]
+
+[3]
+
+[4]
+
+Propositional logic, and universal and existential quantification are preloaded here.
+
+Set theory is based on the membership relation _∈_ (type “\in”):
+
+Declaration: _∈_ : t → set t → 𝔹
+Explanation: e ∈ S ≔ “`e` is an element of `S`.”
+Explanation: e ∈ S ≔ “item `e` is an element of the set `S`.”
+
+Declaration: _∈_ : t → (set t → 𝔹)
+— CalcCheck: Operator _∈_: Conjunctional; precedence 50
+Explanation: e ∈ S ≔ “`e` is an element of `S`.”
+Explanation: e ∈ S ≔ “item `e` is an element of the set `S`.”
+
+For two sets S and T, their union S ∪ T consists of those elements that occur in S or in T, whereas their intersection S ∩ T consists of only the
+common elements.
+
+
+[5]
+
+[6]
+
+[7]
+
+
+Declaration: _∪_ , _∩_ : set t → set t → set t
+
+Axiom “Union”:
+Axiom “Intersection”:
+
+e ∈ S ∪ T
+e ∈ S ∩ T
+
+≡
+≡
+
+e ∈ S
+e ∈ S
+
+∨ e ∈ T
+∧ e ∈ T
+
+Declaration: _∪_ , _∩_ : set t → (set t → set t)
+— CalcCheck: Operator _∪_: Associating to the right; precedence
+100
+— CalcCheck: Operator _∩_: Associating to the right; precedence
+100
+
+Axiom “Union”: e ∈ S ∪ T ≡ e ∈ S ∨ e ∈ T
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+— CalcCheck: Variable types: S : set ty᎑₁₅, T : set ty᎑₁₅, e :
+ty᎑₁₅
+Axiom “Intersection”: e ∈ S ∩ T ≡ e ∈ S ∧ e ∈ T
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+— CalcCheck: Variable types: S : set ty᎑₁₅, T : set ty᎑₁₅, e :
+ty᎑₁₅
+
+Since these two operations are defined in-terms of the familar conjunction and disjunction, they also inherit their properties, see LADM
+Metatheorem (11.25).
+As long as we cannot use that metatheorem, we have to manually bridge the gap between set theory and propositional calculus; for set equalities,
+the main tool for that is “Set extensionality”:
+
+[8]
+
+[9]
+
+Axiom (11.4) “Set extensionality”:
+S = T ≡ (∀ e • e ∈ S ≡ e ∈ T)
+
+Axiom (11.4) “Set extensionality”: S = T ≡ (∀ e • e ∈ S ≡ e ∈ T
+)
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+— CalcCheck: Proviso: ¬occurs(`e`, `S, T`)
+— CalcCheck: Variable types: S : set ty᎑₁₃, T : set ty᎑₁₃
+
+This is typically used by “turning it into an inference rule” via Using, for example:
+
+
+[10]
+
+
+Theorem (11.26) “Symmetry of ∪”: S ∪ T = T ∪ S
+Proof:
+Using “Set extensionality”:
+Subproof for `∀ e • e ∈ S ∪ T ≡ e ∈ T ∪ S`:
+For any `e`:
+e ∈ S ∪ T
+≡⟨ “Union” ⟩
+e ∈ S ∨ e ∈ T
+≡⟨ “Symmetry of ∨” ⟩
+e ∈ T ∨ e ∈ S
+≡⟨ “Union” ⟩
+e ∈ T ∪ S
+
+
+Theorem (11.26) “Symmetry of ∪”: S ∪ T = T ∪ S
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+— CalcCheck: Variable types: S : set t᎑₇, T : set t᎑₇
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof for `(∀ e • e ∈ S ∪ T ≡ e ∈ T ∪ S )`:
+For any ` e`:
+Calculation for expected goal `e ∈ S ∪ T ≡ e ∈ T ∪
+S`:
+e∈S∪T
+≡ ⟨ “Union” ⟩
+— CalcCheck: Found “Union”
+— CalcCheck: ─ OK
+e∈S∨e∈T
+≡ ⟨ “Symmetry of ∨” ⟩
+— CalcCheck: Found (3.24) “Symmetry of ∨”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+e∈T∨e∈S
+≡ ⟨ “Union” ⟩
+— CalcCheck: Found “Union”
+— CalcCheck: ─ OK
+e∈T∪S
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[11]
+
+
+Theorem (11.27) “Associativity of ∪”: S ∪ (T ∪ W) = (S ∪ T) ∪ W
+Proof:
+Using “Set extensionality”:
+Subproof for `∀ e • e ∈ (S ∪ (T ∪ W)) ≡ e ∈ ((S ∪ T) ∪ W)`:
+For any `e`:
+e ∈ S ∪ (T ∪ W)
+≡⟨“Union”⟩
+e ∈ S ∨ e ∈ (T ∪ W)
+≡⟨“Union”⟩
+e ∈ S ∨ (e ∈ T ∨ e ∈ W)
+≡⟨“Associativity of ∨”⟩
+(e ∈ S ∨ e ∈ T) ∨ e ∈ W
+≡⟨“Union”⟩
+e ∈ (S ∪ T) ∨ e ∈ W
+≡⟨“Union”⟩
+e ∈ (S ∪ T) ∪ W
+
+
+Theorem (11.27) “Associativity of ∪”: S ∪ (T ∪ W) = (S ∪ T) ∪ W
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗, W = W〖〗
+— CalcCheck: Variable types: S : set t᎑₁₂, T : set t᎑₁₂, W : set t᎑₁₂
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof for `(∀ e • e ∈ S ∪ (T ∪ W) ≡ e ∈ (S ∪ T) ∪ W )`:
+For any ` e`:
+Calculation for expected goal `e ∈ S ∪ (T ∪ W) ≡ e ∈ (S ∪
+T) ∪ W`:
+e ∈ S ∪ (T ∪ W)
+≡ ⟨ “Union” ⟩
+— CalcCheck: Found “Union”
+— CalcCheck: ─ OK
+e∈S∨e∈T∪W
+≡ ⟨ “Union” ⟩
+— CalcCheck: Found “Union”
+— CalcCheck: ─ OK
+e ∈ S ∨ (e ∈ T ∨ e ∈ W)
+≡ ⟨ “Associativity of ∨” ⟩
+— CalcCheck: Found (3.25) “Associativity of ∨”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(e ∈ S ∨ e ∈ T) ∨ e ∈ W
+≡ ⟨ “Union” ⟩
+— CalcCheck: Found “Union”
+— CalcCheck: ─ OK
+e∈S∪T∨e∈W
+≡ ⟨ “Union” ⟩
+— CalcCheck: Found “Union”
+— CalcCheck: ─ OK
+e ∈ (S ∪ T) ∪ W
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[12]
+
+[13]
+
+[14]
+
+[15]
+
+
+Theorem (11.28) “Idempotency of ∪”: S ∪ S = S
+Proof:
+Using “Set extensionality”:
+Subproof for `∀ e • e ∈ (S ∪ S) ≡ e ∈ S`:
+For any `e`:
+e ∈ (S ∪ S)
+≡⟨“Union”⟩
+e ∈ S ∨ e ∈ S
+≡⟨“Idempotency of ∨”⟩
+e ∈ S
+
+Theorem (11.28) “Idempotency of ∪”: S ∪ S = S
+— CalcCheck: Metavariables: S = S〖〗
+— CalcCheck: Variable types: S : set t᎑₃
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof for `(∀ e • e ∈ S ∪ S ≡ e ∈ S )`:
+For any ` e`:
+Calculation for expected goal `e ∈ S ∪ S ≡ e ∈ S`:
+e∈S∪S
+≡ ⟨ “Union” ⟩
+— CalcCheck: Found “Union”
+— CalcCheck: ─ OK
+e∈S∨e∈S
+≡ ⟨ “Idempotency of ∨” ⟩
+— CalcCheck: Found (3.26) “Idempotency of
+∨”
+— CalcCheck: ─ OK
+e∈S
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Inclusions are analogously shown via “Set inclusion”:
+
+Declaration: _⊆_ : set t → set t → 𝔹
+
+Axiom (11.13) “Set inclusion” “Subset”
+“Definition of ⊆”:
+S ⊆ T ≡ (∀ e • e ∈ S ⇒ e ∈ T)
+
+
+Declaration: _⊆_ : set t → (set t → 𝔹)
+— CalcCheck: Operator _⊆_: Conjunctional; precedence 50
+
+Axiom (11.13) “Set inclusion” “Subset” “Definition of ⊆”: S ⊆ T ≡ (∀ e • e
+∈S⇒e∈T)
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+— CalcCheck: Proviso: ¬occurs(`e`, `S, T`)
+— CalcCheck: Variable types: S : set ty᎑₁₃, T : set ty᎑₁₃
+
+
+[16]
+
+Theorem (11.31) “Weakening of ∪”: S ⊆ S ∪ T
+Proof:
+Using “Set inclusion”:
+Subproof for `∀ e • e ∈ S ⇒ e ∈ S ∪ T`:
+For any `e`:
+e ∈ S
+⇒⟨“Strengthening”⟩
+e ∈ S ∨ e ∈ T
+≡⟨“Union”⟩
+e ∈ S ∪ T
+
+
+Theorem (11.31) “Weakening of ∪”: S ⊆ S ∪ T
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+— CalcCheck: Variable types: S : set t᎑₄, T : set t᎑₄
+Proof:
+Using “Set inclusion”:
+— CalcCheck: Found (11.13) “Set inclusion”
+Subproof for `(∀ e • e ∈ S ⇒ e ∈ S ∪ T )`:
+For any ` e`:
+Calculation for expected goal `e ∈ S ⇒ e ∈ S ∪ T`:
+e∈S
+⇒ ⟨ “Strengthening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a)
+“Weakening”, (3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+e∈S∨e∈T
+≡ ⟨ “Union” ⟩
+— CalcCheck: Found “Union”
+— CalcCheck: ─ OK
+e∈S∪T
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[17]
+
+[18]
+
+
+Theorem “Weakening of ∩ within ∪”: Q ∪ (S ∩ T) ⊆ Q ∪ S
+Theorem “Weakening of ∩ within ∪”: Q ∪ (S ∩ T)
+— CalcCheck: Metavariables: Q = Q〖〗, S = S〖〗, T = T〖〗
+Proof:
+— CalcCheck: Variable types: Q : set t᎑₁₀, S : set t᎑₁₀, T : set t᎑₁₀
+Using “Set inclusion”:
+Subproof for `∀ e • e ∈ Q ∪ (S ∩ T) ⇒ e ∈ Proof:
+Using “Set inclusion”:
+For any `e`:
+— CalcCheck: Found (11.13) “Set inclusion”
+e ∈ Q ∪ (S ∩ T)
+Subproof for `(∀ e • e ∈ Q ∪ (S ∩ T) ⇒ e ∈ Q ∪ S )`:
+≡⟨“Union”⟩
+For any ` e`:
+e ∈ Q ∨ e ∈ (S ∩ T)
+Calculation for expected goal `e ∈ Q ∪ (S ∩ T) ⇒ e ∈ Q ∪ S`:
+≡⟨“Intersection”⟩
+e ∈ Q ∪ (S ∩ T)
+e ∈ Q ∨ (e ∈ S ∧ e ∈ T)
+≡ ⟨ “Union” ⟩
+⇒⟨“Weakening”⟩
+— CalcCheck: Found “Union”
+e ∈ Q ∨ (e ∈ S)
+— CalcCheck: ─ OK
+e∈Q∨e∈S∩T
+≡⟨“Union”⟩
+≡ ⟨ “Intersection” ⟩
+e ∈ Q ∪ S
+— CalcCheck: Found “Intersection”
+— CalcCheck: ─ OK
+e ∈ Q ∨ (e ∈ S ∧ e ∈ T)
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a)
+“Weakening”, (3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+e∈Q∨e∈S
+≡ ⟨ “Union” ⟩
+— CalcCheck: Found “Union”
+— CalcCheck: ─ OK
+e∈Q∪S
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Subset inclusions can be seen as corresponding to (super-)type casts in programming languages. We formalise this observation as the following
+result.
+(Proven using
+Theorem “Instantiation”: (∀ x ❙ R • P) ⇒ (R ⇒ P)[x ≔ E]
+which is nothing more than:
+“Trading for ∀” (9.2) and “Instantiation” (9.13)
+
+
+)
+[19]
+
+[20]
+
+Theorem “Subset membership” “Casting”:
+X ⊆ Y ⇒ x ∈ X ⇒ x ∈ Y
+Proof:
+X ⊆ Y
+≡⟨ “Set inclusion” ⟩
+∀ z • z ∈ X ⇒ z ∈ Y
+⇒⟨ “Instantiation” ⟩
+(z ∈ X ⇒ z ∈ Y)[z ≔ x]
+≡⟨ substitution ⟩
+x ∈ X ⇒ x ∈ Y
+
+Theorem “Subset membership” “Casting”: X ⊆ Y ⇒ (x ∈ X ⇒ x ∈ Y)
+— CalcCheck: Metavariables: X = X〖〗, Y = Y〖〗
+— CalcCheck: Variable types: X : set ty᎑₁₂, Y : set ty᎑₁₂, x : ty᎑₁₂
+Proof:
+Calculation for expected goal `X ⊆ Y ⇒ (x ∈ X ⇒ x ∈ Y)`:
+X⊆Y
+≡ ⟨ “Set inclusion” ⟩
+— CalcCheck: Found (11.13) “Set inclusion”
+— CalcCheck: ─ OK
+(∀ z • z ∈ X ⇒ z ∈ Y )
+⇒ ⟨ “Instantiation” ⟩
+— CalcCheck: Found (9.13) “Instantiation”, (9.13.2) “Instantiation”,
+(9.13.1) “Instantiation”
+— CalcCheck: ─ OK
+(z ∈ X ⇒ z ∈ Y)[z ≔ x]
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+x∈ X⇒ x∈Y
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+The following theorems forms part of proving that the set inclusion relation is indeed an order. Knowing that, you will recognise “Subset
+membership” as a mixed monotonicity property.
+Note: With Using, it is normally necessary to supply all Subproof goals explicitly, by writing “Subproof for `goal`:” (unless CalcCheck
+can determine the goal from the contained proof).
+
+
+[21]
+
+
+Theorem (11.59) “Transitivity of ⊆”: X ⊆ Y ⇒ Y ⊆ Z ⇒ X ⊆ Z
+Proof:
+Assuming `X ⊆ Y`, `Y ⊆ Z`:
+Using “Set inclusion”:
+Subproof for `∀ e • e ∈ X ⇒ e ∈ Z`:
+For any `e`:
+e ∈ X
+⇒⟨ “Subset membership” with Assumption `X ⊆ Y` ⟩
+e ∈ Y
+⇒⟨ “Subset membership” with Assumption `Y ⊆ Z` ⟩
+e ∈ Z
+
+Theorem (11.59) “Transitivity of ⊆”: X ⊆ Y ⇒ (Y ⊆ Z ⇒ X ⊆
+Z)
+— CalcCheck: Metavariables: X = X〖〗, Y = Y〖〗, Z = Z
+〖〗
+— CalcCheck: Variable types: X : set t᎑₁₁, Y : set t᎑₁₁, Z : set t᎑₁₁
+Proof:
+Assuming `X ⊆ Y` , `Y ⊆ Z`:
+— CalcCheck: Assumptions match goal
+Using “Set inclusion”:
+— CalcCheck: Found (11.13) “Set inclusion”
+Subproof for `(∀ e • e ∈ X ⇒ e ∈ Z )`:
+For any ` e`:
+Calculation for expected goal `e ∈ X ⇒ e ∈ Z`:
+e∈X
+⇒ ⟨ “Subset membership” with Assumption `X ⊆ Y`
+
+⟩
+— CalcCheck: Found “Subset membership”
+— CalcCheck: Found assumption `X ⊆ Y`
+— CalcCheck: ─ OK
+e∈Y
+⇒ ⟨ “Subset membership” with Assumption `Y ⊆ Z`
+
+⟩
+— CalcCheck: Found “Subset membership”
+— CalcCheck: Found assumption `Y ⊆ Z`
+— CalcCheck: ─ OK
+e∈Z
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[22]
+
+The following exquivalence can be shown by starting on one side, and using “Set extensionality” as definition of set equality in the unfold-fold
+strategy:
+
+
+[23]
+
+Theorem “Golden rule for ∩ and ∪”: S ∩ T = S
+Proof:
+S ∩ T = S
+=⟨ “Set extensionality” ⟩
+∀ e • e ∈ S ∩ T ≡ e ∈ S
+=⟨ “Intersection” ⟩
+∀ e • e ∈ S ∧ e ∈ T ≡ e ∈ S
+=⟨ “Golden rule” ⟩
+∀ e • e ∈ S ∨ e ∈ T ≡ e ∈ T
+=⟨ “Union” ⟩
+∀ e • e ∈ S ∪ T ≡ e ∈ T
+=⟨ “Set extensionality” ⟩
+T = S ∪ T
+
+1,1
+
+
+≡
+
+T = S ∪ T
+
+Theorem “Golden rule for ∩ and ∪”: S ∩ T = S ≡ T = S ∪
+T
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+— CalcCheck: Variable types: S : set t᎑₁₂, T : set t᎑₁₂
+Proof:
+Calculation for expected goal `S ∩ T = S ≡ T = S ∪ T`:
+S∩T=S
+= ⟨ “Set extensionality” ⟩
+— CalcCheck: Found (11.4) “Set extensionality”
+— CalcCheck: ─ OK
+(∀ e • e ∈ S ∩ T ≡ e ∈ S )
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found “Intersection”
+— CalcCheck: ─ OK
+(∀ e • e ∈ S ∧ e ∈ T ≡ e ∈ S )
+= ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+(∀ e • e ∈ S ∨ e ∈ T ≡ e ∈ T )
+= ⟨ “Union” ⟩
+— CalcCheck: Found “Union”
+— CalcCheck: ─ OK
+(∀ e • e ∈ S ∪ T ≡ e ∈ T )
+= ⟨ “Set extensionality” ⟩
+— CalcCheck: Found (11.4) “Set extensionality”
+— CalcCheck: ─ OK
+T=S∪T
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

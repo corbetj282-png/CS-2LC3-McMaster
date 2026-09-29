@@ -1,0 +1,1682 @@
+[1]
+
+Propositional logic, universal and existential quantification, and integer material including order are all preloaded here.
+
+[2]
+
+Membership Properties
+[3]
+
+The set operations and properties from Homework 14 are also preloaded here.
+Recall that the set of elements of type t that satisfy a common property P is denoted by the “set comprehension” written as follows:
+{x : t ❙ P }
+(Here, P is an expression in which x can occur as a free variable.)
+More generally, the elements may be the values of expression E, which again may have free occurrences of x, written in set comprehensions of
+the following shape:
+{x : t ❙ P • E}
+If we assume a predicate
+p : t → 𝔹
+
+
+and a function
+f : t → t'
+then we can consider the set S defined via the following set comprehension:
+S
+
+=
+
+{x : t ❙ p x • f x}
+
+Clearly, an item y : t' is an element of S if it is f x for some x satisfying p x.
+
+[4]
+
+[5]
+
+[6]
+
+[7]
+
+Axiom (11.3) “Set membership”:
+F ∈ { x ❙ R • E } ≡ (∃ x ❙ R • F = E)
+
+Axiom (11.3) “Set membership”: F ∈ { x ❙ R • E } ≡ (∃ x ❙ R • F =
+E)
+— CalcCheck: Metavariables: E = E〖x〗, F = F〖〗, R = R
+〖x〗
+— CalcCheck: Proviso: ¬occurs(`x`, `F`)
+
+Set comprehensions without a body expression are treated as notational variant of comprehensions where the body expression is just the single
+variable from the declaration part:
+
+Theorem “Set Abbreviation”:
+{ x ❙ P } = { x ❙ P • x }
+Proof: By “Reflexivity of =”
+
+Theorem “Set Abbreviation”: { x ❙ P } = { x ❙ P • x }
+— CalcCheck: Metavariables: P = P〖x〗
+Proof:
+By “Reflexivity of =”
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: OK (no change)
+
+For such abbreviated set comprehensions, we also have a simplified version of “Set membership”.
+First try to prove this yourself, without looking below:
+
+
+[8]
+
+[9]
+
+Theorem (11.7) (11.7s) “Simple Membership”:
+e ∈ { x ❙ P } ≡ P[x ≔ e]
+Proof:
+e ∈ { x ❙ P }
+≡⟨ “Set Abbreviation” ⟩
+e ∈ { x ❙ P • x }
+≡⟨ “Set membership” ⟩
+∃ x ❙ P • e = x
+≡⟨ “Trading for ∃” ⟩
+∃ x • P ∧ e = x
+≡⟨ “Symmetry of ∧” and “Symmetry of =” ⟩
+∃ x • x = e ∧ P
+≡⟨ “Trading for ∃” ⟩
+∃ x ❙ x = e • P
+≡⟨ “One-point rule for ∃” ⟩
+P [x ≔ e]
+
+
+Theorem (11.7) (11.7s) “Simple Membership”: e ∈ { x ❙ P } ≡ P[x
+≔ e]
+— CalcCheck: Metavariables: P = P〖x〗
+Proof:
+Calculation for expected goal `e ∈ { x ❙ P } ≡ P[x ≔ e]`:
+e∈ {x❙ P}
+≡ ⟨ “Set Abbreviation” ⟩
+— CalcCheck: Found “Set Abbreviation”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+e∈ {x❙ P• x}
+≡ ⟨ “Set membership” ⟩
+— CalcCheck: Found (11.3) “Set membership”
+— CalcCheck: ─ OK
+(∃ x ❙ P • e = x )
+≡ ⟨ “Trading for ∃” ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading
+for ∃”
+— CalcCheck: ─ OK
+(∃ x • P ∧ e = x )
+≡ ⟨ “Symmetry of ∧”, “Symmetry of =” ⟩
+— CalcCheck: Found (3.36) “Symmetry of ∧”
+— CalcCheck: Found (1.3) “Symmetry of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(∃ x • x = e ∧ P )
+≡ ⟨ “Trading for ∃” ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading
+for ∃”
+— CalcCheck: ─ OK
+(∃ x ❙ x = e • P )
+≡ ⟨ “One-point rule for ∃” ⟩
+— CalcCheck: Found (8.14) “One-point rule for ∃”
+— CalcCheck: ─ OK
+P[x ≔ e]
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+If that didn’t work, fill in the hint items below:
+
+
+[10]
+
+Theorem (11.7) (11.7s) “Simple Membership”:
+e ∈ { x ❙ P } ≡ P[x ≔ e]
+Proof:
+e ∈ { x ❙ P }
+≡⟨ “Set Abbreviation” ⟩
+e ∈ { x ❙ P • x }
+≡⟨ “Set membership” ⟩
+∃ x ❙ P • e = x
+≡⟨ “Trading for ∃” ⟩
+∃ x • P ∧ e = x
+≡⟨ “Symmetry of ∧” and “Symmetry of =” ⟩
+∃ x • x = e ∧ P
+≡⟨ “Trading for ∃” ⟩
+∃ x ❙ x = e • P
+≡⟨ “One-point rule for ∃” ⟩
+P [x ≔ e]
+
+
+Theorem (11.7) (11.7s) “Simple Membership”: e ∈ { x ❙ P } ≡ P[x
+≔ e]
+— CalcCheck: Metavariables: P = P〖x〗
+Proof:
+Calculation for expected goal `e ∈ { x ❙ P } ≡ P[x ≔ e]`:
+e∈ {x❙ P}
+≡ ⟨ “Set Abbreviation” ⟩
+— CalcCheck: Found “Set Abbreviation”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+e∈ {x❙ P• x}
+≡ ⟨ “Set membership” ⟩
+— CalcCheck: Found (11.3) “Set membership”
+— CalcCheck: ─ OK
+(∃ x ❙ P • e = x )
+≡ ⟨ “Trading for ∃” ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading
+for ∃”
+— CalcCheck: ─ OK
+(∃ x • P ∧ e = x )
+≡ ⟨ “Symmetry of ∧”, “Symmetry of =” ⟩
+— CalcCheck: Found (3.36) “Symmetry of ∧”
+— CalcCheck: Found (1.3) “Symmetry of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(∃ x • x = e ∧ P )
+≡ ⟨ “Trading for ∃” ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading
+for ∃”
+— CalcCheck: ─ OK
+(∃ x ❙ x = e • P )
+≡ ⟨ “One-point rule for ∃” ⟩
+— CalcCheck: Found (8.14) “One-point rule for ∃”
+— CalcCheck: ─ OK
+P[x ≔ e]
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[11]
+
+[12]
+
+[13]
+
+
+The version of (11.7) listed in LADM is easily obtained from (11.7s):
+
+Theorem (11.7) (11.7x) “Simple Membership”:
+x ∈ { x ❙ P } ≡ P
+Proof:
+x ∈ { x ❙ P } ≡ P
+=⟨“Simple Membership”⟩
+P[x ≔ x] ≡ P
+=⟨ substitution ⟩
+P ≡ P
+=⟨ “Identity of ≡” ⟩
+true
+
+Theorem (11.7) (11.7x) “Simple Membership”: x ∈ { x ❙ P } ≡
+P
+— CalcCheck: Metavariables: P = P〖x〗
+Proof:
+Calculation for expected goal `x ∈ { x ❙ P } ≡ P`:
+x∈ {x❙ P} ≡ P
+= ⟨ “Simple Membership” ⟩
+— CalcCheck: Found (11.7s) “Simple Membership”
+— CalcCheck: ─ OK
+P[x ≔ x] ≡ P
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+P≡P
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Technically, (11.7x), the shape presented in LADM, is quite tricky, since x needs to be understood as a metavariable for a variable. A clearer
+version of this is the following, which has only P as a “normal” metavariable in which x may occur; prove this also from (11.7s):
+
+
+[14]
+
+[15]
+
+
+Theorem (11.7) (11.7∀) “Simple Membership”:
+∀ x • x ∈ { x ❙ P } ≡ P
+Proof:
+For any `x`:
+x ∈ { x ❙ P }
+≡⟨ “Simple Membership” ⟩
+P [x ≔ x]
+≡⟨ substitution ⟩
+P
+
+Theorem (11.7) (11.7∀) “Simple Membership”: (∀ x • x ∈ { x ❙ P } ≡ P )
+— CalcCheck: Metavariables: P = P〖x〗
+Proof:
+For any ` x`:
+Calculation for expected goal `x ∈ { x ❙ P } ≡ P`:
+x∈ {x❙ P}
+≡ ⟨ “Simple Membership” ⟩
+— CalcCheck: Found (11.7s) “Simple Membership”, (11.7x)
+“Simple Membership”
+— CalcCheck: ─ OK
+P[x ≔ x]
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+P
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+With these results in hand, we can formally prove facts that would likely be considered as “obvious” in other classes — remember that set
+enumeration
+{ k₁, ... , kₙ }
+is just “syntactic sugar” for the following set comprehension:
+{ x ❙ x = k₁
+
+
+∨
+
+...
+
+∨
+
+x = kₙ }
+
+
+[16]
+
+
+Calculation:
+4 ∈ { 4 , 5 , 6 }
+≡⟨ “Reflexivity of =” ⟩
+4 ∈ {x ❙ x = 4 ∨ x = 5 ∨ x = 6}
+≡⟨ “Simple Membership” ⟩
+(x = 4 ∨ x = 5 ∨ x = 6)[x ≔ 4]
+≡⟨ substitution ⟩
+(4 = 4 ∨ 4 = 5 ∨ 4 = 6)
+≡⟨ Fact `4 = 4` , Fact `4 = 5 ≡ false` , Fact `4 = 6 ≡
+true ∨ false ∨ false
+≡⟨ “Idempotency of ∨” , “Zero of ∨” ⟩
+true
+
+Calculation:
+4 ∈ { 4, 5, 6 }
+≡ ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+4 ∈ { x ❙ x = 4 ∨ (x = 5 ∨ x = 6) }
+≡ ⟨ “Simple Membership” ⟩
+— CalcCheck: Found (11.7s) “Simple Membership”, (11.7x) “Simple
+Membership”, (11.7∀) “Simple Membership”
+— CalcCheck: ─ OK
+(x = 4 ∨ (x = 5 ∨ x = 6))[x ≔ 4]
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+4 = 4 ∨ (4 = 5 ∨ 4 = 6)
+≡ ⟨ Fact `4 = 4`
+— CalcCheck: OK (no change)
+, Fact `4 = 5 ≡ false`, Fact `4 = 6 ≡ false` ⟩
+— CalcCheck: ─ OK
+true ∨ (false ∨ false)
+≡ ⟨ “Idempotency of ∨”, “Zero of ∨” ⟩
+— CalcCheck: Found (3.26) “Idempotency of ∨”
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+
+[17]
+
+Extensionality
+[18]
+
+We have:
+Axiom (11.4) “Set extensionality” “Set equality” “Extensionality”:
+S = T ≡ (∀ e • e ∈ S ≡ e ∈ T)
+Axiom (11.13) “Subset” “Definition of ⊆” “Set inclusion”:
+S ⊆ T ≡ (∀ e • e ∈ S ⇒ e ∈ T)
+
+
+[19]
+
+[20]
+
+[21]
+
+[22]
+
+
+For example, our “property-based” and “property-shape” possibilities of a set are interdefinable:
+
+Theorem (11.6) “Mathematical formulation of set compre Theorem (11.6) “Mathematical formulation of set comprehension”: { x ❙ P • E } = { y ❙
+{x ❙ P • E } = { y ❙ (∃ x ❙ P • y = E) }
+(∃ x ❙ P • y = E ) }
+— CalcCheck: Metavariables: E = E〖x〗, P = P〖x〗
+Proof:
+— CalcCheck: Proviso: ¬occurs(`y`, `E, P`)
+Using “Set extensionality”:
+Proof:
+For any `e `:
+Using “Set extensionality”:
+e ∈ {x ❙ P • E }
+— CalcCheck: Found (11.4) “Set extensionality”
+=⟨“Set membership”⟩
+Subproof establishing `(∀ e • (e ∈ { x ❙ P • E }) = (e ∈ { y ❙ (∃ x ❙ P • y = E ) }) )`:
+∃ x ❙ P • e = E
+For any ` e`:
+=⟨ substitution ⟩
+Calculation establishing `(e ∈ { x ❙ P • E }) = (e ∈ { y ❙ (∃ x ❙ P • y = E ) })`:
+(∃ x ❙ P • y = E )[y ≔ e]
+e∈ {x❙ P• E}
+=⟨ “Simple Membership”⟩
+= ⟨ “Set membership” ⟩
+e ∈ { y ❙ (∃ x ❙ P • y = E) }
+— CalcCheck: Found (11.3) “Set membership”
+— CalcCheck: ─ OK
+(∃ x ❙ P • e = E )
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(∃ x ❙ P • y = E )[y ≔ e]
+= ⟨ “Simple Membership” ⟩
+— CalcCheck: Found (11.7s) “Simple Membership”, (11.7x) “Simple
+Membership”, (11.7∀) “Simple Membership”
+— CalcCheck: ─ OK
+e ∈ { y ❙ (∃ x ❙ P • y = E ) }
+— CalcCheck: All steps OK
+
+(The more complicated right-hand side is how conventional mathematics tends to deal with defining sets where the elements have a particular
+shape.)
+
+Hint: LADM says that (11.9) theorem follows easily using (11.7).
+
+
+[23]
+
+
+Theorem (11.9) “Simple set comprehension equality”:
+{x ❙ Q} = {x ❙ R} ≡ (∀ x • Q ≡ R)
+Proof:
+{x ❙ Q} = {x ❙ R}
+≡⟨ “Set extensionality” ⟩
+∀ x • x ∈ { x ❙ Q } ≡ x ∈ { x ❙ R }
+≡⟨ “Simple Membership” ⟩
+∀ x • Q ≡ R
+
+Theorem (11.9) “Simple set comprehension equality”: { x ❙ Q } = { x ❙ R } ≡ (∀ x •
+Q ≡R)
+— CalcCheck: Metavariables: Q = Q〖x〗, R = R〖x〗
+Proof:
+Calculation for expected goal `{ x ❙ Q } = { x ❙ R } ≡ (∀ x • Q ≡ R )`:
+{x❙ Q } = {x❙ R}
+≡ ⟨ “Set extensionality” ⟩
+— CalcCheck: Found (11.4) “Set extensionality”
+— CalcCheck: ─ OK
+(∀ x • x ∈ { x ❙ Q } ≡ x ∈ { x ❙ R } )
+≡ ⟨ “Simple Membership” ⟩
+— CalcCheck: Found (11.7s) “Simple Membership”, (11.7x) “Simple
+Membership”, (11.7∀) “Simple Membership”
+— CalcCheck: ─ OK
+(∀ x • Q ≡ R )
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[24]
+
+Inclusion
+[25]
+
+Just as 0 is the least natural number, we have a least set as well. Technically, the empty set {} is the empty set enumeration, and therefore has as
+range predicate the identity of disjunction:
+
+
+[26]
+
+[27]
+
+[28]
+
+
+Theorem “Empty set”: {} = {x ❙ false}
+Proof:
+{} = {x ❙ false}
+=⟨“Set extensionality”⟩
+∀ x • x ∈ {} ≡ x ∈ {x ❙ false}
+=⟨“Simple Membership”⟩
+∀ x • false ≡ false
+=⟨“Identity of ≡”⟩
+∀ x • true
+=⟨“True ∀ body”⟩
+true
+
+Theorem “Empty set”: {} = { x ❙ false }
+Proof:
+Calculation for expected goal `{} = { x ❙ false }`:
+{} = { x ❙ false }
+= ⟨ “Set extensionality” ⟩
+— CalcCheck: Found (11.4) “Set extensionality”
+— CalcCheck: ─ OK
+(∀ x • x ∈ {} ≡ x ∈ { x ❙ false } )
+= ⟨ “Simple Membership” ⟩
+— CalcCheck: Found (11.7s) “Simple Membership”, (11.7x) “Simple
+Membership”, (11.7∀) “Simple Membership”
+— CalcCheck: ─ OK
+(∀ x • false ≡ false )
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+(∀ x • true )
+= ⟨ “True ∀ body” ⟩
+— CalcCheck: Found (9.8) “True ∀ body”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem “Empty set”: x ∈ {}
+Proof:
+x ∈ {}
+=⟨“Simple Membership”⟩
+false
+
+Theorem “Empty set”: x ∈ {} ≡ false
+Proof:
+Calculation for expected goal `x ∈ {} ≡ false`:
+x ∈ {}
+= ⟨ “Simple Membership” ⟩
+— CalcCheck: Found (11.7s) “Simple Membership”, (11.7x) “Simple
+Membership”, (11.7∀) “Simple Membership”
+— CalcCheck: ─ OK
+false
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+≡
+
+false
+
+The fact that {} is the least set can be shown using a straight-forward equivalence calculation:
+
+
+[29]
+
+[30]
+
+[31]
+
+
+Theorem “Empty set is least” “Bottom set”: {} ⊆ X
+Proof:
+{} ⊆ X
+=⟨“Set inclusion”⟩
+∀ e • e ∈ {} ⇒ e ∈ X
+=⟨“Empty set”⟩
+∀ e • false ⇒ e ∈ X
+=⟨“ex falso quodlibet”⟩
+∀ e • true
+=⟨“True ∀ body”⟩
+true
+
+Theorem “Empty set is least” “Bottom set”: {} ⊆ X
+— CalcCheck: Metavariables: X = X〖〗
+Proof:
+Calculation for expected goal `{} ⊆ X`:
+{} ⊆ X
+= ⟨ “Set inclusion” ⟩
+— CalcCheck: Found (11.13) “Set inclusion”
+— CalcCheck: ─ OK
+(∀ e • e ∈ {} ⇒ e ∈ X )
+= ⟨ “Empty set” ⟩
+— CalcCheck: Found “Empty set”
+— CalcCheck: ─ OK
+(∀ e • false ⇒ e ∈ X )
+= ⟨ “ex falso quodlibet” ⟩
+— CalcCheck: Found (3.75) “ex falso quodlibet”
+— CalcCheck: ─ OK
+(∀ e • true )
+= ⟨ “True ∀ body” ⟩
+— CalcCheck: Found (9.8) “True ∀ body”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Dually, in any context where a “universe of discourse” is assumed (often implicitly), that “universe of discourse” forms the greatest set, for
+which LADM uses the symbol “𝐔” (obtained by typing “\universe”).
+
+Axiom “Universal set”: 𝐔 = {x ❙ true}
+
+
+Axiom “Universal set”: 𝐔 = { x ❙ true }
+
+
+[32]
+
+[33]
+
+
+Theorem “Universal set”: x ∈ 𝐔
+Proof:
+x ∈ 𝐔
+=⟨ “Universal set” ⟩
+x ∈ {x ❙ true}
+=⟨ “Simple Membership” ⟩
+true
+
+Theorem “Universal set is greatest” “Top set”: X ⊆ 𝐔
+Proof:
+X ⊆ 𝐔
+=⟨“Set inclusion”⟩
+∀ x • x ∈ X ⇒ x ∈ 𝐔
+=⟨“Universal set”⟩
+∀ x • x ∈ X ⇒ true
+=⟨“Right-zero of ⇒”⟩
+∀ x • true
+=⟨“True ∀ body”⟩
+true
+
+
+Theorem “Universal set”: x ∈ 𝐔
+Proof:
+Calculation for expected goal `x ∈ 𝐔`:
+x∈ 𝐔
+= ⟨ “Universal set” ⟩
+— CalcCheck: Found “Universal set”
+— CalcCheck: ─ OK
+x ∈ { x ❙ true }
+= ⟨ “Simple Membership” ⟩
+— CalcCheck: Found (11.7s) “Simple Membership”, (11.7x) “Simple
+Membership”, (11.7∀) “Simple Membership”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem “Universal set is greatest” “Top set”: X ⊆ 𝐔
+— CalcCheck: Metavariables: X = X〖〗
+Proof:
+Calculation for expected goal `X ⊆ 𝐔`:
+X⊆𝐔
+= ⟨ “Set inclusion” ⟩
+— CalcCheck: Found (11.13) “Set inclusion”
+— CalcCheck: ─ OK
+(∀ x • x ∈ X ⇒ x ∈ 𝐔 )
+= ⟨ “Universal set” ⟩
+— CalcCheck: Found “Universal set”, “Universal
+set”
+— CalcCheck: ─ OK
+(∀ x • x ∈ X ⇒ true )
+= ⟨ “Right-zero of ⇒” ⟩
+— CalcCheck: Found (3.72) “Right-zero of ⇒”
+— CalcCheck: ─ OK
+(∀ x • true )
+= ⟨ “True ∀ body” ⟩
+— CalcCheck: Found (9.8) “True ∀ body”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[34]
+
+[35]
+
+
+The following analogue to “Simple set comprehension equality” can be shown via a straight-forward equivalence calculation:
+
+Theorem (11.56) “Simple set comprehension inclusion”:
+{x ❙ P} ⊆ {x ❙ Q} ≡ (∀ x • P ⇒ Q)
+Proof:
+{x ❙ P} ⊆ {x ❙ Q}
+=⟨“Set inclusion”⟩
+∀ x • x ∈ {x ❙ P} ⇒ x ∈ {x ❙ Q}
+=⟨“Simple Membership”⟩
+∀ x • P ⇒ Q
+
+Theorem (11.56) “Simple set comprehension inclusion”: { x ❙ P } ⊆ { x ❙ Q } ≡ (∀ x
+• P⇒ Q )
+— CalcCheck: Metavariables: P = P〖x〗, Q = Q〖x〗
+Proof:
+Calculation for expected goal `{ x ❙ P } ⊆ { x ❙ Q } ≡ (∀ x • P ⇒ Q )`:
+{x❙ P} ⊆{x❙ Q }
+= ⟨ “Set inclusion” ⟩
+— CalcCheck: Found (11.13) “Set inclusion”
+— CalcCheck: ─ OK
+(∀ x • x ∈ { x ❙ P } ⇒ x ∈ { x ❙ Q } )
+= ⟨ “Simple Membership” ⟩
+— CalcCheck: Found (11.7s) “Simple Membership”, (11.7x) “Simple
+Membership”, (11.7∀) “Simple Membership”
+— CalcCheck: ─ OK
+(∀ x • P ⇒ Q )
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[36]
+
+Complement
+[37]
+
+[38]
+
+[39]
+
+The complement of a set S, written ~ S, is the collection of elements that are not in S.
+
+Declaration: ~_ : set t → set t
+
+Declaration: ~_ : set t → set t
+— CalcCheck: Operator ~_: Non-associating; precedence
+129
+
+Axiom “Complement”: e ∈ ~ S
+
+Axiom “Complement”: e ∈ ~ S ≡ ¬ (e ∈ S)
+— CalcCheck: Metavariables: S = S〖〗
+
+
+≡ ¬ (e ∈ S)
+
+
+[40]
+
+[41]
+
+
+Since complement is defined in terms of negation, we obtain immediately that complement, too, is an involution:
+
+Theorem (11.19) “Self-inverse of complement”: ~ (~ S) = S
+Proof:
+Using “Set extensionality”:
+For any `e`:
+e ∈ ~ (~ S) ≡ e ∈ S
+=⟨“Complement”⟩
+¬ (e ∈ (~ S)) ≡ e ∈ S
+=⟨“¬ connection”⟩
+(e ∈ (~ S)) ≡ ¬ (e ∈ S)
+=⟨“Complement”⟩
+(e ∈ (~ S)) ≡ (e ∈ ~ S)
+=⟨“Identity of ≡”⟩
+true
+
+Theorem (11.19) “Self-inverse of complement”: ~ (~ S) =
+S
+— CalcCheck: Metavariables: S = S〖〗
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof establishing `(∀ e • e ∈ ~ (~ S) ≡ e ∈ S )`:
+For any ` e`:
+Calculation establishing `e ∈ ~ (~ S) ≡ e ∈ S`:
+e ∈ ~ (~ S) ≡ e ∈ S
+= ⟨ “Complement” ⟩
+— CalcCheck: Found “Complement”
+— CalcCheck: ─ OK
+¬ (e ∈ ~ S) ≡ e ∈ S
+= ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+e ∈ ~ S ≡ ¬ (e ∈ S)
+= ⟨ “Complement” ⟩
+— CalcCheck: Found “Complement”
+— CalcCheck: ─ OK
+e∈~S≡e∈~S
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+
+[42]
+
+Union and Intersection
+[43]
+
+Since these two operations are defined in-terms of the familar conjunction and disjunction, they also inherit their properties, such as symmetry
+and idempotency, to name a few.
+
+
+[44]
+
+Basic Properties of Union
+[45]
+
+Theorem (11.29) “Zero of ∪”: S ∪ 𝐔 = 𝐔
+Proof:
+Using “Set extensionality”:
+For any `e`:
+e ∈ S ∪ 𝐔
+=⟨“Union”⟩
+(e ∈ S ∨ e ∈ 𝐔)
+=⟨“Universal set”⟩
+(e ∈ S ∨ true)
+=⟨“Zero of ∨”⟩
+(true)
+=⟨“Universal set”⟩
+e ∈ 𝐔
+
+
+Theorem (11.29) “Zero of ∪”: S ∪ 𝐔 = 𝐔
+— CalcCheck: Metavariables: S = S〖〗
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof establishing `(∀ e • (e ∈ S ∪ 𝐔) = (e ∈ 𝐔) )`:
+For any ` e`:
+Calculation establishing `(e ∈ S ∪ 𝐔) = (e ∈ 𝐔)`:
+e∈S∪𝐔
+= ⟨ “Union” ⟩
+— CalcCheck: Found “Union”
+— CalcCheck: ─ OK
+e∈S∨e∈𝐔
+= ⟨ “Universal set” ⟩
+— CalcCheck: Found “Universal set”, “Universal
+set”
+— CalcCheck: ─ OK
+e ∈ S ∨ true
+= ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+true
+= ⟨ “Universal set” ⟩
+— CalcCheck: Found “Universal set”, “Universal
+set”
+— CalcCheck: ─ OK
+e∈𝐔
+— CalcCheck: All steps OK
+
+
+[46]
+
+Theorem (11.30) “Identity of ∪”: S ∪ {} = S
+Proof:
+Using “Set extensionality”:
+For any `e`:
+e ∈ S ∪ {}
+=⟨“Union”⟩
+e ∈ S ∨ e ∈ {}
+=⟨“Empty set”⟩
+e ∈ S ∨ false
+=⟨“Identity of ∨”⟩
+e ∈ S
+
+
+Theorem (11.30) “Identity of ∪”: S ∪ {} = S
+— CalcCheck: Metavariables: S = S〖〗
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof establishing `(∀ e • (e ∈ S ∪ {}) = (e ∈ S) )`:
+For any ` e`:
+Calculation establishing `(e ∈ S ∪ {}) = (e ∈ S)`:
+e ∈ S ∪ {}
+= ⟨ “Union” ⟩
+— CalcCheck: Found “Union”
+— CalcCheck: ─ OK
+e ∈ S ∨ e ∈ {}
+= ⟨ “Empty set” ⟩
+— CalcCheck: Found “Empty set”
+— CalcCheck: ─ OK
+e ∈ S ∨ false
+= ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+e∈S
+— CalcCheck: All steps OK
+
+
+[47]
+
+Theorem (11.32) “LEM of ∪”: S ∪ ~ S = 𝐔
+Proof:
+Using “Set extensionality”:
+For any `e`:
+e ∈ S ∪ ~ S
+=⟨ “Union” ⟩
+e ∈ S ∨ e ∈ ~ S
+=⟨ “Complement” ⟩
+e ∈ S ∨ ¬ (e ∈ S)
+=⟨ “Excluded middle” ⟩
+true
+=⟨ “Universal set” ⟩
+e ∈ 𝐔
+
+
+Theorem (11.32) “LEM of ∪”: S ∪ ~ S = 𝐔
+— CalcCheck: Metavariables: S = S〖〗
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof establishing `(∀ e • (e ∈ S ∪ ~ S) = (e ∈ 𝐔) )`:
+For any ` e`:
+Calculation establishing `(e ∈ S ∪ ~ S) = (e ∈ 𝐔)`:
+e∈S∪~S
+= ⟨ “Union” ⟩
+— CalcCheck: Found “Union”
+— CalcCheck: ─ OK
+e∈S∨e∈~S
+= ⟨ “Complement” ⟩
+— CalcCheck: Found “Complement”
+— CalcCheck: ─ OK
+e ∈ S ∨ ¬ (e ∈ S)
+= ⟨ “Excluded middle” ⟩
+— CalcCheck: Found (3.28) “Excluded middle”
+— CalcCheck: ─ OK
+true
+= ⟨ “Universal set” ⟩
+— CalcCheck: Found “Universal set”, “Universal
+set”
+— CalcCheck: ─ OK
+e∈𝐔
+— CalcCheck: All steps OK
+
+[48]
+
+Basic Properties of Intersection
+
+
+[49]
+
+Theorem (11.33) “Symmetry of ∩”: S ∩ T = T ∩ S
+Proof:
+Using “Set extensionality”:
+For any `e`:
+e ∈ S ∩ T
+=⟨“Intersection”⟩
+e ∈ S ∧ e ∈ T
+=⟨“Symmetry of ∧”⟩
+e ∈ T ∧ e ∈ S
+=⟨“Intersection”⟩
+e ∈ T ∩ S
+
+
+Theorem (11.33) “Symmetry of ∩”: S ∩ T = T ∩ S
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof establishing `(∀ e • (e ∈ S ∩ T) = (e ∈ T ∩ S)
+)`:
+For any ` e`:
+Calculation establishing `(e ∈ S ∩ T) = (e ∈ T ∩
+S)`:
+e∈S∩T
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found “Intersection”
+— CalcCheck: ─ OK
+e∈S∧e∈T
+= ⟨ “Symmetry of ∧” ⟩
+— CalcCheck: Found (3.36) “Symmetry of ∧”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+e∈T∧e∈S
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found “Intersection”
+— CalcCheck: ─ OK
+e∈T∩S
+— CalcCheck: All steps OK
+
+
+[50]
+
+
+Theorem (11.34) “Associativity of ∩”: S ∩ (T ∩ W) = (S ∩ T) ∩ W
+Proof:
+Using “Set extensionality”:
+For any `e`:
+e ∈ S ∩ (T ∩ W)
+=⟨“Intersection”⟩
+e ∈ S ∧ e ∈ (T ∩ W)
+=⟨“Intersection”⟩
+e ∈ S ∧ (e ∈ T ∧ e ∈ W)
+=⟨“Associativity of ∧”⟩
+(e ∈ S ∧ e ∈ T) ∧ e ∈ W
+=⟨“Intersection”⟩
+e ∈ S ∩ T ∧ e ∈ W
+=⟨“Intersection”⟩
+e ∈ (S ∩ T) ∩ W
+
+
+Theorem (11.34) “Associativity of ∩”: S ∩ (T ∩ W) = (S ∩ T) ∩
+W
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗, W = W〖〗
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof establishing `(∀ e • (e ∈ S ∩ (T ∩ W)) = (e ∈ (S ∩ T)
+∩ W) )`:
+For any ` e`:
+Calculation establishing `(e ∈ S ∩ (T ∩ W)) = (e ∈ (S ∩ T)
+∩ W)`:
+e ∈ S ∩ (T ∩ W)
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found “Intersection”
+— CalcCheck: ─ OK
+e∈S∧e∈T∩W
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found “Intersection”
+— CalcCheck: ─ OK
+e ∈ S ∧ (e ∈ T ∧ e ∈ W)
+= ⟨ “Associativity of ∧” ⟩
+— CalcCheck: Found (3.37) “Associativity of ∧”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(e ∈ S ∧ e ∈ T) ∧ e ∈ W
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found “Intersection”
+— CalcCheck: ─ OK
+e∈S∩T∧e∈W
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found “Intersection”
+— CalcCheck: ─ OK
+e ∈ (S ∩ T) ∩ W
+— CalcCheck: All steps OK
+
+
+[51]
+
+Theorem (11.38) “Weakening of ∩”: S ∩ T ⊆ S
+Proof:
+Using “Set inclusion”:
+For any `e`:
+e ∈ S ∩ T ⇒ e ∈ S
+=⟨“Intersection”⟩
+(e ∈ S ∧ e ∈ T) ⇒ e ∈ S
+=⟨“Weakening”⟩
+true
+
+
+Theorem (11.38) “Weakening of ∩”: S ∩ T ⊆ S
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+Proof:
+Using “Set inclusion”:
+— CalcCheck: Found (11.13) “Set inclusion”
+Subproof establishing `(∀ e • e ∈ S ∩ T ⇒ e ∈ S )`:
+For any ` e`:
+Calculation establishing `e ∈ S ∩ T ⇒ e ∈ S`:
+e∈S∩T⇒e∈S
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found “Intersection”
+— CalcCheck: ─ OK
+e∈S∧e∈T⇒e∈S
+= ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a)
+“Weakening”, (3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+
+
+[52]
+
+Theorem (11.35) “Idempotency of ∩”: S ∩ S = S
+Proof:
+Using “Set extensionality”:
+For any `e`:
+e ∈ S ∩ S ≡ e ∈ S
+=⟨“Intersection”⟩
+e ∈ S ∧ e ∈ S ≡ e ∈ S
+=⟨“Idempotency of ∧”⟩
+e ∈ S ≡ e ∈ S
+=⟨“Identity of ≡”⟩
+true
+
+
+Theorem (11.35) “Idempotency of ∩”: S ∩ S = S
+— CalcCheck: Metavariables: S = S〖〗
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof establishing `(∀ e • e ∈ S ∩ S ≡ e ∈ S )`:
+For any ` e`:
+Calculation establishing `e ∈ S ∩ S ≡ e ∈ S`:
+e∈S∩S≡e∈S
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found “Intersection”
+— CalcCheck: ─ OK
+e∈S∧e∈S≡e∈S
+= ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of
+∧”
+— CalcCheck: ─ OK
+e∈S≡e∈S
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+
+
+[53]
+
+Theorem (11.36) “Zero of ∩”: S ∩ {} = {}
+Proof:
+Using “Set extensionality”:
+For any `e`:
+e ∈ S ∩ {} ≡ e ∈ {}
+=⟨“Intersection”⟩
+e ∈ S ∧ e ∈ {} ≡ e ∈ {}
+=⟨“Empty set”⟩
+e ∈ S ∧ false ≡ e ∈ {}
+=⟨“Zero of ∧”⟩
+false ≡ e ∈ {}
+=⟨“Empty set”⟩
+true
+
+
+Theorem (11.36) “Zero of ∩”: S ∩ {} = {}
+— CalcCheck: Metavariables: S = S〖〗
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof establishing `(∀ e • e ∈ S ∩ {} ≡ e ∈ {} )`:
+For any ` e`:
+Calculation establishing `e ∈ S ∩ {} ≡ e ∈ {}`:
+e ∈ S ∩ {} ≡ e ∈ {}
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found “Intersection”
+— CalcCheck: ─ OK
+e ∈ S ∧ e ∈ {} ≡ e ∈ {}
+= ⟨ “Empty set” ⟩
+— CalcCheck: Found “Empty set”
+— CalcCheck: ─ OK
+e ∈ S ∧ false ≡ e ∈ {}
+= ⟨ “Zero of ∧” ⟩
+— CalcCheck: Found (3.40) “Zero of ∧”
+— CalcCheck: ─ OK
+false ≡ e ∈ {}
+= ⟨ “Empty set” ⟩
+— CalcCheck: Found “Empty set”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+
+
+[54]
+
+Theorem (11.37) “Identity of ∩”: S ∩ 𝐔 = S
+Proof:
+Using “Set extensionality”:
+For any `e`:
+e ∈ S ∩ 𝐔 ≡ e ∈ S
+=⟨“Intersection”⟩
+e ∈ S ∧ e ∈ 𝐔 ≡ e ∈ S
+=⟨“Universal set”⟩
+e ∈ S ∧ true ≡ e ∈ S
+=⟨“Identity of ∧”⟩
+e ∈ S ≡ e ∈ S
+=⟨“Identity of ≡”⟩
+true
+
+
+Theorem (11.37) “Identity of ∩”: S ∩ 𝐔 = S
+— CalcCheck: Metavariables: S = S〖〗
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof establishing `(∀ e • e ∈ S ∩ 𝐔 ≡ e ∈ S )`:
+For any ` e`:
+Calculation establishing `e ∈ S ∩ 𝐔 ≡ e ∈ S`:
+e∈S∩𝐔≡e∈S
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found “Intersection”
+— CalcCheck: ─ OK
+e∈S∧e∈𝐔≡e∈S
+= ⟨ “Universal set” ⟩
+— CalcCheck: Found “Universal set”, “Universal
+set”
+— CalcCheck: ─ OK
+e ∈ S ∧ true ≡ e ∈ S
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+e∈S≡e∈S
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+
+
+[55]
+
+
+Theorem (11.39) “Contradiction of ∩”: S ∩ ~ S = {}
+Proof:
+Using “Set extensionality”:
+For any `e`:
+e ∈ S ∩ ~ S ≡ e ∈ {}
+=⟨ “Empty set” ⟩
+e ∈ S ∩ ~ S ≡ false
+=⟨ “Intersection”⟩
+e ∈ S ∧ e ∈ ~ S ≡ false
+=⟨ “Complement”⟩
+e ∈ S ∧ ¬ (e ∈ S) ≡ false
+=⟨ “Contradiction”⟩
+false ≡ false
+=⟨ “Identity of ≡” ⟩
+true
+
+Theorem (11.39) “Contradiction of ∩”: S ∩ ~ S = {}
+— CalcCheck: Metavariables: S = S〖〗
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof establishing `(∀ e • e ∈ S ∩ ~ S ≡ e ∈ {} )`:
+For any ` e`:
+Calculation establishing `e ∈ S ∩ ~ S ≡ e ∈ {}`:
+e ∈ S ∩ ~ S ≡ e ∈ {}
+= ⟨ “Empty set” ⟩
+— CalcCheck: Found “Empty set”
+— CalcCheck: ─ OK
+e ∈ S ∩ ~ S ≡ false
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found “Intersection”
+— CalcCheck: ─ OK
+e ∈ S ∧ e ∈ ~ S ≡ false
+= ⟨ “Complement” ⟩
+— CalcCheck: Found “Complement”
+— CalcCheck: ─ OK
+e ∈ S ∧ ¬ (e ∈ S) ≡ false
+= ⟨ “Contradiction” ⟩
+— CalcCheck: Found (3.42) “Contradiction”
+— CalcCheck: ─ OK
+false ≡ false
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+
+[56]
+
+Singleton Sets
+
+
+[57]
+
+Lemma “Singleton set membership”:
+x ∈ { y } ≡ x = y
+Proof:
+x ∈ { y }
+=⟨ “Reflexivity of =” ⟩
+x ∈ { z ❙ z = y }
+=⟨ “Simple Membership” ⟩
+(z = y)[z ≔ x]
+=⟨ Substitution ⟩
+x = y
+
+
+Lemma “Singleton set membership”: x ∈ { y } ≡ x = y
+Proof:
+Calculation for expected goal `x ∈ { y } ≡ x = y`:
+x∈ {y}
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+x∈ {z❙ z= y}
+= ⟨ “Simple Membership” ⟩
+— CalcCheck: Found (11.7s) “Simple Membership”, (11.7x) “Simple
+Membership”, (11.7∀) “Simple Membership”
+— CalcCheck: ─ OK
+(z = y)[z ≔ x]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+x= y
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[58]
+
+
+Lemma “Singleton set inclusion”:
+{ x } ⊆ S ≡ x ∈ S
+Proof:
+{ x } ⊆ S
+=⟨“Set inclusion”⟩
+∀ e • e ∈ { x } ⇒ e ∈ S
+=⟨“Singleton set membership”⟩
+∀ e • (e = x) ⇒ e ∈ S
+=⟨ “Trading for ∀” (9.2) ⟩
+∀ e ❙ e = x • e ∈ S
+=⟨ “One-point rule for ∀” ⟩
+(e ∈ S)[e ≔ x]
+=⟨ Substitution ⟩
+x ∈ S
+
+Lemma “Singleton set inclusion”: { x } ⊆ S ≡ x ∈ S
+— CalcCheck: Metavariables: S = S〖〗
+Proof:
+Calculation for expected goal `{ x } ⊆ S ≡ x ∈ S`:
+{x} ⊆ S
+= ⟨ “Set inclusion” ⟩
+— CalcCheck: Found (11.13) “Set inclusion”
+— CalcCheck: ─ OK
+(∀ e • e ∈ { x } ⇒ e ∈ S )
+= ⟨ “Singleton set membership” ⟩
+— CalcCheck: Found “Singleton set membership”
+— CalcCheck: ─ OK
+(∀ e • e = x ⇒ e ∈ S )
+= ⟨ “Trading for ∀” (9.2) ⟩
+— CalcCheck: Found (9.2) “Trading for ∀”
+— CalcCheck: ─ OK
+(∀ e ❙ e = x • e ∈ S )
+= ⟨ “One-point rule for ∀” ⟩
+— CalcCheck: Found (8.14) “One-point rule for ∀”
+— CalcCheck: ─ OK
+(e ∈ S)[e ≔ x]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+x∈ S
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[59]
+
+Monotonicity with Respect to Inclusion
+[60]
+
+When proving monotonicity properties, frequently the “Subset membership” theorem shown in Exercise 8.1, “X ⊆ Y ⇒ (x ∈ X ⇒ x ∈
+Y)”, comes in handy — notice that this is actually a monotonicity property, too, showing that “x ∈_” maps “X ⊆ Y” in the set inclusion order
+to “x ∈ X ⇒ x ∈ Y” in the implication order.
+
+
+[61]
+
+
+Theorem “Monotonicity of ∩”: S ⊆ T ⇒ S ∩ U ⊆ T ∩ U
+Proof:
+S ⊆ T
+=⟨ “Set inclusion” ⟩
+∀ e • e ∈ S ⇒ e ∈ T
+⇒⟨ “Body monotonicity of ∀” with “Monotonicity of ∧” ⟩
+∀ e • e ∈ S ∧ e ∈ U ⇒ e ∈ T ∧ e ∈ U
+=⟨ “Intersection” ⟩
+∀ e • e ∈ S ∩ U ⇒ e ∈ T ∩ U
+=⟨ “Subset” ⟩
+S ∩ U ⊆ T ∩ U
+
+
+Theorem “Monotonicity of ∩”: S ⊆ T ⇒ S ∩ U ⊆ T ∩ U
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗, U = U〖〗
+Proof:
+Calculation for expected goal `S ⊆ T ⇒ S ∩ U ⊆ T ∩ U`:
+S⊆T
+= ⟨ “Set inclusion” ⟩
+— CalcCheck: Found (11.13) “Set inclusion”
+— CalcCheck: ─ OK
+(∀ e • e ∈ S ⇒ e ∈ T )
+⇒ ⟨ “Body monotonicity of ∀” with “Monotonicity of ∧” ⟩
+— CalcCheck: Found (9.12) “Monotonicity of ∀”
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Leftmonotonicity of ∧”
+— CalcCheck: ─ OK
+(∀ e • e ∈ S ∧ e ∈ U ⇒ e ∈ T ∧ e ∈ U )
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found “Intersection”
+— CalcCheck: ─ OK
+(∀ e • e ∈ S ∩ U ⇒ e ∈ T ∩ U )
+= ⟨ “Subset” ⟩
+— CalcCheck: Found (11.13) “Set inclusion”
+— CalcCheck: ─ OK
+S∩U⊆T∩U
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[62]
+
+Theorem “Monotonicity of ∩”: S ⊆ T ⇒ U ⊆ V
+Proof:
+Assuming `S ⊆ T` and using with “Subset”,
+`U ⊆ V` and using with “Subset”:
+S ∩ U ⊆ T ∩ V
+=⟨ “Subset” ⟩
+∀ e • e ∈ S ∩ U ⇒ e ∈ T ∩ V
+=⟨ “Intersection” ⟩
+∀ e • e ∈ S ∧ e ∈ U ⇒ e ∈ T ∧ e ∈ V
+Proof for this:
+For any `e`:
+e ∈ S ∧ e ∈ U
+⇒⟨ “Monotonicity of ∧”
+with Assumption `S ⊆ T`⟩
+e ∈ T ∧ e ∈ U
+⇒⟨ “Monotonicity of ∧”
+with Assumption `U ⊆ V`⟩
+e ∈ T ∧ e ∈ V
+
+
+⇒
+
+S ∩ U ⊆ T ∩ V
+
+Theorem “Monotonicity of ∩”: S ⊆ T ⇒ (U ⊆ V ⇒ S ∩ U ⊆ T ∩ V)
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗, U = U〖〗, V = V
+〖〗
+Proof:
+Assuming `S ⊆ T` and using with “Subset”
+— CalcCheck: Found (11.13) “Set inclusion” , `U ⊆ V` and using with
+“Subset”
+— CalcCheck: Found (11.13) “Set inclusion”:
+— CalcCheck: Assumptions match goal
+Calculation for expected goal `S ∩ U ⊆ T ∩ V`:
+S∩U⊆T∩V
+= ⟨ “Subset” ⟩
+— CalcCheck: Found (11.13) “Set inclusion”
+— CalcCheck: ─ OK
+(∀ e • e ∈ S ∩ U ⇒ e ∈ T ∩ V )
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found “Intersection”
+— CalcCheck: ─ OK
+(∀ e • e ∈ S ∧ e ∈ U ⇒ e ∈ T ∧ e ∈ V )
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Proof for this:
+For any ` e`:
+Calculation for expected goal `e ∈ S ∧ e ∈ U ⇒ e ∈ T ∧ e ∈ V`:
+e∈S∧e∈U
+⇒ ⟨ “Monotonicity of ∧” with Assumption `S ⊆ T` ⟩
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Leftmonotonicity of ∧”
+— CalcCheck: Found assumption `S ⊆ T`
+— CalcCheck: ─ OK
+e∈T∧e∈U
+⇒ ⟨ “Monotonicity of ∧” with Assumption `U ⊆ V` ⟩
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Leftmonotonicity of ∧”
+— CalcCheck: Found assumption `U ⊆ V`
+— CalcCheck: ─ OK
+e∈T∧e∈V
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[63]
+
+Inclusion and Proper Subset
+[64]
+
+[65]
+
+Theorem (11.58) “Reflexivity of ⊆”: X ⊆ X
+Proof:
+Using “Set inclusion”:
+For any `e`:
+e ∈ X ⇒ e ∈ X
+=⟨“Reflexivity of ⇒”⟩
+true
+
+Theorem (11.58) “Reflexivity of ⊆”: X ⊆ X
+— CalcCheck: Metavariables: X = X〖〗
+Proof:
+Using “Set inclusion”:
+— CalcCheck: Found (11.13) “Set inclusion”
+Subproof establishing `(∀ e • e ∈ X ⇒ e ∈ X )`:
+For any ` e`:
+Calculation establishing `e ∈ X ⇒ e ∈ X`:
+e∈X⇒e∈X
+= ⟨ “Reflexivity of ⇒” ⟩
+— CalcCheck: Found (3.80.1) “Reflexivity of ⇒ wrt. ≡”, (3.71)
+“Reflexivity of ⇒”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+
+The more general shape of “Reflexivity of ⊆” below can be derived quite directly (without moving to the membership level) from the version
+shown in LADM and above:
+
+
+[66]
+
+[67]
+
+[68]
+
+[69]
+
+Theorem “Reflexivity of ⊆”: S = T ⇒ S ⊆ T
+Proof:
+S = T ⇒ S ⊆ T
+=⟨ substitution ⟩
+S = T ⇒ (z ⊆ T)[z ≔ S]
+=⟨ “Replacement” ⟩
+S = T ⇒ (z ⊆ T)[z ≔ T]
+=⟨ substitution ⟩
+S = T ⇒ (T ⊆ T)
+=⟨ “Reflexivity of ⊆” ⟩
+S = T ⇒ true
+=⟨ “Right-zero of ⇒” ⟩
+true
+
+
+Theorem “Reflexivity of ⊆”: S = T ⇒ S ⊆ T
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+Proof:
+Calculation for expected goal `S = T ⇒ S ⊆ T`:
+S=T⇒S⊆T
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+S = T ⇒ (z ⊆ T)[z ≔ S]
+= ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+S = T ⇒ (z ⊆ T)[z ≔ T]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+S=T⇒T⊆T
+= ⟨ “Reflexivity of ⊆” ⟩
+— CalcCheck: Found (11.58) “Reflexivity of ⊆”
+— CalcCheck: ─ OK
+S = T ⇒ true
+= ⟨ “Right-zero of ⇒” ⟩
+— CalcCheck: Found (3.72) “Right-zero of ⇒”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Declaration: _⊂_ : set t → set t → 𝔹
+
+Axiom (11.14) “Proper subset” “Definition of ⊂”:
+S ⊂ T ≡
+S ⊆ T ∧ S ≠ T
+
+Declaration: _⊂_ : set t → (set t → 𝔹)
+— CalcCheck: Operator _⊂_: Conjunctional; precedence 50
+
+Axiom (11.14) “Proper subset” “Definition of ⊂”: S ⊂ T ≡ S ⊆ T ∧
+S≠T
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+
+(11.63) “Inclusion in terms of ⊂” can be obtained via a direct equivalence calculation without moving to the membership level:
+
+
+[70]
+
+
+Theorem (11.63) “Inclusion in terms of ⊂”: S ⊆ T ≡ S ⊂ T ∨ S = T
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+Proof:
+Calculation for expected goal `S ⊆ T ≡ S ⊂ T ∨ S = T`:
+S⊂T∨S=T
+= ⟨ “Proper subset” ⟩
+— CalcCheck: Found (11.14) “Proper subset”
+— CalcCheck: ─ OK
+(S ⊆ T ∧ S ≠ T) ∨ S = T
+= ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+(S ⊆ T ∧ ¬ (S = T)) ∨ S = T
+≡ ⟨ “Absorption” ⟩
+— CalcCheck: Found (3.44a) “Absorption”, (3.44b) “Absorption”, (3.43b) “Absorption”,
+(3.43a) “Absorption”, (3.44c) “Absorption”, (3.44d) “Absorption”
+— CalcCheck: ─ OK
+S⊆T∨S=T
+≡ ⟨ “Reflexivity of ⊆” with (3.57) ⟩
+— CalcCheck: Found “Reflexivity of ⊆”, (11.58) “Reflexivity of ⊆”
+— CalcCheck: Found (3.57) “Definition of ⇒ via ∨”
+— CalcCheck: ─ OK
+S⊆T
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem (11.63) “Inclusion in terms of ⊂”:
+S ⊆ T ≡ S ⊂ T ∨ S = T
+Proof:
+S ⊂ T ∨ S = T
+=⟨“Proper subset”⟩
+(S ⊆ T ∧ S ≠ T) ∨ S = T
+=⟨“Definition of ≠”⟩
+(S ⊆ T ∧ ¬ (S = T)) ∨ S = T
+≡⟨ “Absorption” ⟩
+S ⊆ T ∨ S = T
+≡⟨ “Reflexivity of ⊆” with (3.57) ⟩
+S ⊆ T
+
+[71]
+
+Set Difference
+[72]
+
+[73]
+
+Declaration: _-_ : set t → (set t → set t)
+— CalcCheck: Operator _-_: Associating to the left; precedence
+100
+
+Declaration: _-_ : set t → set t → set t
+
+Axiom (11.22) “Set difference”:
+
+
+v ∈ S - T
+
+≡
+
+v ∈ S ∧ ¬ (v ∈ T)
+
+Axiom (11.22) “Set difference”: v ∈ S - T ≡ v ∈ S ∧ ¬ (v ∈
+T)
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+
+
+[74]
+
+[75]
+
+
+Since set difference is defined via membership, proving basic equations about it will require using extensionality:
+
+Theorem (11.52): S ∩ (T - S) = {}
+Proof:
+Using “Set extensionality”:
+For any `e`:
+e ∈ (S ∩ (T - S)) ≡ e ∈ {}
+=⟨ “Intersection” ⟩
+e ∈ S ∧ e ∈ (T - S) ≡ e ∈ {}
+=⟨ “Set difference” ⟩
+e ∈ S ∧ (e ∈ T ∧ ¬(e ∈ S)) ≡ e ∈ {}
+=⟨ “Associativity of ∧” ⟩
+e ∈ S ∧ ¬(e ∈ S) ∧ e ∈ T ≡ e ∈ {}
+=⟨ “Contradiction” ⟩
+false ∧ e ∈ T ≡ e ∈ {}
+=⟨ “Zero of ∧” ⟩
+false ≡ e ∈ {}
+=⟨ “Empty set” , “Identity of ≡” ⟩
+true
+
+
+Theorem (11.52): S ∩ (T - S) = {}
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof establishing `(∀ e • e ∈ S ∩ (T - S) ≡ e ∈ {} )`:
+For any ` e`:
+Calculation establishing `e ∈ S ∩ (T - S) ≡ e ∈ {}`:
+e ∈ S ∩ (T - S) ≡ e ∈ {}
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found “Intersection”
+— CalcCheck: ─ OK
+e ∈ S ∧ e ∈ T - S ≡ e ∈ {}
+= ⟨ “Set difference” ⟩
+— CalcCheck: Found (11.22) “Set difference”
+— CalcCheck: ─ OK
+e ∈ S ∧ (e ∈ T ∧ ¬ (e ∈ S)) ≡ e ∈ {}
+= ⟨ “Associativity of ∧” ⟩
+— CalcCheck: Found (3.37) “Associativity of
+∧”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+e ∈ S ∧ (¬ (e ∈ S) ∧ e ∈ T) ≡ e ∈ {}
+= ⟨ “Contradiction” ⟩
+— CalcCheck: Found (3.42) “Contradiction”
+— CalcCheck: ─ OK
+false ∧ e ∈ T ≡ e ∈ {}
+= ⟨ “Zero of ∧” ⟩
+— CalcCheck: Found (3.40) “Zero of ∧”
+— CalcCheck: ─ OK
+false ≡ e ∈ {}
+= ⟨ “Empty set”, “Identity of ≡” ⟩
+— CalcCheck: Found “Empty set”
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+
+
+[76]
+
+1,1
+
+
+Theorem (11.54): S - (T ∪ U) = (S - T) ∩ (S - U)
+Theorem (11.54): S - (T ∪ U) = (S - T) ∩ (S - U)
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗, U = U〖〗
+Proof:
+Proof:
+Using “Set extensionality”:
+Using “Set extensionality”:
+For any `e`:
+— CalcCheck: Found (11.4) “Set extensionality”
+e ∈ (S - (T ∪ U)) ≡ e ∈ ((S - T) ∩ (S - U))
+Subproof establishing `(∀ e • e ∈ S - (T ∪ U) ≡ e ∈ (S - T) ∩ (S - U) )`:
+=⟨“Set difference”⟩
+For any ` e`:
+(e ∈ S) ∧ ¬(e ∈ (T ∪ U)) ≡ e ∈ ((S - T) ∩ (S Calculation establishing `e ∈ S - (T ∪ U) ≡ e ∈ (S - T) ∩ (S - U)`:
+=⟨“Intersection”⟩
+e ∈ S - (T ∪ U) ≡ e ∈ (S - T) ∩ (S - U)
+(e ∈ S) ∧ ¬(e ∈ (T ∪ U)) ≡ e ∈ (S - T) ∧ e ∈ (
+= ⟨ “Set difference” ⟩
+=⟨“Set difference”⟩
+— CalcCheck: Found (11.22) “Set difference”
+(e ∈ S) ∧ ¬(e ∈ (T ∪ U)) ≡ ((e ∈ S) ∧ ¬(e ∈ T)
+— CalcCheck: ─ OK
+e ∈ S ∧ ¬ (e ∈ T ∪ U) ≡ e ∈ (S - T) ∩ (S - U)
+=⟨“Associativity of ∧” , “Idempotency of ∧”⟩
+= ⟨ “Intersection” ⟩
+(e ∈ S) ∧ ¬(e ∈ (T ∪ U)) ≡ (¬(e ∈ T) ∧ (e ∈ S)
+— CalcCheck: Found “Intersection”
+=⟨“Union” , “De Morgan” , “Identity of ≡”⟩
+— CalcCheck: ─ OK
+true
+e ∈ S ∧ ¬ (e ∈ T ∪ U) ≡ e ∈ S - T ∧ e ∈ S - U
+= ⟨ “Set difference” ⟩
+— CalcCheck: Found (11.22) “Set difference”
+— CalcCheck: ─ OK
+e ∈ S ∧ ¬ (e ∈ T ∪ U) ≡ (e ∈ S ∧ ¬ (e ∈ T)) ∧ (e ∈ S ∧ ¬ (e ∈ U))
+= ⟨ “Associativity of ∧”, “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.37) “Associativity of ∧”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+e ∈ S ∧ ¬ (e ∈ T ∪ U) ≡ ¬ (e ∈ T) ∧ (e ∈ S ∧ ¬ (e ∈ U))
+= ⟨ “Union”, “De Morgan”, “Identity of ≡” ⟩
+— CalcCheck: Found “Union”
+— CalcCheck: Found (3.47a) “De Morgan”, (3.47b) “De Morgan”, (3.47c)
+“De Morgan”, (3.47d) “De Morgan”
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+
+Check and Save
+
+
+Save
+
+

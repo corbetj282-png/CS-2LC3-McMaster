@@ -1,0 +1,231 @@
+[1]
+
+Preloaded here is:
+All propositional logic, including monotonicity laws, and Leibniz as axiom and substitution laws
+Universal quantification
+Inductive theory of natural numbers, including order, and sum quantification.
+Evaluation is disabled, but Facts can be used.
+First prove some auxiliary theorems that will be useful below — all three can be shown without induction, based on the preloaded material:
+
+[2]
+
+Theorem “Multiplying by 2”: 2 · x = x + x
+Proof:
+2 · x
+=⟨ Fact `2 = 1 + 1` , “Distributivity of · over +” , “Identity of ·”⟩
+x + x
+
+
+Theorem “Multiplying by 2”: 2 · x = x + x
+Proof:
+Calculation for expected goal `2 · x = x + x`:
+2·x
+= ⟨ Fact `2 = 1 + 1`, “Distributivity of · over +”, “Identity of
+·” ⟩
+— CalcCheck: Found “Distributivity of · over +”
+— CalcCheck: Found “Identity of ·”
+— CalcCheck: ─ OK
+x+ x
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[3]
+
+[4]
+
+[5]
+
+
+Axiom (15.38) “At most” “Definition of ≤”: a ≤ b ≡ a < b ∨ a = b
+
+Axiom (15.38) “At most” “Definition of ≤”: a ≤ b ≡ a < b ∨ a
+=b
+
+Theorem “Split ≤-<-suc range at top” “Split r Theorem “Split ≤-<-suc range at top” “Split range at top”: m ≤ n ⇒ (m ≤ i < suc n ≡ m ≤ i < n ∨ i =
+m ≤ n ⇒ (m ≤ i < suc n ≡ m ≤ i < n ∨ i n)
+Proof:
+Proof:
+Assuming `m ≤ n`:
+Assuming `m ≤ n`:
+— CalcCheck: Assumption matches goal
+m ≤ i ∧ i < suc n
+Calculation for expected goal `m ≤ i < suc n ≡ m ≤ i < n ∨ i = n`:
+=⟨ “Less than successor” ⟩
+m ≤ i ∧ i < suc n
+m ≤ i ∧ (i < n ∨ i = n )
+= ⟨ “Less than successor” ⟩
+=⟨ “Distributivity of ∧ over ∨”⟩
+— CalcCheck: Found “Less than successor”
+(m ≤ i ∧ i < n) ∨ (m ≤ i ∧ i = n )
+— CalcCheck: ─ OK
+= ⟨substitution , “Replacement” ⟩
+m ≤ i ∧ (i < n ∨ i = n)
+(m ≤ i ∧ i < n) ∨ ((m ≤ z)[z ≔ n] ∧ i =
+= ⟨ “Distributivity of ∧ over ∨” ⟩
+— CalcCheck: Found (3.46) “Distributivity of ∧ over ∨”
+= ⟨substitution , assumption `m ≤ n` , “Id
+— CalcCheck: ─ OK
+m ≤ i < n ∨ i = n
+(m ≤ i ∧ i < n) ∨ (m ≤ i ∧ i = n)
+= ⟨ Substitution, “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+(m ≤ i ∧ i < n) ∨ ((m ≤ z)[z ≔ n] ∧ i = n)
+= ⟨ Substitution, Assumption `m ≤ n`, “Identity of ∧” ⟩
+— CalcCheck: Found assumption `m ≤ n`
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+m≤ i< n∨ i= n
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Fill in the “?₁”-blanks for proving the following theorem:
+
+
+[6]
+
+
+Theorem “Split off term from ∑ at top”: (∑ i : ℕ ❙ i < suc n • E ) = (∑ i : ℕ ❙ i < n • E ) + E[i ≔ n]
+Proof:
+Calculation for expected goal `(∑ i : ℕ ❙ i < suc n • E ) = (∑ i : ℕ ❙ i < n • E ) + E[i ≔ n]`:
+(∑ i ❙ i < suc n • E )
+= ⟨ “Identity of ∧”, “Zero is least element” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: Found “Zero is least element”
+— CalcCheck: ─ OK
+(∑ i ❙ 0 ≤ i < suc n • E )
+= ⟨ Subproof for `0 ≤ i < suc n ≡ 0 ≤ i < n ∨ i = n`:
+By “Split range at top” with “Zero is least element”
+— CalcCheck: Found “Split ≤-<-suc range at top”
+— CalcCheck: Found “Zero is least element”
+
+⟩
+— CalcCheck: ─ OK
+(∑ i ❙ 0 ≤ i < n ∨ i = n • E )
+= ⟨ “Zero is least element”, “Identity of ∧” ⟩
+— CalcCheck: Found “Zero is least element”
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+(∑ i ❙ i < n ∨ i = n • E )
+= ⟨ “Disjoint range split for ∑” with Subproof for `(∀ i • i < n ∧ i = n ≡ false )`:
+For any ` i`:
+Calculation for expected goal `i < n ∧ i = n ≡ false`:
+i< n∧ i= n
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(z < n)[z ≔ i] ∧ i = n
+≡ ⟨ “Replacement”, Substitution ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c)
+“Replacement”, (3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+n< n∧ i= n
+≡ ⟨ “Irreflexivity of <”, “Zero of ∧” ⟩
+— CalcCheck: Found “Irreflexivity of <”
+— CalcCheck: Found (3.40) “Zero of ∧”
+— CalcCheck: ─ OK
+false
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+⟩
+— CalcCheck: Found (8.16) “Disjoint range split for ∑”
+
+
+Theorem “Split off term from ∑ at top”:
+(∑ i : ℕ ❙ i < suc n • E) = (∑ i : ℕ ❙
+Proof:
+(∑ i ❙ i < suc n • E)
+=⟨ “Identity of ∧”, “Zero is least elem
+(∑ i ❙ 0 ≤ i < suc n • E)
+=⟨ Subproof for `0 ≤ i < suc n ≡ 0 ≤ i
+By “Split range at top” with “Z
+⟩
+(∑ i ❙ 0 ≤ i < n ∨ i = n • E)
+=⟨ “Zero is least element”, “Identity o
+(∑ i ❙ i < n ∨ i = n • E)
+=⟨ “Disjoint range split for ∑”
+with subproof for `∀ i • i < n ∧
+For any `i`:
+i < n ∧ i = n
+≡⟨ substitution ⟩
+(z < n)[z ≔ i] ∧ i = n
+≡⟨ “Replacement”, substitutio
+n < n ∧ i = n
+≡⟨ “Irreflexivity of <”, “Zer
+false
+⟩
+(∑ i ❙ i < n • E) + (∑ i ❙ i = n •
+=⟨ “One-point rule for ∑” ⟩
+(∑ i ❙ i < n • E) + E[i ≔ n]
+
+[7]
+
+— CalcCheck: ─ OK
+(∑ i ❙ i < n • E ) + (∑ i ❙ i = n • E )
+= ⟨ “One-point rule for ∑” ⟩
+— CalcCheck: Found (8.14) “One-point rule for ∑”
+— CalcCheck: ─ OK
+(∑ i ❙ i < n • E ) + E[i ≔ n]
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Prove the following additional “Split off term” theorem; you may orient yourself at the proof skeleton above, and you may need to add lemmas
+about natural numbers.
+
+
+[8]
+
+Theorem “Split off term from ∑ at bottom”:
+m < n ⇒
+(∑ i ❙ m < i ≤ n • E) = (∑ i ❙ suc m < i ≤ n • E) + E
+Proof:
+Assuming `m < n`:
+(∑ i ❙ m < i ≤ n • E)
+
+Theorem “Split off term from ∑ at bottom”: m < n ⇒ (∑ i ❙ m < i ≤ n • E ) = (∑ i ❙ suc
+m < i ≤ n • E ) + E[i ≔ suc m]
+Proof:
+Assuming `m < n`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `(∑ i ❙ m < i ≤ n • E ) = (∑ i ❙ suc m < i ≤ n • E ) +
+E[i ≔ suc m]`:
+(∑ i ❙ m < i ≤ n • E )
+— CalcCheck: Could not match calculation with stated goal.
+
+[9]
+
+Application Exercise
+[10]
+
+Exponentiation is provided here as follows:
+Precedence 115 for: _**_
+Associating to the right: _**_
+Declaration: _**_ : ℕ → ℕ → ℕ
+Axiom “Definition of **”:
+Axiom “Definition of **”:
+
+x **
+0
+= 1
+x ** (suc n) = x · x ** n
+
+Prove the following theorem:
+
+[11]
+
+Theorem “Sum powers of two”: suc (∑ i ❙ i < n • 2 ** i) = 2 ** n
+Proof:
+
+Theorem “Sum powers of two”: suc (∑ i ❙ i < n • 2 ** i ) = 2
+** n
+Proof:
+— CalcCheck: Proof: No proof there!
+
+Check and Save
+
+
+Save
+
+

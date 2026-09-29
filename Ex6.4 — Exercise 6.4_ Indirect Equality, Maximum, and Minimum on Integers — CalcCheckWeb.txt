@@ -1,0 +1,607 @@
+Integers
+
+[1]
+
+Preloaded here is the theory of integers including order essentially following LADM chapter 15.
+On page 308 in LADM, which roughly corresponds to Ex4.4, there is a nameless theorem at the end of the box which actually does have a
+conventional name: “Indirect equality”.
+Indirect equality turns into an occasionally-useful proof method, and therefore is worth remembering: For proving an equality, one may instead
+prove the universally-quantified equivalence of two order statements.
+The natural way to prove indirect equality properties is Using mutual implication:
+
+
+[2]
+
+
+Theorem (15.47) “Indirect Equality” “Indirect Equality from below”: a = b ≡
+(∀ z • z ≤ a ≡ z ≤ b )
+Proof:
+Using “Mutual implication”:
+— CalcCheck: Found (3.80) “Mutual implication”
+Subproof for `a = b ⇒ (∀ z • z ≤ a ≡ z ≤ b )`:
+Assuming `a = b`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `(∀ z • z ≤ a ≡ z ≤ b )`:
+(∀ z • z ≤ a ≡ z ≤ b )
+= ⟨ Assumption `a = b` ⟩
+— CalcCheck: Found assumption `a = b`
+— CalcCheck: ─ OK
+(∀ z • z ≤ b ≡ z ≤ b )
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+(∀ z • true )
+= ⟨ “True ∀ body” ⟩
+— CalcCheck: Found (9.8) “True ∀ body”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `(∀ z • z ≤ a ≡ z ≤ b ) ⇒ a = b`:
+(∀ z • z ≤ a ≡ z ≤ b )
+= ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+(∀ z • z ≤ a ≡ z ≤ b ) ∧ (∀ z • z ≤ a ≡ z ≤ b )
+⇒ ⟨ “Monotonicity of ∧” with “Instantiation” (9.13) ⟩
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Left-monotonicity
+of ∧”
+— CalcCheck: Found (9.13) “Instantiation”
+— CalcCheck: ─ OK
+(z ≤ a ≡ z ≤ b)[z ≔ a] ∧ (z ≤ a ≡ z ≤ b)[z ≔ b]
+= ⟨ Substitution, “Reflexivity of ≤”, “Identity of ≡” ⟩
+— CalcCheck: Found (15.46) “Reflexivity of ≤”
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+a≤b∧b≤a
+= ⟨ “Antisymmetry of ≤” ⟩
+
+
+Theorem (15.47) “Indirect Equality” “Indirect Equality from
+a = b ≡ (∀ z • z ≤ a ≡ z ≤ b)
+Proof:
+Using “Mutual implication”:
+Subproof for `a = b ⇒ (∀ z • z ≤ a ≡ z ≤ b)`:
+Assuming `a = b`:
+(∀ z • z ≤ a ≡ z ≤ b)
+=⟨ Assumption `a = b`⟩
+(∀ z • z ≤ b ≡ z ≤ b)
+=⟨ “Identity of ≡”⟩
+(∀ z • true)
+=⟨ “True ∀ body”⟩
+true
+
+— CalcCheck: Found “Antisymmetry of ≤”, (15.45) “Antisymmetry
+of ≤”
+— CalcCheck: ─ OK
+a=b
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Subproof for `(∀ z • z ≤ a ≡ z ≤ b) ⇒ a = b`:
+(∀ z • z ≤ a ≡ z ≤ b)
+=⟨ “Idempotency of ∧” ⟩
+(∀ z • z ≤ a ≡ z ≤ b) ∧ (∀ z • z ≤ a ≡ z ≤ b)
+⇒⟨ “Monotonicity of ∧” with “Instantiation” (9.13) ⟩
+(z ≤ a ≡ z ≤ b)[z ≔ a] ∧ (z ≤ a ≡ z ≤ b)[z ≔
+=⟨ Substitution, “Reflexivity of ≤”, “Identity of ≡”
+a ≤ b ∧ b ≤ a
+=⟨ “Antisymmetry of ≤” ⟩
+a = b
+
+[3]
+
+From the proof, it should be obvious that this will work for any order, so in particular also for the converse order:
+
+
+[4]
+
+
+Theorem “Indirect Equality” “Indirect Equality from above”: a = b ≡ (∀ z
+• a ≤ z≡ b ≤ z)
+Proof:
+Using “Mutual implication”:
+— CalcCheck: Found (3.80) “Mutual implication”
+Subproof for `a = b ⇒ (∀ z • a ≤ z ≡ b ≤ z )`:
+a = b ⇒ (∀ z • a ≤ z ≡ b ≤ z )
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+a = b ⇒ (∀ z • d ≤ z ≡ b ≤ z )[d ≔ a]
+= ⟨ “Replacement” (3.84b), Substitution ⟩
+— CalcCheck: Found (3.84b) “Replacement”
+— CalcCheck: ─ OK
+a = b ⇒ (∀ z • b ≤ z ≡ b ≤ z )
+= ⟨ “Reflexivity of ≡”, “True ∀ body”, “Right-zero of ⇒” ⟩
+— CalcCheck: Found (3.5) “Reflexivity of ≡”
+— CalcCheck: Found (9.8) “True ∀ body”
+— CalcCheck: Found (3.72) “Right-zero of ⇒”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `(∀ z • a ≤ z ≡ b ≤ z ) ⇒ a = b`:
+(∀ z • a ≤ z ≡ b ≤ z )
+= ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+(∀ z • a ≤ z ≡ b ≤ z ) ∧ (∀ z • a ≤ z ≡ b ≤ z )
+⇒ ⟨ “Monotonicity of ∧” with “Instantiation” (9.13) ⟩
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Leftmonotonicity of ∧”
+— CalcCheck: Found (9.13) “Instantiation”
+— CalcCheck: ─ OK
+(a ≤ z ≡ b ≤ z)[z ≔ a] ∧ (a ≤ z ≡ b ≤ z)[z ≔ b]
+= ⟨ Substitution, “Reflexivity of ≤”, “Identity of ≡” ⟩
+— CalcCheck: Found (15.46) “Reflexivity of ≤”
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+b≤a∧a≤b
+= ⟨ “Antisymmetry of ≤” ⟩
+— CalcCheck: Found “Antisymmetry of ≤”, (15.45)
+“Antisymmetry of ≤”
+
+
+Theorem “Indirect Equality” “Indirect Equality from above”:
+a = b ≡ (∀ z • a ≤ z ≡ b ≤ z)
+Proof:
+Using “Mutual implication”:
+Subproof for `a = b ⇒ (∀ z • a ≤ z ≡ b ≤ z)`:
+a = b ⇒ (∀ z • a ≤ z ≡ b ≤ z)
+=⟨ Substitution ⟩
+a = b ⇒ (∀ z • d ≤ z ≡ b ≤ z)[d ≔ a]
+=⟨ “Replacement” (3.84b), Substitution ⟩
+a = b ⇒ (∀ z • b ≤ z ≡ b ≤ z)
+=⟨ “Reflexivity of ≡”, “True ∀ body”, “Right-zero of ⇒”
+true
+Subproof for `(∀ z • a ≤ z ≡ b ≤ z) ⇒ a = b`:
+(∀ z • a ≤ z ≡ b ≤ z)
+=⟨ “Idempotency of ∧” ⟩
+(∀ z • a ≤ z ≡ b ≤ z) ∧ (∀ z • a ≤ z ≡ b ≤ z)
+⇒⟨ “Monotonicity of ∧” with “Instantiation” (9.13) ⟩
+(a ≤ z ≡ b ≤ z)[z ≔ a] ∧ (a ≤ z ≡ b ≤ z)[z ≔ b]
+=⟨ Substitution, “Reflexivity of ≤”, “Identity of ≡” ⟩
+b ≤ a ∧ a ≤ b
+=⟨ “Antisymmetry of ≤” ⟩
+a = b
+
+[5]
+
+— CalcCheck: ─ OK
+a=b
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+For the definition of the minimum and maximum operators on the integers, we essentially follow LADM section 15.2. An exact rendering of the
+axioms in LADM would be:
+-- Axiom (15.53) (15.53a) “Definition of ↓”:
+-∀ z • z ≤ x ↓ y ≡ z ≤ x ∧ z ≤ y
+-- Axiom (15.53) (15.53b) “Definition of ↑”:
+-∀ z • x ↑ y ≤ z ≡ x ≤ z ∧ y ≤ z
+By (9.16), the single universal quantifications used there do not make any difference. However, the different quantification status of x, y, and z is
+not well-motivated. We could of course switch to quantifying all three variables:
+---
+
+
+∀ x, y • ∀ z • z ≤ x ↓ y ≡ z ≤ x ∧ z ≤ y
+∀ x, y • ∀ z • x ↑ y ≤ z ≡ x ≤ z ∧ y ≤ z
+
+
+However, it is much less cumbersome to just use the version without quantifiers (equivalent by (9.16) to the LADM version):
+[6]
+
+[7]
+
+[8]
+
+[9]
+
+Declaration: _↓_ : ℤ → ℤ → ℤ
+Declaration: _↑_ : ℤ → ℤ → ℤ
+
+Declaration: _↓_ : ℤ → (ℤ → ℤ)
+— CalcCheck: Operator _↓_: Associating to the right; precedence
+90
+Declaration: _↑_ : ℤ → (ℤ → ℤ)
+— CalcCheck: Operator _↑_: Associating to the right; precedence
+90
+
+Axiom (15.53) (15.53a) “Definition of ↓”:
+z ≤ x ↓ y ≡ z ≤ x ∧ z ≤ y
+
+Axiom (15.53) (15.53a) “Definition of ↓”: z ≤ x ↓ y ≡ z ≤ x ∧ z
+≤y
+
+Axiom (15.53) (15.53b) “Definition of ↑”:
+x ↑ y ≤ z ≡ x ≤ z ∧ y ≤ z
+
+Axiom (15.53) (15.53b) “Definition of ↑”: x ↑ y ≤ z ≡ x ≤ z ∧ y
+≤z
+
+For the proof of symmetry of ↓, see LADM pp. 312–313.
+
+
+[10]
+
+[11]
+
+
+Theorem (15.54) “Symmetry of ↓”: x ↓ y = y ↓ x
+Proof:
+Using “Indirect Equality”:
+Subproof for `∀ z • z ≤ x ↓ y ≡ z ≤ y ↓ x`:
+For any `z`:
+z ≤ x ↓ y
+=⟨ “Definition of ↓” ⟩
+z ≤ x ∧ z ≤ y
+=⟨ “Definition of ↓” ⟩
+z ≤ y ↓ x
+
+Theorem (15.54) “Symmetry of ↓”: x ↓ y = y ↓ x
+Proof:
+Using “Indirect Equality”:
+— CalcCheck: Found “Indirect Equality”, (15.47) “Indirect
+Equality”
+Subproof for `(∀ z • z ≤ x ↓ y ≡ z ≤ y ↓ x )`:
+For any ` z`:
+Calculation for expected goal `z ≤ x ↓ y ≡ z ≤ y ↓ x`:
+z≤ x↓y
+= ⟨ “Definition of ↓” ⟩
+— CalcCheck: Found (15.53a) “Definition of ↓”
+— CalcCheck: ─ OK
+z≤ x∧z≤ y
+= ⟨ “Definition of ↓” ⟩
+— CalcCheck: Found (15.53a) “Definition of ↓”
+— CalcCheck: ─ OK
+z≤ y↓x
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem (15.54) “Symmetry of ↑”: x ↑ y = y ↑ x
+Proof:
+Using “Indirect Equality”:
+Subproof for `∀ z • x ↑ y ≤ z ≡ y ↑ x ≤ z`:
+For any `z`:
+x ↑ y ≤ z
+=⟨ “Definition of ↑” ⟩
+x ≤ z ∧ y ≤ z
+=⟨ “Definition of ↑” ⟩
+y ↑ x ≤ z
+
+Theorem (15.54) “Symmetry of ↑”: x ↑ y = y ↑ x
+Proof:
+Using “Indirect Equality”:
+— CalcCheck: Found “Indirect Equality”, (15.47) “Indirect
+Equality”
+Subproof for `(∀ z • x ↑ y ≤ z ≡ y ↑ x ≤ z )`:
+For any ` z`:
+Calculation for expected goal `x ↑ y ≤ z ≡ y ↑ x ≤ z`:
+x↑y≤ z
+= ⟨ “Definition of ↑” ⟩
+— CalcCheck: Found (15.53b) “Definition of ↑”
+— CalcCheck: ─ OK
+x≤ z∧y≤ z
+= ⟨ “Definition of ↑” ⟩
+— CalcCheck: Found (15.53b) “Definition of ↑”
+— CalcCheck: ─ OK
+y↑x≤ z
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[12]
+
+
+Theorem (15.55) “Associativity of ↓”: (x ↓ y) ↓ z = x ↓ (y ↓ z)
+Proof:
+Using “Indirect Equality”:
+Subproof for `∀ b • b ≤ (x ↓ y) ↓ z ≡ b ≤ x ↓ (y ↓ z) `:
+For any `b`:
+b ≤ (x ↓ y) ↓ z
+=⟨ “Definition of ↓” ⟩
+b ≤ (x ↓ y) ∧ b ≤ z
+=⟨ “Definition of ↓” ⟩
+b ≤ x ∧ b ≤ y ∧ b ≤ z
+=⟨ “Associativity of ∧” ⟩
+b ≤ x ∧ (b ≤ y ∧ b ≤ z)
+=⟨ “Definition of ↓” ⟩
+b ≤ x ∧ b ≤ (y ↓ z)
+=⟨ “Definition of ↓” ⟩
+b ≤ x ↓ (y ↓ z)
+
+
+Theorem (15.55) “Associativity of ↓”: (x ↓ y) ↓ z = x ↓ (y ↓ z)
+Proof:
+Using “Indirect Equality”:
+— CalcCheck: Found “Indirect Equality”, (15.47) “Indirect
+Equality”
+Subproof for `(∀ b • b ≤ (x ↓ y) ↓ z ≡ b ≤ x ↓ (y ↓ z) )`:
+For any ` b`:
+Calculation for expected goal `b ≤ (x ↓ y) ↓ z ≡ b ≤ x ↓ (y
+↓ z)`:
+b ≤ (x ↓ y) ↓ z
+= ⟨ “Definition of ↓” ⟩
+— CalcCheck: Found (15.53a) “Definition of ↓”
+— CalcCheck: ─ OK
+b ≤ x↓y∧b ≤ z
+= ⟨ “Definition of ↓” ⟩
+— CalcCheck: Found (15.53a) “Definition of ↓”
+— CalcCheck: ─ OK
+b ≤ x ∧ (b ≤ y ∧ b ≤ z)
+= ⟨ “Associativity of ∧” ⟩
+— CalcCheck: Found (3.37) “Associativity of ∧”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+b ≤ x ∧ (b ≤ y ∧ b ≤ z)
+= ⟨ “Definition of ↓” ⟩
+— CalcCheck: Found (15.53a) “Definition of ↓”
+— CalcCheck: ─ OK
+b ≤ x∧b ≤ y↓z
+= ⟨ “Definition of ↓” ⟩
+— CalcCheck: Found (15.53a) “Definition of ↓”
+— CalcCheck: ─ OK
+b ≤ x ↓ (y ↓ z)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[13]
+
+[14]
+
+
+Theorem (15.55) “Associativity of ↑”: (x ↑ y) ↑ z = x ↑ (y ↑ z)
+Proof:
+Using “Indirect Equality”:
+Subproof for `∀ a • (x ↑ y) ↑ z ≤ a ≡ x ↑ (y ↑ z) ≤ a `:
+For any `a`:
+(x ↑ y) ↑ z ≤ a
+=⟨ “Definition of ↑” ⟩
+x ≤ a ∧ y ≤ a ∧ z ≤ a
+=⟨ “Definition of ↑” ⟩
+x ↑ (y ↑ z) ≤ a
+
+Theorem (15.55) “Associativity of ↑”: (x ↑ y) ↑ z = x ↑ (y ↑ z)
+Proof:
+Using “Indirect Equality”:
+— CalcCheck: Found “Indirect Equality”, (15.47) “Indirect
+Equality”
+Subproof for `(∀ a • (x ↑ y) ↑ z ≤ a ≡ x ↑ (y ↑ z) ≤ a )`:
+For any ` a`:
+Calculation for expected goal `(x ↑ y) ↑ z ≤ a ≡ x ↑ (y ↑ z)
+≤ a`:
+(x ↑ y) ↑ z ≤ a
+= ⟨ “Definition of ↑” ⟩
+— CalcCheck: Found (15.53b) “Definition of ↑”
+— CalcCheck: ─ OK
+x ≤ a ∧ (y ≤ a ∧ z ≤ a)
+= ⟨ “Definition of ↑” ⟩
+— CalcCheck: Found (15.53b) “Definition of ↑”
+— CalcCheck: ─ OK
+x ↑ (y ↑ z) ≤ a
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem (15.56) “Idempotency of ↓”: x ↓ x = x
+Proof:
+Using “Indirect Equality”:
+Subproof for `∀ y • y ≤ x ↓ x ≡ y ≤ x`:
+For any `y`:
+y ≤ x ↓ x ≡ y ≤ x
+= ⟨ “Definition of ↓” , “Idempotency of ∧” , “Identity of ≡”⟩
+true
+
+Theorem (15.56) “Idempotency of ↓”: x ↓ x = x
+Proof:
+Using “Indirect Equality”:
+— CalcCheck: Found “Indirect Equality”, (15.47) “Indirect
+Equality”
+Subproof for `(∀ y • y ≤ x ↓ x ≡ y ≤ x )`:
+For any ` y`:
+Calculation for expected goal `y ≤ x ↓ x ≡ y ≤ x`:
+y≤ x↓x≡ y≤ x
+= ⟨ “Definition of ↓”, “Idempotency of ∧”, “Identity of ≡”
+
+⟩
+— CalcCheck: Found (15.53a) “Definition of ↓”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[15]
+
+
+Theorem (15.56) “Idempotency of ↑”: x ↑ x = x
+Proof:
+Using “Indirect Equality”:
+Subproof for `∀ y • x ↑ x ≤ y ≡ x ≤ y`:
+For any `y`:
+x ↑ x ≤ y ≡ x ≤ y
+= ⟨ “Definition of ↑” , “Idempotency of ∧” , “Identity of ≡”⟩
+true
+
+Theorem (15.56) “Idempotency of ↑”: x ↑ x = x
+Proof:
+Using “Indirect Equality”:
+— CalcCheck: Found “Indirect Equality”, (15.47) “Indirect
+Equality”
+Subproof for `(∀ y • x ↑ x ≤ y ≡ x ≤ y )`:
+For any ` y`:
+Calculation for expected goal `x ↑ x ≤ y ≡ x ≤ y`:
+x↑x≤ y≡ x≤ y
+= ⟨ “Definition of ↑”, “Idempotency of ∧”, “Identity of ≡”
+
+⟩
+— CalcCheck: Found (15.53b) “Definition of ↑”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[16]
+
+[17]
+
+A nice proof for (15.57) is described in LADM:
+
+Theorem (15.57) “Minimum is lower bound”: x ↓ y ≤ x
+Proof:
+x ↓ y ≤ x ∧ x ↓ y ≤ y
+=⟨“Definition of ↓”⟩
+x ↓ y ≤ x ↓ y
+=⟨“Reflexivity of ≤”⟩
+true
+
+
+∧
+
+x ↓ y ≤ y
+
+Theorem (15.57) “Minimum is lower bound”: x ↓ y ≤ x ∧ x ↓ y
+≤y
+Proof:
+Calculation for expected goal `x ↓ y ≤ x ∧ x ↓ y ≤ y`:
+x↓y≤ x∧x↓y≤ y
+= ⟨ “Definition of ↓” ⟩
+— CalcCheck: Found (15.53a) “Definition of ↓”
+— CalcCheck: ─ OK
+x↓y≤ x↓y
+= ⟨ “Reflexivity of ≤” ⟩
+— CalcCheck: Found (15.46) “Reflexivity of ≤”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[18]
+
+[19]
+
+
+Theorem (15.57) “Maximum is upper bound”: x ≤ x ↑ y
+Proof:
+x ≤ x ↑ y ∧ y ≤ x ↑ y
+=⟨“Definition of ↑”⟩
+x ↑ y ≤ x ↑ y
+=⟨“Reflexivity of ≤”⟩
+true
+
+∧
+
+y ≤ x ↑ y
+
+Theorem (15.57) “Maximum is upper bound”: x ≤ x ↑ y ∧ y ≤ x
+↑y
+Proof:
+Calculation for expected goal `x ≤ x ↑ y ∧ y ≤ x ↑ y`:
+x≤ x↑y∧y≤ x↑y
+= ⟨ “Definition of ↑” ⟩
+— CalcCheck: Found (15.53b) “Definition of ↑”
+— CalcCheck: ─ OK
+x↑y≤ x↑y
+= ⟨ “Reflexivity of ≤” ⟩
+— CalcCheck: Found (15.46) “Reflexivity of ≤”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+For “At most via minimum”, the LADM exercises provide the following hint:
+A possible first step is to use the theorem b = c ≡ b ≤ c ∧ c ≤ b.
+
+
+[20]
+
+
+Theorem (15.58) “At most via minimum”: x ≤ y ≡ x ↓ y = x
+Proof:
+x ↓ y = x
+=⟨ “Antisymmetry of ≤” ⟩
+x ↓ y ≤ x ∧ x ≤ x ↓ y
+=⟨ “Minimum is lower bound” ⟩
+true ∧ x ≤ x ↓ y
+=⟨ “Identity of ∧” ⟩
+x ≤ x ↓ y
+=⟨ “Definition of ↓”, “Reflexivity of ≤”, “Identity of ∧” ⟩
+x ≤ y
+
+
+Theorem (15.58) “At most via minimum”: x ≤ y ≡ x ↓ y = x
+Proof:
+Calculation for expected goal `x ≤ y ≡ x ↓ y = x`:
+x↓y= x
+= ⟨ “Antisymmetry of ≤” ⟩
+— CalcCheck: Found “Antisymmetry of ≤”, (15.45)
+“Antisymmetry of ≤”
+— CalcCheck: ─ OK
+x↓y≤ x∧x≤ x↓y
+= ⟨ “Minimum is lower bound” ⟩
+— CalcCheck: Found (15.57) “Minimum is lower bound”
+— CalcCheck: ─ OK
+true ∧ x ≤ x ↓ y
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+x≤ x↓y
+= ⟨ “Definition of ↓”, “Reflexivity of ≤”, “Identity of ∧” ⟩
+— CalcCheck: Found (15.53a) “Definition of ↓”
+— CalcCheck: Found (15.46) “Reflexivity of ≤”
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+x≤ y
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[21]
+
+
+Theorem (15.58) “At most via maximum”: x ≤ y ≡ x ↑ y = y
+Proof:
+x ↑ y = y
+=⟨ “Antisymmetry of ≤”⟩
+x ↑ y ≤ y ∧ y ≤ x ↑ y
+=⟨ “Maximum is upper bound” ⟩
+x ↑ y ≤ y ∧ true
+=⟨ “Identity of ∧”⟩
+x ↑ y ≤ y
+=⟨ “Definition of ↑” , “Reflexivity of ≤” , “Identity of ∧”⟩
+x ≤ y
+
+Theorem (15.58) “At most via maximum”: x ≤ y ≡ x ↑ y = y
+Proof:
+Calculation for expected goal `x ≤ y ≡ x ↑ y = y`:
+x↑y= y
+= ⟨ “Antisymmetry of ≤” ⟩
+— CalcCheck: Found “Antisymmetry of ≤”, (15.45)
+“Antisymmetry of ≤”
+— CalcCheck: ─ OK
+x↑y≤ y∧y≤ x↑y
+= ⟨ “Maximum is upper bound” ⟩
+— CalcCheck: Found (15.57) “Maximum is upper bound”
+— CalcCheck: ─ OK
+x ↑ y ≤ y ∧ true
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+x↑y≤ y
+= ⟨ “Definition of ↑”, “Reflexivity of ≤”, “Identity of ∧” ⟩
+— CalcCheck: Found (15.53b) “Definition of ↑”
+— CalcCheck: Found (15.46) “Reflexivity of ≤”
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+x≤ y
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

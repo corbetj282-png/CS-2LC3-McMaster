@@ -1,0 +1,318 @@
+[1]
+
+Preloaded here are propositional logic, predicate logic (i.e., universal and existential quantification), and integer material including order up to
+Ex4.4 and the following theorems:
+“Multiplying by 2”: 2 · x = x + x
+“Multiplying by 3”: 3 · x = x + x + x
+This Exercise is essentially a continuation of H13, but Evaluation is enabled here.
+
+[2]
+
+Warnings of shapes
+The calculation start expression cannot be proven by a _⇒_-calculation!
+The 10 steps (“proof length”: 13) up to here attempt to prove (...) ⇒ true, which could be shown by “Right-zero of ⇒” in a single
+step!
+are enabled here, but won’t be enabled normally, and in particular will not be enabled on midterms and final exam.
+
+[3]
+
+Very Simple ∀ with ∃ Theorems
+
+
+[4]
+
+
+For the examples here, try different ways to prove them, similar to the different ways shown in H8.2!
+
+[5]
+
+Example 6: The Relation ≤ on the Integers is Total
+
+
+[6]
+
+
+Theorem: (∀ y : ℤ • (∃ x : ℤ • y ≤ x ) )
+Theorem:
+Proof:
+∀ y : ℤ • ∃ x : ℤ • y ≤ x
+For any ` y : ℤ`:
+Proof:
+Calculation for expected goal `(∃ x : ℤ • y ≤ x )`:
+For any `y : ℤ`:
+(∃ x : ℤ • y ≤ x )
+∃ x : ℤ • y ≤ x
+⇐ ⟨ “∃-Introduction” ⟩
+⇐⟨“∃-Introduction”⟩
+— CalcCheck: Found (9.28) “∃-Introduction”, (9.28.1) “∃(y ≤ x)[x ≔ y]
+Introduction”
+=⟨ substitution ⟩
+— CalcCheck: ─ OK
+(y ≤ y)
+(y ≤ x)[x ≔ y]
+=⟨“At most”⟩
+= ⟨ Substitution ⟩
+(y < y ∨ y = y)
+— CalcCheck: ─ OK
+=⟨“Converse of <” , “Double negation” , “Irreflexivity of >”
+y≤ y
+= ⟨ “At most” ⟩
+(false ∨ y = y)
+— CalcCheck: Found (15.38) “At most”
+=⟨“Reflexivity of =”⟩
+— CalcCheck: ─ OK
+(false ∨ true)
+y
+<
+y∨y= y
+=⟨“Zero of ∨”⟩
+=
+⟨
+“Converse
+of <”, “Double negation”, “Irreflexivity of >”, “Definition
+true
+of `false`” ⟩
+— CalcCheck: Found “Converse of <”
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: Found “Irreflexivity of >”
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: ─ OK
+false ∨ y = y
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+false ∨ true
+= ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[7]
+
+Example 7: Addition of Integers has an Identity
+
+
+[8]
+
+[9]
+
+
+Theorem:
+∃ y : ℤ • ∀ x : ℤ • x + y = x
+Proof:
+∃ y : ℤ • ∀ x : ℤ • x + y = x
+⇐⟨ “∃-Introduction” ⟩
+(∀ x : ℤ • x + y = x)[y ≔ 0]
+=⟨ substitution ⟩
+(∀ x : ℤ • x + 0 = x)
+=⟨“Additive identity” , “Reflexivity of =” , “True ∀ body”⟩
+true
+
+Theorem: (∃ y : ℤ • (∀ x : ℤ • x + y = x ) )
+Proof:
+Calculation for expected goal `(∃ y : ℤ • (∀ x : ℤ • x + y = x ) )`:
+(∃ y : ℤ • (∀ x : ℤ • x + y = x ) )
+⇐ ⟨ “∃-Introduction” ⟩
+— CalcCheck: Found (9.28) “∃-Introduction”, (9.28.1) “∃Introduction”
+— CalcCheck: ─ OK
+(∀ x : ℤ • x + y = x )[y ≔ 0]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(∀ x : ℤ • x + 0 = x )
+= ⟨ “Additive identity”, “Reflexivity of =”, “True ∀ body” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: Found (9.8) “True ∀ body”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Example 8: ∀ x : ℤ • ∃ y : ℤ • x + y = 0
+
+
+[10]
+
+
+Theorem:
+∀ x : ℤ • ∃ y : ℤ • x + y = 0
+Proof:
+For any `x : ℤ`:
+∃ y : ℤ • x + y = 0
+⇐⟨ “∃-Introduction”⟩
+(x + y = 0 )[y ≔ - x]
+=⟨ substitution , “Unary minus” , “Reflexivity of =” ⟩
+true
+
+Theorem: (∀ x : ℤ • (∃ y : ℤ • x + y = 0 ) )
+Proof:
+For any ` x : ℤ`:
+Calculation for expected goal `(∃ y : ℤ • x + y = 0 )`:
+(∃ y : ℤ • x + y = 0 )
+⇐ ⟨ “∃-Introduction” ⟩
+— CalcCheck: Found (9.28) “∃-Introduction”, (9.28.1) “∃Introduction”
+— CalcCheck: ─ OK
+(x + y = 0)[y ≔ - x]
+= ⟨ Substitution, “Unary minus”, “Reflexivity of =” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[11]
+
+Example 9: ∀ y : ℤ • ∃ x : ℤ • x · 1 = y
+
+
+[12]
+
+
+Theorem: (∀ y : ℤ • (∃ x : ℤ • x · 1 = y ) )
+Theorem:
+Proof:
+∀ y : ℤ • ∃ x : ℤ • x · 1 = y
+For any ` y : ℤ`:
+Proof:
+Calculation for expected goal `(∃ x : ℤ • x · 1 = y )`:
+For any `y : ℤ`:
+(∃ x : ℤ • x · 1 = y )
+∃ x : ℤ • x · 1 = y
+⇐ ⟨ “∃-Introduction” ⟩
+⇐⟨ “∃-Introduction”⟩
+— CalcCheck: Found (9.28) “∃-Introduction”, (9.28.1) “∃(x · 1 = y)[x ≔ y]
+Introduction”
+=⟨ substitution , “Multiplicative identity” , “Reflexivity of =
+— CalcCheck: ─ OK
+true
+(x · 1 = y)[x ≔ y]
+= ⟨ Substitution, “Multiplicative identity”, “Reflexivity of =” ⟩
+— CalcCheck: Found (15.4) “Multiplicative identity”
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[13]
+
+Slightly More Interesting Problems
+
+
+[14]
+
+
+Theorem: (∀ x : ℤ • (∃ y : ℤ • x + 2 · x = y · x ) )
+Theorem: ∀ x : ℤ • ∃ y : ℤ • x + 2 · x = y · x
+Proof:
+Proof:
+For any ` x : ℤ`:
+For any `x : ℤ`:
+Calculation for expected goal `(∃ y : ℤ • x + 2 · x = y · x )`:
+∃ y : ℤ • x + 2 · x = y · x
+(∃ y : ℤ • x + 2 · x = y · x )
+⇐⟨ “∃-Introduction”⟩
+⇐ ⟨ “∃-Introduction” ⟩
+(x + 2 · x = y · x) [y ≔ 3]
+— CalcCheck: Found (9.28) “∃-Introduction”, (9.28.1) “∃=⟨ substitution , “Multiplicative identity” , “Distributivi
+Introduction”
+(3 · x) = 3 · x
+— CalcCheck: ─ OK
+=⟨ “Reflexivity of =” ⟩
+(x + 2 · x = y · x)[y ≔ 3]
+true
+= ⟨ Substitution, “Multiplicative identity”, “Distributivity of · over +”,
+Fact `1 + 2 = 3` ⟩
+— CalcCheck: Found (15.4) “Multiplicative identity”
+— CalcCheck: Found (15.5) “Distributivity of · over +”
+— CalcCheck: ─ OK
+3 ·x= 3 ·x
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[15]
+
+
+Theorem: (∃ y : ℤ • (∀ x : ℤ • x + 2 · x = y · x ) )
+Theorem: ∃ y : ℤ • ∀ x : ℤ • x + 2 · x = y · x
+Proof:
+Proof:
+Calculation for expected goal `(∃ y : ℤ • (∀ x : ℤ • x + 2 · x = y · x ) )`:
+∃ y : ℤ • ∀ x : ℤ • x + 2 · x = y · x
+(∃ y : ℤ • (∀ x : ℤ • x + 2 · x = y · x ) )
+⇐⟨“∃-Introduction”⟩
+⇐ ⟨ “∃-Introduction” ⟩
+(∀ x : ℤ • x + 2 · x = y · x)[y ≔ 3]
+— CalcCheck: Found (9.28) “∃-Introduction”, (9.28.1) “∃=⟨ substitution , “Multiplicative identity” , “Distributivity of
+Introduction”
+(∀ x : ℤ • 3 · x = 3 · x)
+— CalcCheck: ─ OK
+=⟨ “Reflexivity of =” , “True ∀ body” ⟩
+(∀ x : ℤ • x + 2 · x = y · x )[y ≔ 3]
+true
+= ⟨ Substitution, “Multiplicative identity”, “Distributivity of · over +”, Fact
+`1 + 2 = 3` ⟩
+— CalcCheck: Found (15.4) “Multiplicative identity”
+— CalcCheck: Found (15.5) “Distributivity of · over +”
+— CalcCheck: ─ OK
+(∀ x : ℤ • 3 · x = 3 · x )
+= ⟨ “Reflexivity of =”, “True ∀ body” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: Found (9.8) “True ∀ body”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[16]
+
+How do you prove (∃ x ❙ R • P) ≡ false?
+Aim to use “Generalised De Morgan” to obtain one of the kinds of quantified expressions you have tackled above!
+(And in this case, a case analysis may be needed.)
+
+
+[17]
+
+
+Theorem: (∃ y : ℤ • ∀ x : ℤ • x + y = 7 · x) ≡ Theorem: (∃ y : ℤ • (∀ x : ℤ • x + y = 7 · x ) ) ≡ false
+Proof:
+Proof:
+Calculation for expected goal `(∃ y : ℤ • (∀ x : ℤ • x + y = 7 · x ) ) ≡ false`:
+(∃ y : ℤ • ∀ x : ℤ • x + y = 7 · x) ≡ false
+(∃ y : ℤ • (∀ x : ℤ • x + y = 7 · x ) ) ≡ false
+=⟨ “Definition of `false`” , “¬ connection” ,
+= ⟨ “Definition of `false`”, “¬ connection”, “Definition of ≡”, “Generalised De Morgan” ⟩
+(∀ y : ℤ • ¬(∀ x : ℤ • x + y = 7 · x))
+— CalcCheck: Found (3.8) “Definition of `false`”
+=⟨ ?, “Generalised De Morgan”, “Interchange o
+— CalcCheck: Found (3.11) “¬ connection”
+(∃ y : ℤ • ∀ x : ℤ • ¬ (x + y = 7 · x))
+— CalcCheck: Found “Definition of ≡”
+— CalcCheck: Found (9.18b) “Generalised De Morgan”, (9.18a) “Generalised De Morgan”,
+(9.18c) “Generalised De Morgan”, (9.17) “Generalised De Morgan”
+— CalcCheck: ─ OK
+(∀ y : ℤ • ¬ (∀ x : ℤ • x + y = 7 · x ) )
+= ⟨ “Generalised De Morgan”, “Interchange of quantifications” ⟩
+— CalcCheck: Found (9.18b) “Generalised De Morgan”, (9.18a) “Generalised De Morgan”,
+(9.18c) “Generalised De Morgan”, (9.17) “Generalised De Morgan”
+— CalcCheck: Found (9.29) “Interchange of quantifications”, (9.29.1) “Interchange of
+quantifications”
+— CalcCheck: Timed out! Check for problems and consider splitting into smaller steps!
+(∃ y : ℤ • (∀ x : ℤ • ¬ (x + y = 7 · x) ) )
+— CalcCheck: 1 out of 2 steps not justified
+— CalcCheck: Could not match calculation with stated goal.
+
+Check and Save
+
+
+Save
+
+

@@ -1,0 +1,704 @@
+[1]
+
+Preloaded here are Propositional logic, predicate logic, program correctness material, and integers.
+Four hint items are allowed per hint.
+Ex5.4 is preloaded here as well; note that this provides in particular the following additional theorems for the order on integers beyond Ex4.4:
+“Successor at most”:
+a + 1 ≤ b
+“At least successor”:
+a ≥ b + 1
+“Less than successor”:
+a < b + 1
+“Successor greater”:
+a + 1 > b
+
+≡
+≡
+≡
+≡
+
+a < b
+a > b
+a ≤ b
+a ≥ b
+
+Prove the following auxiliary theorems that may come in useful below:
+
+
+[2]
+
+[3]
+
+
+Theorem “Successor increases”: a < a + 1
+Proof:
+a < a + 1
+=⟨ “Less than successor” ⟩
+a ≤ a
+=⟨ “Reflexivity of ≤”⟩
+true
+
+Theorem “Cancellation of subtraction by addition”: (n - m) + m = n
+Proof:
+(n - m ) + m = n
+=⟨ “Subtraction” , “Associativity of +” ⟩
+n + ((- m) + m) = n
+=⟨ “Unary minus” , “Additive identity” , “Reflexivity of =” ⟩
+true
+
+
+Theorem “Successor increases”: a < a + 1
+Proof:
+Calculation for expected goal `a < a + 1`:
+a<a+1
+= ⟨ “Less than successor” ⟩
+— CalcCheck: Found “Less than successor”
+— CalcCheck: ─ OK
+a≤a
+= ⟨ “Reflexivity of ≤” ⟩
+— CalcCheck: Found (15.46) “Reflexivity of ≤”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem “Cancellation of subtraction by addition”: (n - m) + m
+=n
+Proof:
+Calculation for expected goal `(n - m) + m = n`:
+(n - m) + m = n
+= ⟨ “Subtraction”, “Associativity of +” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: Found (15.1a) “Associativity of +”
+— CalcCheck: ─ OK
+n + (- m + m) = n
+= ⟨ “Unary minus”, “Additive identity”, “Reflexivity of =” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[4]
+
+
+Theorem “Predecessor less than”: a - 1 < b ≡ a ≤ b
+Theorem “Predecessor less than”: a - 1 < b ≡ a ≤ b
+Proof:
+Proof:
+Calculation for expected goal `a - 1 < b ≡ a ≤ b`:
+a - 1 < b
+a-1<b
+=⟨ “Successor at most”⟩
+= ⟨ “Successor at most” ⟩
+(a - 1) + 1 ≤ b
+— CalcCheck: Found “Least greater element”
+=⟨ “Mutual associativity of + and -” , “Subtraction” , “Unary m
+— CalcCheck: ─ OK
+a ≤ b
+(a - 1) + 1 ≤ b
+= ⟨ “Mutual associativity of + and -”, “Subtraction”, “Unary minus”,
+“Additive identity” ⟩
+— CalcCheck: Found (15.25a) “Mutual associativity of + and -”
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+a≤b
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[5]
+
+
+Theorem “Conditional replacement”: (p ⇒ e = f) ⇒ (p ∧ E[z ≔ e] ≡ p ∧ E[z ≔ f])
+Proof:
+Assuming `p ⇒ e = f`:
+— CalcCheck: Assumption matches goal
+Using “Mutual implication”:
+— CalcCheck: Found (3.80) “Mutual implication”
+Subproof for `(p ∧ E[z ≔ e] ⇒ p ∧ E[z ≔ f]) ⇒ (p ∧ E[z ≔ f] ⇒ p ∧ E[z ≔ e])`:
+Assuming `p ∧ E[z ≔ e] ⇒ p ∧ E[z ≔ f]`:
+— CalcCheck: Assumption matches goal
+Assuming `p ∧ E[z ≔ f]`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `p ∧ E[z ≔ e]`:
+p ∧ E[z ≔ e]
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a)
+“Weakening”, (3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+p
+⇒ ⟨ Assumption `p ⇒ e = f` ⟩
+— CalcCheck: Found assumption `p ⇒ e = f`
+— CalcCheck: ─ OK
+e=f
+= ⟨ “Symmetry of =” ⟩
+— CalcCheck: Found (1.3) “Symmetry of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+f= e
+⇒ ⟨ “Leibniz” ⟩
+— CalcCheck: Found (3.83.2) “Leibniz”, (3.83.4) “Leibniz”, (3.83.3) “Leibniz”,
+(3.83.1) “Leibniz”, (1.5) “Leibniz”, (3.83) “Leibniz”
+— CalcCheck: ─ OK
+E[z ≔ f] = E[z ≔ e]
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+true
+— CalcCheck: 1 out of 5 steps not justified
+— CalcCheck: Could not match calculation with stated goal.
+Subproof for `(p ∧ E[z ≔ e] ⇒ p ∧ E[z ≔ f]) ⇒ (p ∧ E[z ≔ f] ⇒ p ∧ E[z ≔ e])`:
+Assuming `p ∧ E[z ≔ e] ⇒ p ∧ E[z ≔ f]`:
+— CalcCheck: Assumption matches goal
+Assuming `p ∧ E[z ≔ f]`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `p ∧ E[z ≔ e]`:
+
+
+Theorem “Conditional replacement”:
+(p ⇒ e = f) ⇒ (p ∧ E[z ≔ e] ≡ p ∧ E[z ≔
+Proof:
+Assuming `p ⇒ e = f`:
+Using “Mutual implication”:
+Subproof for `(p ∧ E[z ≔ e] ⇒ p ∧ E[z
+Assuming `(p ∧ E[z ≔ e] ⇒ p ∧ E[z ≔
+Assuming `p ∧ E[z ≔ f]`:
+p ∧ E[z ≔ e]
+⇒⟨ “Weakening” ⟩
+p
+⇒⟨ assumption `p ⇒ e = f` ⟩
+e = f
+=⟨ “Symmetry of =”⟩
+f = e
+⇒⟨ “Leibniz”⟩
+E[z ≔ f] = E[z ≔ e]
+=⟨ ? ⟩
+true
+Subproof for `(p ∧ E[z ≔ e] ⇒ p ∧ E[z
+Assuming `(p ∧ E[z ≔ e] ⇒ p ∧ E[z ≔
+Assuming `p ∧ E[z ≔ f]`:
+p ∧ E[z ≔ e]
+⇒⟨ “Weakening” ⟩
+p
+⇒⟨ assumption `p ⇒ e = f` ⟩
+e = f
+=⟨ “Symmetry of =”⟩
+f = e
+⇒⟨ “Leibniz”⟩
+E[z ≔ f] = E[z ≔ e]
+=⟨ “Weakening” ⟩
+E[z ≔ f] = E[z ≔ e]
+
+
+p ∧ E[z ≔ e]
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a)
+“Weakening”, (3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+p
+⇒ ⟨ Assumption `p ⇒ e = f` ⟩
+— CalcCheck: Found assumption `p ⇒ e = f`
+— CalcCheck: ─ OK
+e=f
+= ⟨ “Symmetry of =” ⟩
+— CalcCheck: Found (1.3) “Symmetry of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+f= e
+⇒ ⟨ “Leibniz” ⟩
+— CalcCheck: Found (3.83.2) “Leibniz”, (3.83.4) “Leibniz”, (3.83.3) “Leibniz”,
+(3.83.1) “Leibniz”, (1.5) “Leibniz”, (3.83) “Leibniz”
+— CalcCheck: ─ OK
+E[z ≔ f] = E[z ≔ e]
+= ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a)
+“Weakening”, (3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+E[z ≔ f] = E[z ≔ e]
+— CalcCheck: Could not match calculation with stated goal.
+— CalcCheck: Could not justify this `Using` application!
+
+
+[6]
+
+[7]
+
+
+“Conditional replacement” has a usage pattern similar to that of the preloaded “Replacement” theorems, namely surrounded by explicit
+Substitution steps.
+
+For the correctness proofs below, replace all question marks with appropriate material.
+As usual, “⇒⟨ ? ⟩” may need to be expanded into a longer calculation containing any numbers of ≡-steps and ⇒-steps.
+In addition, “? ⟨ ? ⟩” may need to be expanded into a longer calculation containing any numbers of ≡-steps, ⇒-steps, and correctness
+statement steps “ ⇒⁅command⁆ ⟨ ? ⟩ ”.
+
+[8]
+
+The following theorems derived from the “Split off …” theorems of Ex5.4 are available here as well:
+“Split off ∑-term from top of ≤-<-suc range”:
+m ≤ n
+
+⇒
+
+(∑ i : ℤ ❙ m ≤ i < n + 1 • E)
+= (∑ i : ℤ ❙ m ≤ i < n
+• E) + E[i ≔ n]
+
+“Split off ∑-term from top of <-≤-suc range”:
+m ≤ n
+
+⇒
+
+(∑ i : ℤ ❙ m < i ≤ n + 1 • E)
+= (∑ i : ℤ ❙ m < i ≤ n
+• E) + E[i ≔ n + 1]
+
+“Split off ∑-term from top of <-≤ range”:
+m < n
+
+⇒
+
+(∑ i : ℤ ❙ m < i ≤ n • E)
+= (∑ i : ℤ ❙ m < i < n • E) + E[i ≔ n]
+
+“Split off ∑-term from top of ≤-≤ range”:
+m ≤ n
+
+⇒
+
+(∑ i : ℤ ❙ m ≤ i ≤ n • E)
+= (∑ i : ℤ ❙ m ≤ i < n • E) + E[i ≔ n]
+
+Using “Conditional replacement” (from above) with one of these may be useful for proving the theorem below.
+
+
+[9]
+
+
+Theorem “Sum example 1”: true ⇒⁅ (t := b + 1 ⍮ (s := 2 · b + 2 ⍮ while (t ≠ w) do (i := 1 ⍮ (t := t + i ⍮ s := s +
+2 · t)) od)) ⁆ s = (∑ i : ℤ ❙ b < i ≤ w • 2 · i )
+Proof:
+Calculation for expected goal `true ⇒⁅ (t := b + 1 ⍮ (s := 2 · b + 2 ⍮ while (t ≠ w) do (i := 1 ⍮ (t := t + i ⍮ s :=
+s + 2 · t)) od)) ⁆ s = (∑ i : ℤ ❙ b < i ≤ w • 2 · i )`:
+true
+= ⟨ “Reflexivity of ≤”, “Idempotency of ∧” ⟩
+— CalcCheck: Found (15.46) “Reflexivity of ≤”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+b≤b∧b≤b
+⇒ ⟨ “Monotonicity of ∧” with “Split off ∑-term from top of <-≤ range”, “Empty range <_≤”, “Empty range for
+∑” ⟩
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Left-monotonicity of ∧”
+— CalcCheck: Found “Split off ∑-term from top of <-≤ range”
+— CalcCheck: Found “Empty range <_≤”
+— CalcCheck: Found (8.13) “Empty range for ∑”
+— CalcCheck: Could not justify this step!
+(∑ i : ℤ ❙ b < i ≤ b + 1 • 2 · i ) = 0 + (2 · i)[i ≔ b + 1] ∧ b ≤ b
+= ⟨ “Additive identity”, Substitution, “Symmetry of =”, “Less than successor” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: Found (1.3) “Symmetry of =”
+— CalcCheck: Found “Less than successor”
+— CalcCheck: ─ OK
+2 · (b + 1) = (∑ i : ℤ ❙ b < i ≤ b + 1 • 2 · i ) ∧ b < b + 1
+⇒⁅ t := b + 1 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+2 · (b + 1) = (∑ i : ℤ ❙ b < i ≤ t • 2 · i ) ∧ b < t
+= ⟨ “Distributivity of · over +”, “Multiplicative identity” ⟩
+— CalcCheck: Found (15.5) “Distributivity of · over +”
+— CalcCheck: Found (15.4) “Multiplicative identity”
+— CalcCheck: ─ OK
+2 · b + 2 = (∑ i : ℤ ❙ b < i ≤ t • 2 · i ) ∧ b < t
+⇒⁅ s := 2 · b + 2 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+s = (∑ i : ℤ ❙ b < i ≤ t • 2 · i ) ∧ b < t
+⇒⁅ while (t ≠ w) do (i := 1 ⍮ (t := t + i ⍮ s := s + 2 · t)) od ⁆ ⟨ “While” with Subproof establishing `t ≠ w ∧ (s =
+(∑ i : ℤ ❙ b < i ≤ t • 2 · i ) ∧ b < t) ⇒⁅ ((i := 1 ⍮ t := t + i) ⍮ s := s + 2 · t) ⁆ s = (∑ i : ℤ ❙ b < i ≤ t • 2 · i ) ∧ b < t`:
+t ≠ w ∧ (s = (∑ i : ℤ ❙ b < i ≤ t • 2 · i ) ∧ b < t)
+⇒ ⟨ “Weakening” ⟩
+
+
+Theorem “Sum example 1”:
+true
+⇒⁅ t := b + 1 ⍮
+s := 2 · b + 2 ⍮
+while t ≠ w
+do
+i := 1 ⍮
+t := t + i ⍮
+s := s + 2 · t
+od
+⁆
+s = (∑ i : ℤ ❙ b < i ≤ w • 2
+Proof:
+true
+╍╍╍ Precondit
+=⟨ “Reflexivity of ≤” , “Idempoten
+(b ≤ b) ∧ (b ≤ b)
+⇒⟨ “Monotonicity of ∧” with “Spl
+((∑ i : ℤ ❙ b < i ≤ b + 1 • (2
+=⟨“Additive identity” , substituti
+2 · (b + 1) = (∑ i : ℤ ❙ b < i ≤
+⇒⁅ t := b + 1 ⁆⟨ “Assignment” with
+2 · (b + 1) = (∑ i : ℤ ❙ b < i ≤
+= ⟨ “Distributivity of · over +” ,
+2 · b + 2 = (∑ i : ℤ ❙ b < i ≤ t
+⇒⁅ s := 2 · b + 2 ⁆⟨ “Assignment”
+s = (∑ i : ℤ ❙ b < i ≤ t • 2 · i
+⇒⁅ while t ≠ w do
+i := 1 ⍮
+t := t + i ⍮
+s := s + 2 · t
+od ⁆ ⟨ “While” with subproof:
+(t ≠ w) ∧ s = (∑ i : ℤ ❙ b
+⇒ ⟨ “Weakening” ⟩
+s = (∑ i : ℤ ❙ b < i ≤ t •
+= ⟨ ? ⟩
+
+s + 2 · (t + 1) = (∑ i : ℤ
+⇒⁅ i := 1 ⁆⟨ “Assignment” wit
+s + 2 · (t + i) = (∑ i : ℤ
+
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”, (3.76b)
+“Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+s = (∑ i : ℤ ❙ b < i ≤ t • 2 · i ) ∧ b < t
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+s + 2 · (t + 1) = (∑ i : ℤ ❙ b < i ≤ t • 2 · i ) ∧ b < t + 1
+⇒⁅ i := 1 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+s + 2 · (t + i) = (∑ i : ℤ ❙ b < i ≤ t • 2 · i ) ∧ b < t + i
+⇒⁅ t := t + i ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: Could not justify this step!
+s + 2 · t = (∑ i : ℤ ❙ b < i ≤ t • 2 · i ) ∧ b < t
+⇒⁅ s := s + 2 · t ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+s = (∑ i : ℤ ❙ b < i ≤ t • 2 · i ) ∧ b < t
+— CalcCheck: 2 out of 5 steps not justified
+
+⟩
+— CalcCheck: Found “While”
+¬ (t ≠ w) ∧ (s = (∑ i : ℤ ❙ b < i ≤ t • 2 · i ) ∧ b < t)
+= ⟨ “Definition of ≠”, “Double negation” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+t = w ∧ (s = (∑ i : ℤ ❙ b < i ≤ t • 2 · i ) ∧ b < t)
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+t = w ∧ (s = (∑ i : ℤ ❙ b < i ≤ z • 2 · i ) ∧ b < z)[z ≔ t]
+= ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”, (3.84b≡)
+“Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+t = w ∧ (s = (∑ i : ℤ ❙ b < i ≤ z • 2 · i ) ∧ b < z)[z ≔ w]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+t = w ∧ (s = (∑ i : ℤ ❙ b < i ≤ z • 2 · i )[z ≔ w] ∧ b < w)
+= ⟨ “Substitution into ∑”, Substitution ⟩
+— CalcCheck: Found (8.11) “Substitution into ∑”
+— CalcCheck: ─ OK
+
+
+⇒⁅ t := t + i ⁆⟨ “Assignment”
+s + 2 · (t) = (∑ i : ℤ ❙ b
+⇒⁅ s := s + 2 · t ⁆⟨ “Assignm
+s = (∑ i : ℤ ❙ b < i ≤ t •
+⟩
+¬(t ≠ w) ∧ s = (∑ i : ℤ ❙ b < i
+= ⟨ “Definition of ≠” , “Double ne
+(t = w) ∧ s = (∑ i : ℤ ❙ b < i ≤
+= ⟨ substitution ⟩
+(t = w) ∧ (s = (∑ i : ℤ ❙ b < i
+= ⟨ “Replacement” ⟩
+(t = w) ∧ (s = (∑ i : ℤ ❙ b < i
+= ⟨ substitution ⟩
+(t = w) ∧ (s = (∑ i : ℤ ❙ b < i
+= ⟨ “Substitution into ∑” , substi
+(t = w) ∧ (s = (∑ i : ℤ ❙ b < i
+⇒ ⟨ “Weakening” ⟩
+(s = (∑ i : ℤ ❙ b < i ≤ w • 2 ·
+⇒ ⟨ “Weakening” ⟩
+s = (∑ i : ℤ ❙ b < i ≤ w • 2 · i
+t = w ∧ (s = (∑ i : ℤ ❙ b < i ≤ w • 2 · i ) ∧ b < w)
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”, (3.76b)
+“Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+s = (∑ i : ℤ ❙ b < i ≤ w • 2 · i ) ∧ b < w
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”, (3.76b)
+“Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+s = (∑ i : ℤ ❙ b < i ≤ w • 2 · i )
+— CalcCheck: 2 out of 14 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[10]
+
+
+The following theorems derived from the “Split off …” theorems of Ex5.4 are available here as well:
+“Split off ∑-term from bottom of ≤-<-suc range”:
+m ≤ n
+
+⇒
+
+(∑ i : ℤ ❙ m
+≤ i < n + 1 • E)
+= (∑ i : ℤ ❙ m + 1 ≤ i < n + 1 • E) + E[i ≔ m]
+
+“Split off ∑-term from bottom of <-≤-suc range”:
+m ≤ n
+
+⇒
+
+(∑ i : ℤ ❙ m
+< i ≤ n + 1 • E)
+= (∑ i : ℤ ❙ m + 1 < i ≤ n + 1 • E) + E[i ≔ m + 1]
+
+“Split off ∑-term from bottom of ≤-< range”:
+
+
+m < n
+
+⇒
+
+(∑ i : ℤ ❙ m
+≤ i < n • E)
+= (∑ i : ℤ ❙ m + 1 ≤ i < n • E) + E[i ≔ m]
+
+“Split off ∑-term from bottom of ≤-≤ range”:
+m ≤ n
+
+⇒
+
+(∑ i : ℤ ❙ m
+≤ i ≤ n • E)
+= (∑ i : ℤ ❙ m + 1 ≤ i ≤ n • E) + E[i ≔ m]
+
+“Split off ∑-term from bottom of <-≤ range”:
+m < n
+
+⇒
+
+(∑ i : ℤ ❙ m
+< i ≤ n • E)
+= (∑ i : ℤ ❙ m + 1 < i ≤ n • E) + E[i ≔ m + 1]
+
+Using “Conditional replacement” (from above) with one of these may be useful for proving the theorem below.
+
+
+[11]
+
+
+Theorem “Sum example 2”: true ⇒⁅ (s := m - 1 ⍮ (r := m ⍮ while (s ≠ 0) do (n := 1 ⍮ (r := r + n · s ⍮ s := s - n))
+od)) ⁆ r = (∑ n : ℤ ❙ 0 < n ≤ m • n )
+Proof:
+Calculation for expected goal `true ⇒⁅ (s := m - 1 ⍮ (r := m ⍮ while (s ≠ 0) do (n := 1 ⍮ (r := r + n · s ⍮ s := s n)) od)) ⁆ r = (∑ n : ℤ ❙ 0 < n ≤ m • n )`:
+true
+= ⟨ “Reflexivity of ≤”, “Idempotency of ∧” ⟩
+— CalcCheck: Found (15.46) “Reflexivity of ≤”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+m- 1 ≤ m- 1 ∧ m- 1 ≤ m- 1
+= ⟨ “Less than successor”, “Subtraction”, “Associativity of +”, “Unary minus” ⟩
+— CalcCheck: Found “Less than successor”
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: Found (15.1a) “Associativity of +”
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: ─ OK
+m- 1 ≤ m- 1 ∧ m- 1 < m+ 0
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+m- 1 ≤ m- 1 ∧ m- 1 < m
+⇒ ⟨ “Monotonicity of ∧” with “Split off ∑-term from top of <-≤-suc range” ⟩
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Left-monotonicity of ∧”
+— CalcCheck: Found “Split off ∑-term from top of <-≤-suc range”
+— CalcCheck: Could not justify this step!
+(∑ n : ℤ ❙ m - 1 < n ≤ (m - 1) + 1 • n ) = (∑ n : ℤ ❙ (m - 1) + 1 < n ≤ (m - 1) + 1 • n ) + n[n ≔ (m - 1) + 1] ∧
+m- 1 < m
+= ⟨ “Subtraction”, “Associativity of +”, “Unary minus”, “Additive identity” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: Found (15.1a) “Associativity of +”
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+(∑ n : ℤ ❙ m - 1 < n ≤ m • n ) = (∑ n : ℤ ❙ (m - 1) + 1 < n ≤ (m - 1) + 1 • n ) + n[n ≔ m] ∧ m - 1 < m
+= ⟨ “Empty range <_≤”, “Empty range for ∑”, “Additive identity”, Substitution ⟩
+— CalcCheck: Found “Empty range <_≤”
+— CalcCheck: Found (8.13) “Empty range for ∑”
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+(∑ n : ℤ ❙ m - 1 < n ≤ m • n ) = m ∧ m - 1 < m
+= ⟨ “Symmetry of =” ⟩
+
+
+— CalcCheck: Found (1.3) “Symmetry of =”
+Theorem “Sum example 2”:
+— CalcCheck: OK (no change)
+true
+— CalcCheck: ─ OK
+⇒⁅ s := m - 1 ⍮
+m = (∑ n : ℤ ❙ m - 1 < n ≤ m • n ) ∧ m - 1 < m
+r := m ⍮
+⇒⁅ s := m - 1 ⁆ ⟨ “Assignment” with Substitution ⟩
+while s ≠ 0
+— CalcCheck: Found “Assignment”, “Assignment”
+do
+— CalcCheck: ─ OK
+n := 1 ⍮
+m = (∑ n : ℤ ❙ m - 1 < n ≤ m • n )[s ≔ m - 1] ∧ s < m
+= ⟨ “Substitution into ∑”, Substitution ⟩
+r := r + n · s ⍮
+— CalcCheck: Found (8.11) “Substitution into ∑”
+s := s - n
+— CalcCheck: Could not justify this step!
+od
+m
+=
+(∑ n : ℤ ❙ s < n ≤ m • n ) ∧ s < m
+⁆
+⇒⁅ r := m ⁆ ⟨ “Assignment” with Substitution ⟩
+r = (∑ n : ℤ ❙ 0 < n ≤ m • n)
+— CalcCheck: Found “Assignment”, “Assignment”
+Proof:
+— CalcCheck: ─ OK
+true
+r = (∑ n : ℤ ❙ s < n ≤ m • n ) ∧ s < m
+= ⟨ “Reflexivity of ≤” , “Idempotenc
+⇒⁅ while (s ≠ 0) do (n := 1 ⍮ (r := r + n · s ⍮ s := s - n)) od ⁆ ⟨ “While” with Subproof establishing `s ≠ 0 ∧ (r =
+(m - 1 ≤ m - 1) ∧ (m - 1 ≤ m - 1)
+(∑ n : ℤ ❙ s < n ≤ m • n ) ∧ s < m) ⇒⁅ ((n := 1 ⍮ r := r + n · s) ⍮ s := s - n) ⁆ r = (∑ n : ℤ ❙ s < n ≤ m • n ) ∧ s < m`:
+= ⟨ “Less than successor” , “Subtrac
+s ≠ 0 ∧ (r = (∑ n : ℤ ❙ s < n ≤ m • n ) ∧ s < m)
+(m - 1 ≤ m - 1) ∧ (m - 1 < m + 0)
+⇒ ⟨ “Weakening” ⟩
+=⟨“Additive identity”⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”, (3.76b)
+(m - 1 ≤ m - 1) ∧ (m - 1 < m)
+“Weakening”, (3.76c) “Weakening”, “Weakening”
+⇒⟨ “Monotonicity of ∧” with “Split
+— CalcCheck: ─ OK
+((∑ n : ℤ ❙ m - 1 < n ≤ (m - 1) +
+r = (∑ n : ℤ ❙ s < n ≤ m • n ) ∧ s < m
+=⟨ “Subtraction” , “Associativity of
+=⟨?⟩
+((∑ n : ℤ ❙ m - 1 < n ≤ m • n) =
+— CalcCheck: “?” does not prove anything!
+=⟨ “Empty range <_≤” , “Empty range
+r + 1 · s = (∑ n : ℤ ❙ s < n ≤ m • n ) ∧ s - 1 < m
+⇒⁅ n := 1 ⁆ ⟨ “Assignment” with Substitution ⟩
+((∑ n : ℤ ❙ m - 1 < n ≤ m • n) =
+— CalcCheck: Found “Assignment”, “Assignment”
+=⟨ “Symmetry of =”⟩
+— CalcCheck: ─ OK
+m = (∑ n : ℤ ❙ (m - 1) < n ≤ m • n
+r
++
+n · s = (∑ n : ℤ ❙ s < n ≤ m • n ) ∧ s - n < m
+⇒⁅ s := m - 1 ⁆⟨ “Assignment” with s
+⇒⁅ r := r + n · s ⁆ ⟨ “Assignment” with Substitution ⟩
+m = (∑ n : ℤ ❙ (m - 1) < n ≤ m • n
+— CalcCheck: Found “Assignment”, “Assignment”
+=⟨ “Substitution into ∑” , substitut
+— CalcCheck: ─ OK
+m = (∑ n : ℤ ❙ s < n ≤ m • n) ∧ s
+r = (∑ n : ℤ ❙ s < n ≤ m • n ) ∧ s - n < m
+⇒⁅ r := m ⁆⟨ “Assignment” with subst
+=⟨?⟩
+r = (∑ n : ℤ ❙ s < n ≤ m • n) ∧ s
+— CalcCheck: “?” does not prove anything!
+⇒⁅ while s ≠ 0 do
+r = (∑ n : ℤ ❙ s - n < n ≤ m • n ) ∧ s - n < m
+n := 1 ⍮
+⇒⁅ s := s - n ⁆ ⟨ “Assignment” with Substitution ⟩
+r := r + n · s ⍮
+— CalcCheck: Found “Assignment”, “Assignment”
+s := s - n
+— CalcCheck: Could not justify this step!
+od ⁆ ⟨ “While” with subproof:
+r = (∑ n : ℤ ❙ s - n < n ≤ m • n )[s ≔ s - n] ∧ s < m
+(s ≠ 0) ∧ (r = (∑ n : ℤ ❙ s <
+
+
+⇒ ⟨ “Weakening” ⟩
+(r = (∑ n : ℤ ❙ s < n ≤ m • n
+= ⟨ ? ⟩
+r + 1 · s = (∑ n : ℤ ❙ s < n
+⇒⁅ n := 1 ⁆⟨ “Assignment” with
+r + n · s = (∑ n : ℤ ❙ s < n
+⇒⁅ r := r + n · s ⁆⟨ “Assignmen
+r = (∑ n : ℤ ❙ s < n ≤ m • n
+=⟨?⟩
+r = (∑ n : ℤ ❙ s - n < n ≤ m
+⇒⁅ s := s - n ⁆⟨ “Assignment” w
+r = (∑ n : ℤ ❙ s - n < n ≤ m
+=⟨?⟩
+r = (∑ n : ℤ ❙ s < n ≤ m • n
+⟩
+¬(s ≠ 0) ∧ r = (∑ n : ℤ ❙ s < n ≤
+= ⟨ “Definition of ≠” , “Double nega
+(s = 0) ∧ (r = (∑ n : ℤ ❙ z < n ≤
+= ⟨ substitution , “Substitution int
+(s = 0) ∧ (r = (∑ n : ℤ ❙ 0 < n ≤
+⇒⟨ “Weakening”⟩
+(r = (∑ n : ℤ ❙ 0 < n ≤ m • n) ∧
+⇒⟨ “Weakening”⟩
+r = (∑ n : ℤ ❙ 0 < n ≤ m • n)
+
+1,1
+
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+r = (∑ n : ℤ ❙ s < n ≤ m • n ) ∧ s < m
+— CalcCheck: 4 out of 7 steps not justified
+
+⟩
+— CalcCheck: Found “While”
+¬ (s ≠ 0) ∧ (r = (∑ n : ℤ ❙ s < n ≤ m • n ) ∧ s < m)
+= ⟨ “Definition of ≠”, “Double negation”, Substitution, “Replacement” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”, (3.84b≡)
+“Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+s = 0 ∧ (r = (∑ n : ℤ ❙ z < n ≤ m • n ) ∧ z < m)[z ≔ 0]
+
+
+= ⟨ Substitution, “Substitution into ∑”, Substitution ⟩
+— CalcCheck: Found (8.11) “Substitution into ∑”
+— CalcCheck: ─ OK
+s = 0 ∧ (r = (∑ n : ℤ ❙ 0 < n ≤ m • n ) ∧ 0 < m)
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”, (3.76b)
+“Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+r = (∑ n : ℤ ❙ 0 < n ≤ m • n ) ∧ 0 < m
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”, (3.76b)
+“Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+r = (∑ n : ℤ ❙ 0 < n ≤ m • n )
+— CalcCheck: 3 out of 15 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+
+Check and Save
+
+
+Save
+
+

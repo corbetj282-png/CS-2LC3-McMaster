@@ -1,0 +1,944 @@
+[1]
+
+Preloaded here are propositional and predicate logic (but no sets), and natural numbers. For the order ≤ and the strict-order < on ℕ, the
+monotonicity, isotonicity and antitonicity properties are now more consistently named, e.g., “≤-Isotonicity of suc”.
+For these, and for other useful theorems about the natural numbers see the list of preloaded theorems you can access via the “cell action
+menu” that pops up when you click the cell number of a code cell.
+Most proofs here, with two exceptions that are pointed out, can be quite short.
+
+[2]
+
+We have a new type constructor for bags, also called “multisets”:
+Declaration: Bag : Type → Type
+Bag comprehensions ⟅ x ❙ R • E ⟆ work analogously to set comprehensions; they are written using the “bag brackets” ⟅ ... ⟆ (type
+\lbag and \rbag) provided by Unicode.
+Just like set comprehensions without a body expression, bag comprehensions without a body expression are also treated as notational variant of
+comprehensions where the body expression is just the single variable from the declaration part:
+
+
+[3]
+
+[4]
+
+[5]
+
+
+Theorem “Bag abbreviation”:
+⟅ x ❙ P ⟆ = ⟅ x ❙ P • x ⟆
+Proof:
+By “Reflexivity of =”
+
+Theorem “Bag abbreviation”: ⟅ x ❙ P ⟆ = ⟅ x ❙ P • x ⟆
+— CalcCheck: Metavariables: P = P〖x〗
+Proof:
+By “Reflexivity of =”
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: OK (no change)
+
+In the case of multiple variables, an absent body expression is interpreted as the corresponding tuple:
+
+Theorem “Bag abbreviation”:
+⟅ x, y ❙ P ⟆ = ⟅ x, y ❙ P • ⟨ x, y ⟩ ⟆
+Proof:
+By “Reflexivity of =”
+
+Theorem “Bag abbreviation”: ⟅ x, y ❙ P ⟆ = ⟅ x, y ❙ P • ⟨x, y⟩
+⟆
+— CalcCheck: Metavariables: P = P〖x, y〗
+Proof:
+By “Reflexivity of =”
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: OK (no change)
+
+[6]
+
+Bag Membership
+[7]
+
+[8]
+
+[9]
+
+Bag membership (type \inbag for ⋿) shares many properties with set membership:
+
+Precedence 50 for: _⋿_
+Conjunctional: _⋿_
+Declaration: _⋿_ : t → Bag t → 𝔹
+Explanation: e ⋿ B ≔ “item `e` is an element of the bag `B`.”
+
+Precedence 50 for: _⋿_
+Conjunctional: _⋿_
+Declaration: _⋿_ : t → (Bag t → 𝔹)
+— CalcCheck: Operator _⋿_: Conjunctional; precedence 50
+Explanation: e ⋿ B ≔ “item `e` is an element of the bag `B`.”
+
+Since CalcCheck does not yet support metavariables for variable lists, as LADM uses them, we provide separate versions for bound variable
+lists of different lengths for some key axioms here.
+
+
+[10]
+
+[11]
+
+[12]
+
+Axiom (11.79) “Bag membership”:
+F ⋿ ⟅ x ❙ R • E ⟆ ≡ (∃ x ❙ R • F = E)
+Axiom (11.79) “Bag membership”:
+F ⋿ ⟅ x, y ❙ R • E ⟆ ≡ (∃ x, y ❙ R • F = E)
+
+
+Axiom (11.79) “Bag membership”: F ⋿ ⟅ x ❙ R • E ⟆ ≡ (∃ x ❙ R • F =
+E)
+— CalcCheck: Metavariables: E = E〖x〗, F = F〖〗, R = R〖x〗
+— CalcCheck: Proviso: ¬occurs(`x`, `F`)
+Axiom (11.79) “Bag membership”: F ⋿ ⟅ x, y ❙ R • E ⟆ ≡ (∃ x, y ❙ R •
+F=E)
+— CalcCheck: Metavariables: E = E〖x, y〗, F = F〖〗, R = R〖x,
+y〗
+— CalcCheck: Proviso: ¬occurs(`x, y`, `F`)
+
+For such abbreviated bag comprehensions, we also have a simplified version of “Bag membership”:
+
+Theorem “Simple bag membership”:
+e ⋿ ⟅ x ❙ P ⟆ ≡ P[x ≔ e]
+Proof:
+e ⋿ ⟅ x ❙ P ⟆
+≡⟨ “Bag abbreviation” ⟩
+e ⋿ ⟅ x ❙ P • x ⟆
+≡⟨ “Bag membership”⟩
+(∃ x ❙ P • e = x)
+=⟨“Trading for ∃”⟩
+(∃ x ❙ e = x • P)
+=⟨ “One-point rule for ∃”⟩
+P[x ≔ e]
+
+
+Theorem “Simple bag membership”: e ⋿ ⟅ x ❙ P ⟆ ≡ P[x ≔ e]
+— CalcCheck: Metavariables: P = P〖x〗
+Proof:
+Calculation for expected goal `e ⋿ ⟅ x ❙ P ⟆ ≡ P[x ≔ e]`:
+e⋿ ⟅x❙ P⟆
+≡ ⟨ “Bag abbreviation” ⟩
+— CalcCheck: Found “Bag abbreviation”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+e⋿ ⟅x❙ P• x⟆
+≡ ⟨ “Bag membership” ⟩
+— CalcCheck: Found (11.79) “Bag membership”
+— CalcCheck: ─ OK
+(∃ x ❙ P • e = x )
+= ⟨ “Trading for ∃” ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading
+for ∃”
+— CalcCheck: ─ OK
+(∃ x ❙ e = x • P )
+= ⟨ “One-point rule for ∃” ⟩
+— CalcCheck: Found (8.14) “One-point rule for ∃”
+— CalcCheck: ─ OK
+P[x ≔ e]
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[13]
+
+[14]
+
+
+The version corresponding to (11.7) is easily obtained from “Simple bag membership”:
+
+Theorem “Direct bag comprehension membership”:
+∀ x • x ⋿ ⟅ x ❙ P ⟆ ≡ P
+Proof:
+For any `x`:
+x ⋿ ⟅ x ❙ P ⟆
+=⟨ “Simple bag membership”⟩
+P[ x ≔ x]
+=⟨ substitution ⟩
+P
+
+Theorem “Direct bag comprehension membership”: (∀ x • x ⋿ ⟅ x ❙
+P⟆ ≡P)
+— CalcCheck: Metavariables: P = P〖x〗
+Proof:
+For any ` x`:
+Calculation for expected goal `x ⋿ ⟅ x ❙ P ⟆ ≡ P`:
+x⋿ ⟅x❙ P⟆
+= ⟨ “Simple bag membership” ⟩
+— CalcCheck: Found “Simple bag membership”
+— CalcCheck: ─ OK
+P[x ≔ x]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+P
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[15]
+
+Occurrence Counting
+[16]
+
+However, bag membership ⋿ does not define bags in the way that set membership ∈ defines sets.
+That role is taken on by occurrence count, for which we use the same binary _#_ as LADM:
+
+[17]
+
+Declaration: _#_ : A → Bag A → ℕ
+
+
+Declaration: _#_ : A → (Bag A → ℕ)
+— CalcCheck: Operator _#_: Non-associating; precedence
+70
+
+
+[18]
+
+[19]
+
+
+Axiom (11.81) “Bag occurrences”:
+a # ⟅ x : t ❙ R • E ⟆ = ∑ x : t ❙ R ∧ a = E • 1
+Axiom (11.81) “Bag occurrences”:
+a # ⟅ x : t, y : u ❙ R • E ⟆ = ∑ x : t, y : u ❙ R ∧ a = E
+
+Axiom (11.81) “Bag occurrences”: a # ⟅ x : t ❙ R • E ⟆ = (∑ x : t ❙ R ∧ a = E
+•1)
+— CalcCheck: Metavariables: E = E〖x〗, R = R〖x〗
+Axiom (11.81) “Bag occurrences”: a # ⟅ x : t; y : u ❙ R • E ⟆ = (∑ x : t; y : u ❙
+R∧a=E• 1)
+— CalcCheck: Metavariables: E = E〖x, y〗, R = R〖x, y〗
+
+With that we can prove that simple bag comprehensions (that is, without body expression) are rather boring, since they contain each element at
+most once (“proof length” less than 20 is possible):
+
+
+[20]
+
+
+Theorem “Occurrences in simple bag comprehension”:
+a # ⟅ x : t ❙ P ⟆ ≤ 1
+Proof:
+a # ⟅ x : t ❙ P ⟆ ≤ 1
+=⟨ “Bag abbreviation”⟩
+a # ⟅ x : t ❙ P • x ⟆ ≤ 1
+=⟨ “Bag occurrences”⟩
+(∑ x ❙ P ∧ a = x • 1) ≤ 1
+=⟨ “Symmetry of ∧” ⟩
+(∑ x ❙ a = x ∧ P • 1) ≤ 1
+⇒⟨ “Generalised one-point rule for ∑” ⟩
+1[x ≔ a] ≤ 1
+=⟨ substitution , “Reflexivity of ≤” ⟩
+true
+
+Theorem “Occurrences in simple bag comprehension”: a # ⟅ x : t ❙
+P⟆ ≤ 1
+— CalcCheck: Metavariables: P = P〖x〗
+Proof:
+Calculation for expected goal `a # ⟅ x : t ❙ P ⟆ ≤ 1`:
+a # ⟅ x:t ❙ P⟆ ≤ 1
+= ⟨ “Bag abbreviation” ⟩
+— CalcCheck: Found “Bag abbreviation”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+a # ⟅ x:t ❙ P• x⟆ ≤ 1
+= ⟨ “Bag occurrences” ⟩
+— CalcCheck: Found (11.81) “Bag occurrences”
+— CalcCheck: ─ OK
+(∑ x ❙ P ∧ a = x • 1 ) ≤ 1
+= ⟨ “Symmetry of ∧” ⟩
+— CalcCheck: Found (3.36) “Symmetry of ∧”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(∑ x ❙ a = x ∧ P • 1 ) ≤ 1
+= ⟨ “Generalised one-point rule for ∑” ⟩
+— CalcCheck: Found “Generalised one-point rule for ∑”
+— CalcCheck: Could not justify this step!
+1[x ≔ a] ≤ 1
+= ⟨ Substitution, “Reflexivity of ≤” ⟩
+— CalcCheck: Found “Reflexivity of ≤”
+— CalcCheck: ─ OK
+true
+— CalcCheck: 1 out of 5 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+[21]
+
+Extensionality
+
+
+[22]
+
+[23]
+
+
+Lemma “Counting”: (∑ i ❙ i < n • 1) = n
+Proof:
+By induction on `n : ℕ`:
+Base case `(∑ i ❙ i < 0 • 1) = 0`:
+∑ i ❙ i < 0 • 1
+=⟨ “Nothing is less than zero” , “Empty range for ∑” ⟩
+0
+Induction step `(∑ i ❙ i < suc n • 1) = suc n`:
+∑ i ❙ i < suc n • 1
+=⟨ “Split off ∑-term from top of _<-suc range” ⟩
+(∑ i ❙ i < n • 1) + 1[i ≔ n]
+=⟨ Induction hypothesis, Substitution ⟩
+n + 1
+=⟨ “Successor” ⟩
+suc n
+
+Lemma “Counting”: (∑ i ❙ i < n • 1 ) = n
+Proof:
+By induction on `n : ℕ`:
+Base case `(∑ i ❙ i < 0 • 1 ) = 0`:
+Calculation for expected goal `(∑ i ❙ i < 0 • 1 ) = 0`:
+(∑ i ❙ i < 0 • 1 )
+= ⟨ “Nothing is less than zero”, “Empty range for ∑” ⟩
+— CalcCheck: Found “Nothing is less than zero”, “Nothing is
+less than zero”
+— CalcCheck: Found (8.13) “Empty range for ∑”
+— CalcCheck: ─ OK
+0
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∑ i ❙ i < suc n • 1 ) = suc n`:
+Calculation for expected goal `(∑ i ❙ i < suc n • 1 ) = suc n`:
+(∑ i ❙ i < suc n • 1 )
+= ⟨ “Split off ∑-term from top of _<-suc range” ⟩
+— CalcCheck: Found “Split off ∑-term from top of _<-suc
+range”
+— CalcCheck: ─ OK
+(∑ i ❙ i < n • 1 ) + 1[i ≔ n]
+= ⟨ Induction hypothesis, Substitution ⟩
+— CalcCheck: Found induction hypothesis `(∑ i ❙ i < n • 1 ) =
+n`
+— CalcCheck: ─ OK
+n+ 1
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+suc n
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+Since occurrence count takes, for bags, the role that set membership has for sets, bag equality is also defined via occurrence count. Formally:
+
+
+[24]
+
+[25]
+
+Axiom (11.4) “Bag extensionality”:
+B = C ≡ (∀ e • e # B = e # C)
+
+
+Axiom (11.4) “Bag extensionality”: B = C ≡ (∀ e • e # B = e #
+C)
+— CalcCheck: Metavariables: B = B〖〗, C = C〖〗
+— CalcCheck: Proviso: ¬occurs(`e`, `B, C`)
+
+The theorem “Bag reconstruction” allows us to consider every bag as a bag comprehension, analogous to LADM (11.5) for sets. (Proving this
+may also need “proof length” around 20, including possibly an auxiliary theorem.)
+
+
+[26]
+
+[27]
+
+Theorem “Bag reconstruction”:
+B = ⟅ x, i ❙ i < x # B • x ⟆
+Proof:
+Using “Bag extensionality”:
+For any `e`:
+e # ⟅ x, i ❙ i < x # B • x ⟆
+=⟨ “Bag occurrences” ⟩
+∑ x , i ❙ i < x # B ∧ e = x • 1
+=⟨ “Nesting for ∑” ⟩
+∑ x ❙ e = x • ∑ i ❙ i < x # B • 1
+=⟨ “One-point rule for ∑” ⟩
+(∑ i ❙ i < x # B • 1)[x ≔ e]
+=⟨ Substitution ⟩
+∑ i ❙ i < e # B • 1
+=⟨ “Counting” ⟩
+e # B
+
+
+Theorem “Bag reconstruction”: B = ⟅ x, i ❙ i < x # B • x ⟆
+— CalcCheck: Metavariables: B = B〖〗
+— CalcCheck: Proviso: ¬occurs(`i, x`, `B`)
+Proof:
+Using “Bag extensionality”:
+— CalcCheck: Found (11.4) “Bag extensionality”
+Subproof establishing `(∀ e • e # ⟅ x, i ❙ i < x # B • x ⟆ = e # B )`:
+For any ` e`:
+Calculation establishing `e # ⟅ x, i ❙ i < x # B • x ⟆ = e # B`:
+e # ⟅ x, i ❙ i < x # B • x ⟆
+= ⟨ “Bag occurrences” ⟩
+— CalcCheck: Found (11.81) “Bag occurrences”
+— CalcCheck: ─ OK
+(∑ x, i ❙ i < x # B ∧ e = x • 1 )
+= ⟨ “Nesting for ∑” ⟩
+— CalcCheck: Found (8.20.2) “Nesting for ∑”, (8.20.1) “Nesting for
+∑”, (8.20) “Nesting for ∑”
+— CalcCheck: ─ OK
+(∑ x ❙ e = x • (∑ i ❙ i < x # B • 1 ) )
+= ⟨ “One-point rule for ∑” ⟩
+— CalcCheck: Found (8.14) “One-point rule for ∑”
+— CalcCheck: ─ OK
+(∑ i ❙ i < x # B • 1 )[x ≔ e]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(∑ i ❙ i < e # B • 1 )
+= ⟨ “Counting” ⟩
+— CalcCheck: Found “Counting”
+— CalcCheck: ─ OK
+e#B
+— CalcCheck: All steps OK
+
+This comes in useful to prove more general properties of operators that have been defined only for bag comprehensions, such as size #_ below.
+
+[28]
+
+Size
+
+
+[29]
+
+[30]
+
+[31]
+
+[32]
+
+
+LADM defines bag size axiomatically for bag comprehensions:
+
+Declaration: #_ : Bag t → ℕ
+
+Axiom (11.80) “Bag comprehension size”:
+# ⟅ x
+❙ R • E ⟆ = (∑ x
+❙ R • 1)
+Axiom (11.80) “Bag comprehension size”:
+# ⟅ x, y ❙ R • E ⟆ = (∑ x, y ❙ R • 1)
+
+Declaration: #_ : Bag t → ℕ
+— CalcCheck: Operator #_: Non-associating; precedence
+130
+
+Axiom (11.80) “Bag comprehension size”: # ⟅ x ❙ R • E ⟆ = (∑ x ❙ R •
+1)
+— CalcCheck: Metavariables: E = E〖x〗, R = R〖x〗
+Axiom (11.80) “Bag comprehension size”: # ⟅ x, y ❙ R • E ⟆ = (∑ x, y
+❙R• 1)
+— CalcCheck: Metavariables: E = E〖x, y〗, R = R〖x, y〗
+
+Compare this with the definition of set size:
+(11.12) # S = (∑ x ❙ x ∈ S • 1)
+We need “Bag reconstruction” to be able to (easily) achieve the corresponding formulation for bags:
+
+
+[33]
+
+
+Theorem “Bag size”:
+# B = (∑ x, i ❙ i < x # B • 1)
+Proof:
+# B
+=⟨ “Bag reconstruction” ⟩
+# ⟅ x, i ❙ i < x # B • x ⟆
+=⟨ “Bag comprehension size” ⟩
+∑ x, i ❙ i < x # B • 1
+
+Theorem “Bag size”: # B = (∑ x, i ❙ i < x # B • 1 )
+— CalcCheck: Metavariables: B = B〖〗
+— CalcCheck: Proviso: ¬occurs(`i, x`, `B`)
+Proof:
+Calculation for expected goal `# B = (∑ x, i ❙ i < x # B • 1
+)`:
+#B
+= ⟨ “Bag reconstruction” ⟩
+— CalcCheck: Found “Bag reconstruction”
+— CalcCheck: ─ OK
+# ⟅ x, i ❙ i < x # B • x ⟆
+= ⟨ “Bag comprehension size” ⟩
+— CalcCheck: Found (11.80) “Bag comprehension
+size”
+— CalcCheck: ─ OK
+(∑ x, i ❙ i < x # B • 1 )
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[34]
+
+Inclusion
+[35]
+
+[36]
+
+[37]
+
+[38]
+
+We say that one bag is contained in another precisely when for all elements, their occurrence counts on the former are at most their occurrence
+counts in the latter:
+
+Declaration: _⊆_ : Bag t → Bag t → 𝔹
+
+Axiom (11.83) “Subbag” “Definition of ⊆” “Bag inclusion”:
+B ⊆ C ≡ (∀ e • e # B ≤ e # C)
+
+Declaration: _⊆_ : Bag t → (Bag t → 𝔹)
+— CalcCheck: Operator _⊆_: Conjunctional; precedence 50
+
+Axiom (11.83) “Subbag” “Definition of ⊆” “Bag inclusion”: B ⊆ C ≡ (∀ e •
+e#B≤e#C )
+— CalcCheck: Metavariables: B = B〖〗, C = C〖〗
+— CalcCheck: Proviso: ¬occurs(`e`, `B, C`)
+
+With that, it is now quite easy to prove monotonicity of occurrence counting in the bag argument:
+
+
+[39]
+
+
+Theorem “Monotonicity of #”: B ⊆ C ⇒ e # B ≤ e # C
+— CalcCheck: Metavariables: B = B〖〗, C = C〖〗
+Proof:
+Calculation for expected goal `B ⊆ C ⇒ e # B ≤ e # C`:
+B⊆C
+= ⟨ “Subbag” ⟩
+— CalcCheck: Found (11.83) “Subbag”
+— CalcCheck: ─ OK
+(∀ e • e # B ≤ e # C )
+⇒ ⟨ “Instantiation” ⟩
+— CalcCheck: Found (9.13) “Instantiation”, (9.13.2) “Instantiation”,
+(9.13.1) “Instantiation”
+— CalcCheck: ─ OK
+(e # B ≤ e # C)[e ≔ e]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+e#B≤e#C
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem “Monotonicity of #”: B ⊆ C ⇒ e # B ≤ e # C
+Proof:
+B ⊆ C
+=⟨ “Subbag” ⟩
+(∀ e • e # B ≤ e # C)
+⇒ ⟨ “Instantiation”⟩
+(e # B ≤ e # C)[e ≔ e]
+= ⟨ substitution ⟩
+(e # B ≤ e # C)
+
+[40]
+
+Union and Intersection
+[41]
+
+[42]
+
+[43]
+
+For two bags S and T, the element counts in their union S ∪ T add up, while they are the corresponding minima in their intersection S ∩ T.
+
+Declaration: _∪_ , _∩_ : Bag t → (Bag t → Bag t)
+— CalcCheck: Operator _∪_: Associating to the right; precedence
+100
+— CalcCheck: Operator _∩_: Associating to the right; precedence
+100
+
+Declaration: _∪_ , _∩_ : Bag t → Bag t → Bag t
+
+Axiom “Bag union”:
+
+
+e # S ∪ T
+
+=
+
+(e # S)
+
++
+
+(e # T)
+
+Axiom “Bag union”: e # S ∪ T = (e # S) + (e # T)
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+
+
+[44]
+
+Axiom “Bag intersection”:
+
+
+e # S ∩ T
+
+=
+
+(e # S)
+
+↓
+
+(e # T)
+
+Axiom “Bag intersection”: e # S ∩ T = (e # S) ↓ (e # T)
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+
+[45]
+
+Basic Properties of Union
+[46]
+
+[47]
+
+Bag equalities such as the following will typically need to be proven using “Bag extensionality”:
+
+Theorem “Symmetry of bag union”: S ∪ T = T ∪ S
+Proof:
+Using “Bag extensionality”:
+For any `e`:
+e # S ∪ T
+=⟨“Bag union”⟩
+(e # S) + (e # T)
+=⟨“Symmetry of +”⟩
+(e # T) + (e # S)
+=⟨“Bag union”⟩
+e # T ∪ S
+
+
+Theorem “Symmetry of bag union”: S ∪ T = T ∪ S
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+Proof:
+Using “Bag extensionality”:
+— CalcCheck: Found (11.4) “Bag extensionality”
+Subproof establishing `(∀ e • e # S ∪ T = e # T ∪ S )`:
+For any ` e`:
+Calculation establishing `e # S ∪ T = e # T ∪ S`:
+e#S∪T
+= ⟨ “Bag union” ⟩
+— CalcCheck: Found “Bag union”
+— CalcCheck: ─ OK
+(e # S) + (e # T)
+= ⟨ “Symmetry of +” ⟩
+— CalcCheck: Found “Symmetry of +”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(e # T) + (e # S)
+= ⟨ “Bag union” ⟩
+— CalcCheck: Found “Bag union”
+— CalcCheck: ─ OK
+e#T∪S
+— CalcCheck: All steps OK
+
+
+[48]
+
+
+Theorem “Associativity of bag union”: S ∪ (T ∪ W) = (S ∪ T) ∪ W
+Proof:
+Using “Bag extensionality”:
+For any `e`:
+e # (S ∪ (T ∪ W))
+=⟨“Bag union”⟩
+(e # S) + (e # (T ∪ W))
+=⟨“Bag union”⟩
+(e # S) + ((e # T) + (e # W))
+=⟨“Associativity of +”⟩
+((e # S) + (e # T)) + (e # W)
+=⟨“Bag union”⟩
+((e # S ∪ T)) + (e # W)
+=⟨“Bag union”⟩
+(e # (S ∪ T) ∪ W)
+
+Theorem “Associativity of bag union”: S ∪ (T ∪ W) = (S ∪ T) ∪
+W
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗, W = W〖〗
+Proof:
+Using “Bag extensionality”:
+— CalcCheck: Found (11.4) “Bag extensionality”
+Subproof establishing `(∀ e • e # S ∪ (T ∪ W) = e # (S ∪ T) ∪
+W )`:
+For any ` e`:
+Calculation establishing `e # S ∪ (T ∪ W) = e # (S ∪ T)
+∪ W`:
+e # S ∪ (T ∪ W)
+= ⟨ “Bag union” ⟩
+— CalcCheck: Found “Bag union”
+— CalcCheck: ─ OK
+(e # S) + (e # T ∪ W)
+= ⟨ “Bag union” ⟩
+— CalcCheck: Found “Bag union”
+— CalcCheck: ─ OK
+(e # S) + ((e # T) + (e # W))
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found “Associativity of +”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+((e # S) + (e # T)) + (e # W)
+= ⟨ “Bag union” ⟩
+— CalcCheck: Found “Bag union”
+— CalcCheck: ─ OK
+(e # S ∪ T) + (e # W)
+= ⟨ “Bag union” ⟩
+— CalcCheck: Found “Bag union”
+— CalcCheck: ─ OK
+e # (S ∪ T) ∪ W
+— CalcCheck: All steps OK
+
+[49]
+
+Bag Difference
+
+
+[50]
+
+[51]
+
+
+Declaration: _-_ : Bag t → Bag t → Bag t
+
+Axiom “Bag difference”:
+
+
+v # S - T
+
+=
+
+(v # S) - (v # T)
+
+Declaration: _-_ : Bag t → (Bag t → Bag t)
+— CalcCheck: Operator _-_: Associating to the left; precedence
+100
+
+Axiom “Bag difference”: v # S - T = (v # S) - (v # T)
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+
+
+[52]
+
+
+Theorem “Bag difference with union”: S - (T ∪ U) = (S - T) - U
+Proof:
+Using “Bag extensionality”:
+For any `e`:
+e # S - (T ∪ U)
+=⟨ “Bag difference”⟩
+(e # S) - (e # (T ∪ U))
+=⟨ “Bag union”⟩
+(e # S) - ((e # T) + (e # U))
+=⟨ “Subtraction of sum”⟩
+(e # S) - (e # T) - (e # U)
+=⟨ “Bag difference”⟩
+(e # S - T) - (e # U)
+=⟨ “Bag difference”⟩
+(e # ((S - T) - U))
+
+
+Theorem “Bag difference with union”: S - (T ∪ U) = (S - T) U
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗, U = U
+〖〗
+Proof:
+Using “Bag extensionality”:
+— CalcCheck: Found (11.4) “Bag extensionality”
+Subproof establishing `(∀ e • e # S - (T ∪ U) = e # (S - T) U )`:
+For any ` e`:
+Calculation establishing `e # S - (T ∪ U) = e # (S - T)
+- U`:
+e # S - (T ∪ U)
+= ⟨ “Bag difference” ⟩
+— CalcCheck: Found “Bag difference”
+— CalcCheck: ─ OK
+(e # S) - (e # T ∪ U)
+= ⟨ “Bag union” ⟩
+— CalcCheck: Found “Bag union”
+— CalcCheck: ─ OK
+(e # S) - ((e # T) + (e # U))
+= ⟨ “Subtraction of sum” ⟩
+— CalcCheck: Found “Subtraction of sum”
+— CalcCheck: ─ OK
+((e # S) - (e # T)) - (e # U)
+= ⟨ “Bag difference” ⟩
+— CalcCheck: Found “Bag difference”
+— CalcCheck: ─ OK
+(e # S - T) - (e # U)
+= ⟨ “Bag difference” ⟩
+— CalcCheck: Found “Bag difference”
+— CalcCheck: ─ OK
+e # (S - T) - U
+— CalcCheck: All steps OK
+
+
+[53]
+
+
+Theorem “Re-adding to monus”: m ≤ n ≡ (n - m) + m = n
+Proof:
+By induction on `m : ℕ`:
+Base case:
+Calculation for expected goal `0 ≤ n ≡ (n - 0) + 0 = n`:
+0≤n
+≡ ⟨ “Zero is least element” ⟩
+— CalcCheck: Found “Zero is least element”
+— CalcCheck: ─ OK
+true
+≡ ⟨ “Right-identity of +”, “Right-identity of subtraction” ⟩
+— CalcCheck: Found “Right-identity of +”
+— CalcCheck: Found “Right-identity of subtraction”
+— CalcCheck: ─ OK
+(n - 0) + 0 = n
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+By induction on `n : ℕ`:
+Base case:
+Calculation for expected goal `suc m ≤ 0 ≡ (0 - suc m) + suc m
+= 0`:
+suc m ≤ 0
+≡ ⟨ “Successor is not at most zero” ⟩
+— CalcCheck: Found “Successor is not at most zero”
+— CalcCheck: ─ OK
+false
+≡ ⟨ “Zero is not successor” ⟩
+— CalcCheck: Found “Zero is not successor”, “Zero is not
+successor”
+— CalcCheck: ─ OK
+suc m = 0
+≡ ⟨ “Left-identity of +”, “Subtraction from zero” ⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: Found “Subtraction from zero”
+— CalcCheck: ─ OK
+(0 - suc m) + suc m = 0
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `suc m ≤ suc n ≡ (suc n - suc m) +
+suc m = suc n`:
+suc m ≤ suc n
+
+
+Theorem “Re-adding to monus”: m ≤ n ≡ (n - m) + m = n
+Proof:
+By induction on `m : ℕ`:
+Base case:
+0 ≤ n
+≡⟨ “Zero is least element” ⟩
+true
+≡⟨ “Right-identity of +”, “Right-identity of subtracti
+(n - 0) + 0 = n
+Induction step:
+By induction on `n : ℕ`:
+Base case:
+suc m ≤ 0
+≡⟨ “Successor is not at most zero” ⟩
+false
+≡⟨ “Zero is not successor” ⟩
+suc m = 0
+≡⟨ “Left-identity of +”, “Subtraction from zero” ⟩
+(0 - suc m) + suc m = 0
+Induction step:
+suc m ≤ suc n
+≡⟨ “Successor”⟩
+(m + 1) ≤ (n + 1)
+≡⟨ “≤-Isotonicity of +” ⟩
+m ≤ n
+≡⟨ Induction hypothesis `m ≤ n ≡ (n - m) + m = n`
+(n - m) + m = n
+≡⟨ “Cancellation of `suc`” ⟩
+suc ((n - m) + m) = suc n
+≡⟨ “Adding the successor” ⟩
+(n - m) + suc m = suc n
+≡⟨ “Subtraction of successor from successor” ⟩
+(suc n - suc m) + suc m = suc n
+
+
+≡ ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+m+ 1 ≤ n+ 1
+≡ ⟨ “≤-Isotonicity of +” ⟩
+— CalcCheck: Found “≤-Isotonicity of +”
+— CalcCheck: ─ OK
+m≤ n
+≡ ⟨ Induction hypothesis `m ≤ n ≡ (n - m) + m = n` ⟩
+— CalcCheck: Found induction hypothesis `m ≤ n ≡ (n - m)
++ m = n`
+— CalcCheck: ─ OK
+(n - m) + m = n
+≡ ⟨ “Cancellation of `suc`” ⟩
+— CalcCheck: Found “Cancellation of `suc`”
+— CalcCheck: ─ OK
+suc ((n - m) + m) = suc n
+≡ ⟨ “Adding the successor” ⟩
+— CalcCheck: Found “Adding the successor”
+— CalcCheck: ─ OK
+(n - m) + suc m = suc n
+≡ ⟨ “Subtraction of successor from successor” ⟩
+— CalcCheck: Found “Subtraction of successor from
+successor”
+— CalcCheck: ─ OK
+(suc n - suc m) + suc m = suc n
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[54]
+
+
+Theorem “Bag inclusion via ∪”: S ⊆ T ≡ S ∪ (T - S) = T
+Proof:
+S ⊆ T
+≡⟨ “Bag inclusion” ⟩
+∀ x • x # S ≤ x # T
+≡⟨ “Re-adding to monus” ⟩
+∀ x • ((x # T) - (x # S)) + (x # S) = x # T
+≡⟨ “Bag difference” ⟩
+∀ x • (x # (T - S)) + (x # S) = x # T
+≡⟨ “Bag union” ⟩
+∀ x • x # (S ∪ (T - S)) = x # T
+≡⟨ “Bag extensionality” ⟩
+S ∪ (T - S) = T
+
+Theorem “Bag inclusion via ∪”: S ⊆ T ≡ S ∪ (T - S) = T
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+Proof:
+Calculation for expected goal `S ⊆ T ≡ S ∪ (T - S) = T`:
+S⊆T
+≡ ⟨ “Bag inclusion” ⟩
+— CalcCheck: Found (11.83) “Subbag”
+— CalcCheck: ─ OK
+(∀ x • x # S ≤ x # T )
+≡ ⟨ “Re-adding to monus” ⟩
+— CalcCheck: Found “Re-adding to monus”
+— CalcCheck: ─ OK
+(∀ x • ((x # T) - (x # S)) + (x # S) = x # T )
+≡ ⟨ “Bag difference” ⟩
+— CalcCheck: Found “Bag difference”
+— CalcCheck: ─ OK
+(∀ x • (x # T - S) + (x # S) = x # T )
+≡ ⟨ “Bag union” ⟩
+— CalcCheck: Found “Bag union”
+— CalcCheck: ─ OK
+(∀ x • x # S ∪ (T - S) = x # T )
+≡ ⟨ “Bag extensionality” ⟩
+— CalcCheck: Found (11.4) “Bag extensionality”
+— CalcCheck: ─ OK
+S ∪ (T - S) = T
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

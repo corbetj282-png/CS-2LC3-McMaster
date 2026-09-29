@@ -1,0 +1,958 @@
+[1]
+
+Preloaded here are
+propositional and predicate logic,
+set theory as presented in Reference Notebook “Set Theory” and Ex7.2, with symmetry and associativity of union and intersection as well
+as the transitivity laws activated,
+relation operations as presented in H15.2, and their properties as presented in Reference Notebook “Basic Relation Operation Properties”,
+In addition, the material of Reference Notebook “Operators Combining Sets and Relations”.
+Prove all theorems below — these are a selection from Reference Notebook “Operators Combining Sets and Relations”, and some of the
+additional theorems there may come in useful here.
+Where the theorems you prove have numbers, you are not allowed to use numbered theorems with equal or larger numbers (or
+theorems occurring after the current theorem in this notebook).
+(Theorems with larger numbers may still be offered by theorem name completion, but will not be accepted by the proof checker.)
+Even though theorem numbers are relevant for which theorems you are allowed to use, you still do not have to refer to theorems by their
+numbers — it remains preferred that you refer to named theorems by (one of) their names.
+Up to four hint items are allowed per hint.
+
+[2]
+
+The preloaded material includes in particular the following for Cartesian products:
+
+
+“Relationship via ×”:
+
+[3]
+
+x ⦗ S × T ⦘ y
+
+≡
+
+x ∈ S ∧ y ∈ T
+
+In this notebook, we will introduce and investigate a few operators defined by the Z notation that take sets and relations as arguments.
+
+[4]
+
+Domain and Range Restrictions
+[5]
+
+The domain and range restrictions have the same precedence as intersection _∩_ and union _∪_, to avoid ambiguities induced by inadvertent
+omission of parentheses.
+The domain restrictions associate to the right, and the range restrictions to the left — only this makes sense given their types.
+The Unicode code points for the symbols for these operators are specified by the Z standard; browsers may unfortunately display them at
+vastly different sizes.
+For input,
+type “\drestr” for “◁” — “domain restriction”,
+type “\ndrestr” for “⩤” — “negated domain restriction”, “domain antirestriction”,
+type “\rrestr” for “▷” — “range restriction”,
+type “\nrrestr” for “⩥” — “negated range restriction”, “range antirestriction”.
+
+[6]
+
+Declaration: _◁_ , _⩤_ : set t₁ → (t₁ ↔ t₂) → (t₁ ↔ t₂)
+Declaration: _▷_ , _⩥_ : (t₁ ↔ t₂) → set t₂ → (t₁ ↔ t₂)
+
+
+Declaration: _◁_ , _⩤_ : set t₁ → (t₁ ↔ t₂ → t₁ ↔ t₂)
+— CalcCheck: Operator _◁_: Associating to the right; precedence
+100
+— CalcCheck: Operator _⩤_: Associating to the right; precedence
+100
+Declaration: _▷_ , _⩥_ : t₁ ↔ t₂ → (set t₂ → t₁ ↔ t₂)
+— CalcCheck: Operator _▷_: Associating to the left; precedence
+100
+— CalcCheck: Operator _⩥_: Associating to the left; precedence
+100
+
+
+[7]
+
+[8]
+
+
+Remember that the maximal set at the type where it is used is the “universal set” “𝐔” (type “\universe” or “\U!”).
+
+Axiom (14.201) “Definition of ◁”:
+Axiom (14.202) “Definition of ▷”:
+Axiom (14.203) “Definition of ⩤”:
+Axiom (14.204) “Definition of ⩥”:
+
+A ◁ R = R ∩ (A × 𝐔)
+R ▷ B = R ∩ (𝐔 × B)
+A ⩤ R = R ∩ (~ A × 𝐔)
+R ⩥ B = R ∩ (𝐔 × ~ B)
+
+Axiom (14.201) “Definition of ◁”: A ◁ R = R ∩ (A × 𝐔)
+— CalcCheck: Metavariables: A = A〖〗, R = R〖〗
+Axiom (14.202) “Definition of ▷”: R ▷ B = R ∩ (𝐔 × B)
+— CalcCheck: Metavariables: B = B〖〗, R = R〖〗
+Axiom (14.203) “Definition of ⩤”: A ⩤ R = R ∩ (~ A × 𝐔)
+— CalcCheck: Metavariables: A = A〖〗, R = R〖〗
+Axiom (14.204) “Definition of ⩥”: R ⩥ B = R ∩ (𝐔 × ~ B)
+— CalcCheck: Metavariables: B = B〖〗, R = R〖〗
+
+[9]
+
+The proofs of the predicate logic translations for the domain and range restrictions are quite straight-forward:
+
+
+[10]
+
+
+Theorem (14.227) “Relationship via ◁” “Domain restriction”:
+x ⦗ A ◁ R ⦘ y ≡ x ∈ A ∧ x ⦗ R ⦘ y
+Proof:
+x ⦗ A ◁ R ⦘ y
+=⟨“Definition of ◁”⟩
+x ⦗ (R ∩ (A × 𝐔 )) ⦘ y
+=⟨“Relation intersection”⟩
+x ⦗ R ⦘ y ∧ x ⦗ (A × 𝐔 ) ⦘ y
+=⟨“Relationship via ×” , “Universal set” , “Identity of ∧”
+x ∈ A ∧ x ⦗ R ⦘ y
+
+
+Theorem (14.227) “Relationship via ◁” “Domain restriction”: x ⦗ A ◁ R ⦘ y
+≡ x∈A∧ x⦗ R ⦘ y
+— CalcCheck: Metavariables: A = A〖〗, R = R〖〗
+Proof:
+Calculation for expected goal `x ⦗ A ◁ R ⦘ y ≡ x ∈ A ∧ x ⦗ R ⦘ y`:
+x⦗A◁ R ⦘ y
+= ⟨ “Definition of ◁” ⟩
+— CalcCheck: Found (14.201) “Definition of ◁”
+— CalcCheck: ─ OK
+x ⦗ R ∩ (A × 𝐔) ⦘ y
+= ⟨ “Relation intersection” ⟩
+— CalcCheck: Found “Relation intersection”
+— CalcCheck: ─ OK
+x⦗ R ⦘ y∧ x⦗A× 𝐔 ⦘ y
+= ⟨ “Relationship via ×”, “Universal set”, “Identity of ∧”, “Symmetry of ∧” ⟩
+— CalcCheck: Found “Relationship via ×”
+— CalcCheck: Found “Universal set”, “Universal set”
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: Found (3.36) “Symmetry of ∧”
+— CalcCheck: ─ OK
+x∈A∧ x⦗ R ⦘ y
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[11]
+
+
+Theorem (14.230) “Relationship via ⩥” “Range antirestrictio Theorem (14.230) “Relationship via ⩥” “Range antirestriction”: x ⦗ R ⩥ B ⦘ y
+≡ x ⦗ R ⦘ y ∧ ¬ (y ∈ B)
+x ⦗ R ⩥ B ⦘ y ≡ x ⦗ R ⦘ y ∧ ¬ (y ∈ B)
+— CalcCheck: Metavariables: B = B〖〗, R = R〖〗
+Proof:
+Proof:
+x ⦗ R ⩥ B ⦘ y
+Calculation for expected goal `x ⦗ R ⩥ B ⦘ y ≡ x ⦗ R ⦘ y ∧ ¬ (y ∈ B)`:
+=⟨“Definition of ⩥”⟩
+x⦗R⩥ B⦘y
+x ⦗ R ∩ (𝐔 × ~ B) ⦘ y
+= ⟨ “Definition of ⩥” ⟩
+=⟨“Relation intersection” , “Relationship via ×” , “Set co
+— CalcCheck: Found (14.204) “Definition of ⩥”
+x ⦗ R ⦘ y ∧ true ∧ ¬ (y ∈ B)
+— CalcCheck: ─ OK
+=⟨“Identity of ∧”⟩
+x ⦗ R ∩ (𝐔 × ~ B) ⦘ y
+x ⦗ R ⦘ y ∧ ¬ (y ∈ B)
+= ⟨ “Relation intersection”, “Relationship via ×”, “Set complement”, “Universal set”
+
+⟩
+— CalcCheck: Found “Relation intersection”
+— CalcCheck: Found “Relationship via ×”
+— CalcCheck: Found (11.18) “Set complement”
+— CalcCheck: Found “Universal set”, “Universal set”
+— CalcCheck: ─ OK
+x ⦗ R ⦘ y ∧ (true ∧ ¬ (y ∈ B))
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+x ⦗ R ⦘ y ∧ ¬ (y ∈ B)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[12]
+
+You’ll want to prove “Domain of ◁” using set extensionality. You may also need additional quantifier theorems (not only here).
+
+
+[13]
+
+[14]
+
+
+Theorem (14.231) “Domain of ◁”: Dom (A ◁ R) = A ∩ Dom R
+Theorem (14.231) “Domain of ◁”: Dom (A ◁ R) = A ∩ Dom R
+— CalcCheck: Metavariables: A = A〖〗, R = R〖〗
+Proof:
+Proof:
+Using “Set extensionality”:
+Using “Set extensionality”:
+For any `x`:
+— CalcCheck: Found (11.4) “Set extensionality”
+x ∈ Dom (A ◁ R)
+Subproof establishing `(∀ x • (x ∈ Dom (A ◁ R)) = (x ∈ Dom R ∩ A) )`:
+=⟨ “Definition of ◁” , “Membership in `Dom`” , “Relati
+For any ` x`:
+∃ y • x ⦗ R ⦘ y ∧ x ∈ A ∧ y ∈ 𝐔
+Calculation establishing `(x ∈ Dom (A ◁ R)) = (x ∈ Dom R ∩ A)`:
+=⟨ “Universal set” , “Identity of ∧” , “Distributivity
+x ∈ Dom (A ◁ R)
+x ∈ Dom R ∧ x ∈ A
+= ⟨ “Definition of ◁”, “Membership in `Dom`”, “Relation intersection”,
+=⟨ “Intersection”⟩
+“Relationship via ×” ⟩
+x ∈ Dom R ∩ A
+— CalcCheck: Found (14.201) “Definition of ◁”
+— CalcCheck: Found “Membership in `Dom`”
+— CalcCheck: Found “Relation intersection”
+— CalcCheck: Found “Relationship via ×”
+— CalcCheck: ─ OK
+(∃ y • x ⦗ R ⦘ y ∧ (x ∈ A ∧ y ∈ 𝐔) )
+= ⟨ “Universal set”, “Identity of ∧”, “Distributivity of ∧ over ∃”,
+“Membership in `Dom`” ⟩
+— CalcCheck: Found “Universal set”, “Universal set”
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: Found (9.21) “Distributivity of ∧ over ∃”
+— CalcCheck: Found “Membership in `Dom`”
+— CalcCheck: ─ OK
+x ∈ Dom R ∧ x ∈ A
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found (11.21) “Set intersection”
+— CalcCheck: ─ OK
+x ∈ Dom R ∩ A
+— CalcCheck: All steps OK
+
+You’ll want to prove “Domain restriction by Dom” using relation extensionality.
+
+
+[15]
+
+[16]
+
+
+Theorem (14.235) “Domain restriction by `Dom`”:
+Proof:
+Using “Relation extensionality”:
+For any `x`, `y`:
+x ⦗ Dom S ◁ S ⦘ y
+=⟨“Relationship via ◁”⟩
+x ∈ Dom S ∧ x ⦗ S ⦘ y
+=⟨“Membership in `Dom`”⟩
+(∃ b • x ⦗ S ⦘ b) ∧ x ⦗ S ⦘ y
+=⟨“Distributivity of ∧ over ∃”⟩
+(∃ b • x ⦗ S ⦘ b ∧ x ⦗ S ⦘ y)
+⇐⟨ “∃-Introduction”⟩
+(x ⦗ S ⦘ b ∧ x ⦗ S ⦘ y)[b ≔ y]
+=⟨ Substitution⟩
+(x ⦗ S ⦘ y ∧ x ⦗ S ⦘ y)
+=⟨ “Idempotency of ∧” ⟩
+x ⦗ S ⦘ y
+
+Dom S ◁ S = S
+
+Theorem (14.235) “Domain restriction by `Dom`”: Dom S ◁ S = S
+— CalcCheck: Metavariables: S = S〖〗
+Proof:
+Using “Relation extensionality”:
+— CalcCheck: Found “Relation extensionality”
+Subproof establishing `(∀ x • (∀ y • x ⦗ Dom S ◁ S ⦘ y ⇐ x ⦗ S ⦘ y ) )`:
+For any ` x`:
+For any ` y`:
+Calculation establishing `x ⦗ Dom S ◁ S ⦘ y ⇐ x ⦗ S ⦘ y`:
+x ⦗ Dom S ◁ S ⦘ y
+= ⟨ “Relationship via ◁” ⟩
+— CalcCheck: Found (14.227) “Relationship via ◁”
+— CalcCheck: ─ OK
+x ∈ Dom S ∧ x ⦗ S ⦘ y
+= ⟨ “Membership in `Dom`” ⟩
+— CalcCheck: Found “Membership in `Dom`”
+— CalcCheck: ─ OK
+(∃ b • x ⦗ S ⦘ b ) ∧ x ⦗ S ⦘ y
+= ⟨ “Distributivity of ∧ over ∃” ⟩
+— CalcCheck: Found (9.21) “Distributivity of ∧ over ∃”
+— CalcCheck: ─ OK
+(∃ b • x ⦗ S ⦘ b ∧ x ⦗ S ⦘ y )
+⇐ ⟨ “∃-Introduction” ⟩
+— CalcCheck: Found (9.28) “∃-Introduction”, (9.28.1)
+“∃-Introduction”
+— CalcCheck: ─ OK
+(x ⦗ S ⦘ b ∧ x ⦗ S ⦘ y)[b ≔ y]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+x⦗S ⦘y∧x⦗S ⦘y
+= ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+x⦗S ⦘y
+— CalcCheck: All steps OK
+— CalcCheck: Could not justify this `Using` application!
+
+These restrictions correspond to composition with subidentities:
+
+
+[17]
+
+
+Theorem (14.237) “Domain restriction via ⨾”:
+A ◁ R = id A ⨾ R
+Proof:
+Using “Relation extensionality”:
+For any `x`, `y`:
+x ⦗ A ◁ R ⦘ y
+=⟨ “Relationship via ◁” ⟩
+x ∈ A ∧ x ⦗ R ⦘ y
+=⟨ Substitution ⟩
+(b ∈ A ∧ b ⦗ R ⦘ y)[b ≔ x]
+=⟨ “One-point rule for ∃” ⟩
+∃ b ❙ b = x • (b ∈ A ∧ b ⦗ R ⦘ y)
+=⟨ “Trading for ∃” , “Symmetry of ∧” ⟩
+∃ b • b = x ∧ (b ∈ A ∧ b ⦗ R ⦘ y)
+=⟨ “Relationship via `id`” ⟩
+∃ b • (x ⦗ id A ⦘ b ∧ b ⦗ R ⦘ y)
+=⟨ “Relation composition” ⟩
+x ⦗ (id A ⨾ R) ⦘ y
+
+
+Theorem (14.237) “Domain restriction via ⨾”: A ◁ R = id A ⨾ R
+— CalcCheck: Metavariables: A = A〖〗, R = R〖〗
+Proof:
+Using “Relation extensionality”:
+— CalcCheck: Found “Relation extensionality”
+Subproof establishing `(∀ x • (∀ y • (x ⦗ A ◁ R ⦘ y) = (x ⦗ id A ⨾ R ⦘
+y) ) )`:
+For any ` x`:
+For any ` y`:
+Calculation establishing `(x ⦗ A ◁ R ⦘ y) = (x ⦗ id A ⨾ R ⦘ y)`:
+x⦗A◁ R ⦘ y
+= ⟨ “Relationship via ◁” ⟩
+— CalcCheck: Found (14.227) “Relationship via ◁”
+— CalcCheck: ─ OK
+x∈A∧ x⦗ R ⦘ y
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(b ∈ A ∧ b ⦗ R ⦘ y)[b ≔ x]
+= ⟨ “One-point rule for ∃” ⟩
+— CalcCheck: Found (8.14) “One-point rule for ∃”
+— CalcCheck: ─ OK
+(∃ b ❙ b = x • b ∈ A ∧ b ⦗ R ⦘ y )
+= ⟨ “Trading for ∃”, “Symmetry of ∧” ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20)
+“Trading for ∃”
+— CalcCheck: Found (3.36) “Symmetry of ∧”
+— CalcCheck: ─ OK
+(∃ b • b = x ∧ (b ∈ A ∧ b ⦗ R ⦘ y) )
+= ⟨ “Relationship via `id`” ⟩
+— CalcCheck: Found “Relationship via `id`”,
+“Relationship via `id`”
+— CalcCheck: ─ OK
+(∃ b • x ⦗ id A ⦘ b ∧ b ⦗ R ⦘ y )
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+x ⦗ id A ⨾ R ⦘ y
+— CalcCheck: All steps OK
+
+
+[18]
+
+[19]
+
+
+This correspondence can be used to easily prove several laws without recourse to relation extensionality:
+
+Theorem (14.241) “Switching ▷ and ◁ in ⨾”:
+(R ▷ B) ⨾ S = R ⨾ (B ◁ S)
+Proof:
+Using “Relation extensionality”:
+For any `x`, `y`:
+x ⦗ R ⨾ (B ◁ S) ⦘ y
+=⟨ “Relation composition”⟩
+∃ b • x ⦗ (R) ⦘ b ∧ b ⦗ B ◁ S ⦘ y
+=⟨ “Relationship via ◁”⟩
+∃ b • x ⦗ (R) ⦘ b ∧ (b ∈ B ∧ b ⦗ S ⦘ y)
+=⟨ “Associativity of ∧”⟩
+∃ b • b ∈ B ∧ x ⦗ (R) ⦘ b ∧ b ⦗ S ⦘ y
+=⟨ “Relationship via ▷” , “Relation composition”⟩
+x ⦗ ((R ▷ B) ⨾ S) ⦘ y
+
+
+Theorem (14.241) “Switching ▷ and ◁ in ⨾”: (R ▷ B) ⨾ S = R ⨾ (B ◁ S)
+— CalcCheck: Metavariables: B = B〖〗, R = R〖〗, S = S〖〗
+Proof:
+Using “Relation extensionality”:
+— CalcCheck: Found “Relation extensionality”
+Subproof establishing `(∀ x • (∀ y • (x ⦗ R ⨾ (B ◁ S) ⦘ y) = (x ⦗ (R ▷
+B) ⨾ S ⦘ y) ) )`:
+For any ` x`:
+For any ` y`:
+Calculation establishing `(x ⦗ R ⨾ (B ◁ S) ⦘ y) = (x ⦗ (R ▷ B) ⨾
+S ⦘ y)`:
+x ⦗ R ⨾ (B ◁ S) ⦘ y
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+(∃ b • x ⦗ R ⦘ b ∧ b ⦗ B ◁ S ⦘ y )
+= ⟨ “Relationship via ◁” ⟩
+— CalcCheck: Found (14.227) “Relationship via ◁”
+— CalcCheck: ─ OK
+(∃ b • x ⦗ R ⦘ b ∧ (b ∈ B ∧ b ⦗ S ⦘ y) )
+= ⟨ “Associativity of ∧” ⟩
+— CalcCheck: Found (3.37) “Associativity of ∧”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(∃ b • b ∈ B ∧ (x ⦗ R ⦘ b ∧ b ⦗ S ⦘ y) )
+= ⟨ “Relationship via ▷”, “Relation composition” ⟩
+— CalcCheck: Found (14.228) “Relationship via ▷”
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+x ⦗ (R ▷ B) ⨾ S ⦘ y
+— CalcCheck: All steps OK
+
+
+[20]
+
+
+Theorem (14.243) “Mutual associativity of ◁ with ⨾”:
+(A ◁ R) ⨾ S = A ◁ (R ⨾ S)
+Proof:
+Using “Relation extensionality”:
+For any `x`, `y`:
+x ⦗ (A ◁ R) ⨾ S ⦘ y
+=⟨ “Relation composition” ⟩
+∃ b • x ⦗ (A ◁ R) ⦘ b ∧ b ⦗ S ⦘ y
+=⟨ “Relationship via ◁” ⟩
+∃ b • x ∈ A ∧ x ⦗ R ⦘ b ∧ b ⦗ S ⦘ y
+=⟨ “Distributivity of ∧ over ∃” ⟩
+(∃ b • x ⦗ R ⦘ b ∧ b ⦗ S ⦘ y) ∧ x ∈ A
+=⟨ “Relation composition” ⟩
+x ⦗ R ⨾ S ⦘ y ∧ x ∈ A
+=⟨ “Relationship via ◁” ⟩
+x ⦗ A ◁ (R ⨾ S) ⦘ y
+
+
+Theorem (14.243) “Mutual associativity of ◁ with ⨾”: (A ◁ R) ⨾ S = A
+◁R⨾S
+— CalcCheck: Metavariables: A = A〖〗, R = R〖〗, S = S〖〗
+Proof:
+Using “Relation extensionality”:
+— CalcCheck: Found “Relation extensionality”
+Subproof establishing `(∀ x • (∀ y • (x ⦗ (A ◁ R) ⨾ S ⦘ y) = (x ⦗ A ◁ R
+⨾ S ⦘ y) ) )`:
+For any ` x`:
+For any ` y`:
+Calculation establishing `(x ⦗ (A ◁ R) ⨾ S ⦘ y) = (x ⦗ A ◁ R ⨾
+S ⦘ y)`:
+x ⦗ (A ◁ R) ⨾ S ⦘ y
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+(∃ b • x ⦗ A ◁ R ⦘ b ∧ b ⦗ S ⦘ y )
+= ⟨ “Relationship via ◁” ⟩
+— CalcCheck: Found (14.227) “Relationship via ◁”
+— CalcCheck: ─ OK
+(∃ b • x ∈ A ∧ (x ⦗ R ⦘ b ∧ b ⦗ S ⦘ y) )
+= ⟨ “Distributivity of ∧ over ∃” ⟩
+— CalcCheck: Found (9.21) “Distributivity of ∧ over ∃”
+— CalcCheck: ─ OK
+(∃ b • x ⦗ R ⦘ b ∧ b ⦗ S ⦘ y ) ∧ x ∈ A
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+x⦗R⨾ S ⦘y∧x∈A
+= ⟨ “Relationship via ◁” ⟩
+— CalcCheck: Found (14.227) “Relationship via ◁”
+— CalcCheck: ─ OK
+x⦗A◁ R ⨾ S ⦘ y
+— CalcCheck: All steps OK
+
+
+[21]
+
+
+Theorem (14.247) “Nested ◁”: A ◁ (B ◁ R) = (A ∩ B) ◁ R
+Proof:
+Using “Relation extensionality”:
+For any `x`, `y`:
+x ⦗ A ◁ (B ◁ R) ⦘ y
+=⟨ “Relationship via ◁”⟩
+x ∈ A ∧ x ⦗ (B ◁ R) ⦘ y
+=⟨ “Relationship via ◁” , “Associativity of ∧” , “Set inte
+(x ∈ A ∩ B ∧ x ⦗ R ⦘ y)
+=⟨ “Relationship via ◁”⟩
+( x ⦗ (A ∩ B) ◁ R ⦘ y)
+
+Theorem (14.247) “Nested ◁”: A ◁ (B ◁ R) = (A ∩ B) ◁ R
+— CalcCheck: Metavariables: A = A〖〗, B = B〖〗, R = R〖〗
+Proof:
+Using “Relation extensionality”:
+— CalcCheck: Found “Relation extensionality”
+Subproof establishing `(∀ x • (∀ y • (x ⦗ A ◁ (B ◁ R) ⦘ y) = (x ⦗ (A ∩
+B) ◁ R ⦘ y) ) )`:
+For any ` x`:
+For any ` y`:
+Calculation establishing `(x ⦗ A ◁ (B ◁ R) ⦘ y) = (x ⦗ (A ∩ B)
+◁ R ⦘ y)`:
+x ⦗ A ◁ (B ◁ R) ⦘ y
+= ⟨ “Relationship via ◁” ⟩
+— CalcCheck: Found (14.227) “Relationship via ◁”
+— CalcCheck: ─ OK
+x∈A∧ x⦗ B ◁ R ⦘ y
+= ⟨ “Relationship via ◁”, “Associativity of ∧”, “Set intersection”
+
+⟩
+— CalcCheck: Found (14.227) “Relationship via ◁”
+— CalcCheck: Found (3.37) “Associativity of ∧”
+— CalcCheck: Found (11.21) “Set intersection”
+— CalcCheck: ─ OK
+x∈A∩ B ∧ x⦗ R ⦘ y
+= ⟨ “Relationship via ◁” ⟩
+— CalcCheck: Found (14.227) “Relationship via ◁”
+— CalcCheck: ─ OK
+x ⦗ (A ∩ B) ◁ R ⦘ y
+— CalcCheck: All steps OK
+
+
+[22]
+
+
+Theorem (14.248) “Nested ⩤”: A ⩤ (B ⩤ R) = (A ∪ B) ⩤ Theorem (14.248) “Nested ⩤”: A ⩤ (B ⩤ R) = (A ∪ B) ⩤ R
+— CalcCheck: Metavariables: A = A〖〗, B = B〖〗, R = R〖〗
+Proof:
+Proof:
+Using “Relation extensionality”:
+Using “Relation extensionality”:
+For any `x`, `y`:
+— CalcCheck: Found “Relation extensionality”
+x ⦗ (A ∪ B) ⩤ R ⦘ y
+Subproof establishing `(∀ x • (∀ y • (x ⦗ (A ∪ B) ⩤ R ⦘ y) = (x ⦗ A ⩤ (B ⩤ R) ⦘ y) ) )`:
+=⟨ “Relationship via ⩤”⟩
+For any ` x`:
+(x ⦗ R ⦘ y) ∧ (¬ (x ∈ (A ∪ B)))
+For any ` y`:
+=⟨ “Set union”⟩
+Calculation establishing `(x ⦗ (A ∪ B) ⩤ R ⦘ y) = (x ⦗ A ⩤ (B ⩤ R) ⦘ y)`:
+(x ⦗ R ⦘ y) ∧ (¬ (x ∈ A ∨ x ∈ B))
+x ⦗ (A ∪ B) ⩤ R ⦘ y
+=⟨ “De Morgan”⟩
+= ⟨ “Relationship via ⩤” ⟩
+(x ⦗ R ⦘ y) ∧ ((¬ (x ∈ A)) ∧ (¬ (x ∈ B)))
+— CalcCheck: Found (14.229) “Relationship via ⩤”
+=⟨ “Associativity of ∧”⟩
+— CalcCheck: ─ OK
+x ⦗ R ⦘ y ∧ ¬ (x ∈ A ∪ B)
+(¬ (x ∈ B)) ∧ (x ⦗ R ⦘ y) ∧ ((¬ (x ∈ A)))
+= ⟨ “Set union” ⟩
+=⟨ “Relationship via ⩤”⟩
+— CalcCheck: Found (11.20) “Set union”
+(x ⦗ B ⩤ R ⦘ y) ∧ ((¬ (x ∈ A)))
+— CalcCheck: ─ OK
+=⟨ “Relationship via ⩤”⟩
+x
+⦗
+R ⦘ y ∧ ¬ (x ∈ A ∨ x ∈ B)
+(x ⦗ A ⩤ (B ⩤ R) ⦘ y)
+= ⟨ “De Morgan” ⟩
+— CalcCheck: Found (3.47a) “De Morgan”, (3.47b) “De Morgan”,
+(3.47c) “De Morgan”, (3.47d) “De Morgan”
+— CalcCheck: ─ OK
+x ⦗ R ⦘ y ∧ (¬ (x ∈ A) ∧ ¬ (x ∈ B))
+= ⟨ “Associativity of ∧” ⟩
+— CalcCheck: Found (3.37) “Associativity of ∧”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+¬ (x ∈ B) ∧ (x ⦗ R ⦘ y ∧ ¬ (x ∈ A))
+= ⟨ “Relationship via ⩤” ⟩
+— CalcCheck: Found (14.229) “Relationship via ⩤”
+— CalcCheck: ─ OK
+x ⦗ B ⩤ R ⦘ y ∧ ¬ (x ∈ A)
+= ⟨ “Relationship via ⩤” ⟩
+— CalcCheck: Found (14.229) “Relationship via ⩤”
+— CalcCheck: ─ OK
+x ⦗ A ⩤ (B ⩤ R) ⦘ y
+— CalcCheck: All steps OK
+
+
+[23]
+
+
+Theorem (14.251) “Monotonicity of ◁”: A ⊆ B ⇒ A ◁ R ⊆ B
+Proof:
+Assuming `A ⊆ B`:
+Using “Relation inclusion”:
+For any `x`, `y`:
+x ⦗ A ◁ R ⦘ y
+=⟨“Relationship via ◁”⟩
+x ∈ A ∧ x ⦗ R ⦘ y
+⇒⟨ “Monotonicity of ∧” with “Superset membership” wi
+(A ⊆ B ⇒ x ∈ B) ∧ x ⦗ R ⦘ y
+=⟨ Assumption `A ⊆ B` , “Left-identity of ⇒”⟩
+(x ∈ B) ∧ x ⦗ R ⦘ y
+=⟨“Relationship via ◁”⟩
+x ⦗ B ◁ R ⦘ y
+
+
+Theorem (14.251) “Monotonicity of ◁”: A ⊆ B ⇒ A ◁ R ⊆ B ◁ R
+— CalcCheck: Metavariables: A = A〖〗, B = B〖〗, R = R〖〗
+Proof:
+Assuming `A ⊆ B`:
+— CalcCheck: Assumption matches goal
+Using “Relation inclusion”:
+— CalcCheck: Found “Relation inclusion”
+Subproof establishing `(∀ x • (∀ y • x ⦗ A ◁ R ⦘ y ⇒ x ⦗ B ◁ R ⦘ y ) )`:
+For any ` x`:
+For any ` y`:
+Calculation establishing `x ⦗ A ◁ R ⦘ y ⇒ x ⦗ B ◁ R ⦘ y`:
+x⦗A◁ R ⦘ y
+= ⟨ “Relationship via ◁” ⟩
+— CalcCheck: Found (14.227) “Relationship via ◁”
+— CalcCheck: ─ OK
+x∈A∧ x⦗ R ⦘ y
+⇒ ⟨ “Monotonicity of ∧” with “Superset membership” with
+Assumption `A ⊆ B` ⟩
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Leftmonotonicity of ∧”
+— CalcCheck: Found (11.13d) “Superset membership”
+— CalcCheck: Found assumption `A ⊆ B`
+— CalcCheck: ─ OK
+(A ⊆ B ⇒ x ∈ B) ∧ x ⦗ R ⦘ y
+= ⟨ Assumption `A ⊆ B`, “Left-identity of ⇒” ⟩
+— CalcCheck: Found assumption `A ⊆ B`
+— CalcCheck: Found (3.73) “Left-identity of ⇒”
+— CalcCheck: ─ OK
+x∈ B∧x⦗R⦘y
+= ⟨ “Relationship via ◁” ⟩
+— CalcCheck: Found (14.227) “Relationship via ◁”
+— CalcCheck: ─ OK
+x⦗B◁R⦘y
+— CalcCheck: All steps OK
+
+
+[24]
+
+
+Theorem (14.259) “Antitonicity of ⩥”: A ⊆ B ⇒ R ⩥ B ⊆ R Theorem (14.259) “Antitonicity of ⩥”: A ⊆ B ⇒ R ⩥ B ⊆ R ⩥ A
+— CalcCheck: Metavariables: A = A〖〗, B = B〖〗, R = R〖〗
+Proof:
+Proof:
+Assuming `A ⊆ B`:
+Assuming `A ⊆ B`:
+Using “Relation inclusion”:
+— CalcCheck: Assumption matches goal
+Subproof for `∀ x • ∀ y • x ⦗ R ⩥ B ⦘ y ⇒ x ⦗ R ⩥ A ⦘ y`
+Using “Relation inclusion”:
+For any `x`, `y`:
+— CalcCheck: Found “Relation inclusion”
+Assuming `x ⦗ R ⩥ B ⦘ y`:
+Subproof for `(∀ x • (∀ y • x ⦗ R ⩥ B ⦘ y ⇒ x ⦗ R ⩥ A ⦘ y ) )`:
+x ⦗ R ⩥ A ⦘ y
+For any ` x`:
+=⟨ “Relationship via ⩥” ⟩
+For any ` y`:
+x ⦗ R ⦘ y ∧ (¬ (y ∈ A))
+Assuming `x ⦗ R ⩥ B ⦘ y`:
+⇒⟨ “Monotonicity of ∧” with “Superset membership
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `x ⦗ R ⩥ A ⦘ y`:
+x ⦗ R ⦘ y ∧ (¬ (A ⊆ B ⇒ y ∈ B))
+x⦗ R ⩥A⦘ y
+=⟨ Assumption `A ⊆ B` , “Left-identity of ⇒”⟩
+=
+⟨
+“Relationship via ⩥” ⟩
+x ⦗ R ⦘ y ∧ (¬ (y ∈ B))
+— CalcCheck: Found (14.230) “Relationship via ⩥”
+=⟨ “Relationship via ⩥”⟩
+— CalcCheck: ─ OK
+x ⦗ R ⩥ B ⦘ y
+x ⦗ R ⦘ y ∧ ¬ (y ∈ A)
+=⟨ assumption `x ⦗ R ⩥ B ⦘ y`⟩
+⇒ ⟨ “Monotonicity of ∧” with “Superset membership” with
+true
+Assumption `A ⊆ B` ⟩
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Leftmonotonicity of ∧”
+— CalcCheck: Found (11.13d) “Superset membership”
+— CalcCheck: Found assumption `A ⊆ B`
+— CalcCheck: Could not justify this step!
+x ⦗ R ⦘ y ∧ ¬ (A ⊆ B ⇒ y ∈ B)
+= ⟨ Assumption `A ⊆ B`, “Left-identity of ⇒” ⟩
+— CalcCheck: Found assumption `A ⊆ B`
+— CalcCheck: Found (3.73) “Left-identity of ⇒”
+— CalcCheck: ─ OK
+x ⦗ R ⦘ y ∧ ¬ (y ∈ B)
+= ⟨ “Relationship via ⩥” ⟩
+— CalcCheck: Found (14.230) “Relationship via ⩥”
+— CalcCheck: ─ OK
+x⦗R⩥ B⦘y
+= ⟨ Assumption `x ⦗ R ⩥ B ⦘ y` ⟩
+— CalcCheck: Found assumption `x ⦗ R ⩥ B ⦘ y`
+— CalcCheck: ─ OK
+true
+— CalcCheck: 1 out of 5 steps not justified
+— CalcCheck: Could not match calculation with stated goal.
+
+
+[25]
+
+
+Theorem (14.260) “Monotonicity of ⩥”: R ⊆ S ⇒ R ⩥ A ⊆ S ⩥ A
+Theorem (14.260) “Monotonicity of ⩥”: R ⊆ S ⇒ R ⩥ A ⊆
+— CalcCheck: Metavariables: A = A〖〗, R = R〖〗, S = S〖〗
+Proof:
+Proof:
+Assuming `R ⊆ S`:
+Assuming `R ⊆ S`:
+Using “Relation inclusion”:
+— CalcCheck: Assumption matches goal
+For any `a`, `b`:
+Using “Relation inclusion”:
+a ⦗ R ⩥ A ⦘ b
+— CalcCheck: Found “Relation inclusion”
+=⟨ “Relationship via ⩥”⟩
+Subproof establishing `(∀ a • (∀ b • a ⦗ R ⩥ A ⦘ b ⇒ a ⦗ S ⩥ A ⦘ b ) )`:
+a ⦗ R ⦘ b ∧ (¬(b ∈ A))
+For any ` a`:
+⇒⟨ “Monotonicity of ∧” with “Monotonicity of relation
+For any ` b`:
+(a ⦗ S ⦘ b) ∧ (¬(b ∈ A))
+Calculation establishing `a ⦗ R ⩥ A ⦘ b ⇒ a ⦗ S ⩥ A ⦘ b`:
+=⟨ “Relationship via ⩥”⟩
+a ⦗ R ⩥A⦘ b
+(a ⦗ S ⩥ A ⦘ b)
+= ⟨ “Relationship via ⩥” ⟩
+— CalcCheck: Found (14.230) “Relationship via ⩥”
+— CalcCheck: ─ OK
+a ⦗ R ⦘ b ∧ ¬ (b ∈ A)
+⇒ ⟨ “Monotonicity of ∧” with “Monotonicity of relationship” with
+Assumption `R ⊆ S` ⟩
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Leftmonotonicity of ∧”
+— CalcCheck: Found “Monotonicity of relationship”
+— CalcCheck: Found assumption `R ⊆ S`
+— CalcCheck: ─ OK
+a ⦗ S ⦘ b ∧ ¬ (b ∈ A)
+= ⟨ “Relationship via ⩥” ⟩
+— CalcCheck: Found (14.230) “Relationship via ⩥”
+— CalcCheck: ─ OK
+a ⦗ S ⩥A⦘ b
+— CalcCheck: All steps OK
+
+[26]
+
+Relational Image
+[27]
+
+For the parts of the relational image operator “_⦇_⦈”, type “\limg” or “\(|” respectively “\rimg” or “\|)”; this operator has the same high
+precedence as converse.
+
+
+[28]
+
+[29]
+
+[30]
+
+
+Declaration: _⦇_⦈ : t₁ ↔ t₂ → (set t₁ → set t₂)
+— CalcCheck: Operator _⦇_⦈: Non-associating; precedence
+140
+
+Declaration: _⦇_⦈ : (t₁ ↔ t₂) → set t₁ → set t₂
+
+Axiom (14.301) “Definition of ⦇_⦈”, “Range of ◁”: R ⦇ A ⦈ = Ran (A
+
+Theorem (14.302) “Relational image”:
+Proof:
+y ∈ R ⦇ A ⦈
+=⟨ “Definition of ⦇_⦈”⟩
+y ∈ Ran (A ◁ R)
+=⟨ “Membership in `Ran`”⟩
+∃ x • x ⦗ A ◁ R ⦘ y
+=⟨ “Relationship via ◁”⟩
+∃ x • x ∈ A ∧ x ⦗ R ⦘ y
+=⟨ “Trading for ∃”⟩
+∃ x ❙ x ∈ A • x ⦗ R ⦘ y
+
+
+y ∈ R ⦇ A ⦈
+
+≡
+
+Axiom (14.301) “Definition of ⦇_⦈” “Range of ◁”: R ⦇ A ⦈ = Ran
+(A ◁ R)
+— CalcCheck: Metavariables: A = A〖〗, R = R〖〗
+
+(∃ x ❙ x ∈ A • Theorem (14.302) “Relational image”: y ∈ R ⦇ A ⦈ ≡ (∃ x ❙ x ∈ A • x ⦗
+R⦘y)
+— CalcCheck: Metavariables: A = A〖〗, R = R〖〗
+— CalcCheck: Proviso: ¬occurs(`x`, `A, R`)
+Proof:
+Calculation for expected goal `y ∈ R ⦇ A ⦈ ≡ (∃ x ❙ x ∈ A • x ⦗ R ⦘ y
+)`:
+y∈ R ⦇ A⦈
+= ⟨ “Definition of ⦇_⦈” ⟩
+— CalcCheck: Found (14.301) “Definition of ⦇_⦈”
+— CalcCheck: ─ OK
+y ∈ Ran (A ◁ R)
+= ⟨ “Membership in `Ran`” ⟩
+— CalcCheck: Found “Membership in `Ran`”
+— CalcCheck: ─ OK
+(∃ x • x ⦗ A ◁ R ⦘ y )
+= ⟨ “Relationship via ◁” ⟩
+— CalcCheck: Found (14.227) “Relationship via ◁”
+— CalcCheck: ─ OK
+(∃ x • x ∈ A ∧ x ⦗ R ⦘ y )
+= ⟨ “Trading for ∃” ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading for
+∃”
+— CalcCheck: ─ OK
+(∃ x ❙ x ∈ A • x ⦗ R ⦘ y )
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[31]
+
+
+Theorem (14.303) “Relational image of ⨾”: (R ⨾ S) ⦇ A ⦈ = S ⦇ (R ⦇ A ⦈) ⦈
+— CalcCheck: Metavariables: A = A〖〗, R = R〖〗, S = S〖〗
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof:
+Using “Definition of ⦇_⦈”:
+— CalcCheck: Found (14.301) “Definition of ⦇_⦈”
+Subproof establishing `(∀ x • (x ∈ Ran (R ⨾ S ◁ A)) = (x ∈ S ⦇ (R ⦇ A ⦈) ⦈) )`:
+— CalcCheck: Unification of `❰ t₁᎑₃₆, t₂᎑₃₇ ❱` with `t₁᎑₁₇` clashes!
+While type-checking `R ⨾ S ◁ A`:
+• Empty type options for binary operator `_◁_`!
+• Type of the operator `_◁_`:
+`set t₁᎑₃₆ → (set ❰ t₁᎑₃₆, t₂᎑₃₇ ❱ → set ❰ t₁᎑₃₆, t₂᎑₃₇ ❱)`
+• Type of the first argument `R ⨾ S`:
+`set ❰ t₁᎑₁₇, t₂᎑₁₄ ❱`, with variable type assignment: `A : set t₁᎑₁₇; R : set
+❰ t₁᎑₁₇, t₂᎑₁₈ ❱; S : set ❰ t₂᎑₁₈, t₂᎑₁₄ ❱`
+• Type of the second argument `A`:
+`set t₁᎑₁₇`, with variable type assignment: `A : set t₁᎑₁₇; R : set ❰ t₁᎑₁₇,
+t₂᎑₁₈ ❱; S : set ❰ t₂᎑₁₈, t₂᎑₁₄ ❱`
+For any ` x`:
+Calculation establishing `(x ∈ Ran (R ⨾ S ◁ A)) = (x ∈ S ⦇ (R ⦇ A ⦈) ⦈)`:
+x ∈ Ran (R ⨾ S ◁ A)
+=⟨?⟩
+— CalcCheck: Unification of `❰ t₁᎑₅₅, t₂᎑₅₆ ❱` with `t₁᎑₁₇` clashes!
+In calculation start expression, while type-checking `R ⨾ S ◁ A`:
+• Empty type options for binary operator `_◁_`!
+• Type of the operator `_◁_`:
+`set t₁᎑₅₅ → (set ❰ t₁᎑₅₅, t₂᎑₅₆ ❱ → set ❰ t₁᎑₅₅, t₂᎑₅₆ ❱)`
+• Type of the first argument `R ⨾ S`:
+`set ❰ t₁᎑₁₇, t₂᎑₁₄ ❱`, with variable type assignment: `A : set
+t₁᎑₁₇; R : set ❰ t₁᎑₁₇, t₂᎑₁₈ ❱; S : set ❰ t₂᎑₁₈, t₂᎑₁₄ ❱`
+• Type of the second argument `A`:
+`set t₁᎑₁₇`, with variable type assignment: `A : set t₁᎑₁₇; R : set ❰
+t₁᎑₁₇, t₂᎑₁₈ ❱; S : set ❰ t₂᎑₁₈, t₂᎑₁₄ ❱`
+— CalcCheck: “?” does not prove anything!
+x ∈ S ⦇ (R ⦇ A ⦈) ⦈
+— CalcCheck: 1 out of 1 steps not justified
+— CalcCheck: Unification of `❰ t₁᎑₉₃, t₂᎑₉₄ ❱` with `t₁᎑₁₇` clashes!
+While type-checking `R ⨾ S ◁ A`:
+
+
+Theorem (14.303) “Relational image of ⨾”:
+Proof:
+Using “Set extensionality”:
+Using “Definition of ⦇_⦈”:
+For any `x`:
+x ∈ Ran ((R ⨾ S) ◁ A )
+=⟨ ? ⟩
+x ∈ (S ⦇ R ⦇ A ⦈ ⦈)
+
+(R ⨾ S)
+
+• Empty type options for binary operator `_◁_`!
+• Type of the operator `_◁_`:
+`set t₁᎑₉₃ → (set ❰ t₁᎑₉₃, t₂᎑₉₄ ❱ → set ❰ t₁᎑₉₃, t₂᎑₉₄ ❱)`
+• Type of the first argument `R ⨾ S`:
+`set ❰ t₁᎑₁₇, t₂᎑₁₄ ❱`, with variable type assignment: `A : set t₁᎑₁₇; R :
+set ❰ t₁᎑₁₇, t₂᎑₁₈ ❱; S : set ❰ t₂᎑₁₈, t₂᎑₁₄ ❱`
+• Type of the second argument `A`:
+`set t₁᎑₁₇`, with variable type assignment: `A : set t₁᎑₁₇; R : set ❰ t₁᎑₁₇,
+t₂᎑₁₈ ❱; S : set ❰ t₂᎑₁₈, t₂᎑₁₄ ❱`
+— CalcCheck: Unknown goal for `Using`!
+— CalcCheck: Could not justify this `Using` application!
+
+[32]
+
+Relation Override
+[33]
+
+[34]
+
+[35]
+
+The symbol “⊕” is obtained by typing “\oplus”.
+
+Declaration: _⊕_ : (t₁ ↔ t₂) → (t₁ ↔ t₂) → (t₁ ↔ t₂)
+
+Declaration: _⊕_ : t₁ ↔ t₂ → (t₁ ↔ t₂ → t₁ ↔ t₂)
+— CalcCheck: Operator _⊕_: Non-associating; precedence
+100
+
+Axiom (14.401) “Definition of ⊕”:
+
+Axiom (14.401) “Definition of ⊕”: R ⊕ S = (Dom S ⩤ R) ∪
+S
+— CalcCheck: Metavariables: R = R〖〗, S = S〖〗
+
+
+R ⊕ S
+
+=
+
+(Dom S ⩤ R) ∪ S
+
+
+[36]
+
+
+Theorem (14.402) “Relation override”:
+x ⦗ R ⊕ S ⦘ y ≡ (¬ (x ∈ Dom S) ∧ x ⦗ R ⦘ y) ∨ x ⦗ S ⦘ y
+Proof:
+x ⦗ R ⊕ S ⦘ y
+=⟨ “Definition of ⊕”⟩
+x ⦗ (Dom S ⩤ R) ∪ S ⦘ y
+=⟨ “Relation union” ⟩
+x ⦗ Dom S ⩤ R ⦘ y ∨ x ⦗ S ⦘ y
+=⟨ “Relationship via ⩤” ⟩
+((x ⦗ R ⦘ y) ∧ (¬ (x ∈ (Dom S)))) ∨ (x ⦗ S ⦘ y)
+
+1,1
+
+Theorem (14.402) “Relation override”: x ⦗ R ⊕ S ⦘ y ≡ (¬ (x ∈ Dom S) ∧ x ⦗
+R ⦘ y) ∨ x ⦗ S ⦘ y
+— CalcCheck: Metavariables: R = R〖〗, S = S〖〗
+Proof:
+Calculation for expected goal `x ⦗ R ⊕ S ⦘ y ≡ (¬ (x ∈ Dom S) ∧ x ⦗ R ⦘ y) ∨
+x ⦗ S ⦘ y`:
+x⦗R⊕ S ⦘y
+= ⟨ “Definition of ⊕” ⟩
+— CalcCheck: Found (14.401) “Definition of ⊕”
+— CalcCheck: ─ OK
+x ⦗ (Dom S ⩤ R) ∪ S ⦘ y
+= ⟨ “Relation union” ⟩
+— CalcCheck: Found “Relation union”
+— CalcCheck: ─ OK
+x ⦗ Dom S ⩤ R ⦘ y ∨ x ⦗ S ⦘ y
+= ⟨ “Relationship via ⩤” ⟩
+— CalcCheck: Found (14.229) “Relationship via ⩤”
+— CalcCheck: ─ OK
+(x ⦗ R ⦘ y ∧ ¬ (x ∈ Dom S)) ∨ x ⦗ S ⦘ y
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

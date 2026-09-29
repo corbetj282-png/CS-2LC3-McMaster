@@ -1,0 +1,327 @@
+[1]
+
+Here we continue the redevelopment of the theory of the natural numbers from scratch started in H18: Instead of having the successor operator
+suc, induction is based here on 0 and (_+ 1), using the following explicitly stated induction principle:
+Axiom “Induction over ℕ”:
+P[n ≔ 0]
+⇒ (∀ n : ℕ ❙ P • P[n ≔ n + 1])
+⇒ (∀ n : ℕ • P)
+(All propositional logic and predicate logic are preloaded here, and four hint items are allowed per hint.)
+
+[2]
+
+Recall that “Induction over ℕ” can be used to prove properties of the shape (∀ n : ℕ • P) by supplying subproofs for the base case P[n
+≔ 0] and the induction step (∀ n : ℕ ❙ P • P[n ≔ n + 1]), normally organised in the following pattern:
+Theorem “P”: ∀ n • P
+Proof:
+Using “Induction over ℕ”:
+Subproof for `P[n ≔ 0]`:
+?
+Subproof for `∀ n : ℕ ❙ P • P[n ≔ n + 1]`:
+For any `n : ℕ` satisfying “IndHyp” `P`:
+?
+
+
+Important: Using “Induction over ℕ” with two subproofs can only prove universally-quantified goals, that is, goals of shape (∀ n : ℕ
+• P)!
+[3]
+
+Addition
+[4]
+
+In H18, you proved symmetry of addition; associativity still remains to be shown. It will be easiest to prove “Associativity of +” by induction
+over k:
+
+
+[5]
+
+
+Theorem “Associativity of +”: ∀ k • ∀ m • ∀ n • (k + m)
+Proof:
+Using “Induction over ℕ”:
+Subproof:
+For any `m`:
+For any `n`:
+(0 + m) + n
+=⟨ “Definition of +”⟩
+m + n
+=⟨ “Definition of +”⟩
+0 + (m + n)
+Subproof:
+For any `k`:
+For any `m`:
+For any `n` satisfying `(k + m) + n = k + (m +
+((k + 1) + m) + n
+=⟨ “Definition of +”⟩
+((k + m) + 1) + n
+=⟨ “Definition of +”⟩
+((k + m) + n) + 1
+=⟨ Assumption `(k + m) + n = k + (m + n)`⟩
+(k + (m + n)) + 1
+
+
+Theorem “Associativity of +”: (∀ k • (∀ m • (∀ n • (k + m) + n = k + (m + n) ) ) )
+Proof:
+Using “Induction over ℕ”:
+— CalcCheck: Found “Induction over ℕ”
+Subproof establishing `(∀ m • (∀ n • (0 + m) + n = 0 + (m + n) ) )`:
+For any ` m`:
+For any ` n`:
+Calculation establishing `(0 + m) + n = 0 + (m + n)`:
+(0 + m) + n
+= ⟨ “Definition of +” ⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: ─ OK
+m+ n
+= ⟨ “Definition of +” ⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: ─ OK
+0 + (m + n)
+— CalcCheck: All steps OK
+Subproof establishing `(∀ k • (∀ m • (∀ n ❙ (k + m) + n = k + (m + n) • ((k + 1) +
+m) + n = (k + (m + n)) + 1 ) ) )`:
+For any ` k`:
+For any ` m`:
+For any ` n` satisfying `(k + m) + n = k + (m + n)`:
+— CalcCheck: Assumptions match quantifier range.
+Calculation establishing `((k + 1) + m) + n = (k + (m + n)) + 1`:
+((k + 1) + m) + n
+= ⟨ “Definition of +” ⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: ─ OK
+((k + m) + 1) + n
+= ⟨ “Definition of +” ⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: ─ OK
+((k + m) + n) + 1
+= ⟨ Assumption `(k + m) + n = k + (m + n)` ⟩
+— CalcCheck: Found assumption `(k + m) + n = k + (m + n)`
+— CalcCheck: ─ OK
+(k + (m + n)) + 1
+— CalcCheck: All steps OK
+— CalcCheck: Could not justify this `Using` application!
+
+
+[6]
+
+
+Note that symmetry and associativity of addition are not activated here, so their uses will need to be made explicit below where necessary.
+
+[7]
+
+Multiplication
+[8]
+
+[9]
+
+[10]
+
+We define multiplication analogously to Ex3.2:
+
+Declaration: _·_ : ℕ → ℕ → ℕ
+
+Axiom “Definition of ·”: 0 · n = 0
+Axiom “Definition of ·”: (m + 1) · n = m · n + n
+
+
+Declaration: _·_ : ℕ → (ℕ → ℕ)
+— CalcCheck: Operator _·_: Associating to the left; precedence
+110
+
+Axiom “Definition of ·”: 0 · n = 0
+Axiom “Definition of ·”: (m + 1) · n = m · n + n
+
+
+[11]
+
+[12]
+
+
+Theorem “Right-identity of ·”: ∀ k • k · 1 = k
+Proof:
+Using “Induction over ℕ”:
+Subproof:
+0 · 1
+=⟨ “Definition of ·” ⟩
+0
+Subproof:
+For any `k` satisfying `k · 1 = k`:
+(k + 1) · 1
+=⟨ “Definition of ·”⟩
+k · 1 + 1
+=⟨ Assumption `k · 1 = k`⟩
+k + 1
+
+Theorem “Right-identity of ·”: (∀ k • k · 1 = k )
+Proof:
+Using “Induction over ℕ”:
+— CalcCheck: Found “Induction over ℕ”
+Subproof establishing `0 · 1 = 0`:
+0·1
+= ⟨ “Definition of ·” ⟩
+— CalcCheck: Found “Definition of ·”
+— CalcCheck: ─ OK
+0
+— CalcCheck: All steps OK
+Subproof establishing `(∀ k ❙ k · 1 = k • (k + 1) · 1 = k + 1
+)`:
+For any ` k` satisfying `k · 1 = k`:
+— CalcCheck: Assumptions match quantifier range.
+Calculation establishing `(k + 1) · 1 = k + 1`:
+(k + 1) · 1
+= ⟨ “Definition of ·” ⟩
+— CalcCheck: Found “Definition of ·”
+— CalcCheck: ─ OK
+k·1+1
+= ⟨ Assumption `k · 1 = k` ⟩
+— CalcCheck: Found assumption `k · 1 = k`
+— CalcCheck: ─ OK
+k+1
+— CalcCheck: All steps OK
+
+For proving “Symmetry of ·”, you will most likely need to first prove the analogues of the intermediate theorems that you proved on the way to
+“Symmetry of ·” in Ex3.2.
+
+
+[13]
+
+
+Theorem “Symmetry of ·”: ∀ m • ∀ n • m · n = n · m
+Proof:
+Using “Induction over ℕ”:
+Subproof:
+For any `n`:
+0 · m
+=⟨ “Definition of ·” ⟩
+0
+=⟨ ? ⟩
+m · 0
+Subproof:
+For any `m`:
+For any `n` satisfying `m · n = n · m`:
+(n + 1) · m
+=⟨ “Definition of ·” ⟩
+n · m + m
+=⟨ Assumption `n · m = m · n` ⟩
+m · n + m
+=⟨ “Symmetry of +”⟩
+m + m · n
+=⟨ “Definition of ·” ⟩
+m · (n + 1)
+
+
+Theorem “Symmetry of ·”: (∀ m • (∀ n • m · n = n · m ) )
+Proof:
+Using “Induction over ℕ”:
+— CalcCheck: Found “Induction over ℕ”
+Subproof establishing `(∀ n • 0 · m = m · 0 )`:
+For any ` n`:
+Calculation establishing `0 · m = m · 0`:
+0·m
+= ⟨ “Definition of ·” ⟩
+— CalcCheck: Found “Definition of ·”
+— CalcCheck: ─ OK
+0
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+m· 0
+— CalcCheck: 1 out of 2 steps not justified
+Subproof establishing `(∀ m • (∀ n ❙ m · n = n · m • (n + 1) · m = m ·
+(n + 1) ) )`:
+For any ` m`:
+For any ` n` satisfying `m · n = n · m`:
+— CalcCheck: Assumptions match quantifier range.
+Calculation establishing `(n + 1) · m = m · (n + 1)`:
+(n + 1) · m
+= ⟨ “Definition of ·” ⟩
+— CalcCheck: Found “Definition of ·”
+— CalcCheck: ─ OK
+n· m+ m
+= ⟨ Assumption `n · m = m · n` ⟩
+— CalcCheck: Found assumption `n · m = m · n`
+— CalcCheck: ─ OK
+m· n+ m
+= ⟨ “Symmetry of +” ⟩
+— CalcCheck: Found “Symmetry of +”
+— CalcCheck: ─ OK
+m+ m· n
+= ⟨ “Definition of ·” ⟩
+— CalcCheck: Found “Definition of ·”
+— CalcCheck: Could not justify this step!
+m · (n + 1)
+— CalcCheck: 1 out of 4 steps not justified
+
+
+[14]
+
+[15]
+
+1,1
+
+
+Similarly, prove also associativity of multiplication. You may again need to prove some auxiliary theorem(s) on the way.
+
+Theorem “Associativity of ·”: ∀ k • ∀ m • ∀ n • (k · m) · Theorem “Associativity of ·”: (∀ k • (∀ m • (∀ n • (k · m) · n = k · (m · n) ) ) )
+Proof:
+Proof:
+Using “Induction over ℕ”:
+Using “Induction over ℕ”:
+— CalcCheck: Found “Induction over ℕ”
+Subproof:
+Subproof establishing `(∀ m • (∀ n • (0 · m) · n = 0 · (m · n) ) )`:
+For any `m`:
+For any ` m`:
+For any `n`:
+For any ` n`:
+(0 · m) · n
+Calculation establishing `(0 · m) · n = 0 · (m · n)`:
+=⟨ “Definition of ·”⟩
+(0 · m) · n
+0 · n
+= ⟨ “Definition of ·” ⟩
+=⟨ “Definition of ·”⟩
+— CalcCheck: Found “Definition of ·”
+— CalcCheck: ─ OK
+0 · (m · n)
+0
+·
+n
+Subproof:
+= ⟨ “Definition of ·” ⟩
+For any `k`:
+— CalcCheck: Found “Definition of ·”
+For any `m`:
+— CalcCheck: ─ OK
+For any `n` satisfying `(k · m) · n = k · (m · n
+0 · (m · n)
+((k + 1) · m) · n
+— CalcCheck: All steps OK
+=⟨ “Definition of ·”⟩
+Subproof establishing `(∀ k • (∀ m • (∀ n ❙ (k · m) · n = k · (m · n) • ((k + 1) · m)
+(k · m + m) · n
+· n = (k + 1) · (m · n) ) ) )`:
+=⟨ ? ⟩
+For any ` k`:
+(k + 1) · (m · n)
+For any ` m`:
+For any ` n` satisfying `(k · m) · n = k · (m · n)`:
+— CalcCheck: Assumptions match quantifier range.
+Calculation establishing `((k + 1) · m) · n = (k + 1) · (m · n)`:
+((k + 1) · m) · n
+= ⟨ “Definition of ·” ⟩
+— CalcCheck: Found “Definition of ·”
+— CalcCheck: ─ OK
+(k · m + m) · n
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+(k + 1) · (m · n)
+— CalcCheck: 1 out of 2 steps not justified
+— CalcCheck: Could not justify this `Using` application!
+
+
+Check and Save
+
+
+Save
+
+

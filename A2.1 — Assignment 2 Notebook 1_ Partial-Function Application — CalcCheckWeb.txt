@@ -1,0 +1,392 @@
+[1]
+
+Preloaded here are
+propositional and predicate logic,
+set theory as presented in the Reference Notebook “Set Theory” and Ex7.2, with symmetry and associativity of union and intersection as
+well as the transitivity laws activated,
+relation operations as presented in H15,
+Reference Notebook “Basic Relation Operation Properties”,
+heterogeneous relation properties as presented in H17,
+Reference Notebook “Operators Combining Sets and Relations”.
+
+[2]
+
+Properties of Heterogeneous Relations
+[3]
+
+To practice quantifier reasoning for Midterm 2, prove “Distributivity of composition with univalent over ∩” from
+“Univalence”: univalent R
+
+≡
+
+∀ b₁ • ∀ b₂ • ∀ a • a ⦗ R ⦘ b₁ ∧ a ⦗ R ⦘ b₂ ⇒ b₁ = b₂
+
+via relation extensionality (required!):
+
+
+[4]
+
+
+Theorem “Distributivity of composition with univalent over ∩”: univalent F ⇒ F ⨾ (R ∩
+S) = F ⨾ R ∩ F ⨾ S
+Proof:
+Assuming `univalent F`:
+— CalcCheck: Assumption matches goal
+Using “Relation extensionality”:
+— CalcCheck: Found “Relation extensionality”
+Subproof establishing `(∀ a • (∀ b • a ⦗ F ⨾ (R ∩ S) ⦘ b ⇒ a ⦗ F ⨾ R ∩ F ⨾ S ⦘ b ) )`:
+For any ` a`:
+For any ` b`:
+Calculation establishing `a ⦗ F ⨾ (R ∩ S) ⦘ b ⇒ a ⦗ F ⨾ R ∩ F ⨾ S ⦘ b`:
+a ⦗ F ⨾ (R ∩ S) ⦘ b
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+(∃ c • a ⦗ F ⦘ c ∧ c ⦗ R ∩ S ⦘ b )
+= ⟨ “Relation intersection” ⟩
+— CalcCheck: Found “Relation intersection”
+— CalcCheck: ─ OK
+(∃ c • a ⦗ F ⦘ c ∧ (c ⦗ R ⦘ b ∧ c ⦗ S ⦘ b) )
+= ⟨ “Distributivity of ∧ over ∧”, “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.41) “Distributivity of ∧ over ∧”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+(∃ c • (a ⦗ F ⦘ c ∧ c ⦗ R ⦘ b) ∧ (a ⦗ F ⦘ c ∧ c ⦗ S ⦘ b) ) ∧ (∃ c • (a ⦗ F ⦘ c
+∧ c ⦗ R ⦘ b) ∧ (a ⦗ F ⦘ c ∧ c ⦗ S ⦘ b) )
+⇒ ⟨ “Monotonicity of ∧” with “Body weakening for ∃” ⟩
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Left-monotonicity
+of ∧”
+— CalcCheck: Found (9.26) “Body weakening for ∃”, (9.26.1) “Body
+weakening for ∃”
+— CalcCheck: ─ OK
+(∃ c • a ⦗ F ⦘ c ∧ c ⦗ R ⦘ b ) ∧ (∃ c • (a ⦗ F ⦘ c ∧ c ⦗ R ⦘ b) ∧ (a ⦗ F ⦘ c ∧
+c ⦗ S ⦘ b) )
+⇒ ⟨ “Monotonicity of ∧” with “Body weakening for ∃” ⟩
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Left-monotonicity
+of ∧”
+— CalcCheck: Found (9.26) “Body weakening for ∃”, (9.26.1) “Body
+weakening for ∃”
+— CalcCheck: ─ OK
+(∃ c • a ⦗ F ⦘ c ∧ c ⦗ R ⦘ b ) ∧ (∃ c • a ⦗ F ⦘ c ∧ c ⦗ S ⦘ b )
+= ⟨ “Relation composition”, “Relation intersection” ⟩
+
+
+Theorem “Distributivity of composition with univalent
+univalent F ⇒ F ⨾ (R ∩ S) = F ⨾ R ∩ F ⨾ S
+Proof:
+Assuming `univalent F`:
+Using “Relation extensionality”:
+For any `a`, `b`:
+a ⦗ (F ⨾ (R ∩ S)) ⦘ b
+=⟨ “Relation composition” ⟩
+∃ c • a ⦗ F ⦘ c ∧ c ⦗ (R ∩ S) ⦘ b
+=⟨ “Relation intersection”⟩
+∃ c • a ⦗ F ⦘ c ∧ (c ⦗ R ⦘ b ∧ c ⦗ S ⦘ b)
+=⟨ “Distributivity of ∧ over ∧” , “Idempotenc
+(∃ c • (a ⦗ F ⦘ c ∧ c ⦗ R ⦘ b) ∧ (a ⦗ F ⦘
+⇒⟨ “Monotonicity of ∧” with “Body weakening
+(∃ c • (a ⦗ F ⦘ c ∧ c ⦗ R ⦘ b) ) ∧ (∃ c •
+⇒⟨ “Monotonicity of ∧” with “Body weakening
+(∃ c • (a ⦗ F ⦘ c ∧ c ⦗ R ⦘ b) ) ∧ (∃ c • (
+=⟨ “Relation composition” , “Relation interse
+a ⦗ (F ⨾ R ∩ F ⨾ S) ⦘ b
+
+[5]
+
+— CalcCheck: Found “Relation composition”
+— CalcCheck: Found “Relation intersection”
+— CalcCheck: ─ OK
+a⦗F⨾R∩F⨾S⦘b
+— CalcCheck: All steps OK
+— CalcCheck: Could not justify this `Using` application!
+
+Prove “Surjective range restriction” via an equivalence calculation from left to right, and use
+“Surjectivity”:
+
+surjective R
+
+≡
+
+(∀ b • (∃ a • a ⦗ R ⦘ b))
+
+(required!) in the first step:
+
+
+[6]
+
+
+Theorem “Surjective range restriction”:
+surjective (R ▷ B) ≡ surjective R ∧ B = 𝐔
+Proof:
+surjective (R ▷ B)
+=⟨ “Surjectivity”⟩
+∀ b • (∃ a • a ⦗ R ▷ B ⦘ b)
+=⟨ “Relationship via ▷”⟩
+∀ b • (∃ a • b ∈ B ∧ a ⦗ R ⦘ b)
+=⟨ “Distributivity of ∧ over ∃”⟩
+∀ b • (∃ a • a ⦗ R ⦘ b) ∧ b ∈ B
+=⟨ “Distributivity of ∀ over ∧”⟩
+(∀ b • ∃ a • a ⦗ R ⦘ b) ∧ ∀ b • b ∈ B
+=⟨ “Surjectivity”⟩
+(surjective R) ∧ ∀ b • b ∈ B
+=⟨ “Identity of ≡”⟩
+(surjective R) ∧ (∀ b • b ∈ B ≡ true)
+=⟨“Universal set”⟩
+(surjective R) ∧ (∀ b • b ∈ B ≡ b ∈ 𝐔)
+=⟨“Set extensionality”⟩
+(surjective R) ∧ B = 𝐔
+
+
+Theorem “Surjective range restriction”: surjective (R ▷ B) ≡ surjective
+R∧B=𝐔
+Proof:
+Calculation for expected goal `surjective (R ▷ B) ≡ surjective R ∧ B =
+𝐔`:
+surjective (R ▷ B)
+= ⟨ “Surjectivity” ⟩
+— CalcCheck: Found “Surjectivity”
+— CalcCheck: ─ OK
+(∀ b • (∃ a • a ⦗ R ▷ B ⦘ b ) )
+= ⟨ “Relationship via ▷” ⟩
+— CalcCheck: Found (14.228) “Relationship via ▷”
+— CalcCheck: ─ OK
+(∀ b • (∃ a • b ∈ B ∧ a ⦗ R ⦘ b ) )
+= ⟨ “Distributivity of ∧ over ∃” ⟩
+— CalcCheck: Found (9.21) “Distributivity of ∧ over ∃”
+— CalcCheck: ─ OK
+(∀ b • (∃ a • a ⦗ R ⦘ b ) ∧ b ∈ B )
+= ⟨ “Distributivity of ∀ over ∧” ⟩
+— CalcCheck: Found (8.15) “Distributivity of ∀ over ∧”
+— CalcCheck: ─ OK
+(∀ b • (∃ a • a ⦗ R ⦘ b ) ) ∧ (∀ b • b ∈ B )
+= ⟨ “Surjectivity” ⟩
+— CalcCheck: Found “Surjectivity”
+— CalcCheck: ─ OK
+surjective R ∧ (∀ b • b ∈ B )
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+surjective R ∧ (∀ b • b ∈ B ≡ true )
+= ⟨ “Universal set” ⟩
+— CalcCheck: Found “Universal set”, “Universal set”
+— CalcCheck: ─ OK
+surjective R ∧ (∀ b • b ∈ B ≡ b ∈ 𝐔 )
+= ⟨ “Set extensionality” ⟩
+— CalcCheck: Found (11.4) “Set extensionality”
+— CalcCheck: ─ OK
+surjective R ∧ B = 𝐔
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[7]
+
+Partial-Function Application
+[8]
+
+A univalent relation is also called a partial function.
+Note that our function types t₁ → t₂ are disjoint from our relation types t₁ ↔ t₂.
+Therefore, if f : t₁ ↔ t₂ is a partial function (i.e., a univalent relation), and if a : t₁ is a potential argument, then we cannot write “f a” to
+apply f to a, since that would require f to be of a function type.
+To bridge this gap, we introduce the special application operator _@_ for partial functions, with the same precedence and associating behaviour
+as function application:
+
+[9]
+
+[10]
+
+Precedence 120 for: _@_
+Associating to the left: _@_
+
+Declaration: _@_ : (t₁ ↔ t₂) → t₁ → t₂
+
+Precedence 120 for: _@_
+Associating to the left: _@_
+
+Declaration: _@_ : t₁ ↔ t₂ → (t₁ → t₂)
+— CalcCheck: Operator _@_: Associating to the left; precedence
+120
+
+[11]
+
+[12]
+
+[13]
+
+We want to be able to prove interesting things only about well-defined partial-function applications “f @ x” where f actually is a partial
+function, and x is in its domain:
+
+Axiom “Partial-function application”:
+univalent f ∧ x ∈ Dom f
+⇒ (f @ x = y ≡ x ⦗ f ⦘ y)
+
+
+Axiom “Partial-function application”: univalent f ∧ x ∈ Dom f ⇒ (f @ x =
+y ≡ x ⦗ f ⦘ y)
+
+
+[14]
+
+[15]
+
+[16]
+
+
+With that, we now can formulate and prove that relational image for partial functions corresponds to partial-function application:
+
+Theorem “@ via relational image”:
+univalent f ∧ x ∈ Dom f
+⇒ f ⦇ { x } ⦈ = { f @ x }
+Proof:
+univalent f ∧ x ∈ Dom f
+⇒⟨ “Partial-function application” ⟩
+((f @ x = y) ≡ x ⦗ f ⦘ y)
+=⟨ “Symmetry of =” , “Singleton set membership” ⟩
+(y ∈ { f @ x } ≡ x ⦗ f ⦘ y)
+=⟨ “Infix relationship” ⟩
+(y ∈ { f @ x } ≡ ⟨ x , y ⟩ ∈ f )
+=⟨ ? ⟩
+f ⦇ { x } ⦈ = { f @ x }
+
+Theorem “@ via relational image”: univalent f ∧ x ∈ Dom f ⇒ f ⦇ { x } ⦈
+= {f@ x}
+Proof:
+Calculation for expected goal `univalent f ∧ x ∈ Dom f ⇒ f ⦇ { x } ⦈ = {
+f @ x }`:
+univalent f ∧ x ∈ Dom f
+⇒ ⟨ “Partial-function application” ⟩
+— CalcCheck: Found “Partial-function application”
+— CalcCheck: ─ OK
+f@ x= y≡ x⦗ f⦘ y
+= ⟨ “Symmetry of =”, “Singleton set membership” ⟩
+— CalcCheck: Found (1.3) “Symmetry of =”
+— CalcCheck: Found (11.101) “Singleton set membership”
+— CalcCheck: ─ OK
+y∈ {f@ x} ≡ x⦗ f⦘ y
+= ⟨ “Infix relationship” ⟩
+— CalcCheck: Found “Infix relationship”
+— CalcCheck: ─ OK
+y ∈ { f @ x } ≡ ⟨x, y⟩ ∈ f
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+f⦇ {x} ⦈ = {f@ x}
+— CalcCheck: 1 out of 4 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: This proof contains the following free variables:
+`y`
+Are any of these perhaps typos?
+
+An easy consequence of “Partial-function application” is the following:
+
+
+[17]
+
+[18]
+
+[19]
+
+
+Theorem “Relationship with @”:
+univalent f ∧ x ∈ Dom f
+⇒
+x ⦗ f ⦘ (f @ x)
+Proof:
+univalent f ∧ x ∈ Dom f
+⇒⟨ “Partial-function application” ⟩
+((f @ x = y) ≡ x ⦗ f ⦘ y)
+=⟨ “Symmetry of =” , “Singleton set membership” ⟩
+(y ∈ { f @ x } ≡ x ⦗ f ⦘ y)
+=⟨ “Infix relationship” ⟩
+(y ∈ { f @ x } ≡ ⟨ x , y ⟩ ∈ f )
+=⟨ ? ⟩
+x ⦗ f ⦘ (f @ x)
+
+Theorem “Relationship with @”: univalent f ∧ x ∈ Dom f ⇒ x ⦗ f ⦘
+f@ x
+Proof:
+Calculation for expected goal `univalent f ∧ x ∈ Dom f ⇒ x ⦗ f ⦘ f
+@ x`:
+univalent f ∧ x ∈ Dom f
+⇒ ⟨ “Partial-function application” ⟩
+— CalcCheck: Found “Partial-function application”
+— CalcCheck: ─ OK
+f@ x= y≡ x⦗ f⦘ y
+= ⟨ “Symmetry of =”, “Singleton set membership” ⟩
+— CalcCheck: Found (1.3) “Symmetry of =”
+— CalcCheck: Found (11.101) “Singleton set membership”
+— CalcCheck: ─ OK
+y∈ {f@ x} ≡ x⦗ f⦘ y
+= ⟨ “Infix relationship” ⟩
+— CalcCheck: Found “Infix relationship”
+— CalcCheck: ─ OK
+y ∈ { f @ x } ≡ ⟨x, y⟩ ∈ f
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+x⦗ f⦘ f@ x
+— CalcCheck: 1 out of 4 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: This proof contains the following free variables:
+`y`
+Are any of these perhaps typos?
+
+“Membership in domain of ⨾” will be useful below.
+
+Theorem “Membership in domain of ⨾”:
+x ∈ Dom (R ⨾ S)
+≡ x ∈ Dom R ∧ (∃ y ❙ x ⦗ R ⦘ y • y ∈ Dom S)
+Proof:
+
+Theorem “Membership in domain of ⨾”: x ∈ Dom (R ⨾ S) ≡ x ∈ Dom R ∧ (∃ y ❙ x
+⦗ R ⦘ y • y ∈ Dom S )
+— CalcCheck: Proviso: ¬occurs(`y`, `R, S`)
+Proof:
+— CalcCheck: Proof: No proof there!
+
+
+[20]
+
+[21]
+
+[22]
+
+
+A few side proofs (there can be more than one before “Continuing:”) may be useful to keep things organised for proving the following
+theorem (which may not be easy…):
+
+Theorem “Partial-function application of ⨾”:
+univalent f ∧ univalent g ∧ x ∈ Dom (f ⨾ g)
+⇒ (f ⨾ g) @ x = g @ (f @ x)
+Proof:
+
+Theorem “Partial-function application of ⨾”: univalent f ∧ (univalent g ∧ x ∈ Dom (f ⨾
+g)) ⇒ (f ⨾ g) @ x = g @ (f @ x)
+Proof:
+— CalcCheck: Proof: No proof there!
+
+The necessity of being so careful with definedness of partial-function application (f @ x) is the main reason we separate it notationally from
+function application (f x), and therewith also for the separation between types and sets.
+As another example, proving “Injectivity and @”, which is essentially the partial-function application variant of the predicate-logic version of
+injectivity, is quite a bit more trouble due to the antecedents required for everything involving partial-function application @:
+
+[23]
+
+Theorem “Injectivity and @”:
+univalent f ∧ injective f ∧
+x₁ ∈ Dom f
+∧ x₂ ∈ Dom f
+⇒ (f @ x₁ = f @ x₂
+≡
+x₁ = x₂)
+Proof:
+
+Theorem “Injectivity and @”: univalent f ∧ (injective f ∧ (x₁ ∈ Dom f ∧ x₂ ∈ Dom f))
+⇒ (f @ x₁ = f @ x₂ ≡ x₁ = x₂)
+Proof:
+— CalcCheck: Proof: No proof there!
+
+Check and Save
+
+
+Save
+
+

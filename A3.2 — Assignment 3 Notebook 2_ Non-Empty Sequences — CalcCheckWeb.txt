@@ -1,0 +1,410 @@
+[1]
+
+[2]
+
+(All propositional logic and predicate logic are preloaded here as well as natural numbers. Four hint items are allowed per hint.)
+
+Here we are dealing with a type NESeq of non-empty sequences; these are not supported by “By induction on”.
+Declaration: NESeq : Type → Type
+Declaration: Singleton : A
+→ NESeq A
+Declaration: Cons
+: A → NESeq A → NESeq A
+
+[3]
+
+For calculating the length, we follow the umber of constructor arguments of type A:
+Declaration: length : NESeq A → ℕ
+Axiom “NESeq length”: length (Singleton x) = 1
+Axiom “NESeq length”: length (Cons x xs) = suc (length xs)
+We also have the usual kind of map function:
+Declaration: map : (A → B) → NESeq A → NESeq B
+Axiom “NESeq map”: map f (Singleton x) = Singleton (f x)
+Axiom “NESeq map”: map f (Cons x xs)
+= Cons (f x) (map f xs)
+
+
+[4]
+
+
+For proving properties about these non-empty sequences, we have the following induction principle:
+Axiom “Induction over `NESeq`”:
+(∀ a : A • P[xs ≔ Singleton a])
+⇒ (∀ xs : NESeq A ❙ P • ∀ x : A • P[xs ≔ Cons x xs])
+⇒ (∀ xs : NESeq A • P)
+Important: Using “Induction overNESeq” with two subproofs can only prove universally-quantified goals, that is, goals of shape (∀ xs
+: NESeq A • P)!
+
+[5]
+
+Now you can prove that map still preserves length. But first answer a question: When using “Induction over NESeq” to prove Theorem “Length
+of NESeq map”:
+∀ xs • length (map f xs) = length xs
+below, the metavariable P from the induction principle needs to be instantiated with the following expression:
+length (map f xs) = length xs
+∀ xs • length (map f xs) = length xs
+∀ x • ∀ xs • length (map f xs) = length xs
+∀ xs • ∀ x • length (map f xs) = length xs
+∀ x • ∀ xs • length (map f (Cons x xs)) = length xs
+∀ xs • ∀ xs • length (map f (Cons x xs)) = length xs
+∀ x • ∀ xs • length (map f (Cons x xs)) = length (Cons x xs)
+∀ xs • ∀ x • length (map f (Cons x xs)) = length (Cons x xs)
+Prove all theorems below:
+
+
+[6]
+
+
+Theorem “Length of NESeq map”: (∀ xs • length ((map f) xs) = length xs )
+Proof:
+Using “Induction over `NESeq`”:
+— CalcCheck: Found “Induction over `NESeq`”
+Subproof establishing `(∀ xs • (∀ a ❙ length ((map f) xs) = length xs • length ((map f)
+((Cons x) xs)) = length ((Cons x) xs) ) )`:
+For any ` xs`:
+For any ` a` satisfying `length ((map f) xs) = length xs`:
+— CalcCheck: Assumptions match quantifier range.
+Calculation establishing `length ((map f) ((Cons x) xs)) = length ((Cons x) xs)`:
+length ((map f) ((Cons x) xs))
+= ⟨ “NESeq map” ⟩
+— CalcCheck: Found “NESeq map”
+— CalcCheck: ─ OK
+length ((Cons (f x)) ((map f) xs))
+= ⟨ “NESeq length” ⟩
+— CalcCheck: Found “NESeq length”
+— CalcCheck: ─ OK
+suc length ((map f) xs)
+= ⟨ Assumption `length ((map f) xs) = length xs` ⟩
+— CalcCheck: Found assumption `length ((map f) xs) = length xs`
+— CalcCheck: ─ OK
+suc length xs
+= ⟨ “NESeq length” ⟩
+— CalcCheck: Found “NESeq length”
+— CalcCheck: ─ OK
+length ((Cons x) xs)
+— CalcCheck: All steps OK
+Subproof establishing `(∀ xs • (∀ y ❙ length ((map f) xs) = length xs • length ((map f)
+(Singleton a)) = length (Singleton a) ) )`:
+For any ` xs`:
+For any ` y` satisfying `length ((map f) xs) = length xs`:
+— CalcCheck: Assumptions match quantifier range.
+Calculation establishing `length ((map f) (Singleton a)) = length (Singleton a)`:
+length ((map f) (Singleton a))
+= ⟨ “NESeq map” ⟩
+— CalcCheck: Found “NESeq map”
+— CalcCheck: ─ OK
+length (Singleton (f a))
+= ⟨ “NESeq length” ⟩
+— CalcCheck: Found “NESeq length”
+— CalcCheck: ─ OK
+1
+
+
+Theorem “Length of NESeq map”:
+∀ xs • length (map f xs) = length xs
+Proof:
+Using “Induction over `NESeq`”:
+Subproof:
+For any `xs`:
+For any `a` satisfying `length (map f xs) =
+length (map f (Cons x xs))
+=⟨ “NESeq map”⟩
+length (Cons (f x) (map f xs))
+=⟨ “NESeq length” ⟩
+suc (length (map f xs))
+=⟨ assumption `length (map f xs) = length x
+suc (length xs)
+=⟨ “NESeq length” ⟩
+length (Cons x xs)
+
+= ⟨ “NESeq length” ⟩
+— CalcCheck: Found “NESeq length”
+— CalcCheck: ─ OK
+length (Singleton a)
+— CalcCheck: All steps OK
+— CalcCheck: Could not justify this `Using` application!
+
+Subproof:
+For any `xs`:
+For any `y` satisfying `length (map f xs) =
+length (map f (Singleton a))
+=⟨ “NESeq map”⟩
+length (Singleton (f a))
+=⟨ “NESeq length”⟩
+1
+=⟨ “NESeq length”⟩
+length (Singleton a)
+
+[7]
+
+We have concatenation, using the name “cat”:
+
+
+Declaration: cat : NESeq A → NESeq A → NESeq A
+Axiom “NESeq cat”: cat (Singleton x) ys = Cons x ys
+Axiom “NESeq cat”: cat (Cons x xs)
+ys = Cons x (cat xs ys)
+[8]
+
+Now you can prove how length interacts with concatenation, but again, first answer a question: When using “Induction over NESeq” to prove
+Theorem “Length of NESeq cat”:
+∀ xs • ∀ ys • length (cat xs ys) = length xs + length ys
+below, the metavariable P from the induction principle needs to be instantiated with the following expression:
+length (cat xs ys) = length xs + length ys
+∀ xs • length (cat xs ys) = length xs + length ys
+∀ ys • length (cat xs ys) = length xs + length ys
+∀ xs • ∀ ys • length (cat xs ys) = length xs + length ys
+∀ x • ∀ xs • ∀ ys • length (cat xs ys) = length xs + length ys
+∀ xs • ∀ x • ∀ ys • length (cat xs ys) = length xs + length ys
+∀ xs • ∀ ys • ∀ x • length (cat xs ys) = length xs + length ys
+∀ x • ∀ xs • ∀ ys • length (cat (Cons x xs) ys) = length xs + length ys
+∀ xs • ∀ x • ∀ ys • length (cat (Cons x xs) ys) = length xs + length ys
+∀ xs • ∀ ys • ∀ x • length (cat (Cons x xs) ys) = length xs + length ys
+∀ x • ∀ xs • ∀ ys • length (cat (Cons x xs) ys) = length (Cons x xs) + length ys
+∀ xs • ∀ x • ∀ ys • length (cat (Cons x xs) ys) = length (Cons x xs) + length ys
+∀ xs • ∀ ys • ∀ x • length (cat (Cons x xs) ys) = length (Cons x xs) + length ys
+(If your answer is wrong, you should not be able to finish the proof.)
+
+
+[9]
+
+
+Theorem “Length of NESeq cat”: (∀ xs • (∀ ys • length ((cat xs) ys) = length xs + length ys ) )
+Proof:
+Using “Induction over `NESeq`”:
+— CalcCheck: Found “Induction over `NESeq`”
+Subproof establishing `(∀ xs • (∀ ys • (∀ x ❙ length ((cat xs) ys) = length xs + length ys • length
+((cat (Singleton x)) ys) = length (Singleton x) + length ys ) ) )`:
+For any ` xs`:
+For any ` ys`:
+For any ` x` satisfying `length ((cat xs) ys) = length xs + length ys`:
+— CalcCheck: Assumptions match quantifier range.
+Calculation establishing `length ((cat (Singleton x)) ys) = length (Singleton x) + length
+ys`:
+length ((cat (Singleton x)) ys)
+= ⟨ “NESeq cat” ⟩
+— CalcCheck: Found “NESeq cat”
+— CalcCheck: ─ OK
+length ((Cons x) ys)
+= ⟨ “NESeq length” ⟩
+— CalcCheck: Found “NESeq length”
+— CalcCheck: ─ OK
+suc length ys
+= ⟨ “Successor”, “NESeq length” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: Found “NESeq length”
+— CalcCheck: ─ OK
+length (Singleton x) + length ys
+— CalcCheck: All steps OK
+Subproof establishing `(∀ xs • (∀ ys • (∀ x ❙ length ((cat xs) ys) = length xs + length ys • length
+((cat ((Cons x) xs)) ys) = length ((Cons x) xs) + length ys ) ) )`:
+For any ` xs`:
+For any ` ys`:
+For any ` x` satisfying `length ((cat xs) ys) = length xs + length ys`:
+— CalcCheck: Assumptions match quantifier range.
+Calculation establishing `length ((cat ((Cons x) xs)) ys) = length ((Cons x) xs) +
+length ys`:
+length ((cat ((Cons x) xs)) ys)
+= ⟨ “NESeq cat” ⟩
+— CalcCheck: Found “NESeq cat”
+— CalcCheck: ─ OK
+length ((Cons x) ((cat xs) ys))
+= ⟨ “NESeq length” ⟩
+— CalcCheck: Found “NESeq length”
+— CalcCheck: ─ OK
+
+
+Theorem “Length of NESeq cat”:
+∀ xs • ∀ ys • length (cat xs ys) = length xs
+Proof:
+Using “Induction over `NESeq`”:
+Subproof:
+For any `xs`:
+For any `ys`:
+For any `x` satisfying `length (cat
+length (cat (Singleton x) ys)
+=⟨ “NESeq cat”⟩
+length (Cons x ys)
+=⟨ “NESeq length”⟩
+suc (length ys)
+=⟨ “Successor” , “NESeq length”⟩
+length (Singleton x ) + (length
+Subproof:
+For any `xs`:
+For any `ys`:
+For any `x` satisfying `length (cat
+length (cat (Cons x xs) ys)
+=⟨ “NESeq cat”⟩
+length (Cons x (cat xs ys))
+=⟨ “NESeq length”⟩
+suc (length (cat xs ys))
+=⟨ assumption `length (cat xs ys)
+(1 + length xs) + length ys
+=⟨ “Successor” , “NESeq length”⟩
+(length (Cons x xs)) + length ys
+
+[10]
+
+suc length ((cat xs) ys)
+= ⟨ Assumption `length ((cat xs) ys) = length xs + length ys`, “Successor”,
+“Associativity of +” ⟩
+— CalcCheck: Found assumption `length ((cat xs) ys) = length xs + length ys`
+— CalcCheck: Found “Successor”
+— CalcCheck: Found “Associativity of +”
+— CalcCheck: ─ OK
+(1 + length xs) + length ys
+= ⟨ “Successor”, “NESeq length” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: Found “NESeq length”
+— CalcCheck: ─ OK
+length ((Cons x) xs) + length ys
+— CalcCheck: All steps OK
+— CalcCheck: Could not justify this `Using` application!
+
+Theorem “Associativity of NESeq cat”:
+∀ xs • ∀ ys • ∀ zs • cat (cat xs ys) zs = cat xs (cat
+Proof:
+
+Theorem “Associativity of NESeq cat”: (∀ xs • (∀ ys • (∀ zs • (cat ((cat xs) ys)) zs
+= (cat xs) ((cat ys) zs) ) ) )
+Proof:
+— CalcCheck: Proof: No proof there!
+
+
+[11]
+
+
+A flatten function (corresponding to concat in Haskell) and a sum function are also available:
+Declaration: flatten : NESeq (NESeq A) → NESeq A
+Axiom “NESeq flatten”: flatten (Singleton xs) = xs
+Axiom “NESeq flatten”: flatten (Cons xs xss) = cat xs (flatten xss)
+Declaration: sum : NESeq ℕ → ℕ
+Axiom “NESeq sum”: sum (Singleton n) = n
+Axiom “NESeq sum”: sum (Cons n ns)
+= n + sum ns
+
+[12]
+
+Theorem “Sum of nested NESeq lengths”: (∀ xss : NESeq (NESeq A) • sum ((map
+Theorem “Sum of nested NESeq lengths”:
+∀ xss : NESeq (NESeq A) • sum (map length xss) = lengt length) xss) = length (flatten xss) )
+— CalcCheck: Metavariables: A = A〖〗
+Proof:
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[13]
+
+[14]
+
+[15]
+
+[16]
+
+We define head and tail appropriately:
+
+Declaration: head
+Declaration: tail
+
+: OddSeq A → A
+: OddSeq A → OddSeq A
+
+Axiom “NESeq head”: head (Singleton x) = x
+Axiom “NESeq head”: head (Cons x xs) = x
+Axiom “NESeq tail”: tail (Cons x xs) = xs
+
+Theorem “NESeq decomposition”:
+∀ xs : NESeq a • xs = Singleton (head xs) ∨ xs = Cons
+Proof:
+
+Declaration: head : OddSeq A → A
+Declaration: tail : OddSeq A → OddSeq A
+
+Axiom “NESeq head”: head (Singleton x) = x
+Axiom “NESeq head”: head ((Cons x) xs) = x
+Axiom “NESeq tail”: tail ((Cons x) xs) = xs
+
+Theorem “NESeq decomposition”: (∀ xs : NESeq a • xs = Singleton (head xs) ∨ xs
+= (Cons (head xs)) (tail xs) )
+Proof:
+— CalcCheck: Proof: No proof there!
+
+
+[17]
+
+
+The function that in the Haskell prelude is called zipWith we just be called zip here, for brevity:
+Declaration: zip : (A → B → C) → NESeq A → NESeq B → NESeq C
+Axiom “NESeq zip”: zip f (Singleton x) (Singleton y) = Singleton (f x y)
+Axiom “NESeq zip”: zip f (Singleton x) (Cons y ys)
+= Singleton (f x y)
+Axiom “NESeq zip”: zip f (Cons x xs)
+(Singleton y) = Singleton (f x y)
+Axiom “NESeq zip”: zip f (Cons x xs)
+(Cons y ys)
+= Cons (f x y) (zip f xs ys)
+
+
+[18]
+
+1,1
+
+
+Theorem “Length of NESeq zip”: (∀ xs • (∀ ys • length (((zip f) xs) ys) = length xs ↓
+Theorem “Length of NESeq zip”:
+∀ xs • ∀ ys • length (zip f xs ys) = length xs ↓ length length ys ) )
+Proof:
+Proof:
+Using “Induction over `NESeq`”:
+Using “Induction over `NESeq`”:
+— CalcCheck: Found “Induction over `NESeq`”
+Subproof:
+Subproof:
+For any `xs`:
+For any ` xs`:
+For any `ys`:
+For any ` ys`:
+For any `x` satisfying `length (zip f xs ys) =
+For any ` x` satisfying `length (((zip f) xs) ys) = length xs ↓ length ys`:
+length (zip f (Singleton x) ys)
+length (((zip f) (Singleton x)) ys)
+= ⟨ “NESeq zip” ⟩
+=⟨“NESeq zip”⟩
+— CalcCheck: Found “NESeq zip”
+length (Singleton (f x y))
+— CalcCheck: Could not justify this step!
+=⟨“NESeq zip”⟩
+length (Singleton ((f x) y))
+= ⟨ “NESeq zip” ⟩
+— CalcCheck: Found “NESeq zip”
+Subproof:
+— CalcCheck: Due to parse error in the expression below, this
+For any `xs`:
+calculation step cannot be checked.
+For any `ys`:
+⟪ expecting «expression»! ⟫
+For any `a` satisfying `length (zip f xs ys) =
+— CalcCheck: 2 out of 2 steps not justified
+length (zip f (Cons x xs) ys)
+— CalcCheck: Could not determine the goal for this calculation.
+Subproof:
+For any ` xs`:
+For any ` ys`:
+For any ` a` satisfying `length (((zip f) xs) ys) = length xs ↓ length ys`:
+length (((zip f) ((Cons x) xs)) ys)
+2 SUBPROOFS PER ONE SUBPROOF SO ANOTHER INDUCTION OVER IT
+— CalcCheck: Could not determine the goal for this calculation.
+— CalcCheck: Could not justify this `Using` application!
+— CalcCheck: This proof contains the following free variables:
+`x`, `y`
+Are any of these perhaps typos?
+Top-Level Reports:
+— CalcCheck: Parse error: (line 24, column 1): unexpected '2' expecting end of input, or
+«TLI»
+
+Check and Save
+
+
+Save
+
+

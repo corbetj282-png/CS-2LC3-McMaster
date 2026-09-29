@@ -1,0 +1,598 @@
+[1]
+
+The set-up here is the same as in H9: Preloaded are:
+All propositional logic, including monotonicity laws, and Leibniz as axiom and substitution laws
+Integers up to Ex5.4, Ex5.5, and 6.5
+Program correctness material up to the “While” rule — which you should now remember.
+Two hint items per hint are allowed here; Evaluation is disabled, but Facts are allowed.
+
+[2]
+
+A proof for the correctness statement “Answering…” was (mostly) shown in the lecture — first try to produce a proof yourself without
+looking there!
+Also, strive to develop this proof without copying a “While” template from elsewhere!
+
+
+[3]
+
+
+Theorem “Answering...”:
+true
+⇒⁅ i := 0 ⍮
+while i = 0
+do
+n := n + 1
+od
+⁆
+n = 42
+Proof:
+true
+╍╍╍ Precondition
+=⟨Fact `0 = 0`⟩
+0 = 0
+⇒⁅ i := 0 ⁆ ⟨ “Assignment” with substitution⟩
+i = 0 ╍╍╍ Invariant
+⇒⁅ while i = 0 do
+n := n + 1
+od ⁆
+⟨ “While” with subproof:
+(i = 0) ∧ (i = 0)
+╍╍╍ Loop condition and in
+⇒⁅ n := n + 1 ⁆ ⟨ “Assignment” with substitution
+(i = 0) ∧ (i = 0)
+╍╍╍ Invariant
+=⟨“Idempotency of ∧”⟩
+(i = 0)
+⟩
+¬ (i = 0) ∧ (i = 0) ╍╍╍ Negated loop condition, and i
+=⟨ “Contradiction” ⟩
+false
+⇒⟨ “ex falso quodlibet” ⟩
+n = 42
+
+
+Theorem “Answering...”: true ⇒⁅ (i := 0 ⍮ while (i = 0) do (n := n + 1) od) ⁆ n = 42
+Proof:
+Calculation for expected goal `true ⇒⁅ (i := 0 ⍮ while (i = 0) do (n := n + 1) od) ⁆ n
+= 42`:
+true
+= ⟨ Fact `0 = 0`
+— CalcCheck: OK (no change)
+
+⟩
+— CalcCheck: ─ OK
+0=0
+⇒⁅ i := 0 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+i= 0
+⇒⁅ while (i = 0) do (n := n + 1) od ⁆ ⟨ “While” with Subproof establishing `i = 0 ∧ i
+= 0 ⇒⁅ (n := n + 1) ⁆ i = 0`:
+i= 0 ∧ i= 0
+⇒⁅ n := n + 1 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+i= 0 ∧ i= 0
+= ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+i= 0
+— CalcCheck: All steps OK
+
+⟩
+— CalcCheck: Found “While”
+— CalcCheck: ─ OK
+¬ (i = 0) ∧ i = 0
+= ⟨ “Contradiction” ⟩
+— CalcCheck: Found (3.42) “Contradiction”
+— CalcCheck: ─ OK
+false
+⇒ ⟨ “ex falso quodlibet” ⟩
+— CalcCheck: Found (3.75) “ex falso quodlibet”
+— CalcCheck: ─ OK
+n = 42
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[4]
+
+
+For the correctness statement “Adding₁” should also be relatively straight-forward to prove:
+
+
+[5]
+
+
+Theorem “Adding₁”: n = n₀ ⇒⁅ (i := 0 ⍮ while (i ≠ m) do (i := i + 1 ⍮ n := n + 1) od) ⁆ n = m + n₀
+Proof:
+Calculation for expected goal `n = n₀ ⇒⁅ (i := 0 ⍮ while (i ≠ m) do (i := i + 1 ⍮ n := n + 1) od) ⁆ n = m
++ n₀`:
+n = n₀
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+n = n₀ + 0
+⇒⁅ i := 0 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+n = n₀ + i
+⇒⁅ while (i ≠ m) do (i := i + 1 ⍮ n := n + 1) od ⁆ ⟨ “While” with Subproof establishing `i ≠ m ∧ n = n₀ +
+i ⇒⁅ (i := i + 1 ⍮ n := n + 1) ⁆ n = n₀ + i`:
+i ≠ m ∧ n = n₀ + i
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”,
+(3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+n = n₀ + i
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+n = (n₀ + i) + 0
+= ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: ─ OK
+n = ((n₀ + i) + 1) + - 1
+⇒⁅ i := i + 1 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+n = (n₀ + i) + - 1
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+n + 0 = (n₀ + i) + - 1
+= ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: ─ OK
+(n + 1) + - 1 = (n₀ + i) + - 1
+⇒⁅ n := n + 1 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+
+
+Theorem “Adding₁”:
+n = n₀
+⇒⁅ i := 0 ⍮
+while i ≠ m
+do
+i := i + 1 ⍮
+n := n + 1
+od
+⁆
+n = m + n₀
+Proof:
+n = n₀
+=⟨“Additive identity”⟩
+n = n₀ + 0
+⇒⁅ i := 0 ⁆ ⟨“Assignment” with substituti
+n = n₀ + i
+⇒⁅ while i ≠ m
+do
+i := i + 1 ⍮
+n := n + 1
+od ⁆
+⟨ “While” with subproof:
+(i ≠ m) ∧ (n = n₀ + i)
+⇒⟨ “Weakening” ⟩
+(n = n₀ + i)
+=⟨“Additive identity”⟩
+(n = n₀ + i + 0)
+=⟨“Unary minus”⟩
+(n = n₀ + i + 1 + (- 1))
+⇒⁅ i := i + 1 ⁆ ⟨“Assignment”
+(n = n₀ + i + (- 1))
+=⟨“Additive identity”⟩
+(n + 0 = n₀ + i + (- 1))
+=⟨“Unary minus”⟩
+(n + 1 + (- 1) = n₀ + i + (⇒⁅ n := n + 1 ⁆ ⟨“Assignment”
+(n + (- 1) = n₀ + i + (- 1))
+=⟨“Cancellation of +”⟩
+(n = n₀ + i )
+
+
+— CalcCheck: ─ OK
+n + - 1 = (n₀ + i) + - 1
+= ⟨ “Cancellation of +” ⟩
+— CalcCheck: Found (15.8) “Cancellation of +”
+— CalcCheck: ─ OK
+n = n₀ + i
+— CalcCheck: All steps OK
+
+⟩
+— CalcCheck: Found “While”
+— CalcCheck: ─ OK
+¬ (i ≠ m) ∧ n = n₀ + i
+= ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+¬ (¬ (i = m)) ∧ n = n₀ + i
+= ⟨ “Double negation” ⟩
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+i = m ∧ n = n₀ + i
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+i = m ∧ (n = n₀ + z)[z ≔ i]
+= ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+i = m ∧ (n = n₀ + z)[z ≔ m]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+i = m ∧ n = n₀ + m
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”,
+(3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+n = n₀ + m
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+⟩
+¬(i ≠ m) ∧ (n = n₀ + i)
+=⟨“Definition of ≠”⟩
+¬ ¬ (i = m) ∧ (n = n₀ + i)
+=⟨“Double negation”⟩
+(i = m) ∧ (n = n₀ + i)
+=⟨ substitution ⟩
+(i = m) ∧ (n = n₀ + z)[z ≔ i]
+=⟨ “Replacement”⟩
+(i = m) ∧ (n = n₀ + z)[z ≔ m]
+=⟨ substitution ⟩
+(i = m) ∧ (n = n₀ + m)
+⇒⟨ “Weakening” ⟩
+(n = n₀ + m)
+
+[6]
+
+The “Adding” functionality can also be achieved by counting m down to zero instead of counting i up from 0 to m — identify an appropriate
+invariant and prove the correctness statement “Adding₂”.
+(You are encouraged to experiment with different invariant candidates.)
+
+
+[7]
+
+
+Theorem “Adding₂”: m = m₀ ∧ n = n₀ ⇒⁅ while (m ≠ 0) do (m := m - 1 ⍮ n := n + 1) od ⁆ n = m₀ + n₀
+Proof:
+Calculation for expected goal `m = m₀ ∧ n = n₀ ⇒⁅ while (m ≠ 0) do (m := m - 1 ⍮ n := n + 1) od ⁆ n
+= m₀ + n₀`:
+m = m₀ ∧ n = n₀
+= ⟨ “Cancellation of +” ⟩
+— CalcCheck: Found (15.8) “Cancellation of +”
+— CalcCheck: ─ OK
+m = m₀ ∧ n + m = n₀ + m
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+m = m₀ ∧ (n + m = n₀ + z)[z ≔ m]
+= ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+m = m₀ ∧ (n + m = n₀ + z)[z ≔ m₀]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+m = m₀ ∧ n + m = n₀ + m₀
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”,
+(3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+n + m = n₀ + m₀
+⇒⁅ while (m ≠ 0) do (m := m - 1 ⍮ n := n + 1) od ⁆ ⟨ “While” with Subproof establishing `m ≠ 0 ∧ n +
+m = m₀ + n₀ ⇒⁅ (m := m - 1 ⍮ n := n + 1) ⁆ n + m = m₀ + n₀`:
+m ≠ 0 ∧ n + m = m₀ + n₀
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”,
+(3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+n + m = m₀ + n₀
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+(n + m) + 0 = m₀ + n₀
+= ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: ─ OK
+((n + m) + 1) + - 1 = m₀ + n₀
+= ⟨ “Associativity of +” ⟩
+
+
+Theorem “Adding₂”:
+m = m₀ ∧ n = n₀
+⇒⁅ while m ≠ 0
+do
+m := m - 1 ⍮
+n := n + 1
+od
+⁆
+n = m₀ + n₀
+Proof:
+m = m₀ ∧ n = n₀
+=⟨ “Cancellation of +” ⟩
+m = m₀ ∧ (n + m = n₀ + m)
+=⟨ substitution ⟩
+m = m₀ ∧ (n + m = n₀ + z)[z ≔ m]
+=⟨ “Replacement” ⟩
+m = m₀ ∧ (n + m = n₀ + z)[z ≔ m₀ ]
+=⟨ substitution ⟩
+m = m₀ ∧ (n + m = n₀ + m₀)
+⇒⟨ “Weakening” ⟩
+(n + m = n₀ + m₀)
+⇒⁅ while m ≠ 0
+do
+m := m - 1 ⍮
+n := n + 1
+od ⁆
+⟨“While” with subproof:
+(m ≠ 0) ∧ (n + m = m₀ + n₀)
+⇒ ⟨“Weakening”⟩
+(n + m = m₀ + n₀)
+= ⟨“Additive identity”⟩
+(n + m + 0 = m₀ + n₀)
+= ⟨“Unary minus”⟩
+(n + m + 1 + (- 1) = m₀ + n₀)
+= ⟨“Associativity of +”⟩
+((n + 1) + (m + (- 1)) = m₀ +
+= ⟨“Subtraction”⟩
+((n + 1) + (m - 1) = m₀ + n₀)
+⇒⁅ m := m - 1 ⁆ ⟨“Assignment”
+((n + 1) + m = m₀ + n₀)
+⇒⁅ n := n + 1 ⁆ ⟨“Assignment”
+
+— CalcCheck: Found (15.1a) “Associativity of +”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(n + 1) + (m + - 1) = m₀ + n₀
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+(n + 1) + (m - 1) = m₀ + n₀
+⇒⁅ m := m - 1 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+(n + 1) + m = m₀ + n₀
+⇒⁅ n := n + 1 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+n + m = m₀ + n₀
+— CalcCheck: All steps OK
+
+⟩
+— CalcCheck: Found “While”
+— CalcCheck: ─ OK
+¬ (m ≠ 0) ∧ n + m = m₀ + n₀
+= ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+¬ (¬ (m = 0)) ∧ n + m = m₀ + n₀
+= ⟨ “Double negation” ⟩
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+m = 0 ∧ n + m = m₀ + n₀
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+m = 0 ∧ (n + z = m₀ + n₀)[z ≔ m]
+= ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+m = 0 ∧ (n + z = m₀ + n₀)[z ≔ 0]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+m = 0 ∧ n + 0 = m₀ + n₀
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”,
+(3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+
+
+(n + m = m₀ + n₀)
+⟩
+¬(m ≠ 0) ∧ (n + m = m₀ + n₀)
+=⟨“Definition of ≠”⟩
+¬ ¬ (m = 0) ∧ (n + m = m₀ + n₀)
+=⟨“Double negation”⟩
+(m = 0) ∧ (n + m = m₀ + n₀)
+=⟨ substitution ⟩
+(m = 0) ∧ (n + z = m₀ + n₀)[z ≔ m]
+=⟨ “Replacement” ⟩
+(m = 0) ∧ (n + z = m₀ + n₀)[z ≔ 0]
+=⟨ substitution ⟩
+(m = 0) ∧ (n + 0 = m₀ + n₀)
+⇒⟨ “Weakening” ⟩
+(n + 0 = m₀ + n₀)
+=⟨ “Additive identity” ⟩
+(n = m₀ + n₀)
+
+— CalcCheck: ─ OK
+n + 0 = m₀ + n₀
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+n = m₀ + n₀
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[8]
+
+
+Instead of the loop condition m ≠ 0, once can also use m > 0 — however, this requires a stronger precondition and a stronger invariant:
+
+
+[9]
+
+
+Theorem “Adding₃”: 0 ≤ m = m₀ ∧ n = n₀ ⇒⁅ while (m > 0) do (m := m - 1 ⍮ n := n + 1) od ⁆ n = m₀ + n₀
+Proof:
+Calculation for expected goal `0 ≤ m = m₀ ∧ n = n₀ ⇒⁅ while (m > 0) do (m := m - 1 ⍮ n := n + 1) od ⁆
+n = m₀ + n₀`:
+0 ≤ m = m₀ ∧ n = n₀
+= ⟨ “Associativity of ∧” ⟩
+— CalcCheck: Found (3.37) “Associativity of ∧”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+0 ≤ m ∧ (m = m₀ ∧ n = n₀)
+= ⟨ “Cancellation of +” ⟩
+— CalcCheck: Found (15.8) “Cancellation of +”
+— CalcCheck: ─ OK
+0 ≤ m ∧ (m = m₀ ∧ n + m = n₀ + m)
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+0 ≤ m ∧ (m = m₀ ∧ (n + m = n₀ + z)[z ≔ m])
+= ⟨ “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+0 ≤ m ∧ (m = m₀ ∧ (n + m = n₀ + z)[z ≔ m₀])
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+0 ≤ m ∧ (m = m₀ ∧ n + m = n₀ + m₀)
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”, (3.76b)
+“Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+0 ≤ m ∧ n + m = n₀ + m₀
+⇒⁅ while (m > 0) do (m := m - 1 ⍮ n := n + 1) od ⁆ ⟨ “While” with Subproof establishing `m > 0 ∧ (n +
+m = n₀ + m₀ ∧ 0 ≤ m) ⇒⁅ (m := m - 1 ⍮ n := n + 1) ⁆ 0 ≤ m ∧ n + m = n₀ + m₀`:
+m > 0 ∧ (n + m = n₀ + m₀ ∧ 0 ≤ m)
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”,
+(3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+n + m = n₀ + m₀ ∧ m > 0
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+(n + m) + 0 = n₀ + m₀ ∧ m + 0 > 0
+
+
+Theorem “Adding₃”:
+0 ≤ m = m₀ ∧ n = n₀
+⇒⁅ while m > 0
+do
+m := m - 1 ⍮
+n := n + 1
+od
+⁆
+n = m₀ + n₀
+Proof:
+(0 ≤ m = m₀) ∧ n = n₀
+=⟨ “Associativity of ∧” ⟩
+(0 ≤ m) ∧ (m = m₀) ∧ (n = n₀)
+=⟨ “Cancellation of +” ⟩
+(0 ≤ m) ∧ (m = m₀) ∧ (n + m = n₀ + m)
+=⟨ substitution ⟩
+(0 ≤ m) ∧ (m = m₀) ∧ (n + m = n₀ + z)[z
+=⟨ “Replacement” ⟩
+(0 ≤ m) ∧ (m = m₀) ∧ (n + m = n₀ + z)[z
+=⟨ substitution ⟩
+(0 ≤ m) ∧ (m = m₀) ∧ (n + m = n₀ + m₀)
+⇒⟨ “Weakening” ⟩
+(0 ≤ m) ∧ n + m = n₀ + m₀
+⇒⁅ while m > 0 do
+m := m - 1 ⍮
+n := n + 1
+od ⁆ ⟨ “While” with subproof:
+(m > 0) ∧ ((n + m = n₀ + m₀) ∧ (0
+⇒⟨ “Weakening” ⟩
+n + m = n₀ + m₀ ∧ (m > 0)
+=⟨ “Additive identity” ⟩
+(n + m) + 0 = n₀ + m₀ ∧ (m + 0 >
+=⟨ “Unary minus” ⟩
+(n + m) + (1 + (- 1)) = n₀ + m₀ ∧
+=⟨ “Associativity of +” ⟩
+(n + 1) + (m + (- 1)) = n₀ + m₀ ∧
+=⟨ “Subtraction” ⟩
+n + 1 + (m - 1) = n₀ + m₀ ∧ ((m
+⇒⁅ m := m - 1 ⁆ ⟨ “Assignment” with
+
+= ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: ─ OK
+(n + m) + (1 + - 1) = n₀ + m₀ ∧ (m + 1) + - 1 > 0
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found (15.1a) “Associativity of +”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(n + 1) + (m + - 1) = n₀ + m₀ ∧ (m + - 1) + 1 > 0
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+(n + 1) + (m - 1) = n₀ + m₀ ∧ (m - 1) + 1 > 0
+⇒⁅ m := m - 1 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+(n + 1) + m = n₀ + m₀ ∧ m + 1 > 0
+⇒⁅ n := n + 1 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+n + m = n₀ + m₀ ∧ m + 1 > 0
+= ⟨ “Successor greater”, “Converse of ≤” ⟩
+— CalcCheck: Found “Successor greater”
+— CalcCheck: Found “Converse of ≤”
+— CalcCheck: ─ OK
+0 ≤ m ∧ n + m = n₀ + m₀
+— CalcCheck: All steps OK
+
+⟩
+— CalcCheck: Found “While”
+— CalcCheck: ─ OK
+¬ (m > 0) ∧ (0 ≤ m ∧ n + m = n₀ + m₀)
+= ⟨ “Complement of >” with (3.14) ⟩
+— CalcCheck: Found “Complement of >”
+— CalcCheck: Found (3.14) `(p ≢ q) ≡ (¬ p ≡ q)`
+— CalcCheck: ─ OK
+m ≤ 0 ∧ (0 ≤ m ∧ n + m = n₀ + m₀)
+= ⟨ “Antisymmetry of ≤” ⟩
+— CalcCheck: Found “Antisymmetry of ≤”, (15.45) “Antisymmetry of ≤”
+— CalcCheck: ─ OK
+m = 0 ∧ n + m = n₀ + m₀
+= ⟨ Substitution, “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+
+
+n + 1 + m = n₀ + m₀ ∧ (m + 1 > 0
+⇒⁅ n := n + 1 ⁆ ⟨ “Assignment” with
+n + m = n₀ + m₀ ∧ (m + 1 > 0)
+=⟨ “Successor greater” , “Converse
+(0 ≤ m) ∧ (n + m = n₀ + m₀)
+⟩
+¬(m > 0) ∧ (0 ≤ m) ∧ (n + m = n₀ + m₀)
+=⟨ “Complement of >” with (3.14)⟩
+(m ≤ 0) ∧ (0 ≤ m) ∧ (n + m = n₀ + m₀)
+=⟨ “Antisymmetry of ≤”⟩
+(m = 0) ∧ (n + m = n₀ + m₀)
+=⟨ substitution , “Replacement” ⟩
+(m = 0) ∧ (n + z = n₀ + m₀)[z ≔ 0]
+=⟨ substitution ⟩
+(m = 0) ∧ (n + 0 = n₀ + m₀)
+⇒⟨ “Weakening” , “Additive identity” ⟩
+(n = n₀ + m₀)
+
+1,1
+
+
+— CalcCheck: ─ OK
+m = 0 ∧ (n + z = n₀ + m₀)[z ≔ 0]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+m = 0 ∧ n + 0 = n₀ + m₀
+⇒ ⟨ “Weakening”, “Additive identity” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”, (3.76b)
+“Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+
+
+n = n₀ + m₀
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

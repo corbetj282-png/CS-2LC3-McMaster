@@ -1,0 +1,302 @@
+[1]
+
+Preloaded here is:
+All propositional logic, including monotonicity laws, and Leibniz as axiom and substitution laws
+Integers as usual, including “Cancellation of +”
+Two hint items per hint are allowed here; Evaluation is disabled, but Facts are allowed.
+
+[2]
+
+We continue with command correctness as started in H3 and Ex2.6, and add a new kind of commands: while loops, constructed using the
+following command constructor:
+while_do_od : 𝔹 → Cmd → Cmd
+
+[3]
+
+We reason about while loops using the following inference rule:
+Primitive inference rule “While”:
+`B ∧ Q ⇒⁅ C ⁆ Q`
+⊦—————————————————————————————————————
+`Q ⇒⁅ while B do C od ⁆ ¬ B ∧ Q`
+
+
+[4]
+
+[5]
+
+[6]
+
+[7]
+
+
+For simple example programs that consist of a while loop preceded by some initialisation command (sequences) INIT and followed by some
+finalisation command (sequence) FINAL, a correctness proof with respect to precondition Pre and postcondition Post can be presented as
+follows:
+
+Theorem “While-example”:
+Pre
+⇒⁅ INIT ⍮
+while B
+do
+C
+od ⍮
+FINAL
+⁆
+Post
+Proof:
+Pre
+╍╍╍ Precondition
+⇒⁅ INIT ⁆ ⟨ ? ⟩
+Q
+╍╍╍ Invariant
+⇒⁅ while B do
+C
+od ⁆
+⟨ “While” with subproof:
+B ∧ Q
+╍╍╍ Loop condition and invariant
+⇒⁅ C ⁆ ⟨ ? ⟩
+Q
+╍╍╍ Invariant
+⟩
+¬ B ∧ Q
+╍╍╍ Negated loop condition, and invariant
+⇒⁅ FINAL ⁆ ⟨ ? ⟩
+Post
+╍╍╍ Postcondition
+
+Notice how the subproof for “While” establishes the premise of the “While” rule, and how the calculation step with calculation operator ⇒⁅
+while B do C od ⁆ uses the conclusion of the “While” rule as one step in the whole calculation.
+
+For the variables of the “While” rule, note that B and C are parts of the program that is subject to the proof.
+The invariant Q however needs to be provided
+
+
+ideally as part of the program development process;
+in any case at the time of proof.
+That means: If the program developer did not document the intended invariant, you have to invent an appropriate invariant yourself.
+The invariant will need to hold
+immediately before the loop starts,
+after each execution of the loop body,
+and therefore also after the loop ends.
+In general, invariant generation cannot be automated. (But there is a flourishing research area investigating automatic invariant generation in
+special cases.)
+In practice, an appropriate invariant often can be obtained by generalising the loop postcondition, keeping in mind that the invariant will typically
+mention all variables that are changed by the loop, and will explain how they are related.
+
+[8]
+
+As an example for how to use this “While” rule, the code cell contains a proof skeleton for a simple loop correctness property.
+As usual, simple “?” steps may need to be replaced with arbitrarily many calculation steps; where the calculation operator given for the “?” is an
+implication, having some or all of the replacing calculation steps being equivalence steps is no problem.
+For integrating the Substitution invocation into the assignment step, “Assignment” now refers also to the following inference rule:
+Derived inference rule “Assignment”:
+`Φ ≡ Ψ[x ≔ E]`
+⊦———————————————————
+`Φ ⇒⁅ x := E ⁆ Ψ`
+This has to be combined with the keyword hint item Substitution by with (not by comma), to use the Sustitution hint item to prove the
+premise of the respective instance of the “Assignment” inference rule. For example:
+0 ≤ i + 1
+⇒⁅ i := i + 1 ⁆ ⟨ “Assignment” with substitution ⟩
+0 ≤ i
+(As in H3 and Ex2.6, you continue to work bottom-up for these calculations!)
+
+
+[9]
+
+
+Fill the “Squaring” proof below, and do this as if you had started this yourself from scratch, working bottom-up.
+
+
+[10]
+
+
+Theorem “Squaring”: true ⇒⁅ (i := 0 ⍮ (s := 0 ⍮ (d := 1 ⍮ while (i ≠ n) do (s := s + d ⍮ (d := d + 2 ⍮ i := i +
+1)) od))) ⁆ s = n · n
+Proof:
+Calculation for expected goal `true ⇒⁅ (i := 0 ⍮ (s := 0 ⍮ (d := 1 ⍮ while (i ≠ n) do (s := s + d ⍮ (d := d + 2
+⍮ i := i + 1)) od))) ⁆ s = n · n`:
+true
+≡ ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+true ∧ true
+≡ ⟨ Fact `1 = (0 + 0) + 1`, Fact `0 = 0 · 0` ⟩
+— CalcCheck: ─ OK
+1 = (0 + 0) + 1 ∧ 0 = 0 · 0
+⇒⁅ i := 0 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+1 = (i + i) + 1 ∧ 0 = i · i
+⇒⁅ s := 0 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+1 = (i + i) + 1 ∧ s = i · i
+⇒⁅ d := 1 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+d = (i + i) + 1 ∧ s = i · i
+⇒⁅ while (i ≠ n) do (s := s + d ⍮ (d := d + 2 ⍮ i := i + 1)) od ⁆ ⟨ “While” with Subproof establishing `i ≠ n ∧
+(d = (i + i) + 1 ∧ s = i · i) ⇒⁅ ((s := s + d ⍮ d := d + 2) ⍮ i := i + 1) ⁆ d = (i + i) + 1 ∧ s = i · i`:
+i ≠ n ∧ (d = (i + i) + 1 ∧ s = i · i)
+⇒ ⟨ “Weakening” (3.76b) ⟩
+— CalcCheck: Found (3.76b) “Weakening”
+— CalcCheck: ─ OK
+d = (i + i) + 1 ∧ s = i · i
+= ⟨ “Cancellation of +” ⟩
+— CalcCheck: Found (15.8) “Cancellation of +”
+— CalcCheck: ─ OK
+d = (i + i) + 1 ∧ s + d = i · i + d
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+d = (i + i) + 1 ∧ (s + d = i · i + z)[z ≔ d]
+≡ ⟨ “Replacement” (3.84a) ⟩
+— CalcCheck: Found (3.84a) “Replacement”
+— CalcCheck: ─ OK
+
+
+Theorem “Squaring”:
+true
+⇒⁅ i := 0 ⍮
+s := 0 ⍮
+d := 1 ⍮
+while i ≠ n
+do
+s := s + d ⍮
+d := d + 2 ⍮
+i := i + 1
+od
+⁆ s = n · n
+Proof:
+true
+╍╍╍ Precondition
+≡⟨ “Idempotency of ∧” ⟩
+true ∧ true
+≡⟨ Fact `1 = 0 + 0 + 1`, Fact `0 = 0 ·
+1 = 0 + 0 + 1 ∧ 0 = 0 · 0
+⇒⁅ i := 0 ⁆⟨ “Assignment” with substitu
+1 = i + i + 1 ∧ 0 = i · i
+⇒⁅ s := 0 ⁆⟨ “Assignment” with substitu
+1 = i + i + 1 ∧ s = i · i
+⇒⁅ d := 1 ⁆⟨ “Assignment” with substitu
+d = i + i + 1 ∧ s = i · i
+╍╍╍
+⇒⁅ while i ≠ n do
+s := s + d ⍮
+d := d + 2 ⍮
+i := i + 1
+od ⁆⟨ “While” with subproof:
+i ≠ n ∧ d = i + i + 1 ∧ s = i
+⇒⟨ “Weakening” (3.76b) ⟩
+d = i + i + 1 ∧ s = i · i
+=⟨ “Cancellation of +” ⟩
+d = i + i + 1 ∧ s + d = i · i
+=⟨ Substitution ⟩
+d = i + i + 1 ∧ (s + d = i · i
+≡⟨ “Replacement” (3.84a) ⟩
+d = i + i + 1 ∧ (s + d = i · i
+⇒⁅ s := s + d ⁆⟨ “Assignment” wit
+d = i + i + 1 ∧ s = i · i + i
+
+
+d = (i + i) + 1 ∧ (s + d = i · i + z)[z ≔ (i + i) + 1]
+⇒⁅ s := s + d ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+d = (i + i) + 1 ∧ s = ((i · i + i) + i) + 1
+≡ ⟨ “Cancellation of +” ⟩
+— CalcCheck: Found (15.8) “Cancellation of +”
+— CalcCheck: ─ OK
+d + 2 = ((i + i) + 1) + 2 ∧ s = ((i · i + i) + i) + 1
+⇒⁅ d := d + 2 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+d = ((i + i) + 1) + 2 ∧ s = ((i · i + i) + i) + 1
+≡ ⟨ “Distributivity of · over +”, “Identity of ·” ⟩
+— CalcCheck: Found (15.5) “Distributivity of · over +”
+— CalcCheck: Found (15.4) “Multiplicative identity”
+— CalcCheck: ─ OK
+d = ((i + i) + 1) + 2 ∧ s = (i + 1) · (i + 1)
+⇒⁅ i := i + 1 ⁆ ⟨ “Assignment” with Substitution and Fact `1 + 1 = 2` ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+d = (i + i) + 1 ∧ s = i · i
+— CalcCheck: All steps OK
+
+⟩
+— CalcCheck: Found “While”
+— CalcCheck: ─ OK
+¬ (i ≠ n) ∧ (d = (i + i) + 1 ∧ s = i · i)
+≡ ⟨ “Definition of ≠”, “Double negation” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+i = n ∧ (d = (i + i) + 1 ∧ s = i · i)
+⇒ ⟨ “Weakening” (3.76b) ⟩
+— CalcCheck: Found (3.76b) “Weakening”
+— CalcCheck: ─ OK
+i= n∧ s = i· i
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+i = n ∧ (s = z · z)[z ≔ i]
+= ⟨ “Replacement” (3.84a), Substitution ⟩
+— CalcCheck: Found (3.84a) “Replacement”
+— CalcCheck: ─ OK
+i= n∧ s = n· n
+
+
+≡⟨ “Cancellation of +” ⟩
+d + 2 = i + i + 1 + 2 ∧ s = i
+⇒⁅ d := d + 2 ⁆⟨ “Assignment” wit
+d = i + i + 1 + 2 ∧ s = i · i
+≡⟨ “Distributivity of · over +”,
+d = i + i + 1 + 2 ∧ s = (i + 1
+⇒⁅ i := i + 1 ⁆⟨ “Assignment” wit
+and Fact `1 + 1
+d = i + i + 1 ∧ s = i · i
+╍╍
+⟩
+¬ (i ≠ n) ∧ d = i + i + 1 ∧ s = i ·
+≡⟨ “Definition of ≠”, “Double negation
+(i = n) ∧ d = i + i + 1 ∧ s = i · i
+⇒⟨ “Weakening” (3.76b) ⟩
+(i = n) ∧ s = i · i
+=⟨ Substitution ⟩
+i = n ∧ (s = z · z)[z ≔ i]
+=⟨ “Replacement” (3.84a) , Substitutio
+i = n ∧ s = n · n
+⇒⟨ “Weakening” (3.76b) ⟩
+s = n · n
+╍╍╍ Postcondition
+1,1
+
+
+⇒ ⟨ “Weakening” (3.76b) ⟩
+— CalcCheck: Found (3.76b) “Weakening”
+— CalcCheck: ─ OK
+s= n·n
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[11]
+
+
+Above, the expression d = i + i + 1 ∧ s = i · i has been provided to you a sufficient invariant. In particular if consider its formulation
+awkward, you could explore alternatives: Duplicate the above code cell (Shift-D on the cell wrapper), and try with d = 2 · i + 1 ∧ s =
+i · i, or any other invariant candidate you can think of, instead.
+Another promising place for exploring alternatives is the subproof for the premise of the “While” rule involving several arithmetic simplification
+steps and three “Assignment” applications; this could be arranged differently.
+
+[12]
+
+Even more useful practice can be had by making another copy of the theorem, deleting the proof, and redoing it from scratch. Soon it will be
+expected that you can develop such proofs from scratch.
+
+
+Check and Save
+
+
+Save
+
+

@@ -1,0 +1,808 @@
+Calculus following LADM Chapter 3
+
+[1]
+
+Except equality, which is used only in the first axiom, nothing is preloaded here.
+The only theorems that will be useful here are all provided here.
+
+[2]
+
+Equivalence
+[3]
+
+[4]
+
+[5]
+
+[6]
+
+[7]
+
+While LADM mentions in the footnote on p. 42 that = and ≡ are “interchangeable in formulae without
+special mention”, it appears to be infeasible to fully implement this in a formal system like CalcCheck.
+Therefore, the underlying axiom “Definition of ≡” will need to be used occasionally.
+
+Axiom “Definition of ≡”: (p ≡ q) = (p = q)
+
+Axiom “Definition of ≡”: (p ≡ q) = (p =
+q)
+
+Note that in “Definition of ≡”, the variables p and q are both of type 𝔹, so they must not be instantiated
+with expressions of different type.
+
+LADM starts the presentation of the propositional calculus in Chapter 3 with axioms for equivalence _≡_.
+
+Axiom (3.1) “Associativity of ≡”: ((p ≡ q) ≡ r) ≡
+
+
+Axiom (3.1) “Associativity of ≡”: ((p ≡ q) ≡ r) ≡ (p
+≡ (q ≡ r))
+
+
+[8]
+
+[9]
+
+[10]
+
+[11]
+
+
+Activate associativity property (3.1)
+
+Activate associativity property (3.1)
+— CalcCheck: Found associativity of
+`_≡_`
+
+This activation clause has the effect that we now can omit parentheses in nested equivalence expressions
+in the same way as in LADM.
+
+Axiom (3.2) “Symmetry of ≡”: p ≡ q ≡ q ≡ p
+
+Axiom (3.2) “Symmetry of ≡”: p ≡ (q ≡ (q ≡
+p))
+
+The first proof shown in LADM Section 3.2 uses automatic associativity, but explicit symmetry — fill in
+the hint items with references to “Symmetry of ≡” and explicit substitutions (using with) to make this
+proof work.
+(Note that if explicit substitutions are requested for individual proofs or calculations in a larger notebook,
+then this is not checked while you are working on this, but only when it is graded.)
+As already seen in Homework 1 and 2, occurrences of “?₁” in hint item position indicate that you should
+replace them with a single hint item, and, in proofs that are otherwise complete and contain no simple
+“?”, that you must not change anything else in the proof. Single hint items can still be structured, such
+as those providing the explicit substitutions expected here. This means that single hint items can in
+particular be of the following shape:
+“⟪theorem name⟫” with `⟪variable(s)⟫ ≔ ⟪expression(s)⟫`
+
+[12]
+
+[13]
+
+[14]
+
+Calculation:
+p ≡ p ≡ q ≡ q
+≡⟨ “Symmetry of ≡” ⟩
+p ≡ p
+≡⟨ “Symmetry of ≡” ⟩
+p ≡ q ≡ q ≡ p
+
+Calculation:
+p ≡ (p ≡ (q ≡ q))
+≡ ⟨ “Symmetry of ≡” ⟩
+— CalcCheck: Found (3.2) “Symmetry
+of ≡”
+— CalcCheck: ─ OK
+p≡p
+≡ ⟨ “Symmetry of ≡” ⟩
+— CalcCheck: Found (3.2) “Symmetry
+of ≡”
+— CalcCheck: ─ OK
+p ≡ (q ≡ (q ≡ p))
+— CalcCheck: All steps OK
+
+After that, however, symmetry of ≡ is used also implicitly, so we activate it here.
+
+Activate symmetry property (3.2)
+
+
+Activate symmetry property (3.2)
+— CalcCheck: Found symmetry of
+`_≡_`
+
+
+[15]
+
+
+The constant
+true : 𝔹
+is introduced by characterising it as the identity for equivalence:
+
+[16]
+
+[17]
+
+[18]
+
+[19]
+
+Axiom (3.3) “Identity of ≡”: true ≡ q ≡ q
+
+Axiom (3.3) “Identity of ≡”: true ≡ (q ≡
+q)
+
+LADM then proves what one can call the “least interesting theorem”, namely true — fill in the hint items
+with theorem references to “Identity of ≡” and explicit substitutions (using with):
+
+Theorem (3.4): true
+Proof:
+true
+≡⟨ “Identity of ≡” ⟩
+true ≡ true
+≡⟨ “Identity of ≡” ⟩
+true ≡ q ≡ q — This is “Identity of ≡” with
+
+Theorem (3.4): true
+Proof:
+Calculation for expected goal `true`:
+true
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true ≡ true
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true ≡ (q ≡ q) — This is “Identity of ≡” with
+`q ≔ q`
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+When you calculate some Boolean expression to be equivalent (equal) to true, you do not need to
+explictly write “— This is (3.4)” at the end. Both CalcCheck and LADM readers will recognise this as a
+proof for the expression you started with, as for example in the proof of (3.5) “Reflexivity of ≡” below.
+Note that an occurrence of “≡⟨ ? ⟩” may need to be replaced by several calculation steps.
+
+[20]
+
+Theorem (3.5) “Reflexivity of ≡”: p ≡ p
+Proof:
+p ≡ p
+≡⟨ “Identity of ≡” ⟩
+true
+
+
+Theorem (3.5) “Reflexivity of ≡”: p ≡ p
+Proof:
+Calculation for expected goal `p ≡ p`:
+p≡p
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity
+of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─
+OK
+
+
+[21]
+
+Negation and false
+[22]
+
+[23]
+
+[24]
+
+[25]
+
+[26]
+
+Declaration:
+Declaration:
+
+false : 𝔹
+¬_
+: 𝔹 → 𝔹
+
+Axiom (3.8) “Definition of `false`”:
+false ≡ ¬ true
+
+Declaration: false : 𝔹
+Declaration: ¬_ : 𝔹 → 𝔹
+— CalcCheck: Operator ¬_: Non-associating;
+precedence 130
+
+Axiom (3.8) “Definition of `false`”: false ≡ ¬
+true
+
+The following theorem has a confusing name in LADM; we only use the following more apt name in this
+course:
+
+Axiom (3.9) “Commutativity of ¬ with ≡”:
+¬(p ≡ q) ≡ ¬ p ≡ q
+
+Axiom (3.9) “Commutativity of ¬ with ≡”: ¬ (p ≡ q)
+≡ (¬ p ≡ q)
+
+Reading (3.11) as (¬ p ≡ q) ≡ (p ≡ ¬ q) makes it an instance of what is known as a “Galois
+Connection” and so we use that as a name here.
+
+
+[27]
+
+[28]
+
+
+Theorem (3.11) “¬ connection”: (¬ p ≡ q) ≡ (p ≡ ¬ Theorem (3.11) “¬ connection”: (¬ p ≡ q) ≡ (p ≡ ¬
+q)
+Proof:
+Proof:
+(¬ p ≡ q)
+Calculation for expected goal `(¬ p ≡ q) ≡ (p ≡ ¬
+≡⟨“Commutativity of ¬ with ≡”⟩
+q)`:
+¬(p ≡ q)
+¬p≡q
+≡⟨“Symmetry of ≡”⟩
+≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+¬(q ≡ p)
+— CalcCheck: Found (3.9) “Commutativity
+≡⟨“Commutativity of ¬ with ≡”⟩
+of ¬ with ≡”
+(¬ q ≡ p)
+— CalcCheck: ─ OK
+¬ (p ≡ q)
+≡⟨“Symmetry of ≡”⟩
+≡ ⟨ “Symmetry of ≡” ⟩
+p ≡ ¬ q
+— CalcCheck: Found (3.2) “Symmetry of ≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+¬ (q ≡ p)
+≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+— CalcCheck: Found (3.9) “Commutativity
+of ¬ with ≡”
+— CalcCheck: ─ OK
+¬q≡p
+≡ ⟨ “Symmetry of ≡” ⟩
+— CalcCheck: Found (3.2) “Symmetry of ≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+p≡¬q
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Reading (3.11) as (¬ p ≡ ¬ q) ≡ (p ≡ q) justifies the additional name “Cancellation of ¬”.
+
+
+[29]
+
+
+Theorem (3.11) “Cancellation of ¬”: (¬ p ≡ ¬ q)
+Proof:
+(¬ p ≡ ¬ q)
+≡⟨“Commutativity of ¬ with ≡”⟩
+¬ (p ≡ ¬ q)
+≡⟨“Commutativity of ¬ with ≡”⟩
+¬ (¬(p ≡ q))
+≡⟨“Identity of ≡”⟩
+true ≡ ¬ (¬(p ≡ q))
+≡⟨“¬ connection”⟩
+¬ true ≡ ¬(p ≡ q)
+≡⟨“Definition of `false`”⟩
+false ≡ ¬(p ≡ q)
+≡⟨“¬ connection”⟩
+¬ false ≡ (p ≡ q)
+≡⟨“Identity of ≡”⟩
+true ≡ ¬ false ≡ (p ≡ q)
+≡⟨“¬ connection”⟩
+¬ true ≡ false ≡ (p ≡ q)
+≡⟨“Definition of `false`”⟩
+false ≡ false ≡ (p ≡ q)
+≡⟨“Identity of ≡”⟩
+true ≡ (p ≡ q)
+≡⟨“Identity of ≡”⟩
+(p ≡ q)
+
+
+Theorem (3.11) “Cancellation of ¬”: (¬ p ≡ ¬ q) ≡ (p
+≡ q)
+Proof:
+Calculation for expected goal `(¬ p ≡ ¬ q) ≡ (p ≡
+q)`:
+¬p≡¬q
+≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+— CalcCheck: Found (3.9) “Commutativity
+of ¬ with ≡”
+— CalcCheck: ─ OK
+¬ (p ≡ ¬ q)
+≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+— CalcCheck: Found (3.9) “Commutativity
+of ¬ with ≡”
+— CalcCheck: ─ OK
+¬ (¬ (p ≡ q))
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true ≡ ¬ (¬ (p ≡ q))
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+¬ true ≡ ¬ (p ≡ q)
+≡ ⟨ “Definition of `false`” ⟩
+— CalcCheck: Found (3.8) “Definition of
+`false`”
+— CalcCheck: ─ OK
+false ≡ ¬ (p ≡ q)
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+¬ false ≡ (p ≡ q)
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true ≡ (¬ false ≡ (p ≡ q))
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+¬ true ≡ (false ≡ (p ≡ q))
+≡ ⟨ “Definition of `false`” ⟩
+— CalcCheck: Found (3.8) “Definition of
+`false`”
+— CalcCheck: ─ OK
+false ≡ (false ≡ (p ≡ q))
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true ≡ (p ≡ q)
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+p≡q
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[30]
+
+[31]
+
+[32]
+
+
+For proving (3.12) “Double negation”, start an equivalence calculation with the whole theorem statement.
+
+Theorem (3.12) “Double negation”: ¬ ¬ p ≡ p
+Proof:
+¬ ¬ p
+≡⟨“Identity of ≡”⟩
+true ≡ ¬ ¬ p
+≡⟨“Commutativity of ¬ with ≡”⟩
+(¬ true) ≡ ¬(p)
+≡⟨“Cancellation of ¬”⟩
+true ≡ p
+≡⟨“Identity of ≡”⟩
+p
+
+Theorem (3.12) “Double negation”: ¬ (¬ p) ≡ p
+Proof:
+Calculation for expected goal `¬ (¬ p) ≡ p`:
+¬ (¬ p)
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true ≡ ¬ (¬ p)
+≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+— CalcCheck: Found (3.9) “Commutativity
+of ¬ with ≡”
+— CalcCheck: ─ OK
+¬ true ≡ ¬ p
+≡ ⟨ “Cancellation of ¬” ⟩
+— CalcCheck: Found (3.11) “Cancellation of
+¬”
+— CalcCheck: ─ OK
+true ≡ p
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+p
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem (3.13) “Negation of `false`”: ¬ false ≡ tru
+Proof:
+¬ false
+≡⟨“Definition of `false`”⟩
+¬ (¬ true)
+≡⟨“Double negation”⟩
+true
+
+Theorem (3.13) “Negation of `false`”: ¬ false ≡
+true
+Proof:
+Calculation for expected goal `¬ false ≡ true`:
+¬ false
+≡ ⟨ “Definition of `false`” ⟩
+— CalcCheck: Found (3.8) “Definition of
+`false`”
+— CalcCheck: ─ OK
+¬ (¬ true)
+≡ ⟨ “Double negation” ⟩
+— CalcCheck: Found (3.12) “Double
+negation”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[33]
+
+Inequivalence
+[34]
+
+For inequivalence ≢(\nequiv), some installations of Chrome (including in UTS labs…) unfortunately
+display the slash / besides the ≡, but still treat it as a single character for all purposes — never write the
+
+
+two pieces separately!
+[35]
+
+[36]
+
+[37]
+
+Declaration: _≢
+_ : 𝔹 → 𝔹 → 𝔹
+
+Axiom (3.10) “Definition of ≢
+”:
+(p ≢q) ≡ ¬ (p ≡ q)
+
+Theorem (3.14): (p ≢q) ≡ ¬ p ≡ q
+Proof:
+(p ≢q)
+≡⟨“Definition of ≢
+”⟩
+¬ (p ≡ q)
+≡⟨“Commutativity of ¬ with ≡”⟩
+(¬ p ≡ q)
+
+
+Declaration: _≢_ : 𝔹 → (𝔹 → 𝔹)
+— CalcCheck: Operator _≢_: Associating to the right;
+precedence 10
+
+Axiom (3.10) “Definition of ≢”: (p ≢ q) ≡ ¬ (p
+≡ q)
+
+Theorem (3.14): (p ≢ q) ≡ (¬ p ≡ q)
+Proof:
+Calculation for expected goal `(p ≢ q) ≡ (¬ p ≡
+q)`:
+p≢q
+≡ ⟨ “Definition of ≢” ⟩
+— CalcCheck: Found (3.10) “Definition of ≢”
+— CalcCheck: ─ OK
+¬ (p ≡ q)
+≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+— CalcCheck: Found (3.9) “Commutativity
+of ¬ with ≡”
+— CalcCheck: ─ OK
+¬p≡q
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[38]
+
+[39]
+
+
+Theorem (3.15) “Definition of ¬ from ≡”:
+¬ p ≡ p ≡ false
+Proof:
+¬ p ≡ p
+≡⟨“Identity of ≡”⟩
+true ≡ ¬ p ≡ p
+≡⟨“¬ connection”⟩
+¬ true ≡ p ≡ p
+≡⟨“Identity of ≡”⟩
+¬ true ≡ true
+≡⟨“Definition of `false`”⟩
+false ≡ true
+≡⟨“Identity of ≡”⟩
+false
+
+Theorem (3.15) “Definition of ¬ from ≡”: ¬ p ≡ (p
+≡ false)
+Proof:
+Calculation for expected goal `¬ p ≡ (p ≡
+false)`:
+¬p≡p
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true ≡ (¬ p ≡ p)
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬
+connection”
+— CalcCheck: ─ OK
+¬ true ≡ (p ≡ p)
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+¬ true ≡ true
+≡ ⟨ “Definition of `false`” ⟩
+— CalcCheck: Found (3.8) “Definition of
+`false`”
+— CalcCheck: ─ OK
+false ≡ true
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+false
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+For proving “Symmetry of ≢”, use the unfold-fold strategy from LADM p. 48:
+(3.23) Heuristic of Definition Elimination
+To prove a theorem concerning an operator ◦ that is defined in terms of another, say •, expand the
+definition of ◦ to arrive at a formula that contains •; exploit properties of • to manipulate the
+formula, and then (possibly) reintroduce ◦ using its definition.
+
+
+[40]
+
+[41]
+
+[42]
+
+
+Theorem (3.16) “Symmetry of ≢
+”:
+(p ≢q) ≡ (q ≢p)
+Proof:
+(p ≢q)
+≡⟨ (3.14) ⟩
+¬ p ≡ q
+≡⟨ “¬ connection” ⟩
+¬ q ≡ p
+≡⟨ (3.14) ⟩
+(q ≢p)
+
+Activate symmetry property “Symmetry of ≢
+”
+
+Theorem (3.16) “Symmetry of ≢”: (p ≢ q) ≡ (q ≢
+p)
+Proof:
+Calculation for expected goal `(p ≢ q) ≡ (q ≢
+p)`:
+p≢q
+≡ ⟨ (3.14) ⟩
+— CalcCheck: Found (3.14) `(p ≢ q) ≡ (¬
+p ≡ q)`
+— CalcCheck: ─ OK
+¬p≡q
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬
+connection”
+— CalcCheck: ─ OK
+¬q≡p
+≡ ⟨ (3.14) ⟩
+— CalcCheck: Found (3.14) `(p ≢ q) ≡ (¬
+p ≡ q)`
+— CalcCheck: ─ OK
+q≢p
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Activate symmetry property “Symmetry of
+≢”
+— CalcCheck: Found symmetry of `_≢_`
+
+Use the unfold-fold strategy also for proving (3.17) “Associativity of ≢”:
+
+
+[43]
+
+[44]
+
+
+Theorem (3.17) “Associativity of ≢
+”:
+((p ≢q) ≢r) ≡ (p ≢(q ≢r))
+Proof:
+(p ≢q) ≢r
+≡⟨ (3.10) ⟩
+r ≢ (¬( p ≡ q))
+≡⟨ (3.10) ⟩
+¬ (r ≡ (¬( p ≡ q)))
+≡⟨ “Commutativity of ¬ with ≡” ⟩
+¬ (r ≡ (¬ p ≡ q))
+≡⟨ “Associativity of ≡” ⟩
+¬ (¬ p ≡ (q ≡ r))
+≡⟨ “¬ connection” ⟩
+¬ ( p ≡ ¬(q ≡ r))
+≡⟨ (3.10) ⟩
+(p ≢(q ≢r))
+
+Activate associativity property “Associativity of
+
+
+Theorem (3.17) “Associativity of ≢”: ((p ≢ q) ≢ r) ≡
+(p ≢ (q ≢ r))
+Proof:
+Calculation for expected goal `((p ≢ q) ≢ r) ≡ (p ≢
+(q ≢ r))`:
+(p ≢ q) ≢ r
+≡ ⟨ (3.10) ⟩
+— CalcCheck: Found (3.10) “Definition of ≢”
+— CalcCheck: ─ OK
+r ≢ ¬ (p ≡ q)
+≡ ⟨ (3.10) ⟩
+— CalcCheck: Found (3.10) “Definition of ≢”
+— CalcCheck: ─ OK
+¬ (r ≡ ¬ (p ≡ q))
+≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+— CalcCheck: Found (3.9) “Commutativity of
+¬ with ≡”
+— CalcCheck: ─ OK
+¬ (r ≡ (¬ p ≡ q))
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1) “Associativity of
+≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+¬ (¬ p ≡ (q ≡ r))
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+¬ (p ≡ ¬ (q ≡ r))
+≡ ⟨ (3.10) ⟩
+— CalcCheck: Found (3.10) “Definition of ≢”
+— CalcCheck: ─ OK
+p ≢ (q ≢ r)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Activate associativity property “Associativity of
+≢”
+— CalcCheck: Found associativity of `_≢_`
+
+
+[45]
+
+[46]
+
+
+Theorem (3.18) “Mutual associativity of ≡ wi Theorem (3.18) “Mutual associativity of ≡ with ≢”: ((p ≢
+q) ≡ r) ≡ (p ≢ (q ≡ r))
+((p ≢q) ≡ r) ≡ (p ≢(q ≡ r))
+Proof:
+Proof:
+Calculation for expected goal `((p ≢ q) ≡ r) ≡ (p ≢ (q ≡
+(p ≢q) ≡ r
+r))`:
+≡⟨ (3.10) ⟩
+(p ≢ q) ≡ r
+¬ (p ≡ q) ≡ r
+≡ ⟨ (3.10) ⟩
+≡⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.10) “Definition of ≢”
+(p ≡ q) ≡ ¬ r
+— CalcCheck: ─ OK
+≡⟨ “Symmetry of ≡” ⟩
+¬ (p ≡ q) ≡ r
+≡ ⟨ “¬ connection” ⟩
+p ≡ (q ≡ ¬ r)
+— CalcCheck: Found (3.11) “¬ connection”
+≡⟨ “¬ connection” ⟩
+— CalcCheck: ─ OK
+p ≡ (¬ q ≡ r)
+(p
+≡ q) ≡ ¬ r
+≡⟨ “Commutativity of ¬ with ≡” ⟩
+≡ ⟨ “Symmetry of ≡” ⟩
+p ≡ ¬ (q ≡ r)
+— CalcCheck: Found (3.2) “Symmetry of ≡”
+≡⟨ “¬ connection” ⟩
+— CalcCheck: OK (no change)
+¬ p ≡ (q ≡ r)
+— CalcCheck: ─ OK
+≡⟨ “Commutativity of ¬ with ≡” ⟩
+p ≡ (q ≡ ¬ r)
+¬ (p ≡ (q ≡ r))
+≡ ⟨ “¬ connection” ⟩
+≡⟨ (3.10) ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+(p ≢(q ≡ r))
+— CalcCheck: ─ OK
+p ≡ (¬ q ≡ r)
+≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+— CalcCheck: Found (3.9) “Commutativity of ¬
+with ≡”
+— CalcCheck: ─ OK
+p ≡ ¬ (q ≡ r)
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+¬ p ≡ (q ≡ r)
+≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+— CalcCheck: Found (3.9) “Commutativity of ¬
+with ≡”
+— CalcCheck: ─ OK
+¬ (p ≡ (q ≡ r))
+≡ ⟨ (3.10) ⟩
+— CalcCheck: Found (3.10) “Definition of ≢”
+— CalcCheck: ─ OK
+p ≢ (q ≡ r)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Since we cannot activate mutual associativity properties yet, we have to use them explicitly — both ≡ and
+≢currently associate to the right, also mutually (see also the feedback message for the declaration of
+_≢
+_).
+
+
+[47]
+
+
+Theorem (3.19) “Mutual interchangeability
+(p ≢q ≡ r) ≡ (p ≡ q ≢r)
+Proof:
+p ≢q ≡ r
+≡⟨ “Associativity of ≡” ⟩
+p ≢(q ≡ r)
+≡⟨ (3.10) ⟩
+¬ (p ≡ (q ≡ r))
+≡⟨ “Associativity of ≡” ⟩
+¬ ((p ≡ q) ≡ r)
+≡⟨ (3.10) ⟩
+((p ≡ q) ≢r)
+≡⟨ (3.18) ⟩
+(p ≡ q ≢r)
+
+1,1
+
+Theorem (3.19) “Mutual interchangeability of ≡ with ≢”: (p
+≢ (q ≡ r)) ≡ (p ≡ (q ≢ r))
+Proof:
+Calculation for expected goal `(p ≢ (q ≡ r)) ≡ (p ≡ (q ≢ r))`:
+p ≢ (q ≡ r)
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1) “Associativity of ≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+p ≢ (q ≡ r)
+≡ ⟨ (3.10) ⟩
+— CalcCheck: Found (3.10) “Definition of ≢”
+— CalcCheck: ─ OK
+¬ (p ≡ (q ≡ r))
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1) “Associativity of ≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+¬ ((p ≡ q) ≡ r)
+≡ ⟨ (3.10) ⟩
+— CalcCheck: Found (3.10) “Definition of ≢”
+— CalcCheck: ─ OK
+(p ≡ q) ≢ r
+≡ ⟨ (3.18) ⟩
+— CalcCheck: Found (3.18) “Mutual associativity of ≡
+with ≢”
+— CalcCheck: ─ OK
+p ≡ (q ≢ r)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

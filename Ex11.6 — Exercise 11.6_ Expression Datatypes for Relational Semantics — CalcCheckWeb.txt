@@ -1,0 +1,720 @@
+[1]
+
+This notebook provides two expression datatypes for use with introduction to relational semantics started in the Nov. 20 lecture:
+ExprV for expressions that evaluate to storable values, and
+Expr𝔹 for Boolean expressions used as loop conditions and as if-conditions.
+
+[2]
+
+[3]
+
+We will need the “function override” operator ⊕′ below, and also to define the semantics of assignment, which changes the state at one
+particular variable, assigning it a new value.
+
+Declaration: _⊕′_ : (A → B) → ❰ A , B ❱ → (A → B)
+Axiom “Definition of function override”:
+(x = z ⇒ (f ⊕′ ⟨ x, y ⟩) z = y)
+Axiom “Definition of function override”:
+(x ≠ z ⇒ (f ⊕′ ⟨ x, y ⟩) z = f z)
+
+
+Declaration: _⊕′_ : (A → B) → (❰ A, B ❱ → (A → B))
+— CalcCheck: Operator _⊕′_: Associating to the left; precedence
+100
+Axiom “Definition of function override”: x = z ⇒ (f ⊕′ ⟨x, y⟩) z =
+y
+— CalcCheck: Variable types: f : ty᎑₁₇ → ty᎑₁₈, x : ty᎑₁₇, y : ty᎑₁₈, z :
+ty᎑₁₇
+Axiom “Definition of function override”: x ≠ z ⇒ (f ⊕′ ⟨x, y⟩) z =
+fz
+— CalcCheck: Variable types: f : ty᎑₂₂ → ty᎑₁₈, x : ty᎑₂₂, y : ty᎑₁₈, z :
+ty᎑₂₂
+
+
+[4]
+
+
+This is equivalent to defining applications of the function (f ⊕′ ⟨ x, y ⟩) via an if_then_else_fi conditional expression:
+Axiom “Definition of function override”:
+(f ⊕′ ⟨ x, y ⟩) z
+=
+if x = z then y else f z fi
+However, this term we have so far only seen conditional statements, not conditional expressions.
+
+[5]
+
+Note that the “prime” symbol used in the function override operator ⊕′ above, and in many identifiers below, is not the simple apostrophy, but
+the symbol obtained by typing “\'1”.
+
+[6]
+
+Variables
+[7]
+
+[8]
+
+[9]
+
+We use strings for variable names:
+
+Declaration: Var : Type
+Axiom “Definition of `Var`”:
+
+Var = Seq Char
+
+Activate type-abbreviation property “Definition of `Var`”
+
+Declaration: Var : Type
+Axiom “Definition of `Var`”: Var = Seq Char
+
+Activate type-abbreviation property “Definition of `Var`”
+— CalcCheck: Found type-abbreviation for `Var`
+
+[10]
+
+Value Expressions for Assignments
+[11]
+
+Precedence 100 for: _+′_ , _·′_
+Associating to the left: _+′_ ,
+
+
+_·′_
+
+Precedence 100 for: _+′_ , _·′_
+Associating to the left: _+′_ , _·′_
+
+
+[12]
+
+[13]
+
+[14]
+
+[15]
+
+Declaration:
+Declaration:
+Declaration:
+Declaration:
+Declaration:
+
+
+Declaration: ExprV : Type
+Declaration: Var′ : Var → ExprV
+Declaration: Int′ : ℤ → ExprV
+Declaration: _+′_ : ExprV → (ExprV → ExprV)
+— CalcCheck: Operator _+′_: Associating to the left; precedence
+100
+Declaration: _·′_ : ExprV → (ExprV → ExprV)
+— CalcCheck: Operator _·′_: Associating to the left; precedence
+100
+
+ExprV : Type
+Var′ : Var → ExprV
+Int′ : ℤ → ExprV
+_+′_ : ExprV → ExprV → ExprV
+_·′_ : ExprV → ExprV → ExprV
+
+(We do not include subtraction since currently the type checker does not always successfully disambiguate between set subtraction and integer
+subtraction.)
+
+Axiom “Cancellation of `Var′`”: Var′ v = Var′ w
+Axiom “Cancellation of `Int′`”: Int′ m = Int′ n
+Axiom “Cancellation of +′”: e₁ +′ f₁ = e₂ +′ f₂
+Axiom “Cancellation of ·′”: e₁ ·′ f₁ = e₂ ·′ f₂
+
+Axiom “ExprV inequality”:
+Axiom “ExprV inequality”:
+Axiom “ExprV inequality”:
+Axiom “ExprV inequality”:
+Axiom “ExprV inequality”:
+Axiom “ExprV inequality”:
+
+
+≡
+≡
+≡
+≡
+
+Var′ v ≠ Int′ n
+Var′ v ≠ (e₁ +′ e₂)
+Var′ v ≠ (e₁ ·′ e₂)
+Int′ k ≠ (e₁ +′ e₂)
+Int′ k ≠ (e₁ ·′ e₂)
+(e₁ +′ f₁) ≠ (e₂ ·′ f₂)
+
+v = w
+m = n
+e₁ = e₂ ∧ f₁ = f₂
+e₁ = e₂ ∧ f₁ = f₂
+
+Axiom “Cancellation of `Var′`”: Var′ v = Var′ w ≡ v = w
+— CalcCheck: Variable types: v : Seq Char, w : Seq Char
+Axiom “Cancellation of `Int′`”: Int′ m = Int′ n ≡ m = n
+— CalcCheck: Variable types: m : ℤ, n : ℤ
+Axiom “Cancellation of +′”: e₁ +′ f₁ = e₂ +′ f₂ ≡ e₁ = e₂ ∧ f₁ = f₂
+— CalcCheck: Variable types: e₁ : ExprV, e₂ : ExprV, f₁ : ExprV, f₂ :
+ExprV
+Axiom “Cancellation of ·′”: e₁ ·′ f₁ = e₂ ·′ f₂ ≡ e₁ = e₂ ∧ f₁ = f₂
+— CalcCheck: Variable types: e₁ : ExprV, e₂ : ExprV, f₁ : ExprV, f₂ :
+ExprV
+
+Axiom “ExprV inequality”: Var′ v ≠ Int′ n
+— CalcCheck: Variable types: n : ℤ, v : Seq Char
+Axiom “ExprV inequality”: Var′ v ≠ e₁ +′ e₂
+— CalcCheck: Variable types: e₁ : ExprV, e₂ : ExprV, v : Seq Char
+Axiom “ExprV inequality”: Var′ v ≠ e₁ ·′ e₂
+— CalcCheck: Variable types: e₁ : ExprV, e₂ : ExprV, v : Seq Char
+Axiom “ExprV inequality”: Int′ k ≠ e₁ +′ e₂
+— CalcCheck: Variable types: e₁ : ExprV, e₂ : ExprV, k : ℤ
+Axiom “ExprV inequality”: Int′ k ≠ e₁ ·′ e₂
+— CalcCheck: Variable types: e₁ : ExprV, e₂ : ExprV, k : ℤ
+Axiom “ExprV inequality”: e₁ +′ f₁ ≠ e₂ ·′ f₂
+— CalcCheck: Variable types: e₁ : ExprV, e₂ : ExprV, f₁ : ExprV, f₂ :
+ExprV
+
+
+[16]
+
+[17]
+
+[18]
+
+
+Declaration: evalV : (Var → ℤ) → ExprV → ℤ
+Axiom “Definition of `evalV`”: evalV s (Var′ v) = s v
+Axiom “Definition of `evalV`”: evalV s (Int′ n) = n
+Axiom “Definition of `evalV`”: evalV s (e₁ +′ e₂) = evalV s e₁ + e
+Axiom “Definition of `evalV`”: evalV s (e₁ ·′ e₂) = evalV s e₁ · e
+
+Declaration: substV : Var → ExprV → ExprV → ExprV
+Axiom “Definition of `substV`”: substV v e (Var′ v) = e
+Axiom “Definition of `substV`”: v ≠ w ⇒ substV v e (Var′ w) =
+Axiom “Definition of `substV`”: substV v e (Int′ n) = Int′ n
+Axiom “Definition of `substV`”: substV v e (e₁ +′ e₂) = substV
+Axiom “Definition of `substV`”: substV v e (e₁ ·′ e₂) = substV
+
+Axiom “Induction over `ExprV`”:
+(∀ v • P[e ≔ Var′ v])
+∧ (∀ n • P[e ≔ Int′ n])
+∧ (∀ e₁, e₂ ❙ P[e ≔ e₁] ∧ P[e ≔ e₂] •
+∧ (∀ e₁, e₂ ❙ P[e ≔ e₁] ∧ P[e ≔ e₂] •
+⇒ ∀ e • P
+
+
+Declaration: evalV : (Var → ℤ) → (ExprV → ℤ)
+Axiom “Definition of `evalV`”: (evalV s) (Var′ v) = s v
+— CalcCheck: Variable types: s : Seq Char → ℤ, v : Seq Char
+Axiom “Definition of `evalV`”: (evalV s) (Int′ n) = n
+— CalcCheck: Variable types: n : ℤ, s : Seq Char → ℤ
+Axiom “Definition of `evalV`”: (evalV s) (e₁ +′ e₂) = (evalV s) e₁ +
+(evalV s) e₂
+— CalcCheck: Variable types: e₁ : ExprV, e₂ : ExprV, s : Seq Char → ℤ
+Axiom “Definition of `evalV`”: (evalV s) (e₁ ·′ e₂) = (evalV s) e₁ ·
+(evalV s) e₂
+— CalcCheck: Variable types: e₁ : ExprV, e₂ : ExprV, s : Seq Char → ℤ
+
+Declaration: substV : Var → (ExprV → (ExprV → ExprV))
+Axiom “Definition of `substV`”: ((substV v) e) (Var′ v) = e
+— CalcCheck: Variable types: e : ExprV, v : Seq Char
+Axiom “Definition of `substV`”: v ≠ w ⇒ ((substV v) e) (Var′ w) = Var′ w
+— CalcCheck: Variable types: e : ExprV, v : Seq Char, w : Seq Char
+Axiom “Definition of `substV`”: ((substV v) e) (Int′ n) = Int′ n
+— CalcCheck: Variable types: e : ExprV, n : ℤ, v : Seq Char
+Axiom “Definition of `substV`”: ((substV v) e) (e₁ +′ e₂) = ((substV v) e) e₁ +′
+((substV v) e) e₂
+— CalcCheck: Variable types: e : ExprV, e₁ : ExprV, e₂ : ExprV, v : Seq Char
+Axiom “Definition of `substV`”: ((substV v) e) (e₁ ·′ e₂) = ((substV v) e) e₁ ·′
+((substV v) e) e₂
+— CalcCheck: Variable types: e : ExprV, e₁ : ExprV, e₂ : ExprV, v : Seq Char
+
+Axiom “Induction over `ExprV`”: (∀ v • P[e ≔ Var′ v] ) ∧ ((∀ n • P[e ≔ Int′ n] ) ∧ ((∀ e₁, e₂ ❙ P[e ≔ e₁] ∧
+P[e ≔ e₂] • P[e ≔ e₁ +′ e₂] ) ∧ (∀ e₁, e₂ ❙ P[e ≔ e₁] ∧ P[e ≔ e₂] • P[e ≔ e₁ ·′ e₂] ))) ⇒ (∀ e • P )
+— CalcCheck: Metavariables: P = P〖e〗
+— CalcCheck: Proviso: ¬occurs(`e₁, e₂, n, v`, `P`)
+— CalcCheck: Variable types: P : (ℿ e : ExprV • 𝔹 )
+
+
+[19]
+
+
+Lemma “ExprV evaluation after substitution”: (∀ e • (evalV s) (((substV v) f) e) = (evalV (s ⊕′ ⟨v,
+(evalV s) f⟩)) e )
+— CalcCheck: Variable types: f : ExprV, s : Seq Char → ℤ, v : Seq Char
+Proof:
+Using “Induction over `ExprV`”:
+— CalcCheck: Found “Induction over `ExprV`”
+Subproof establishing `(∀ e • (∀ v ❙ (evalV s) (((substV v) f) e) = (evalV (s ⊕′ ⟨v, (evalV s) f⟩)) e •
+(evalV s) (((substV v) f) (Var′ v)) = (evalV (s ⊕′ ⟨v, (evalV s) f⟩)) (Var′ v) ) )`:
+For any ` e`:
+For any ` v` satisfying `(evalV s) (((substV v) f) e) = (evalV (s ⊕′ ⟨v, (evalV s) f⟩)) e`:
+— CalcCheck: Assumptions match quantifier range.
+Calculation establishing `(evalV s) (((substV v) f) (Var′ v)) = (evalV (s ⊕′ ⟨v, (evalV s) f⟩))
+(Var′ v)`:
+(evalV s) (((substV v) f) (Var′ v))
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(evalV s) (((substV v) f) e)[e ≔ Var′ v]
+= ⟨ Assumption `(evalV s) (((substV v) f) e) = (evalV (s ⊕′ ⟨v, (evalV s) f⟩)) e` ⟩
+— CalcCheck: Found assumption `(evalV s) (((substV v) f) e) = (evalV (s ⊕′ ⟨v,
+(evalV s) f⟩)) e`
+— CalcCheck: Could not justify this step!
+((evalV (s ⊕′ ⟨v, (evalV s) f⟩)) e)[e ≔ Var′ v]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(evalV (s ⊕′ ⟨v, (evalV s) f⟩)) (Var′ v)
+— CalcCheck: 1 out of 3 steps not justified
+Subproof establishing `(∀ e • (∀ n ❙ (evalV s) (((substV v) f) e) = (evalV (s ⊕′ ⟨v, (evalV s) f⟩)) e •
+(evalV s) (((substV v) f) (Int′ n)) = (evalV (s ⊕′ ⟨v, (evalV s) f⟩)) (Int′ n) ) )`:
+For any ` e`:
+For any ` n` satisfying `(evalV s) (((substV v) f) e) = (evalV (s ⊕′ ⟨v, (evalV s) f⟩)) e`:
+— CalcCheck: Assumptions match quantifier range.
+Calculation establishing `(evalV s) (((substV v) f) (Int′ n)) = (evalV (s ⊕′ ⟨v, (evalV s) f⟩))
+(Int′ n)`:
+(evalV s) (((substV v) f) (Int′ n))
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(evalV s) (((substV v) f) e)[e ≔ Int′ n]
+= ⟨ Assumption `(evalV s) (((substV v) f) e) = (evalV (s ⊕′ ⟨v, (evalV s) f⟩)) e` ⟩
+— CalcCheck: Found assumption `(evalV s) (((substV v) f) e) = (evalV (s ⊕′ ⟨v,
+(evalV s) f⟩)) e`
+— CalcCheck: Could not justify this step!
+((evalV (s ⊕′ ⟨v, (evalV s) f⟩)) e)[e ≔ Int′ n]
+
+
+Lemma “ExprV evaluation after substitution”
+∀ e • evalV s (substV v f e) = evalV (s ⊕
+Proof:
+Using “Induction over `ExprV`”:
+Subproof:
+For any `e`:
+For any `v` satisfying `evalV s (
+evalV s (substV v f (Var′ v))
+=⟨ substitution ⟩
+evalV s (substV v f (e)) [e ≔
+=⟨ assumption `evalV s (substV
+(evalV (s ⊕′ ⟨v, evalV s f⟩)
+=⟨ substitution⟩
+evalV (s ⊕′ ⟨v, evalV s f⟩) (
+Subproof:
+For any `e`:
+For any `n` satisfying `evalV s (
+evalV s (substV v f (Int′ n))
+=⟨ substitution ⟩
+evalV s (substV v f (e)) [e ≔
+=⟨ assumption `evalV s (substV
+(evalV (s ⊕′ ⟨v, evalV s f⟩)
+=⟨ substitution⟩
+evalV (s ⊕′ ⟨v, evalV s f⟩) (
+Subproof:
+For any `e`:
+For any `e₁`:
+For any `e₂` satisfying `evalV s
+evalV s (substV v f (Int′ n))
+
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(evalV (s ⊕′ ⟨v, (evalV s) f⟩)) (Int′ n)
+— CalcCheck: 1 out of 3 steps not justified
+Subproof:
+For any ` e`:
+For any ` e₁`:
+For any ` e₂` satisfying `(evalV s) (((substV v) f) e) = (evalV (s ⊕′ ⟨v, (evalV s) f⟩)) e`:
+(evalV s) (((substV v) f) (Int′ n))
+— CalcCheck: Could not determine the goal for this calculation.
+— CalcCheck: Could not justify this `Using` application!
+— CalcCheck: This proof contains the following free variables:
+`n`
+Are any of these perhaps typos?
+
+[20]
+
+Boolean Expressions for Conditions
+
+
+[21]
+
+[22]
+
+[23]
+
+
+Precedence 130 for: ¬′_
+Precedence 40 for: _∧′_ , _∨′_
+Associating to the right: _∧′_ , _∨′_
+Precedence 55 for: _=′_
+
+Declaration:
+Declaration:
+Declaration:
+Declaration:
+Declaration:
+Declaration:
+
+Expr𝔹 : Type
+false′, true′ : Expr𝔹
+¬′_ : Expr𝔹 → Expr𝔹
+_∧′_ : Expr𝔹 → Expr𝔹 → Expr𝔹
+_∨′_ : Expr𝔹 → Expr𝔹 → Expr𝔹
+_=′_ : ExprV → ExprV → Expr𝔹
+
+Precedence 130 for: ¬′_
+Precedence 40 for: _∧′_ , _∨′_
+Associating to the right: _∧′_ , _∨′_
+Precedence 55 for: _=′_
+
+Declaration: Expr𝔹 : Type
+Declaration: false′ , true′ : Expr𝔹
+Declaration: ¬′_ : Expr𝔹 → Expr𝔹
+— CalcCheck: Operator ¬′_: Non-associating; precedence 130
+Declaration: _∧′_ : Expr𝔹 → (Expr𝔹 → Expr𝔹)
+— CalcCheck: Operator _∧′_: Associating to the right;
+precedence 40
+Declaration: _∨′_ : Expr𝔹 → (Expr𝔹 → Expr𝔹)
+— CalcCheck: Operator _∨′_: Associating to the right;
+precedence 40
+Declaration: _=′_ : ExprV → (ExprV → Expr𝔹)
+— CalcCheck: Operator _=′_: Non-associating; precedence 55
+
+Add new cells and state the necessary cancellation and inequality axioms for Expr𝔹.
+
+
+[24]
+
+[25]
+
+[26]
+
+[27]
+
+[28]
+
+
+Declaration: eval𝔹 : (Var → ℤ) → Expr𝔹 → 𝔹
+Axiom “Definition of `eval𝔹`”: eval𝔹 s false′ = false
+Axiom “Definition of `eval𝔹`”: eval𝔹 s true′ = true
+Axiom “Definition of `eval𝔹`”: eval𝔹 s (¬′ b) = ¬ (eval𝔹 s b)
+Axiom “Definition of `eval𝔹`”: eval𝔹 s (b₁ ∧′ b₂) = (eval𝔹 s b₁
+Axiom “Definition of `eval𝔹`”: eval𝔹 s (b₁ ∨′ b₂) = (eval𝔹 s b₁
+Axiom “Definition of `eval𝔹`”: eval𝔹 s (e₁ =′ e₂) = (evalV s e₁
+
+Declaration: eval𝔹 : (Var → ℤ) → (Expr𝔹 → 𝔹)
+Axiom “Definition of `eval𝔹`”: (eval𝔹 s) false′ = false
+— CalcCheck: Variable types: s : Seq Char → ℤ
+Axiom “Definition of `eval𝔹`”: (eval𝔹 s) true′ = true
+— CalcCheck: Variable types: s : Seq Char → ℤ
+Axiom “Definition of `eval𝔹`”: (eval𝔹 s) (¬′ b) = ¬ (eval𝔹 s) b
+— CalcCheck: Variable types: b : Expr𝔹, s : Seq Char → ℤ
+Axiom “Definition of `eval𝔹`”: (eval𝔹 s) (b₁ ∧′ b₂) = ((eval𝔹 s) b₁ ∧
+(eval𝔹 s) b₂)
+— CalcCheck: Variable types: b₁ : Expr𝔹, b₂ : Expr𝔹, s : Seq Char → ℤ
+Axiom “Definition of `eval𝔹`”: (eval𝔹 s) (b₁ ∨′ b₂) = ((eval𝔹 s) b₁ ∨
+(eval𝔹 s) b₂)
+— CalcCheck: Variable types: b₁ : Expr𝔹, b₂ : Expr𝔹, s : Seq Char → ℤ
+Axiom “Definition of `eval𝔹`”: (eval𝔹 s) (e₁ =′ e₂) = ((evalV s) e₁ =
+(evalV s) e₂)
+— CalcCheck: Variable types: e₁ : ExprV, e₂ : ExprV, s : Seq Char → ℤ
+
+For defining command semantics, we will mainly use the following sat function derived from eval𝔹:
+
+Declaration: sat
+
+: Expr𝔹 → set (Var → ℤ)
+
+Axiom “Definition of `sat`”: sat b = { s ❙ eval𝔹 s b }
+
+Declaration: sat : Expr𝔹 → set (Var → ℤ)
+
+Axiom “Definition of `sat`”: sat b = { s ❙ (eval𝔹 s) b }
+— CalcCheck: Variable types: b : Expr𝔹
+
+The following lemmas will be useful:
+
+
+[29]
+
+[30]
+
+
+Lemma “sat false′”:
+sat false′
+= {}
+Proof:
+sat false′
+=⟨ “Definition of `sat`” , “Definition of `eval𝔹`”⟩
+{ s ❙ false }
+
+Lemma “sat false′”: sat false′ = {}
+Proof:
+Calculation for expected goal `sat false′ = {}`:
+sat false′
+= ⟨ “Definition of `sat`”, “Definition of `eval𝔹`” ⟩
+— CalcCheck: Found “Definition of `sat`”
+— CalcCheck: Found “Definition of `eval𝔹`”
+— CalcCheck: ─ OK
+{ s ❙ false }
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Lemma “sat true′”:
+Proof:
+sat true′
+=⟨ “Definition of `sat`”⟩
+{ s ❙ eval𝔹 s true′ }
+=⟨ “Definition of `eval𝔹`”⟩
+{ s ❙ true }
+=⟨ “Universal set”⟩
+𝐔
+
+Lemma “sat true′”: sat true′ = 𝐔
+Proof:
+Calculation for expected goal `sat true′ = 𝐔`:
+sat true′
+= ⟨ “Definition of `sat`” ⟩
+— CalcCheck: Found “Definition of `sat`”
+— CalcCheck: ─ OK
+{ s ❙ (eval𝔹 s) true′ }
+= ⟨ “Definition of `eval𝔹`” ⟩
+— CalcCheck: Found “Definition of `eval𝔹`”
+— CalcCheck: ─ OK
+{ s ❙ true }
+= ⟨ “Universal set” ⟩
+— CalcCheck: Found “Universal set”, “Universal
+set”
+— CalcCheck: ─ OK
+𝐔
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+sat true′
+
+=
+
+𝐔
+
+
+[31]
+
+
+Lemma “Negation on `Expr𝔹`”:
+Proof:
+Using “Set extensionality”:
+For any `e`:
+
+sat (¬′ b)
+
+e ∈ sat (¬′ b)
+=⟨ “Definition of `sat`”⟩
+e ∈ { s ❙ eval𝔹 s (¬′ b)}
+=⟨ “Definition of `eval𝔹`”⟩
+e ∈ { s ❙ ¬ (eval𝔹 s b)}
+=⟨ “Simple membership” ⟩
+¬ (eval𝔹 s b) [s ≔ e]
+=⟨ “Simple membership” ⟩
+¬ (e ∈ { s ❙ (eval𝔹 s b)} )
+=⟨ “Complement” ⟩
+(e ∈ ~ { s ❙ (eval𝔹 s b)} )
+=⟨ “Definition of `sat`”⟩
+e ∈ ~ (sat b)
+
+
+=
+
+~ (sat b)
+
+Lemma “Negation on `Expr𝔹`”: sat (¬′ b) = ~ sat b
+— CalcCheck: Variable types: b : Expr𝔹
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof establishing `(∀ e • (e ∈ sat (¬′ b)) = (e ∈ ~ sat b) )`:
+For any ` e`:
+Calculation establishing `(e ∈ sat (¬′ b)) = (e ∈ ~ sat b)`:
+e ∈ sat (¬′ b)
+= ⟨ “Definition of `sat`” ⟩
+— CalcCheck: Found “Definition of `sat`”
+— CalcCheck: ─ OK
+e ∈ { s ❙ (eval𝔹 s) (¬′ b) }
+= ⟨ “Definition of `eval𝔹`” ⟩
+— CalcCheck: Found “Definition of `eval𝔹`”
+— CalcCheck: ─ OK
+e ∈ { s ❙ ¬ (eval𝔹 s) b }
+= ⟨ “Simple membership” ⟩
+— CalcCheck: Found (11.7b) “Simple membership”, (11.7∀)
+“Simple membership”
+— CalcCheck: ─ OK
+¬ ((eval𝔹 s) b)[s ≔ e]
+= ⟨ “Simple membership” ⟩
+— CalcCheck: Found (11.7b) “Simple membership”, (11.7∀)
+“Simple membership”
+— CalcCheck: ─ OK
+¬ (e ∈ { s ❙ (eval𝔹 s) b })
+= ⟨ “Complement” ⟩
+— CalcCheck: Found (11.18) “Set complement”
+— CalcCheck: ─ OK
+e ∈ ~ { s ❙ (eval𝔹 s) b }
+= ⟨ “Definition of `sat`” ⟩
+— CalcCheck: Found “Definition of `sat`”
+— CalcCheck: ─ OK
+e ∈ ~ sat b
+— CalcCheck: All steps OK
+
+
+[32]
+
+
+sat b₁ ∩ s Lemma “Conjunction on `Expr𝔹`”: sat (b₁ ∧′ b₂) = sat b₁ ∩ sat b₂
+— CalcCheck: Variable types: b₁ : Expr𝔹, b₂ : Expr𝔹
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof establishing `(∀ e • (e ∈ sat (b₁ ∧′ b₂)) = (e ∈ sat b₁ ∩ sat b₂) )`:
+For any ` e`:
+Calculation establishing `(e ∈ sat (b₁ ∧′ b₂)) = (e ∈ sat b₁ ∩ sat b₂)`:
+e ∈ sat (b₁ ∧′ b₂)
+= ⟨ “Definition of `sat`” ⟩
+— CalcCheck: Found “Definition of `sat`”
+— CalcCheck: ─ OK
+e ∈ { s ❙ (eval𝔹 s) (b₁ ∧′ b₂) }
+= ⟨ “Definition of `eval𝔹`” ⟩
+— CalcCheck: Found “Definition of `eval𝔹`”
+— CalcCheck: ─ OK
+{s ❙ eval𝔹 s b₂}
+e ∈ { s ❙ (eval𝔹 s) b₁ ∧ (eval𝔹 s) b₂ }
+= ⟨ “Simple membership” ⟩
+— CalcCheck: Found (11.7b) “Simple membership”, (11.7∀)
+“Simple membership”
+— CalcCheck: ─ OK
+((eval𝔹 s) b₁ ∧ (eval𝔹 s) b₂)[s ≔ e]
+= ⟨ “Simple membership” ⟩
+— CalcCheck: Found (11.7b) “Simple membership”, (11.7∀)
+“Simple membership”
+— CalcCheck: ─ OK
+e ∈ { s ❙ (eval𝔹 s) b₁ } ∧ e ∈ { s ❙ (eval𝔹 s) b₂ }
+= ⟨ “Definition of `sat`” ⟩
+— CalcCheck: Found “Definition of `sat`”
+— CalcCheck: ─ OK
+e ∈ sat b₁ ∧ e ∈ sat b₂
+= ⟨ “Intersection” ⟩
+— CalcCheck: Found (11.21) “Set intersection”
+— CalcCheck: ─ OK
+e ∈ sat b₁ ∩ sat b₂
+— CalcCheck: All steps OK
+
+Lemma “Conjunction on `Expr𝔹`”: sat (b₁ ∧′ b₂)
+Proof:
+Using “Set extensionality”:
+For any `e`:
+e ∈ sat (b₁ ∧′ b₂)
+=⟨ “Definition of `sat`”⟩
+e ∈ {s ❙ eval𝔹 s (b₁ ∧′ b₂)}
+=⟨ “Definition of `eval𝔹`”⟩
+e ∈ {s ❙ (eval𝔹 s b₁ ∧ eval𝔹 s b₂)}
+=⟨ “Simple membership” ⟩
+(eval𝔹 s b₁ ∧ eval𝔹 s b₂) [s ≔ e]
+=⟨ “Simple membership” ⟩
+
+e ∈ {s ❙ eval𝔹 s b₁} ∧ e ∈
+=⟨“Definition of `sat`”⟩
+e ∈ sat b₁ ∧ e ∈ sat b₂
+=⟨ “Intersection” ⟩
+e ∈ (sat b₁ ∩ sat b₂)
+
+
+=
+
+
+[33]
+
+
+Lemma “Disjunction on `Expr𝔹`”: sat (b₁ ∨′ b₂)
+Proof:
+Using “Set extensionality”:
+For any `e`:
+e ∈ sat (b₁ ∨′ b₂)
+=⟨ “Definition of `sat`”⟩
+e ∈ {s ❙ eval𝔹 s (b₁ ∨′ b₂)}
+=⟨ “Definition of `eval𝔹`”⟩
+e ∈ {s ❙ (eval𝔹 s b₁ ∨ eval𝔹 s b₂)}
+=⟨ ? ⟩
+e ∈ {s ❙ eval𝔹 s b₁} ∨ e ∈
+=⟨“Definition of `sat`”⟩
+e ∈ sat b₁ ∨ e ∈ sat b₂
+=⟨ “Union” ⟩
+e ∈ (sat b₁ ∪ sat b₂)
+
+[34]
+
+[35]
+
+=
+
+{s ❙ eval𝔹 s b₂}
+
+sat b₁ ∪ sat b₂
+
+Lemma “Disjunction on `Expr𝔹`”: sat (b₁ ∨′ b₂) = sat b₁ ∪ sat b₂
+— CalcCheck: Variable types: b₁ : Expr𝔹, b₂ : Expr𝔹
+Proof:
+Using “Set extensionality”:
+— CalcCheck: Found (11.4) “Set extensionality”
+Subproof establishing `(∀ e • (e ∈ sat (b₁ ∨′ b₂)) = (e ∈ sat b₁ ∪
+sat b₂) )`:
+For any ` e`:
+Calculation establishing `(e ∈ sat (b₁ ∨′ b₂)) = (e ∈ sat b₁ ∪
+sat b₂)`:
+e ∈ sat (b₁ ∨′ b₂)
+= ⟨ “Definition of `sat`” ⟩
+— CalcCheck: Found “Definition of `sat`”
+— CalcCheck: ─ OK
+e ∈ { s ❙ (eval𝔹 s) (b₁ ∨′ b₂) }
+= ⟨ “Definition of `eval𝔹`” ⟩
+— CalcCheck: Found “Definition of `eval𝔹`”
+— CalcCheck: ─ OK
+e ∈ { s ❙ (eval𝔹 s) b₁ ∨ (eval𝔹 s) b₂ }
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+e ∈ { s ❙ (eval𝔹 s) b₁ } ∨ e ∈ { s ❙ (eval𝔹 s) b₂ }
+= ⟨ “Definition of `sat`” ⟩
+— CalcCheck: Found “Definition of `sat`”
+— CalcCheck: ─ OK
+e ∈ sat b₁ ∨ e ∈ sat b₂
+= ⟨ “Union” ⟩
+— CalcCheck: Found (11.20) “Set union”
+— CalcCheck: ─ OK
+e ∈ sat b₁ ∪ sat b₂
+— CalcCheck: 1 out of 5 steps not justified
+
+Define also a substitution function subst𝔹, complete the induction principle for Expr𝔹, and prove also a “Expr𝔹 evaluation after substitution”
+theorem.
+
+Declaration: subst𝔹 : Expr𝔹 → Var → ExprV → Expr𝔹
+
+
+Declaration: subst𝔹 : Expr𝔹 → (Var → (ExprV → Expr𝔹))
+
+
+[36]
+
+Axiom “Induction over `Expr𝔹`”:
+P[b ≔ false′] ∧ (P[b ≔ true′] ∧
+⇒ (∀ b • P )
+
+
+Axiom “Induction over `Expr𝔹`”: P[b ≔ false′] ∧ (P[b ≔ true′] ∧ ((∀ e₁, e₂ • P[b ≔ e₁ =′ e₂] ) ∧ ((∀ b ❙ P • P[b ≔
+¬′ b] ) ∧ ((∀ b₁, b₂ ❙ P[b ≔ b₁] ∧ P[b ≔ b₂] • P[b ≔ b₁ ∧′ b₂] ) ∧ (∀ b₁, b₂ ❙ P[b ≔ b₁] ∧ P[b ≔ b₂] • P[b ≔ b₁ ∨′ b₂]
+))))) ⇒ (∀ b • P )
+— CalcCheck: Metavariables: P = P〖b〗
+— CalcCheck: Proviso: ¬occurs(`b₁, b₂, e₁, e₂`, `P`)
+— CalcCheck: Variable types: P : (ℿ b : Expr𝔹 • 𝔹 )
+
+[37]
+
+Check and Save
+
+
+Save
+
+

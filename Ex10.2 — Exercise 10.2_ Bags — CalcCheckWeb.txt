@@ -1,0 +1,1299 @@
+[1]
+
+This notebook continues after H20, so the bag material from there is preloaded, on top of propositional and predicate logic (but no sets), and
+natural numbers.
+
+[2]
+
+Extensionality
+
+
+[3]
+
+
+Lemma “Non-zero”: (∃ i • i < a ) ≡ a ≠ 0
+Proof:
+By cases: `a = 0`, `0 < a`
+Completeness:
+By “Zero is <-least element”
+— CalcCheck: Found “Zero is <-least element”
+Case `a = 0`:
+Calculation for expected goal `(∃ i • i < a ) ≡ a ≠ 0`:
+(∃ i • i < a ) ≡ a ≠ 0
+= ⟨ Assumption `a = 0` ⟩
+— CalcCheck: Found assumption `a = 0`
+— CalcCheck: ─ OK
+(∃ i • i < 0 ) ≡ 0 ≠ 0
+= ⟨ “Irreflexivity of ≠” ⟩
+— CalcCheck: Found “Irreflexivity of ≠”
+— CalcCheck: ─ OK
+(∃ i • i < 0 ) ≡ false
+= ⟨ “Nothing is less than zero”, “False ∃ body” ⟩
+— CalcCheck: Found “Nothing is less than zero”, “Nothing is
+less than zero”
+— CalcCheck: Found (9.24) “False ∃ body”
+— CalcCheck: ─ OK
+false ≡ false
+= ⟨ “Reflexivity of ≡” ⟩
+— CalcCheck: Found (3.5) “Reflexivity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Case `0 < a`:
+Calculation for expected goal `(∃ i • i < a ) ≡ a ≠ 0`:
+(∃ i • i < a ) ≡ a ≠ 0
+= ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+(∃ i • i < a ) ≡ ¬ (a = 0)
+= ⟨ “Irreflexivity of <” with Assumption `0 < a`, “Identity of ≡” ⟩
+— CalcCheck: Found “Irreflexivity of <”
+— CalcCheck: Found assumption `0 < a`
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+(∃ i • i < a )
+⇐ ⟨ “∃-Introduction” ⟩
+
+
+Lemma “Non-zero”: (∃ i • i < a) ≡ a ≠ 0
+Proof:
+By cases: `a = 0`, `0 < a`
+Completeness: By “Zero is <-least element”
+Case `a = 0`:
+(∃ i • i < a) ≡ a ≠ 0
+=⟨ Assumption `a = 0` ⟩
+(∃ i • i < 0) ≡ 0 ≠ 0
+=⟨ “Irreflexivity of ≠” ⟩
+(∃ i • i < 0) ≡ false
+=⟨ “Nothing is less than zero”, “False ∃ body” ⟩
+false ≡ false
+=⟨ “Reflexivity of ≡” ⟩
+true
+Case `0 < a`:
+(∃ i • i < a) ≡ a ≠ 0
+=⟨ “Definition of ≠” ⟩
+(∃ i • i < a) ≡ ¬ (a = 0)
+=⟨ “Irreflexivity of <” with Assumption `0 < a`, “Identit
+∃ i • i < a
+⇐⟨ “∃-Introduction” ⟩
+(i < a)[i ≔ 0]
+=⟨ Substitution ⟩
+0 < a
+=⟨ Assumption `0 < a` ⟩
+true
+
+
+— CalcCheck: Found (9.28) “∃-Introduction”, (9.28.1) “∃Introduction”
+— CalcCheck: ─ OK
+(i < a)[i ≔ 0]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+0<a
+= ⟨ Assumption `0 < a` ⟩
+— CalcCheck: Found assumption `0 < a`
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: All cases covered.
+
+
+[4]
+
+
+Lemma “Alternative bag extensionality”: a ⋿ B ≡ ∃ i • i < a # Lemma “Alternative bag extensionality”: a ⋿ B ≡ (∃ i • i < a # B )
+— CalcCheck: Metavariables: B = B〖〗
+Proof:
+— CalcCheck: Proviso: ¬occurs(`i`, `B`)
+a ⋿ B
+Proof:
+≡⟨ “Bag reconstruction” ⟩
+Calculation for expected goal `a ⋿ B ≡ (∃ i • i < a # B )`:
+a ⋿ ⟅ x, i ❙ i < x # B • x ⟆
+a⋿B
+≡⟨ “Bag membership” ⟩
+≡ ⟨ “Bag reconstruction” ⟩
+∃ x, i ❙ i < x # B • a = x
+— CalcCheck: Found “Bag reconstruction”
+≡⟨ “Dummy list permutation for ∃” , “Nesting for ∃”⟩
+— CalcCheck: ─ OK
+∃ i • ∃ x ❙ i < x # B • a = x
+a ⋿ ⟅ x, i ❙ i < x # B • x ⟆
+≡⟨ “Trading for ∃” ⟩
+≡ ⟨ “Bag membership” ⟩
+∃ i • (∃ x • (i < x # B) ∧ a = x)
+— CalcCheck: Found (11.79) “Bag membership”
+≡⟨ “Symmetry of ∧” ⟩
+— CalcCheck: ─ OK
+∃ i • (∃ x • a = x ∧ (i < x # B))
+(∃ x, i ❙ i < x # B • a = x )
+≡⟨ “Trading for ∃” ⟩
+≡ ⟨ “Dummy list permutation for ∃”, “Nesting for ∃” ⟩
+∃ i • (∃ x ❙ a = x • (i < x # B))
+— CalcCheck: Found (8.19.1) “Dummy list permutation for ∃”
+— CalcCheck: Found (8.20.2) “Nesting for ∃”, (8.20.1) “Nesting for ∃”,
+≡⟨ “One-point rule for ∃”, Substitution ⟩
+(8.20) “Nesting for ∃”
+∃ i • i < a # B
+— CalcCheck: ─ OK
+(∃ i • (∃ x ❙ i < x # B • a = x ) )
+≡ ⟨ “Trading for ∃” ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading for ∃”
+— CalcCheck: ─ OK
+(∃ i • (∃ x • i < x # B ∧ a = x ) )
+≡ ⟨ “Symmetry of ∧” ⟩
+— CalcCheck: Found (3.36) “Symmetry of ∧”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(∃ i • (∃ x • a = x ∧ i < x # B ) )
+≡ ⟨ “Trading for ∃” ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading for ∃”
+— CalcCheck: ─ OK
+(∃ i • (∃ x ❙ a = x • i < x # B ) )
+≡ ⟨ “One-point rule for ∃”, Substitution ⟩
+— CalcCheck: Found (8.14) “One-point rule for ∃”
+— CalcCheck: ─ OK
+(∃ i • i < a # B )
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[5]
+
+[6]
+
+
+Theorem “Bag reconstruction” comes in useful to prove more general properties of operators that have been defined only for bag
+comprehensions, such as ⋿:
+
+Theorem “Bag members have non-zero count”:
+a ⋿ B ≡ a # B ≠ 0
+Proof:
+a ⋿ B
+≡⟨ “Alternative bag extensionality” ⟩
+∃ i • i < a # B
+≡⟨ “Non-zero” ⟩
+a # B ≠ 0
+
+Theorem “Bag members have non-zero count”: a ⋿ B ≡ a # B
+≠0
+— CalcCheck: Metavariables: B = B〖〗
+Proof:
+Calculation for expected goal `a ⋿ B ≡ a # B ≠ 0`:
+a⋿B
+≡ ⟨ “Alternative bag extensionality” ⟩
+— CalcCheck: Found “Alternative bag extensionality”
+— CalcCheck: ─ OK
+(∃ i • i < a # B )
+≡ ⟨ “Non-zero” ⟩
+— CalcCheck: Found “Non-zero”
+— CalcCheck: ─ OK
+a#B≠0
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[7]
+
+Inclusion
+[8]
+
+With “Bag inclusion”. it is quite easy to prove monotonicity in the bag argument also for bag membership:
+
+
+[9]
+
+[10]
+
+
+Theorem “Subbag membership”: B ⊆ C ⇒ (x ⋿ B ⇒ x ⋿ C)
+Theorem “Subbag membership”:
+— CalcCheck: Metavariables: B = B〖〗, C = C〖〗
+B ⊆ C ⇒ x ⋿ B ⇒ x ⋿ C
+Proof:
+Proof:
+Assuming `B ⊆ C`:
+Assuming `B ⊆ C`:
+— CalcCheck: Assumption matches goal
+x ⋿ B
+Calculation for expected goal `x ⋿ B ⇒ x ⋿ C`:
+=⟨ “Alternative bag extensionality” ⟩
+x⋿ B
+∃ i • i < x # B
+= ⟨ “Alternative bag extensionality” ⟩
+=⟨ “Identity of ∧” , “Monotonicity of #” ⟩
+— CalcCheck: Found “Alternative bag extensionality”
+(∃ i • i < x # B ∧ (B ⊆ C ⇒ x # B ≤ x # C))
+— CalcCheck: ─ OK
+=⟨ assumption `B ⊆ C` , “Left-identity of ⇒”⟩
+(∃ i • i < x # B )
+(∃ i • i < x # B ∧ (x # B ≤ x # C))
+= ⟨ “Identity of ∧”, “Monotonicity of #” ⟩
+⇒⟨ “Body monotonicity of ∃” with “Transitivity of < with ≤” wi
+— CalcCheck: Found (3.39) “Identity of ∧”
+∃ i • i < x # C
+— CalcCheck: Found “Monotonicity of #”
+— CalcCheck: ─ OK
+=⟨ “Alternative bag extensionality” ⟩
+(∃ i • i < x # B ∧ (B ⊆ C ⇒ x # B ≤ x # C) )
+x ⋿ C
+= ⟨ Assumption `B ⊆ C`, “Left-identity of ⇒” ⟩
+— CalcCheck: Found assumption `B ⊆ C`
+— CalcCheck: Found (3.73) “Left-identity of ⇒”
+— CalcCheck: ─ OK
+(∃ i • i < x # B ∧ x # B ≤ x # C )
+⇒ ⟨ “Body monotonicity of ∃” with “Transitivity of < with ≤” with
+“Shunting” ⟩
+— CalcCheck: Found (9.27) “Monotonicity of ∃”
+— CalcCheck: Found “<-≤-Transitivity”
+— CalcCheck: Found (3.65) “Shunting”
+— CalcCheck: ─ OK
+(∃ i • i < x # C )
+= ⟨ “Alternative bag extensionality” ⟩
+— CalcCheck: Found “Alternative bag extensionality”
+— CalcCheck: ─ OK
+x⋿ C
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Activate monotonicity property “Subbag membership”
+
+
+Activate monotonicity property “Subbag membership”
+— CalcCheck: Found monotonicity of `_⋿_` in argument position 1 from
+`_⊆_` to `_⇒_`
+
+
+[11]
+
+
+Via the following three theorems, prove that this inclusion relation is indeed an order!
+Note: With Using, it is normally necessary to supply all Subproof goals explicitly, by writing “Subproof for `goal`:”.
+
+[12]
+
+[13]
+
+Theorem “Reflexivity of bag inclusion”: B ⊆ B
+Proof:
+Using “Subbag membership”:
+Subproof for `x ⋿ B ⇒ x ⋿ B`:
+Assuming `x ⋿ B`:
+x ⋿ B
+=⟨ assumption `x ⋿ B`⟩
+true
+
+Theorem “Reflexivity of bag inclusion”: B ⊆ B
+— CalcCheck: Metavariables: B = B〖〗
+Proof:
+Using “Subbag membership”:
+— CalcCheck: Found “Subbag membership”
+Subproof for `x ⋿ B ⇒ x ⋿ B`:
+Assuming `x ⋿ B`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `x ⋿ B`:
+x⋿ B
+= ⟨ Assumption `x ⋿ B` ⟩
+— CalcCheck: Found assumption `x ⋿ B`
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Could not justify this `Using` application!
+
+Activate reflexivity property “Reflexivity of bag inclusion”
+
+Activate reflexivity property “Reflexivity of bag inclusion”
+— CalcCheck: Found reflexivity of `_⊆_`
+
+
+[14]
+
+
+Theorem “Transitivity of bag inclusion”: X ⊆ Y ⇒ Y ⊆ Z ⇒ X ⊆ Z
+Proof:
+Assuming `X ⊆ Y` and using with “Bag inclusion”,
+`Y ⊆ Z` and using with “Bag inclusion”:
+Using “Bag inclusion”:
+For any `e`:
+e # X
+≤⟨ Assumption `X ⊆ Y` ⟩
+e # Y
+≤⟨ Assumption `Y ⊆ Z` ⟩
+e # Z
+
+
+Theorem “Transitivity of bag inclusion”: X ⊆ Y ⇒ (Y ⊆ Z ⇒ X ⊆ Z)
+— CalcCheck: Metavariables: X = X〖〗, Y = Y〖〗, Z = Z〖〗
+Proof:
+Assuming `X ⊆ Y` and using with “Bag inclusion”
+— CalcCheck: Found (11.83) “Subbag” , `Y ⊆ Z` and using with “Bag
+inclusion”
+— CalcCheck: Found (11.83) “Subbag”:
+— CalcCheck: Assumptions match goal
+Using “Bag inclusion”:
+— CalcCheck: Found (11.83) “Subbag”
+Subproof establishing `(∀ e • e # X ≤ e # Z )`:
+For any ` e`:
+Calculation establishing `e # X ≤ e # Z`:
+e#X
+≤ ⟨ Assumption `X ⊆ Y` ⟩
+— CalcCheck: Found assumption `X ⊆ Y`
+— CalcCheck: ─ OK
+e#Y
+≤ ⟨ Assumption `Y ⊆ Z` ⟩
+— CalcCheck: Found assumption `Y ⊆ Z`
+— CalcCheck: ─ OK
+e#Z
+— CalcCheck: All steps OK
+
+
+[15]
+
+
+Theorem “Flipped transitivity of bag inclusion”: Y ⊆ Z ⇒ X ⊆ Y ⇒
+Proof:
+Assuming `Y ⊆ Z` and using with “Bag inclusion” , `X ⊆ Y` and us
+Using “Bag inclusion”:
+For any `e`:
+e # X
+≤⟨ assumption `X ⊆ Y`⟩
+e # Y
+≤⟨ assumption `Y ⊆ Z`⟩
+e # Z
+
+
+Theorem “Flipped transitivity of bag inclusion”: Y ⊆ Z ⇒ (X ⊆ Y ⇒
+X ⊆ Z)
+— CalcCheck: Metavariables: X = X〖〗, Y = Y〖〗, Z = Z〖〗
+Proof:
+Assuming `Y ⊆ Z` and using with “Bag inclusion”
+— CalcCheck: Found (11.83) “Subbag” , `X ⊆ Y` and using with “Bag
+inclusion”
+— CalcCheck: Found (11.83) “Subbag”:
+— CalcCheck: Assumptions match goal
+Using “Bag inclusion”:
+— CalcCheck: Found (11.83) “Subbag”
+Subproof establishing `(∀ e • e # X ≤ e # Z )`:
+For any ` e`:
+Calculation establishing `e # X ≤ e # Z`:
+e#X
+≤ ⟨ Assumption `X ⊆ Y` ⟩
+— CalcCheck: Found assumption `X ⊆ Y`
+— CalcCheck: ─ OK
+e#Y
+≤ ⟨ Assumption `Y ⊆ Z` ⟩
+— CalcCheck: Found assumption `Y ⊆ Z`
+— CalcCheck: ─ OK
+e#Z
+— CalcCheck: All steps OK
+
+
+[16]
+
+[17]
+
+
+Theorem “Antisymmetry of bag inclusion”: X ⊆ Y ⇒ Y ⊆ X ⇒ X = Y
+Proof:
+Assuming `X ⊆ Y` and using with “Bag inclusion” , `Y ⊆ X` and us
+Using “Bag extensionality”:
+For any `e`:
+e # X = e # Y
+⇐⟨ “Antisymmetry of ≤” with “Shunting” ⟩
+e # X ≤ e # Y ∧ e # Y ≤ e # X
+=⟨ Assumption `X ⊆ Y`, Assumption `Y ⊆ X`, “Identity of ∧”
+true
+
+Activate transitivity property
+Activate antitonicity property
+Activate monotonicity property
+
+Theorem “Antisymmetry of bag inclusion”: X ⊆ Y ⇒ (Y ⊆ X ⇒ X =
+Y)
+— CalcCheck: Metavariables: X = X〖〗, Y = Y〖〗
+Proof:
+Assuming `X ⊆ Y` and using with “Bag inclusion”
+— CalcCheck: Found (11.83) “Subbag” , `Y ⊆ X` and using with “Bag
+inclusion”
+— CalcCheck: Found (11.83) “Subbag”:
+— CalcCheck: Assumptions match goal
+Using “Bag extensionality”:
+— CalcCheck: Found (11.4) “Bag extensionality”
+Subproof establishing `(∀ e • e # X = e # Y )`:
+For any ` e`:
+Calculation establishing `e # X = e # Y`:
+e# X= e#Y
+⇐ ⟨ “Antisymmetry of ≤” with “Shunting” ⟩
+— CalcCheck: Found “Antisymmetry of ≤”
+— CalcCheck: Found (3.65) “Shunting”
+— CalcCheck: ─ OK
+e # X ≤ e #Y∧ e #Y≤ e # X
+= ⟨ Assumption `X ⊆ Y`, Assumption `Y ⊆ X`, “Identity of
+∧” ⟩
+— CalcCheck: Found assumption `X ⊆ Y`
+— CalcCheck: Found assumption `Y ⊆ X`
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+
+Activate transitivity property “Transitivity of bag inclusion”
+“Transitivity of bag inclusion”
+— CalcCheck: Found transitivity of `_⊆_`
+“Transitivity of bag inclusion”
+Activate
+antitonicity property “Transitivity of bag inclusion”
+“Flipped transitivity of bag incl
+— CalcCheck: Found antitonicity of `_⊆_` in argument position 0 from
+`_⊆_` to `_⇒_`
+Activate monotonicity property “Flipped transitivity of bag inclusion”
+— CalcCheck: Found monotonicity of `_⊆_` in argument position 1 from
+`_⊆_` to `_⇒_`
+
+[18]
+
+Union and Intersection
+
+
+[19]
+
+
+As seen in H20, for two bags S and T, the element counts in their union S ∪ T add up, while they are the corresponding minima in their
+intersection S ∩ T:
+Axiom “Bag union”:
+Axiom “Bag intersection”:
+
+e # S ∪ T = (e # S) + (e # T)
+e # S ∩ T = (e # S) ↓ (e # T)
+
+[20]
+
+Basic Properties of Union
+[21]
+
+Theorem “Bag union membership”: x ⋿ B ∪ C ≡ x ⋿ B ∨ x
+Proof:
+x ⋿ B ∪ C
+≡⟨ “Bag members have non-zero count”, “Bag union” ⟩
+(x # B) + (x # C) ≠ 0
+≡⟨ “Definition of ≠”, “Zero sum” ⟩
+¬ (x # B = 0 ∧ x # C = 0)
+≡⟨ “De Morgan”, “Definition of ≠” ⟩
+x # B ≠ 0 ∨ x # C ≠ 0
+≡⟨ “Bag members have non-zero count” ⟩
+x ⋿ B ∨ x ⋿ C
+
+
+Theorem “Bag union membership”: x ⋿ B ∪ C ≡ x ⋿ B ∨ x ⋿ C
+— CalcCheck: Metavariables: B = B〖〗, C = C〖〗
+Proof:
+Calculation for expected goal `x ⋿ B ∪ C ≡ x ⋿ B ∨ x ⋿ C`:
+x⋿ B∪ C
+≡ ⟨ “Bag members have non-zero count”, “Bag union” ⟩
+— CalcCheck: Found “Bag members have non-zero count”
+— CalcCheck: Found “Bag union”
+— CalcCheck: ─ OK
+(x # B) + (x # C) ≠ 0
+≡ ⟨ “Definition of ≠”, “Zero sum” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: Found “Zero sum”
+— CalcCheck: ─ OK
+¬ (x # B = 0 ∧ x # C = 0)
+≡ ⟨ “De Morgan”, “Definition of ≠” ⟩
+— CalcCheck: Found (3.47a) “De Morgan”, (3.47b) “De Morgan”, (3.47c) “De
+Morgan”, (3.47d) “De Morgan”
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+x# B≠ 0 ∨x# C ≠ 0
+≡ ⟨ “Bag members have non-zero count” ⟩
+— CalcCheck: Found “Bag members have non-zero count”
+— CalcCheck: ─ OK
+x⋿ B∨x⋿ C
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[22]
+
+Theorem “Isotonicity of +”: a + b ≤ a + c
+Proof:
+By induction on `a : ℕ`:
+Base case `0 + b ≤ 0 + c ≡ b ≤ c`:
+By “Identity of +”
+Induction step `suc a + b ≤ suc a + c
+suc a + b ≤ suc a + c
+≡⟨ “Definition of + for `suc`” ⟩
+suc (a + b) ≤ suc (a + c)
+≡⟨ “Successor” ⟩
+a + b + 1 ≤ a + c + 1
+≡⟨ “≤-Isotonicity of +” ⟩
+a + b ≤ a + c
+≡⟨ Induction hypothesis ⟩
+b ≤ c
+
+
+≡
+
+b ≤ c
+
+≡
+
+b ≤ c`:
+
+Theorem “Isotonicity of +”: a + b ≤ a + c ≡ b ≤ c
+Proof:
+By induction on `a : ℕ`:
+Base case `0 + b ≤ 0 + c ≡ b ≤ c`:
+By “Identity of +”
+— CalcCheck: Found “Identity of +”
+Induction step `suc a + b ≤ suc a + c ≡ b ≤ c`:
+Calculation for expected goal `suc a + b ≤ suc a + c ≡ b ≤ c`:
+suc a + b ≤ suc a + c
+≡ ⟨ “Definition of + for `suc`” ⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: ─ OK
+suc (a + b) ≤ suc (a + c)
+≡ ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+(a + b) + 1 ≤ (a + c) + 1
+≡ ⟨ “≤-Isotonicity of +” ⟩
+— CalcCheck: Found “≤-Isotonicity of +”
+— CalcCheck: ─ OK
+a+b≤a+c
+≡ ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `a + b ≤ a + c
+≡ b ≤ c`
+— CalcCheck: ─ OK
+b≤c
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[23]
+
+
+Theorem “Weakening of bag union”: S ⊆ S ∪ T
+Proof:
+Using “Bag inclusion”:
+For any `e`:
+e # S
+=⟨ “Identity of +” ⟩
+(e # S) + 0
+≤⟨ “Isotonicity of +” with “Zero is least element” ⟩
+(e # S) + (e # T)
+=⟨ “Bag union” ⟩
+e # S ∪ T
+
+Theorem “Weakening of bag union”: S ⊆ S ∪ T
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+Proof:
+Using “Bag inclusion”:
+— CalcCheck: Found (11.83) “Subbag”
+Subproof establishing `(∀ e • e # S ≤ e # S ∪ T )`:
+For any ` e`:
+Calculation establishing `e # S ≤ e # S ∪ T`:
+e#S
+= ⟨ “Identity of +” ⟩
+— CalcCheck: Found “Identity of +”
+— CalcCheck: ─ OK
+(e # S) + 0
+≤ ⟨ “Isotonicity of +” with “Zero is least element” ⟩
+— CalcCheck: Found “Isotonicity of +”
+— CalcCheck: Found “Zero is least element”
+— CalcCheck: ─ OK
+(e # S) + (e # T)
+= ⟨ “Bag union” ⟩
+— CalcCheck: Found “Bag union”
+— CalcCheck: ─ OK
+e#S∪T
+— CalcCheck: All steps OK
+
+[24]
+
+Basic Properties of Intersection
+
+
+[25]
+
+
+Theorem “Symmetry of bag intersection”: S ∩ T = T ∩ S
+Proof:
+Using “Bag inclusion”:
+For any `e`:
+e # (S ∩ T)
+=⟨ “Bag intersection”⟩
+(e # S) ↓ (e # T)
+=⟨ “Symmetry of ↓”⟩
+(e # T) ↓ (e # S)
+=⟨ “Bag intersection”⟩
+e # (T ∩ S)
+
+
+Theorem “Symmetry of bag intersection”: S ∩ T = T ∩ S
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+Proof:
+Using “Bag inclusion”:
+— CalcCheck: Found (11.83) “Subbag”
+Subproof establishing `(∀ e • e # S ∩ T = e # T ∩ S )`:
+For any ` e`:
+Calculation establishing `e # S ∩ T = e # T ∩ S`:
+e#S∩T
+= ⟨ “Bag intersection” ⟩
+— CalcCheck: Found “Bag intersection”
+— CalcCheck: ─ OK
+(e # S) ↓ (e # T)
+= ⟨ “Symmetry of ↓” ⟩
+— CalcCheck: Found “Symmetry of ↓”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(e # T) ↓ (e # S)
+= ⟨ “Bag intersection” ⟩
+— CalcCheck: Found “Bag intersection”
+— CalcCheck: ─ OK
+e#T∩S
+— CalcCheck: All steps OK
+— CalcCheck: Could not justify this `Using` application!
+
+
+[26]
+
+
+Theorem “Associativity of bag intersection”: S ∩ (T ∩ W) = (S ∩ T) ∩
+Proof:
+Using “Bag inclusion”:
+For any `e`:
+e # (S ∩ (T ∩ W))
+=⟨ “Bag intersection” , “Bag intersection” , “Associativity of
+((e # S) ↓ (e # T)) ↓ (e # W)
+=⟨ “Bag intersection” , “Bag intersection” , “Associativity of
+e # ((S ∩ T) ∩ W)
+
+Theorem “Associativity of bag intersection”: S ∩ (T ∩ W) = (S ∩
+T) ∩ W
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗, W = W〖〗
+Proof:
+Using “Bag inclusion”:
+— CalcCheck: Found (11.83) “Subbag”
+Subproof establishing `(∀ e • e # S ∩ (T ∩ W) = e # (S ∩ T) ∩ W
+)`:
+For any ` e`:
+Calculation establishing `e # S ∩ (T ∩ W) = e # (S ∩ T) ∩
+W`:
+e # S ∩ (T ∩ W)
+= ⟨ “Bag intersection”, “Bag intersection”, “Associativity of ↓”
+
+⟩
+— CalcCheck: Found “Bag intersection”
+— CalcCheck: Found “Associativity of ↓”
+— CalcCheck: ─ OK
+((e # S) ↓ (e # T)) ↓ (e # W)
+= ⟨ “Bag intersection”, “Bag intersection”, “Associativity of ↓”
+
+⟩
+— CalcCheck: Found “Bag intersection”
+— CalcCheck: Found “Associativity of ↓”
+— CalcCheck: ─ OK
+e # (S ∩ T) ∩ W
+— CalcCheck: All steps OK
+— CalcCheck: Could not justify this `Using` application!
+
+[27]
+
+Activate symmetry property “Symmetry of bag intersection”
+Activate associativity property “Associativity of bag intersection”
+
+
+Activate symmetry property “Symmetry of bag intersection”
+— CalcCheck: Found symmetry of `_∩_`
+Activate associativity property “Associativity of bag
+intersection”
+— CalcCheck: Found associativity of `_∩_`
+
+
+[28]
+
+[29]
+
+
+Theorem “Idempotency of bag intersection”: S ∩ S = S
+Proof:
+Using “Bag extensionality”:
+For any `e`:
+e # S ∩ S
+=⟨ “Bag intersection” ⟩
+(e # S) ↓ (e # S)
+=⟨ “Idempotency of ↓” ⟩
+e # S
+
+Theorem “Idempotency of bag intersection”: S ∩ S = S
+— CalcCheck: Metavariables: S = S〖〗
+Proof:
+Using “Bag extensionality”:
+— CalcCheck: Found (11.4) “Bag extensionality”
+Subproof establishing `(∀ e • e # S ∩ S = e # S )`:
+For any ` e`:
+Calculation establishing `e # S ∩ S = e # S`:
+e#S∩S
+= ⟨ “Bag intersection” ⟩
+— CalcCheck: Found “Bag intersection”
+— CalcCheck: ─ OK
+(e # S) ↓ (e # S)
+= ⟨ “Idempotency of ↓” ⟩
+— CalcCheck: Found “Idempotency of ↓”
+— CalcCheck: ─ OK
+e#S
+— CalcCheck: All steps OK
+
+Theorem “Weakening of bag intersection”: S ∩ T ⊆ S
+Proof:
+Using “Bag inclusion”:
+For any `e`:
+e # (S ∩ T)
+=⟨ “Bag intersection”⟩
+(e # S) ↓ (e # T)
+≤⟨ “Weakening for ↓”⟩
+e # S
+
+Theorem “Weakening of bag intersection”: S ∩ T ⊆ S
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+Proof:
+Using “Bag inclusion”:
+— CalcCheck: Found (11.83) “Subbag”
+Subproof establishing `(∀ e • e # S ∩ T ≤ e # S )`:
+For any ` e`:
+Calculation establishing `e # S ∩ T ≤ e # S`:
+e#S∩T
+= ⟨ “Bag intersection” ⟩
+— CalcCheck: Found “Bag intersection”
+— CalcCheck: ─ OK
+(e # S) ↓ (e # T)
+≤ ⟨ “Weakening for ↓” ⟩
+— CalcCheck: Found “Weakening for ↓”
+— CalcCheck: ─ OK
+e#S
+— CalcCheck: All steps OK
+
+
+[30]
+
+[31]
+
+Theorem “Bag inclusion via ∩”: S ⊆ T
+Proof:
+S ⊆ T
+=⟨ “Bag inclusion” ⟩
+∀ e • e # S ≤ e # T
+=⟨ “≤ via ↓” ⟩
+∀ e • (e # S) ↓ (e # T) = e # S
+=⟨ “Bag intersection” ⟩
+∀ e • e # S ∩ T = e # S
+=⟨ “Bag extensionality” ⟩
+S ∩ T = S
+
+
+≡
+
+S ∩ T = S
+
+Theorem “Bag inclusion via ∩”: S ⊆ T ≡ S ∩ T = S
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+Proof:
+Calculation for expected goal `S ⊆ T ≡ S ∩ T = S`:
+S⊆T
+= ⟨ “Bag inclusion” ⟩
+— CalcCheck: Found (11.83) “Subbag”
+— CalcCheck: ─ OK
+(∀ e • e # S ≤ e # T )
+= ⟨ “≤ via ↓” ⟩
+— CalcCheck: Found “≤ via ↓”
+— CalcCheck: ─ OK
+(∀ e • (e # S) ↓ (e # T) = e # S )
+= ⟨ “Bag intersection” ⟩
+— CalcCheck: Found “Bag intersection”
+— CalcCheck: ─ OK
+(∀ e • e # S ∩ T = e # S )
+= ⟨ “Bag extensionality” ⟩
+— CalcCheck: Found (11.4) “Bag extensionality”
+— CalcCheck: ─ OK
+S∩T=S
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+For the theorems below, many of the proof techniques you have learnt so far may come in handy in different places…
+
+[32]
+
+Monotonicity with Respect to Inclusion
+
+
+[33]
+
+
+Theorem “Monotonicity of ∩”: S ⊆ T ⇒ S ∩ U ⊆ T ∩ U
+Proof:
+Assuming `S ⊆ T` and using with “Bag inclusion”:
+Using “Bag inclusion”:
+For any `e`:
+e # (S ∩ U)
+=⟨ “Bag intersection”⟩
+(e # S) ↓ (e # U)
+≤⟨ “Monotonicity of ↓” with assumption `S ⊆ T`⟩
+(e # T) ↓ (e # U)
+=⟨ “Bag intersection”⟩
+e # (T ∩ U)
+
+
+Theorem “Monotonicity of ∩”: S ⊆ T ⇒ S ∩ U ⊆ T ∩ U
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗, U = U
+〖〗
+Proof:
+Assuming `S ⊆ T` and using with “Bag inclusion”
+— CalcCheck: Found (11.83) “Subbag”:
+— CalcCheck: Assumption matches goal
+Using “Bag inclusion”:
+— CalcCheck: Found (11.83) “Subbag”
+Subproof establishing `(∀ e • e # S ∩ U ≤ e # T ∩ U )`:
+For any ` e`:
+Calculation establishing `e # S ∩ U ≤ e # T ∩ U`:
+e#S∩U
+= ⟨ “Bag intersection” ⟩
+— CalcCheck: Found “Bag intersection”
+— CalcCheck: ─ OK
+(e # S) ↓ (e # U)
+≤ ⟨ “Monotonicity of ↓” with Assumption `S ⊆ T` ⟩
+— CalcCheck: Found “Monotonicity of ↓”
+— CalcCheck: Found assumption `S ⊆ T`
+— CalcCheck: ─ OK
+(e # T) ↓ (e # U)
+= ⟨ “Bag intersection” ⟩
+— CalcCheck: Found “Bag intersection”
+— CalcCheck: ─ OK
+e#T∩U
+— CalcCheck: All steps OK
+
+
+[34]
+
+[35]
+
+
+Theorem “Monotonicity of ∩”: S ⊆ T ⇒ U ⊆ V ⇒ S ∩ U ⊆ T ∩ V
+Proof:
+Assuming `S ⊆ T` and using with “Bag inclusion” , `U ⊆ V` and us
+Using “Bag inclusion”:
+For any `e`:
+e # (S ∩ U)
+=⟨ “Bag intersection”⟩
+(e # S) ↓ (e # U)
+≤⟨ “Monotonicity of ↓” with assumption `S ⊆ T`⟩
+(e # T) ↓ (e # U)
+≤⟨ “Monotonicity of ↓” with assumption `U ⊆ V`⟩
+(e # T) ↓ (e # V)
+=⟨ “Bag intersection”⟩
+e # (T ∩ V)
+
+Activate monotonicity property “Monotonicity of ∩”
+
+
+Theorem “Monotonicity of ∩”: S ⊆ T ⇒ (U ⊆ V ⇒ S ∩ U ⊆ T ∩ V)
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗, U = U〖〗, V =
+V〖〗
+Proof:
+Assuming `S ⊆ T` and using with “Bag inclusion”
+— CalcCheck: Found (11.83) “Subbag” , `U ⊆ V` and using with “Bag
+inclusion”
+— CalcCheck: Found (11.83) “Subbag”:
+— CalcCheck: Assumptions match goal
+Using “Bag inclusion”:
+— CalcCheck: Found (11.83) “Subbag”
+Subproof establishing `(∀ e • e # S ∩ U ≤ e # T ∩ V )`:
+For any ` e`:
+Calculation establishing `e # S ∩ U ≤ e # T ∩ V`:
+e#S∩U
+= ⟨ “Bag intersection” ⟩
+— CalcCheck: Found “Bag intersection”
+— CalcCheck: ─ OK
+(e # S) ↓ (e # U)
+≤ ⟨ “Monotonicity of ↓” with Assumption `S ⊆ T` ⟩
+— CalcCheck: Found “Monotonicity of ↓”
+— CalcCheck: Found assumption `S ⊆ T`
+— CalcCheck: ─ OK
+(e # T) ↓ (e # U)
+≤ ⟨ “Monotonicity of ↓” with Assumption `U ⊆ V` ⟩
+— CalcCheck: Found “Monotonicity of ↓”
+— CalcCheck: Found assumption `U ⊆ V`
+— CalcCheck: ─ OK
+(e # T) ↓ (e # V)
+= ⟨ “Bag intersection” ⟩
+— CalcCheck: Found “Bag intersection”
+— CalcCheck: ─ OK
+e#T∩V
+— CalcCheck: All steps OK
+
+Activate monotonicity property “Monotonicity of ∩”
+— CalcCheck: Found monotonicity of `_∩_` in argument position 0 from
+`_⊆_` to `_⊆_`
+
+
+[36]
+
+Inclusion and Proper Subbag
+[37]
+
+[38]
+
+[39]
+
+[40]
+
+Theorem “Reflexivity of ⊆”: S = T ⇒ S ⊆ T
+Proof:
+Assuming `S = T`:
+S
+=⟨ assumption `S = T`⟩
+T
+
+Theorem “Reflexivity of ⊆”: S = T ⇒ S ⊆ T
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+Proof:
+Assuming `S = T`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `S ⊆ T`:
+S
+= ⟨ Assumption `S = T` ⟩
+— CalcCheck: Found assumption `S = T`
+— CalcCheck: ─ OK
+T
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Declaration: _⊂_ : Bag t → Bag t → 𝔹
+
+Declaration: _⊂_ : Bag t → (Bag t → 𝔹)
+— CalcCheck: Operator _⊂_: Conjunctional; precedence 50
+
+Axiom “Proper subbag” “Definition of ⊂”: S ⊂ T ≡ S ⊆ T ∧ S
+≠T
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+
+Axiom “Proper subbag” “Definition of ⊂”:
+S ⊂ T ≡
+S ⊆ T ∧ S ≠ T
+
+Axiom “Reflexivity of ⊆”: R ⊆ R
+Axiom “Antisymmetry of ⊆”: R ⊆ S
+
+⇒
+
+S ⊆ R
+
+⇒
+
+R = S
+
+Axiom “Reflexivity of ⊆”: R ⊆ R
+— CalcCheck: Metavariables: R = R〖〗
+Axiom “Antisymmetry of ⊆”: R ⊆ S ⇒ (S ⊆ R ⇒ R = S)
+— CalcCheck: Metavariables: R = R〖〗, S = S〖〗
+
+
+[41]
+
+[42]
+
+
+Theorem “Mutual inclusion”:
+R = S ≡ R ⊆ S ∧ S ⊆ R
+Proof:
+Using “Mutual implication”:
+Subproof for `R = S ⇒ R ⊆ S ∧ S ⊆ R`:
+Assuming `R = S`:
+R ⊆ S ∧ S ⊆ R
+=⟨ assumption `R = S` , “Idempotency of ∧”⟩
+S ⊆ S
+=⟨ “Reflexivity of ⊆”⟩
+true
+Subproof for `R ⊆ S ∧ S ⊆ R ⇒ R = S`:
+By “Antisymmetry of ⊆” , “Shunting”
+
+Theorem “Mutual inclusion”: R = S ≡ R ⊆ S ∧ S ⊆ R
+— CalcCheck: Metavariables: R = R〖〗, S = S〖〗
+Proof:
+Using “Mutual implication”:
+— CalcCheck: Found (3.80) “Mutual implication”
+Subproof for `R = S ⇒ R ⊆ S ∧ S ⊆ R`:
+Assuming `R = S`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `R ⊆ S ∧ S ⊆ R`:
+R⊆S∧S⊆R
+= ⟨ Assumption `R = S`, “Idempotency of ∧” ⟩
+— CalcCheck: Found assumption `R = S`
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+S⊆S
+= ⟨ “Reflexivity of ⊆” ⟩
+— CalcCheck: Found “Reflexivity of ⊆”, “Reflexivity
+of ⊆”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `R ⊆ S ∧ S ⊆ R ⇒ R = S`:
+By “Antisymmetry of ⊆”, “Shunting”
+— CalcCheck: Found “Antisymmetry of ⊆”
+— CalcCheck: Found (3.65) “Shunting”
+
+Axiom “Reflexivity of ⊆”: R ⊆ R
+
+[43]
+
+
+[44]
+
+
+Theorem “Definition of ⊂ via ⊆”: S ⊂ T ≡ S ⊆ Theorem “Definition of ⊂ via ⊆”: S ⊂ T ≡ S ⊆ T ∧ ¬ (T ⊆ S)
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+Proof:
+Proof:
+S ⊂ T
+Calculation for expected goal `S ⊂ T ≡ S ⊆ T ∧ ¬ (T ⊆ S)`:
+≡⟨ “Definition of ⊂”, “Definition of ≠” ⟩
+S⊂T
+S ⊆ T ∧ ¬ (S = T)
+≡
+⟨
+“Definition of ⊂”, “Definition of ≠” ⟩
+≡⟨ “Mutual inclusion”⟩
+— CalcCheck: Found “Proper subbag”
+S ⊆ T ∧ ¬ (S ⊆ T ∧ T ⊆ S)
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+≡⟨ “De Morgan”, “Absorption” ⟩
+— CalcCheck: ─ OK
+S ⊆ T ∧ ¬ (T ⊆ S)
+S ⊆ T ∧ ¬ (S = T)
+≡ ⟨ “Mutual inclusion” ⟩
+— CalcCheck: Found “Mutual inclusion”
+— CalcCheck: ─ OK
+S ⊆ T ∧ ¬ (S ⊆ T ∧ T ⊆ S)
+≡ ⟨ “De Morgan”, “Absorption” ⟩
+— CalcCheck: Found (3.47a) “De Morgan”, (3.47b) “De Morgan”, (3.47c) “De Morgan”,
+(3.47d) “De Morgan”
+— CalcCheck: Found (3.44a) “Absorption”, (3.44b) “Absorption”, (3.43b) “Absorption”,
+(3.43a) “Absorption”, (3.44c) “Absorption”, (3.44d) “Absorption”
+— CalcCheck: ─ OK
+S ⊆ T ∧ ¬ (T ⊆ S)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[45]
+
+Theorem “Inclusion in terms of ⊂”:
+S ⊆ T ≡ S ⊂ T ∨ S = T
+Proof:
+S ⊂ T ∨ S = T
+=⟨ “Definition of ⊂”⟩
+(S ⊆ T ∧ S ≠ T) ∨ S = T
+=⟨ “Definition of ≠” ⟩
+(S ⊆ T ∧ ¬ (S = T)) ∨ S = T
+≡⟨ “Absorption” ⟩
+S ⊆ T ∨ S = T
+≡⟨ “Reflexivity of ⊆” with (3.57) ⟩
+S ⊆ T
+
+
+Theorem “Inclusion in terms of ⊂”: S ⊆ T ≡ S ⊂ T ∨ S = T
+— CalcCheck: Metavariables: S = S〖〗, T = T〖〗
+Proof:
+Calculation for expected goal `S ⊆ T ≡ S ⊂ T ∨ S = T`:
+S⊂T∨S=T
+= ⟨ “Definition of ⊂” ⟩
+— CalcCheck: Found “Proper subbag”
+— CalcCheck: ─ OK
+(S ⊆ T ∧ S ≠ T) ∨ S = T
+= ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+(S ⊆ T ∧ ¬ (S = T)) ∨ S = T
+≡ ⟨ “Absorption” ⟩
+— CalcCheck: Found (3.44a) “Absorption”, (3.44b) “Absorption”, (3.43b) “Absorption”,
+(3.43a) “Absorption”, (3.44c) “Absorption”, (3.44d) “Absorption”
+— CalcCheck: ─ OK
+S⊆T∨S=T
+≡ ⟨ “Reflexivity of ⊆” with (3.57) ⟩
+— CalcCheck: Found “Reflexivity of ⊆”, “Reflexivity of ⊆”
+— CalcCheck: Found (3.57) “Definition of ⇒ via ∨”
+— CalcCheck: ─ OK
+S⊆T
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[46]
+
+
+Theorem “Transitivity of ⊆ with ⊂”:
+X ⊆ Y ⇒ Y ⊂ Z ⇒ X ⊂ Z
+Proof:
+Assuming `X ⊆ Y`:
+Y ⊂ Z
+=⟨ “Definition of ⊂ via ⊆” ⟩
+Y ⊆ Z ∧ ¬ (Z ⊆ Y)
+⇒⟨ Antitonicity with Assumption `X ⊆ Y` ⟩
+X ⊆ Z ∧ ¬ (Z ⊆ Y)
+⇒⟨ Antitonicity with Assumption `X ⊆ Y` ⟩
+X ⊆ Z ∧ ¬ (Z ⊆ X)
+=⟨ “Definition of ⊂ via ⊆” ⟩
+X ⊂ Z
+
+Theorem “Transitivity of ⊆ with ⊂”: X ⊆ Y ⇒ (Y ⊂ Z ⇒ X ⊂
+Z)
+— CalcCheck: Metavariables: X = X〖〗, Y = Y〖〗, Z = Z
+〖〗
+Proof:
+Assuming `X ⊆ Y`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `Y ⊂ Z ⇒ X ⊂ Z`:
+Y⊂ Z
+= ⟨ “Definition of ⊂ via ⊆” ⟩
+— CalcCheck: Found “Definition of ⊂ via ⊆”
+— CalcCheck: ─ OK
+Y ⊆ Z ∧ ¬ (Z ⊆ Y)
+⇒ ⟨ Antitonicity with Assumption `X ⊆ Y` ⟩
+— CalcCheck: Found assumption `X ⊆ Y`
+— CalcCheck: ─ OK
+X ⊆ Z ∧ ¬ (Z ⊆ Y)
+⇒ ⟨ Antitonicity with Assumption `X ⊆ Y` ⟩
+— CalcCheck: Found assumption `X ⊆ Y`
+— CalcCheck: ─ OK
+X ⊆ Z ∧ ¬ (Z ⊆ X)
+= ⟨ “Definition of ⊂ via ⊆” ⟩
+— CalcCheck: Found “Definition of ⊂ via ⊆”
+— CalcCheck: ─ OK
+X⊂Z
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[47]
+
+Bag Product
+[48]
+
+[49]
+
+Declaration: bagProd : Bag ℕ → ℕ
+
+Declaration: bagProd : Bag ℕ → ℕ
+
+For exponentiation _**_, see module Natural.Exp in the list of preloaded theorems.
+
+
+[50]
+
+[51]
+
+Axiom “Definition of `bagProd`”:
+bagProd B = ∏ x • x ** (x # B)
+
+Theorem “Alternate definition of `bagProd`”:
+bagProd B = ∏ x, i ❙ i < x # B • x
+Proof:
+bagProd B
+=⟨“Definition of `bagProd`”⟩
+∏ x • x ** (x # B)
+=⟨“** via ∏”⟩
+∏ x • ∏ i ❙ i < (x # B) • x
+=⟨“Nesting for ∏”⟩
+∏ x, i ❙ i < x # B • x
+
+
+Axiom “Definition of `bagProd`”: bagProd B = (∏ x • x ** (x #
+B) )
+— CalcCheck: Metavariables: B = B〖〗
+— CalcCheck: Proviso: ¬occurs(`x`, `B`)
+
+Theorem “Alternate definition of `bagProd`”: bagProd B = (∏ x, i ❙ i < x # B • x
+)
+— CalcCheck: Metavariables: B = B〖〗
+— CalcCheck: Proviso: ¬occurs(`i, x`, `B`)
+Proof:
+Calculation for expected goal `bagProd B = (∏ x, i ❙ i < x # B • x )`:
+bagProd B
+= ⟨ “Definition of `bagProd`” ⟩
+— CalcCheck: Found “Definition of `bagProd`”
+— CalcCheck: ─ OK
+(∏ x • x ** (x # B) )
+= ⟨ “** via ∏” ⟩
+— CalcCheck: Found “** via ∏”
+— CalcCheck: ─ OK
+(∏ x • (∏ i ❙ i < x # B • x ) )
+= ⟨ “Nesting for ∏” ⟩
+— CalcCheck: Found (8.20.2) “Nesting for ∏”, (8.20.1) “Nesting for ∏”,
+(8.20) “Nesting for ∏”
+— CalcCheck: ─ OK
+(∏ x, i ❙ i < x # B • x )
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[52]
+
+
+Theorem “Union `bagProd`”:
+bagProd (B₁ ∪ B₂) = bagProd B₁ · bagProd B₂
+Proof:
+bagProd (B₁ ∪ B₂)
+=⟨ “Definition of `bagProd`”⟩
+∏ x • x ** (x # (B₁ ∪ B₂))
+=⟨ “Bag union”⟩
+∏ x • x ** ((x # B₁) + (x # B₂))
+=⟨ “Adding exponents”⟩
+∏ x • (x ** (x # B₁)) · (x ** (x # B₂))
+=⟨ “Distributivity of ∏ quantification over `_·_`”⟩
+(∏ x • x ** (x # B₁)) · ∏ x • (x ** (x # B₂))
+=⟨ “Definition of `bagProd`”⟩
+bagProd B₁ · bagProd B₂
+
+1,1
+
+Theorem “Union `bagProd`”: bagProd (B₁ ∪ B₂) = bagProd B₁ ·
+bagProd B₂
+— CalcCheck: Metavariables: B₁ = B₁〖〗, B₂ = B₂〖〗
+Proof:
+Calculation for expected goal `bagProd (B₁ ∪ B₂) = bagProd B₁ ·
+bagProd B₂`:
+bagProd (B₁ ∪ B₂)
+= ⟨ “Definition of `bagProd`” ⟩
+— CalcCheck: Found “Definition of `bagProd`”
+— CalcCheck: ─ OK
+(∏ x • x ** (x # B₁ ∪ B₂) )
+= ⟨ “Bag union” ⟩
+— CalcCheck: Found “Bag union”
+— CalcCheck: ─ OK
+(∏ x • x ** ((x # B₁) + (x # B₂)) )
+= ⟨ “Adding exponents” ⟩
+— CalcCheck: Found “Adding exponents”
+— CalcCheck: ─ OK
+(∏ x • x ** (x # B₁) · x ** (x # B₂) )
+= ⟨ “Distributivity of ∏ quantification over `_·_`” ⟩
+— CalcCheck: Found (8.15) “Distributivity of ∏ quantification
+over `_·_`”
+— CalcCheck: ─ OK
+(∏ x • x ** (x # B₁) ) · (∏ x • x ** (x # B₂) )
+= ⟨ “Definition of `bagProd`” ⟩
+— CalcCheck: Found “Definition of `bagProd`”
+— CalcCheck: ─ OK
+bagProd B₁ · bagProd B₂
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

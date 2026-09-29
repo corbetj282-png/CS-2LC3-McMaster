@@ -1,0 +1,1253 @@
+[1]
+
+This exercise follows on from Ex6.1, which is preloaded here, with sequences formalised via the new type constructor Seq
+Declaration: Seq : Type → Type
+producing types “Seq A” of finite sequences with elements of type A, and “Seq A” is introduced as an inductive type with the following
+constructors:
+Declaration: 𝜖 : Seq A
+Declaration: _◃_ : A → Seq A → Seq A
+
+[2]
+
+[3]
+
+In this notebook, you are allowed up to four hint items per hint, and Evaluation is enabled.
+
+The induction principle for sequences implemented in By induction proofs is the following:
+⇒
+⇒
+
+P[xs ≔ 𝜖]
+(∀ xs : Seq A ❙ P • (∀ x : A • P[xs ≔ x ◃ xs]))
+(∀ xs : Seq A • P)
+
+An induction proof for either just P, or for ∀ xs : Seq A • P (it works the same for both goal statements), therefore takes the following
+shape:
+
+
+By induction on `xs : Seq A`:
+Base case:
+⟪ Proof for `P[xs ≔ 𝜖]` ⟫
+Induction step:
+⟪ Proof for `∀ x : A • P[xs ≔ x ◃ xs]` ⟫
+⟪ using: Induction hypothesis `P` ⟫
+Be careful to introduce a fresh variable instead of x for proving theorems that mention x!
+
+[4]
+
+For theorem (13.6) “Cons decomposition”, LADM shows the following proof:
+
+
+Produce a CalcCheck proof, possibly following this approach (note that we use different variable names):
+
+
+[5]
+
+
+Theorem (13.6) “Cons decomposition”: xs = 𝜖 ∨ (∃ y • (∃ ys • xs = y ◃ ys
+))
+— CalcCheck: Variable types: xs : Seq ty᎑₁₃
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+Calculation for expected goal `𝜖 = 𝜖 ∨ (∃ y • (∃ ys • 𝜖 = y ◃ ys ) )`:
+𝜖 = 𝜖 ∨ (∃ y • (∃ ys • 𝜖 = y ◃ ys ) )
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+true ∨ (∃ y • (∃ ys • 𝜖 = y ◃ ys ) )
+= ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ x : A • x ◃ xs = 𝜖 ∨ (∃ y • (∃ ys • x ◃ xs = y ◃
+ys ) ) )`:
+For any ` x : A`:
+Calculation for expected goal `x ◃ xs = 𝜖 ∨ (∃ y • (∃ ys • x ◃ xs
+= y ◃ ys ) )`:
+x ◃ xs = 𝜖 ∨ (∃ y • (∃ ys • x ◃ xs = y ◃ ys ) )
+= ⟨ “Cons is not empty”, “Identity of ∨” ⟩
+— CalcCheck: Found “Cons is not empty”, (13.3) “Cons is
+not empty”
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+(∃ y • (∃ ys • x ◃ xs = y ◃ ys ) )
+⇐ ⟨ “∃-Introduction” ⟩
+— CalcCheck: Found (9.28) “∃-Introduction”, (9.28.1) “∃Introduction”
+— CalcCheck: ─ OK
+(∃ ys • x ◃ xs = y ◃ ys )[y ≔ x]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(∃ ys • x ◃ xs = x ◃ ys )
+⇐ ⟨ “∃-Introduction” ⟩
+— CalcCheck: Found (9.28) “∃-Introduction”, (9.28.1) “∃Introduction”
+— CalcCheck: ─ OK
+
+
+Theorem (13.6) “Cons decomposition”:
+xs = 𝜖 ∨ (∃ y • ∃ ys • xs = y ◃ ys)
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+𝜖 = 𝜖 ∨ (∃ y • ∃ ys • 𝜖 = y ◃ ys)
+=⟨“Reflexivity of =”⟩
+true ∨ (∃ y • ∃ ys • 𝜖 = y ◃ ys)
+=⟨“Zero of ∨”⟩
+true
+Induction step `∀ x : A • x ◃ xs = 𝜖 ∨(∃ y • ∃ ys • x ◃
+For any `x : A`:
+x ◃ xs = 𝜖 ∨ (∃ y • ∃ ys • x ◃ xs = y ◃ ys)
+=⟨ “Cons is not empty” , “Identity of ∨” ⟩
+(∃ y • ∃ ys • x ◃ xs = y ◃ ys)
+⇐⟨ “∃-Introduction” ⟩
+(∃ ys • x ◃ xs = y ◃ ys)[y ≔ x]
+=⟨ Substitution ⟩
+(∃ ys • x ◃ xs = x ◃ ys)
+⇐⟨ “∃-Introduction” ⟩
+(x ◃ xs = x ◃ ys)[ys ≔ xs]
+=⟨ Substitution ⟩
+x ◃ xs = x ◃ xs — This is “Reflexivity of =”
+
+[6]
+
+(x ◃ xs = x ◃ ys)[ys ≔ xs]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+x ◃ xs = x ◃ xs — This is “Reflexivity of =”
+— CalcCheck: Final “This is”: OK (no change)
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+In the LADM proof for “Tail is different”, the quantification over x is necessary to allow the application of the induction hypothesis to
+z, and adding also a quantification over xs, we obtain a quantifier arrangement that corresponds exactly to what is described in a more
+roundabout way in LADM on p. 253:
+
+
+Turn this into a CalcCheck proof — note that the quantification over x becomes part of the goals of both base case and induction step, and
+therefore requires an extra level of For any there:
+
+
+[7]
+
+
+Theorem (13.7) “Tail is different”: (∀ xs : Seq A • (∀ x : A • x ◃ xs ≠ xs ) )
+— CalcCheck: Metavariables: A = A〖〗
+— CalcCheck: Proviso: ¬occurs(`xs`, `A`)
+— CalcCheck: Variable types: A : Type
+Proof:
+By induction on `xs : Seq A`:
+Base case `(∀ x : A • x ◃ 𝜖 ≠ 𝜖 )`:
+For any ` x : A`:
+Calculation for expected goal `x ◃ 𝜖 ≠ 𝜖`:
+x ◃ 𝜖 ≠ 𝜖 — This is “Cons is not empty”
+— CalcCheck: Found “Cons is not empty”, (13.3) “Cons is not empty”
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ z : A • (∀ x : A • x ◃ (z ◃ xs) ≠ z ◃ xs ) )`:
+For any ` z : A`:
+For any ` x : A`:
+Calculation for expected goal `x ◃ (z ◃ xs) ≠ z ◃ xs`:
+x ◃ (z ◃ xs) ≠ z ◃ xs
+= ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+¬ (x ◃ (z ◃ xs) = z ◃ xs)
+= ⟨ “Cancellation of ◃” ⟩
+— CalcCheck: Found (13.4) “Cancellation of ◃”
+— CalcCheck: ─ OK
+¬ (x = z ∧ z ◃ xs = xs)
+= ⟨ “De Morgan”, “Definition of ≠” ⟩
+— CalcCheck: Found (3.47a) “De Morgan”, (3.47b) “De Morgan”,
+(3.47c) “De Morgan”, (3.47d) “De Morgan”
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+¬ (x = z) ∨ z ◃ xs ≠ xs
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `(∀ x : A • x ◃ xs ≠ xs )`
+— CalcCheck: ─ OK
+¬ (x = z) ∨ true
+= ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+Theorem (13.7) “Tail is different”:
+∀ xs : Seq A • ∀ x : A • x ◃ xs ≠ xs
+Proof:
+By induction on `xs : Seq A`:
+Base case `∀ x : A • x ◃ 𝜖 ≠ 𝜖`:
+For any `x : A`:
+x ◃ 𝜖 ≠ 𝜖 — This is “Cons is not empty”
+Induction step `∀ z : A • ∀ x : A • x ◃ (z ◃
+For any `z : A`:
+For any `x : A`:
+x ◃ (z ◃ xs) ≠ (z ◃ xs)
+=⟨ “Definition of ≠” ⟩
+¬ (x ◃ (z ◃ xs) = z ◃ xs)
+=⟨ “Cancellation of ◃” ⟩
+¬ (x = z ∧ z ◃ xs = xs)
+=⟨ “De Morgan”, “Definition of ≠” ⟩
+¬ (x = z) ∨ (z ◃ xs ≠ xs)
+=⟨ Induction hypothesis ⟩
+¬ (x = z) ∨ true
+=⟨ “Zero of ∨” ⟩
+true
+
+[8]
+
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+Chris Schankula pointed out that the trouble with the induction hypothesis can be avoided using “Replacement”; that enables a proof that does
+not require any quantification in the theorem statement:
+
+
+[9]
+
+
+Theorem (13.7) “Tail is different”: (∀ xs : Seq A • (∀ x : A • x ◃ xs ≠ xs ) )
+— CalcCheck: Metavariables: A = A〖〗
+— CalcCheck: Proviso: ¬occurs(`xs`, `A`)
+— CalcCheck: Variable types: A : Type
+Proof:
+By induction on `xs : Seq A`:
+Base case `(∀ x : A • x ◃ 𝜖 ≠ 𝜖 )`:
+For any ` x : A`:
+Calculation for expected goal `x ◃ 𝜖 ≠ 𝜖`:
+x ◃ 𝜖 ≠ 𝜖 — This is “Cons is not empty”
+— CalcCheck: Found “Cons is not empty”, (13.3) “Cons is not empty”
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ z : A • (∀ x : A • x ◃ (z ◃ xs) ≠ z ◃ xs ) )`:
+For any ` z : A`:
+For any ` x : A`:
+Calculation for expected goal `x ◃ (z ◃ xs) ≠ z ◃ xs`:
+x ◃ (z ◃ xs) ≠ z ◃ xs
+= ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+¬ (x ◃ (z ◃ xs) = z ◃ xs)
+= ⟨ “Cancellation of ◃” ⟩
+— CalcCheck: Found (13.4) “Cancellation of ◃”
+— CalcCheck: ─ OK
+¬ (x = z ∧ z ◃ xs = xs)
+= ⟨ “De Morgan”, “Definition of ≠” ⟩
+— CalcCheck: Found (3.47a) “De Morgan”, (3.47b) “De Morgan”,
+(3.47c) “De Morgan”, (3.47d) “De Morgan”
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+¬ (x = z) ∨ z ◃ xs ≠ xs
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `(∀ x : A • x ◃ xs ≠ xs )`
+— CalcCheck: ─ OK
+¬ (x = z) ∨ true
+= ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+Theorem (13.7) “Tail is different”:
+∀ xs : Seq A • ∀ x : A • x ◃ xs ≠ xs
+Proof:
+By induction on `xs : Seq A`:
+Base case `∀ x : A • x ◃ 𝜖 ≠ 𝜖`:
+For any `x : A`:
+x ◃ 𝜖 ≠ 𝜖 — This is “Cons is not empty”
+Induction step `∀ z : A • ∀ x : A • x ◃ (z ◃
+For any `z : A`:
+For any `x : A`:
+x ◃ (z ◃ xs) ≠ (z ◃ xs)
+=⟨ “Definition of ≠” ⟩
+¬ (x ◃ (z ◃ xs) = z ◃ xs)
+=⟨ “Cancellation of ◃” ⟩
+¬ (x = z ∧ z ◃ xs = xs)
+=⟨ “De Morgan”, “Definition of ≠” ⟩
+¬ (x = z) ∨ (z ◃ xs ≠ xs)
+=⟨ Induction hypothesis ⟩
+¬ (x = z) ∨ true
+=⟨ “Zero of ∨” ⟩
+true
+
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+[10]
+
+Membership
+[11]
+
+[12]
+
+For membership of elements in sequences, we follow LADM in using the same symbol as for set membership — the precedence and
+conjunctionality of that symbol is declared globally, independent of such overloaded uses.
+
+Declaration: _∈_ : A → Seq A → 𝔹
+
+
+Declaration: _∈_ : A → (Seq A → 𝔹)
+— CalcCheck: Operator _∈_: Conjunctional; precedence 50
+
+
+[13]
+
+Axiom (13.10) “Membership in 𝜖”:
+Axiom (13.11) “Membership in ◃”:
+
+
+x ∈ 𝜖
+≡ false
+x ∈ (y ◃ ys) ≡ x = y
+
+∨
+
+x ∈ ys
+
+Axiom (13.10) “Membership in 𝜖”: x ∈ 𝜖 ≡ false
+— CalcCheck: Variable types: x : A᎑₅
+Axiom (13.11) “Membership in ◃”: x ∈ y ◃ ys ≡ x = y ∨ x ∈
+ys
+— CalcCheck: Variable types: x : ty᎑₁₅, y : ty᎑₁₅, ys : Seq ty᎑₁₅
+
+
+[14]
+
+
+Theorem (13.16) “Membership in ▹”: x ∈ ys ▹ z ≡ x ∈ ys ∨ x = z
+— CalcCheck: Variable types: x : ty᎑₁₆, ys : Seq ty᎑₁₆, z : ty᎑₁₆
+Proof:
+By induction on `ys : Seq A`:
+Base case `x ∈ 𝜖 ▹ z ≡ x ∈ 𝜖 ∨ x = z`:
+Calculation for expected goal `x ∈ 𝜖 ▹ z ≡ x ∈ 𝜖 ∨ x = z`:
+x∈ 𝜖▹z≡ x∈ 𝜖∨x= z
+= ⟨ “Definition of ▹ for 𝜖” ⟩
+— CalcCheck: Found (13.12) “Definition of ▹ for 𝜖”
+— CalcCheck: ─ OK
+x∈ z◃𝜖≡ x∈ 𝜖∨x= z
+= ⟨ “Membership in ◃” ⟩
+— CalcCheck: Found (13.11) “Membership in ◃”
+— CalcCheck: ─ OK
+x= z∨x∈ 𝜖≡ x∈ 𝜖∨x= z
+= ⟨ “Membership in 𝜖” ⟩
+— CalcCheck: Found (13.10) “Membership in 𝜖”
+— CalcCheck: ─ OK
+x = z ∨ false ≡ false ∨ x = z
+= ⟨ “Identity of ∨”, “Identity of ≡” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ y : A • x ∈ (y ◃ ys) ▹ z ≡ x ∈ y ◃ ys ∨ x = z )`:
+For any ` y : A`:
+Calculation for expected goal `x ∈ (y ◃ ys) ▹ z ≡ x ∈ y ◃ ys ∨
+x = z`:
+x ∈ (y ◃ ys) ▹ z ≡ x ∈ y ◃ ys ∨ x = z
+= ⟨ “Definition of ▹ for ◃” ⟩
+— CalcCheck: Found (13.13) “Definition of ▹ for ◃”
+— CalcCheck: ─ OK
+x ∈ y ◃ (ys ▹ z) ≡ x ∈ y ◃ ys ∨ x = z
+= ⟨ “Membership in ◃” ⟩
+— CalcCheck: Found (13.11) “Membership in ◃”
+— CalcCheck: ─ OK
+x = y ∨ x ∈ ys ▹ z ≡ x = y ∨ (x ∈ ys ∨ x = z)
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `x ∈ ys ▹ z ≡ x
+∈ ys ∨ x = z`
+
+
+Theorem (13.16) “Membership in ▹”:
+x ∈ (ys ▹ z) ≡ x ∈ ys ∨ x = z
+Proof:
+By induction on `ys : Seq A`:
+Base case `x ∈ (𝜖 ▹ z) ≡ x ∈ 𝜖 ∨ x = z`:
+x ∈ (𝜖 ▹ z) ≡ x ∈ 𝜖 ∨ x = z
+=⟨ “Definition of ▹ for 𝜖” ⟩
+x ∈ (z ◃ 𝜖) ≡ x ∈ 𝜖 ∨ x = z
+=⟨ “Membership in ◃” ⟩
+x = z ∨ x ∈ 𝜖 ≡ x ∈ 𝜖 ∨ x = z
+=⟨ “Membership in 𝜖” ⟩
+x = z ∨ false ≡ false ∨ x = z
+=⟨ “Identity of ∨” , “Identity of ≡” ⟩
+true
+Induction step `∀ y : A • x ∈ ((y ◃ ys) ▹ z) ≡ x ∈ (y ◃
+For any `y : A`:
+x ∈ ((y ◃ ys) ▹ z) ≡ x ∈ (y ◃ ys) ∨ x = z
+=⟨ “Definition of ▹ for ◃” ⟩
+x ∈ (y ◃ (ys ▹ z)) ≡ x ∈ (y ◃ ys) ∨ x = z
+=⟨ “Membership in ◃” ⟩
+x = y ∨ x ∈ (ys ▹ z) ≡ x = y ∨ x ∈ ys ∨ x = z
+=⟨ Induction hypothesis ⟩
+x = y ∨ x ∈ ys ∨ x = z ≡ x = y ∨ x ∈ ys ∨ x = z
+=⟨ “Reflexivity of ≡” ⟩
+true
+
+
+— CalcCheck: ─ OK
+x = y ∨ (x ∈ ys ∨ x = z) ≡ x = y ∨ (x ∈ ys ∨ x = z)
+= ⟨ “Reflexivity of ≡” ⟩
+— CalcCheck: Found (3.5) “Reflexivity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[15]
+
+
+Theorem (13.21) “Membership in ⌢”: x ∈ ys ⌢ zs ≡ x ∈ ys ∨ x ∈ zs
+— CalcCheck: Variable types: x : ty᎑₁₅, ys : Seq ty᎑₁₅, zs : Seq ty᎑₁₅
+Proof:
+By induction on `ys : Seq A`:
+Base case `x ∈ 𝜖 ⌢ zs ≡ x ∈ 𝜖 ∨ x ∈ zs`:
+Calculation for expected goal `x ∈ 𝜖 ⌢ zs ≡ x ∈ 𝜖 ∨ x ∈ zs`:
+x ∈ 𝜖 ⌢ zs ≡ x ∈ 𝜖 ∨ x ∈ zs
+= ⟨ “Left-identity of ⌢”, “Membership in 𝜖”, “Identity of ∨” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: Found (13.10) “Membership in 𝜖”
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+x ∈ zs ≡ x ∈ zs — This is “Reflexivity of ≡”
+— CalcCheck: Final “This is”: OK (no change)
+— CalcCheck: Found (3.5) “Reflexivity of ≡”
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ y : A • x ∈ (y ◃ ys) ⌢ zs ≡ x ∈ y ◃ ys ∨ x ∈ zs )`:
+For any ` y : A`:
+Calculation for expected goal `x ∈ (y ◃ ys) ⌢ zs ≡ x ∈ y ◃ ys ∨
+x ∈ zs`:
+x ∈ (y ◃ ys) ⌢ zs
+= ⟨ “Definition of ⌢ for ◃” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃
+with ⌢”
+— CalcCheck: ─ OK
+x ∈ y ◃ (ys ⌢ zs)
+= ⟨ “Membership in ◃” ⟩
+— CalcCheck: Found (13.11) “Membership in ◃”
+— CalcCheck: ─ OK
+x = y ∨ x ∈ ys ⌢ zs
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `x ∈ ys ⌢ zs ≡ x
+∈ ys ∨ x ∈ zs`
+— CalcCheck: ─ OK
+x = y ∨ (x ∈ ys ∨ x ∈ zs)
+= ⟨ “Membership in ◃” ⟩
+— CalcCheck: Found (13.11) “Membership in ◃”
+— CalcCheck: ─ OK
+x ∈ y ◃ ys ∨ x ∈ zs
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+Theorem (13.21) “Membership in ⌢”:
+x ∈ ys ⌢ zs ≡ x ∈ ys ∨ x ∈ zs
+Proof:
+By induction on `ys : Seq A`:
+Base case `x ∈ 𝜖 ⌢ zs ≡ x ∈ 𝜖 ∨ x ∈ zs`:
+x ∈ 𝜖 ⌢ zs ≡ x ∈ 𝜖 ∨ x ∈ zs
+=⟨ “Left-identity of ⌢” , “Membership in 𝜖”, “Identity o
+x ∈ zs ≡ x ∈ zs — This is “Reflexivity of ≡”
+Induction step `∀ y : A • x ∈ (y ◃ ys) ⌢ zs ≡ x ∈ (y ◃
+For any `y : A`:
+x ∈ (y ◃ ys) ⌢ zs
+=⟨ “Definition of ⌢ for ◃” ⟩
+x ∈ (y ◃ (ys ⌢ zs))
+=⟨ “Membership in ◃” ⟩
+x = y ∨ x ∈ (ys ⌢ zs)
+=⟨ Induction hypothesis ⟩
+x = y ∨ x ∈ ys ∨ x ∈ zs
+=⟨ “Membership in ◃” ⟩
+x ∈ (y ◃ ys) ∨ x ∈ zs
+
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+[16]
+
+Mapping a Function over a Sequence
+[17]
+
+[18]
+
+Declaration: map : (A → B) → Seq A → Seq B
+
+Declaration: map : (A → B) → (Seq A → Seq B)
+
+For example:
+map factorial [3, 0, 5] = [6, 1, 120].
+
+
+[19]
+
+[20]
+
+[21]
+
+[22]
+
+Axiom “Definition of `map` for 𝜖”:
+Axiom “Definition of `map` for ◃”:
+
+
+map f 𝜖 = 𝜖
+map f (x ◃ xs) = f x ◃ map f xs
+
+Axiom “Definition of `map` for 𝜖”: (map f) 𝜖 = 𝜖
+— CalcCheck: Variable types: f : A᎑₁₃ → A᎑₁₅
+Axiom “Definition of `map` for ◃”: (map f) (x ◃ xs) = f x ◃ (map
+f) xs
+— CalcCheck: Variable types: f : A᎑₃₀ → B᎑₃₁, x : A᎑₃₀, xs : Seq
+A᎑₃₀
+
+For the sake of a simple example:
+
+Declaration: double : ℕ → ℕ
+Axiom “Definition of `double`”: double n = 2 · n
+
+Declaration: double : ℕ → ℕ
+Axiom “Definition of `double`”: double n = 2 · n
+— CalcCheck: Variable types: n : ℤ
+
+Now you can calculate a simple example:
+
+
+[23]
+
+
+Calculation:
+map double (3 ◃ 0 ◃ 5 ◃ 𝜖 ▹ 2)
+=⟨ “Definition of ▹ for 𝜖” ⟩
+map double (3 ◃ 0 ◃ 5 ◃ 2 ◃ 𝜖)
+=⟨ “Definition of `map` for ◃” ⟩
+double 3 ◃ double 0 ◃ double 5 ◃ double 2 ◃ map double 𝜖
+=⟨ “Definition of `double`”, Evaluation ⟩
+6 ◃ 0 ◃ 10 ◃ 4 ◃ map double 𝜖
+=⟨ “Definition of `map` for 𝜖” ⟩
+6 ◃ 0 ◃ 10 ◃ 4 ◃ 𝜖
+
+
+Calculation:
+(map double) (3 ◃ (0 ◃ (5 ◃ (𝜖 ▹ 2))))
+= ⟨ “Definition of ▹ for 𝜖” ⟩
+— CalcCheck: Found (13.12) “Definition of ▹ for 𝜖”
+— CalcCheck: ─ OK
+(map double) (3 ◃ (0 ◃ (5 ◃ (2 ◃ 𝜖))))
+= ⟨ “Definition of `map` for ◃” ⟩
+— CalcCheck: Found “Definition of `map` for ◃”
+— CalcCheck: ─ OK
+double 3 ◃ (double 0 ◃ (double 5 ◃ (double 2 ◃ (map double)
+𝜖)))
+= ⟨ “Definition of `double`”, Evaluation ⟩
+— CalcCheck: Found “Definition of `double`”
+— CalcCheck: ─ OK
+6 ◃ (0 ◃ (10 ◃ (4 ◃ (map double) 𝜖)))
+= ⟨ “Definition of `map` for 𝜖” ⟩
+— CalcCheck: Found “Definition of `map` for 𝜖”
+— CalcCheck: ─ OK
+6 ◃ (0 ◃ (10 ◃ (4 ◃ 𝜖)))
+— CalcCheck: All steps OK
+
+
+[24]
+
+
+Theorem “Definition of `map` for ▹”: (map f) (xs ▹ x) = (map f) xs ▹ f x
+— CalcCheck: Variable types: f : ty᎑₃₃ → ty᎑₂₉, x : ty᎑₃₃, xs : Seq ty᎑₃₃
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+Calculation for expected goal `(map f) (𝜖 ▹ x) = (map f) 𝜖 ▹ f x`:
+(map f) (𝜖 ▹ x)
+= ⟨ “Definition of ▹ for 𝜖” ⟩
+— CalcCheck: Found (13.12) “Definition of ▹ for 𝜖”
+— CalcCheck: ─ OK
+(map f) (x ◃ 𝜖)
+= ⟨ “Definition of `map` for ◃” ⟩
+— CalcCheck: Found “Definition of `map` for ◃”
+— CalcCheck: ─ OK
+f x ◃ (map f) 𝜖
+= ⟨ “Definition of `map` for 𝜖” ⟩
+— CalcCheck: Found “Definition of `map` for 𝜖”
+— CalcCheck: ─ OK
+fx◃ 𝜖
+= ⟨ “Definition of ▹ for 𝜖” ⟩
+— CalcCheck: Found (13.12) “Definition of ▹ for 𝜖”
+— CalcCheck: ─ OK
+𝜖 ▹ fx
+= ⟨ “Definition of `map` for 𝜖” ⟩
+— CalcCheck: Found “Definition of `map` for 𝜖”
+— CalcCheck: ─ OK
+(map f) 𝜖 ▹ f x
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ y : A • (map f) ((y ◃ xs) ▹ x) = (map f) (y ◃ xs) ▹ f
+x )`:
+For any ` y : A`:
+Calculation for expected goal `(map f) ((y ◃ xs) ▹ x) = (map f) (y
+◃ xs) ▹ f x`:
+(map f) ((y ◃ xs) ▹ x)
+= ⟨ “Definition of ▹ for ◃” ⟩
+— CalcCheck: Found (13.13) “Definition of ▹ for ◃”
+— CalcCheck: ─ OK
+(map f) (y ◃ (xs ▹ x))
+= ⟨ “Definition of `map` for ◃” ⟩
+— CalcCheck: Found “Definition of `map` for ◃”
+— CalcCheck: ─ OK
+
+
+Theorem “Definition of `map` for ▹”:
+map f (xs ▹ x) = map f xs ▹ f x
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+map f (𝜖 ▹ x)
+=⟨“Definition of ▹ for 𝜖”⟩
+map f (x ◃ 𝜖)
+=⟨“Definition of `map` for ◃”⟩
+f x ◃ map f 𝜖
+=⟨“Definition of `map` for 𝜖”⟩
+f x ◃ 𝜖
+=⟨“Definition of ▹ for 𝜖”⟩
+𝜖 ▹ f x
+=⟨“Definition of `map` for 𝜖”⟩
+map f 𝜖 ▹ f x
+Induction step `∀ y : A • map f ((y ◃ xs) ▹ x) = map f (
+For any `y : A`:
+map f ((y ◃ xs) ▹ x)
+=⟨ “Definition of ▹ for ◃” ⟩
+map f (y ◃ (xs ▹ x))
+=⟨ “Definition of `map` for ◃” ⟩
+f y ◃ map f (xs ▹ x)
+=⟨ Induction hypothesis ⟩
+f y ◃ (map f xs ▹ f x)
+=⟨ “Definition of ▹ for ◃” ⟩
+(f y ◃ map f xs) ▹ f x
+=⟨ “Definition of `map` for ◃” ⟩
+map f (y ◃ xs) ▹ f x
+
+
+f y ◃ (map f) (xs ▹ x)
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `(map f) (xs ▹ x) =
+(map f) xs ▹ f x`
+— CalcCheck: ─ OK
+f y ◃ ((map f) xs ▹ f x)
+= ⟨ “Definition of ▹ for ◃” ⟩
+— CalcCheck: Found (13.13) “Definition of ▹ for ◃”
+— CalcCheck: ─ OK
+(f y ◃ (map f) xs) ▹ f x
+= ⟨ “Definition of `map` for ◃” ⟩
+— CalcCheck: Found “Definition of `map` for ◃”
+— CalcCheck: ─ OK
+(map f) (y ◃ xs) ▹ f x
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[25]
+
+
+Theorem “Distributivity of `map` over ⌢”: (map f) (xs ⌢ ys) = (map f) xs ⌢
+(map f) ys
+— CalcCheck: Variable types: f : A᎑₃₆ → B᎑₃₇, xs : Seq A᎑₃₆, ys : Seq A᎑₃₆
+Proof:
+By induction on `xs : Seq A`:
+Base case `(map f) (𝜖 ⌢ ys) = (map f) 𝜖 ⌢ (map f) ys`:
+Calculation for expected goal `(map f) (𝜖 ⌢ ys) = (map f) 𝜖 ⌢ (map f) ys`:
+(map f) (𝜖 ⌢ ys) = (map f) 𝜖 ⌢ (map f) ys
+= ⟨ “Definition of `map` for 𝜖”, “Left-identity of ⌢” ⟩
+— CalcCheck: Found “Definition of `map` for 𝜖”
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: ─ OK
+(map f) ys = (map f) ys — This is “Reflexivity of =”
+— CalcCheck: Final “This is”: OK (no change)
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ y : A • (map f) ((y ◃ xs) ⌢ ys) = (map f) (y ◃ xs) ⌢
+(map f) ys )`:
+For any ` y : A`:
+Calculation for expected goal `(map f) ((y ◃ xs) ⌢ ys) = (map f) (y ◃
+xs) ⌢ (map f) ys`:
+(map f) ((y ◃ xs) ⌢ ys)
+= ⟨ “Definition of ⌢ for ◃” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with ⌢”
+— CalcCheck: ─ OK
+(map f) (y ◃ (xs ⌢ ys))
+= ⟨ “Definition of `map` for ◃” ⟩
+— CalcCheck: Found “Definition of `map` for ◃”
+— CalcCheck: ─ OK
+f y ◃ (map f) (xs ⌢ ys)
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `(map f) (xs ⌢ ys) =
+(map f) xs ⌢ (map f) ys`
+— CalcCheck: ─ OK
+f y ◃ ((map f) xs ⌢ (map f) ys)
+= ⟨ “Definition of ⌢ for ◃” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with ⌢”
+— CalcCheck: ─ OK
+(f y ◃ (map f) xs) ⌢ (map f) ys
+= ⟨ “Definition of `map` for ◃” ⟩
+— CalcCheck: Found “Definition of `map` for ◃”
+
+
+Theorem “Distributivity of `map` over ⌢”:
+map f (xs ⌢ ys) = map f xs ⌢ map f ys
+Proof:
+By induction on `xs : Seq A`:
+Base case `map f (𝜖 ⌢ ys) = map f 𝜖 ⌢ map f ys`:
+map f (𝜖 ⌢ ys) = map f 𝜖 ⌢ map f ys
+=⟨ “Definition of `map` for 𝜖” , “Left-identity of ⌢
+map f ys = map f ys — This is “Reflexivity of =”
+Induction step `∀ y : A • map f ((y ◃ xs) ⌢ ys) = map
+For any `y : A`:
+map f ((y ◃ xs) ⌢ ys)
+=⟨ “Definition of ⌢ for ◃” ⟩
+map f (y ◃ (xs ⌢ ys))
+=⟨ “Definition of `map` for ◃” ⟩
+f y ◃ map f (xs ⌢ ys)
+=⟨ Induction hypothesis ⟩
+f y ◃ (map f xs ⌢ map f ys)
+=⟨ “Definition of ⌢ for ◃” ⟩
+(f y ◃ map f xs) ⌢ map f ys
+=⟨ “Definition of `map` for ◃” ⟩
+map f (y ◃ xs) ⌢ map f ys
+
+— CalcCheck: ─ OK
+(map f) (y ◃ xs) ⌢ (map f) ys
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+[26]
+
+Sorted Sequences
+[27]
+
+Some additional properties of the order on integers will probably be useful below:
+
+
+[28]
+
+
+Theorem “Complement of <”: a < b ≢ a ≥ b
+Theorem “Complement of <”: a < b ≢a ≥ b
+— CalcCheck: Variable types: a : ℤ, b : ℤ
+Proof:
+Proof:
+a < b ≢a ≥ b
+Calculation for expected goal `a < b ≢ a ≥ b`:
+=⟨(3.14)⟩
+a<b≢a≥b
+¬(a < b) ≡ a ≥ b
+= ⟨ (3.14) ⟩
+=⟨“At least” , “Less” , “Greater”⟩
+— CalcCheck: Found (3.14) `(p ≢ q) ≡ (¬ p ≡ q)`
+¬(pos(b - a)) ≡ pos(a - b) ∨ a = b
+— CalcCheck: ─ OK
+=⟨“¬ connection” , “De Morgan”⟩
+¬ (a < b) ≡ a ≥ b
+(pos(b - a)) ≡ ¬ pos(a - b) ∧ ¬ (a = b)
+= ⟨ “At least”, “Less”, “Greater” ⟩
+=⟨ “Definition of ≠” , “Subtraction” , “Se
+— CalcCheck: Found (15.39) “At least”
+— CalcCheck: Found (15.36) “Less”
+(pos(b - a)) ≡ ¬ pos(-(- a - (- b))) ∧
+— CalcCheck: Found (15.37) “Greater”
+=⟨ “Self-inverse of unary minus” , “Subtra
+— CalcCheck: ─ OK
+pos(b - a) ≡ (¬ pos(-(b - a)) ∧ (a ≠ b)
+¬ pos (b - a) ≡ pos (a - b) ∨ a = b
+=⟨ “Positivity under unary minus”⟩
+= ⟨ “¬ connection”, “De Morgan” ⟩
+true
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: Found (3.47a) “De Morgan”, (3.47b) “De Morgan”, (3.47c) “De Morgan”, (3.47d)
+“De Morgan”
+— CalcCheck: ─ OK
+pos (b - a) ≡ ¬ pos (a - b) ∧ ¬ (a = b)
+= ⟨ “Definition of ≠”, “Subtraction”, “Self-inverse of unary minus”, “Distributivity of unary minus over +” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: Found (15.17) “Self-inverse of unary minus”
+— CalcCheck: Found (15.19) “Distributivity of unary minus over +”
+— CalcCheck: ─ OK
+pos (b - a) ≡ ¬ pos (- (- a - - b)) ∧ a ≠ b
+= ⟨ “Self-inverse of unary minus”, “Subtraction”, “Symmetry of +”, “Subtraction” ⟩
+— CalcCheck: Found (15.17) “Self-inverse of unary minus”
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: Found (15.2a) “Symmetry of +”
+— CalcCheck: ─ OK
+pos (b - a) ≡ ¬ pos (- (b - a)) ∧ a ≠ b
+= ⟨ “Positivity under unary minus” ⟩
+— CalcCheck: Found (15.33c) “Positivity under unary minus”, (15.33b) “Positivity under unary
+minus”, (15.33a) “Positivity under unary minus”, (15.33) “Positivity under unary minus”
+— CalcCheck: Could not justify this step!
+true
+— CalcCheck: 1 out of 6 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[29]
+
+
+Theorem “Trichotomy — ∨”: a < b ∨ a = b ∨ a > b
+Proof:
+a < b ∨ a = b ∨ a > b
+=⟨ “Double negation” , “De Morgan”⟩
+¬ (¬ (a < b) ∧ ¬ (a = b) ∧ ¬(a > b))
+=⟨ “Converse of <” , “Complement of <” with (3.14) ,
+¬ ((b ≤ a) ∧ ¬ (a = b) ∧ (a ≤ b))
+=⟨ “Antisymmetry of ≤”⟩
+¬ ( ¬ (a = b) ∧ (a = b))
+=⟨ “Contradiction”⟩
+¬ ( false )
+=⟨ “Negation of `false`”⟩
+true
+
+
+Theorem “Trichotomy — ∨”: a < b ∨ (a = b ∨ a > b)
+— CalcCheck: Variable types: a : ℤ, b : ℤ
+Proof:
+Calculation for expected goal `a < b ∨ (a = b ∨ a > b)`:
+a < b ∨ (a = b ∨ a > b)
+= ⟨ “Double negation”, “De Morgan” ⟩
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: Found (3.47a) “De Morgan”, (3.47b) “De Morgan”, (3.47c) “De
+Morgan”, (3.47d) “De Morgan”
+— CalcCheck: ─ OK
+¬ (¬ (a < b) ∧ (¬ (a = b) ∧ ¬ (a > b)))
+= ⟨ “Converse of <”, “Complement of <” with (3.14), “Converse of ≤” ⟩
+— CalcCheck: Found “Converse of <”
+— CalcCheck: Found “Complement of <”
+— CalcCheck: Found (3.14) `(p ≢ q) ≡ (¬ p ≡ q)`
+— CalcCheck: Found “Converse of ≤”
+— CalcCheck: ─ OK
+¬ (b ≤ a ∧ (¬ (a = b) ∧ a ≤ b))
+= ⟨ “Antisymmetry of ≤” ⟩
+— CalcCheck: Found (3.81) “Antisymmetry of ⇒”
+— CalcCheck: Could not resolve theorem reference “Antisymmetry of ≤”!
+— CalcCheck: Misspelled theorem reference “Antisymmetry of ≤”?
+Trying “Antisymmetry of ⇒” instead.
+— CalcCheck: Could not justify this step!
+¬ (¬ (a = b) ∧ a = b)
+= ⟨ “Contradiction” ⟩
+— CalcCheck: Found (3.42) “Contradiction”
+— CalcCheck: ─ OK
+¬ false
+= ⟨ “Negation of `false`” ⟩
+— CalcCheck: Found (3.13) “Negation of `false`”
+— CalcCheck: ─ OK
+true
+— CalcCheck: 1 out of 5 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[30]
+
+[31]
+
+[32]
+
+[33]
+
+[34]
+
+
+If you need more, do not hesitate to prove your own auxiliary lemmas!
+
+We choose a way for defining the predicate isSorted that will appear natural from a Haskell point of view:
+
+Declaration: isSorted : Seq ℤ → 𝔹
+
+Axiom “𝜖 is sorted”: isSorted 𝜖
+Axiom “Singletons are sorted”: isSorted (k ◃ 𝜖)
+Axiom “Sortedness”:
+isSorted (k ◃ m ◃ ns) ≡ k ≤ m ∧ isSorted (m ◃ ns)
+
+Declaration: isSorted : Seq ℤ → 𝔹
+
+Axiom “𝜖 is sorted”: isSorted 𝜖
+Axiom “Singletons are sorted”: isSorted (k ◃ 𝜖)
+— CalcCheck: Variable types: k : ℤ
+Axiom “Sortedness”: isSorted (k ◃ (m ◃ ns)) ≡ k ≤ m ∧ isSorted (m
+◃ ns)
+— CalcCheck: Variable types: k : ℤ, m : ℤ, ns : Seq ℤ
+
+Evaluation is supported here, so the example Facts here can be shown with not much work:
+
+
+[35]
+
+
+Fact (Ex5.2a): isSorted (1 ◃ (3 ◃ (4 ◃ (7 ◃ 𝜖))))
+Proof:
+Calculation for expected goal `isSorted (1 ◃ (3 ◃ (4 ◃ (7 ◃
+𝜖))))`:
+isSorted (1 ◃ (3 ◃ (4 ◃ (7 ◃ 𝜖))))
+≡ ⟨ “Sortedness” ⟩
+— CalcCheck: Found “Sortedness”
+— CalcCheck: ─ OK
+1 ≤ 3 ∧ isSorted (3 ◃ (4 ◃ (7 ◃ 𝜖)))
+≡ ⟨ “Sortedness” ⟩
+— CalcCheck: Found “Sortedness”
+— CalcCheck: ─ OK
+3 ≤ 4 ∧ (1 ≤ 3 ∧ isSorted (4 ◃ (7 ◃ 𝜖)))
+≡ ⟨ “Sortedness” ⟩
+— CalcCheck: Found “Sortedness”
+— CalcCheck: ─ OK
+4 ≤ 7 ∧ (3 ≤ 4 ∧ (1 ≤ 3 ∧ isSorted (7 ◃ 𝜖)))
+≡ ⟨ “Singletons are sorted” ⟩
+— CalcCheck: Found “Singletons are sorted”
+— CalcCheck: ─ OK
+4 ≤ 7 ∧ (3 ≤ 4 ∧ (1 ≤ 3 ∧ true))
+≡ ⟨ Fact `4 ≤ 7` ⟩
+— CalcCheck: ─ OK
+true ∧ (3 ≤ 4 ∧ (1 ≤ 3 ∧ true))
+≡ ⟨ Fact `3 ≤ 4` ⟩
+— CalcCheck: ─ OK
+true ∧ (true ∧ (1 ≤ 3 ∧ true))
+≡ ⟨ Fact `1 ≤ 3` ⟩
+— CalcCheck: ─ OK
+true ∧ (true ∧ (true ∧ true))
+≡ ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+true ∧ (true ∧ true)
+≡ ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+true ∧ true
+≡ ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+true
+
+
+Fact (Ex5.2a): isSorted (1 ◃ 3 ◃ 4 ◃ 7 ◃ 𝜖)
+Proof:
+isSorted (1 ◃ 3 ◃ 4 ◃ 7 ◃ 𝜖)
+≡⟨ “Sortedness” ⟩
+1 ≤ 3 ∧ isSorted (3 ◃ 4 ◃ 7 ◃ 𝜖)
+≡⟨ “Sortedness” ⟩
+3 ≤ 4 ∧ 1 ≤ 3 ∧ isSorted (4 ◃ 7 ◃ 𝜖)
+≡⟨ “Sortedness” ⟩
+4 ≤ 7 ∧ 3 ≤ 4 ∧ 1 ≤ 3 ∧ isSorted (7 ◃ 𝜖)
+≡⟨ “Singletons are sorted” ⟩
+4 ≤ 7 ∧ 3 ≤ 4 ∧ 1 ≤ 3 ∧ true
+≡⟨ Fact `4 ≤ 7` ⟩
+true ∧ 3 ≤ 4 ∧ 1 ≤ 3 ∧ true
+≡⟨ Fact `3 ≤ 4` ⟩
+true ∧ true ∧ 1 ≤ 3 ∧ true
+≡⟨ Fact `1 ≤ 3` ⟩
+true ∧ (true ∧ (true ∧ true))
+≡⟨ “Idempotency of ∧” ⟩
+true ∧ true ∧ true
+≡⟨ “Idempotency of ∧” ⟩
+true ∧ true
+≡⟨ “Idempotency of ∧” ⟩
+true
+
+[36]
+
+Declaration: insert : ℤ → Seq ℤ → Seq ℤ
+
+
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Declaration: insert : ℤ → (Seq ℤ → Seq ℤ)
+
+
+[37]
+
+[38]
+
+[39]
+
+
+Axiom “insert into 𝜖”: insert k 𝜖 = k ◃ 𝜖
+Axiom “insert before ◃”: k ≤ m ⇒ insert k (m ◃ ns) = k ◃ m ◃ ns
+Axiom “insert after ◃”: k > m ⇒ insert k (m ◃ ns) = m ◃ insert k
+
+Fact (Ex5.2b): insert 5 (1 ◃ 3 ◃ 4 ◃ 7 ◃ 𝜖) = (1 ◃ 3 ◃ 4
+Proof:
+insert 5 (1 ◃ 3 ◃ 4 ◃ 7 ◃ 𝜖)
+=⟨“insert after ◃” with Fact `5 > 1`⟩
+1 ◃ insert 5 (3 ◃ 4 ◃ 7 ◃ 𝜖)
+=⟨“insert after ◃” with Fact `5 > 3`⟩
+1 ◃ 3 ◃ insert 5 (4 ◃ 7 ◃ 𝜖)
+=⟨“insert after ◃” with Fact `5 > 4`⟩
+1 ◃ 3 ◃ 4 ◃ insert 5 (7 ◃ 𝜖)
+=⟨“insert before ◃” with Fact `5 ≤ 7`⟩
+1 ◃ 3 ◃ 4 ◃ 5 ◃ 7 ◃ 𝜖
+
+Axiom “insert into 𝜖”: (insert k) 𝜖 = k ◃ 𝜖
+— CalcCheck: Variable types: k : ℤ
+Axiom “insert before ◃”: k ≤ m ⇒ (insert k) (m ◃ ns) = k ◃ (m ◃
+ns)
+— CalcCheck: Variable types: k : ℤ, m : ℤ, ns : Seq ℤ
+Axiom “insert after ◃”: k > m ⇒ (insert k) (m ◃ ns) = m ◃ (insert
+k) ns
+— CalcCheck: Variable types: k : ℤ, m : ℤ, ns : Seq ℤ
+
+Fact (Ex5.2b): (insert 5) (1 ◃ (3 ◃ (4 ◃ (7 ◃ 𝜖)))) = 1 ◃ (3 ◃ (4 ◃ (5 ◃ (7 ◃
+𝜖))))
+Proof:
+Calculation for expected goal `(insert 5) (1 ◃ (3 ◃ (4 ◃ (7 ◃ 𝜖)))) = 1 ◃ (3 ◃
+(4 ◃ (5 ◃ (7 ◃ 𝜖))))`:
+(insert 5) (1 ◃ (3 ◃ (4 ◃ (7 ◃ 𝜖))))
+= ⟨ “insert after ◃” with Fact `5 > 1` ⟩
+— CalcCheck: Found “insert after ◃”
+— CalcCheck: ─ OK
+1 ◃ (insert 5) (3 ◃ (4 ◃ (7 ◃ 𝜖)))
+= ⟨ “insert after ◃” with Fact `5 > 3` ⟩
+— CalcCheck: Found “insert after ◃”
+— CalcCheck: ─ OK
+1 ◃ (3 ◃ (insert 5) (4 ◃ (7 ◃ 𝜖)))
+= ⟨ “insert after ◃” with Fact `5 > 4` ⟩
+— CalcCheck: Found “insert after ◃”
+— CalcCheck: ─ OK
+1 ◃ (3 ◃ (4 ◃ (insert 5) (7 ◃ 𝜖)))
+= ⟨ “insert before ◃” with Fact `5 ≤ 7` ⟩
+— CalcCheck: Found “insert before ◃”
+— CalcCheck: ─ OK
+1 ◃ (3 ◃ (4 ◃ (5 ◃ (7 ◃ 𝜖))))
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+A relatively obvious property of insert is that it does not loose any elements of its argument sequence:
+
+
+[40]
+
+
+Theorem “insert preserves membership”: m ∈ ns ⇒ m ∈ (insert k) ns
+— CalcCheck: Variable types: k : ℤ, m : ℤ, ns : Seq ℤ
+Proof:
+By induction on `ns : Seq ℤ`:
+Base case `m ∈ 𝜖 ⇒ m ∈ (insert k) 𝜖`:
+Calculation for expected goal `m ∈ 𝜖 ⇒ m ∈ (insert k) 𝜖`:
+m ∈ 𝜖 ⇒ m ∈ (insert k) 𝜖
+= ⟨ “Membership in 𝜖” ⟩
+— CalcCheck: Found (13.10) “Membership in 𝜖”
+— CalcCheck: ─ OK
+false ⇒ m ∈ (insert k) 𝜖
+= ⟨ “ex falso quodlibet” ⟩
+— CalcCheck: Found (3.75) “ex falso quodlibet”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ x : ℤ • m ∈ x ◃ ns ⇒ m ∈ (insert k) (x ◃ ns) )`:
+For any ` x : ℤ`:
+Assuming `m ∈ x ◃ ns`:
+— CalcCheck: Assumption matches goal
+By cases: `k ≤ x`, `k > x`
+Completeness:
+By “Trichotomy — ∨”, “At most”
+— CalcCheck: Found “Trichotomy — ∨”
+— CalcCheck: Found (15.38) “At most”
+Case `k ≤ x`:
+Calculation for expected goal `m ∈ (insert k) (x ◃ ns)`:
+m ∈ (insert k) (x ◃ ns)
+= ⟨ “insert before ◃” with Assumption `k ≤ x` ⟩
+— CalcCheck: Found “insert before ◃”
+— CalcCheck: Found assumption `k ≤ x`
+— CalcCheck: ─ OK
+m ∈ k ◃ (x ◃ ns)
+= ⟨ “Membership in ◃” ⟩
+— CalcCheck: Found (13.11) “Membership in ◃”
+— CalcCheck: ─ OK
+m = k ∨ m ∈ x ◃ ns
+⇐ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a)
+“Weakening”, (3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+
+
+Theorem “insert preserves membership”:
+m ∈ ns ⇒ m ∈ (insert k ns)
+Proof:
+By induction on `ns : Seq ℤ`:
+Base case ` m ∈ 𝜖 ⇒ m ∈ (insert k 𝜖)`:
+m ∈ 𝜖 ⇒ m ∈ (insert k 𝜖)
+=⟨“Membership in 𝜖”⟩
+false ⇒ m ∈ (insert k 𝜖)
+=⟨“ex falso quodlibet”⟩
+true
+Induction step `∀ x : ℤ • m ∈ (x ◃ ns) ⇒
+For any `x : ℤ`:
+Assuming `m ∈ (x ◃ ns)`:
+By cases: `k ≤ x`, `k > x`
+Completeness: By “Trichotomy — ∨”
+Case `k ≤ x`:
+m ∈ (insert k (x ◃ ns))
+=⟨ “insert before ◃” with assu
+m ∈ (k ◃ (x ◃ ns))
+=⟨“Membership in ◃”⟩
+m = k ∨ m ∈ (x ◃ ns)
+⇐⟨“Weakening”⟩
+m ∈ (x ◃ ns)
+=⟨ Assumption `m ∈ (x ◃ ns)`⟩
+true
+Case `k > x`:
+m ∈ (insert k (x ◃ ns))
+=⟨ “insert after ◃” with assum
+m ∈ (x ◃ (insert k ns))
+=⟨ “Membership in ◃” ⟩
+m = x ∨ (m ∈ (insert k ns))
+⇐⟨ “Monotonicity of ∨” with In
+m = x ∨ m ∈ ns
+=⟨ “Membership in ◃” ⟩
+m ∈ (x ◃ ns)
+=⟨ Assumption `m ∈ (x ◃ ns)` ⟩
+true
+
+
+m ∈ x ◃ ns
+= ⟨ Assumption `m ∈ x ◃ ns` ⟩
+— CalcCheck: Found assumption `m ∈ x ◃ ns`
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Case `k > x`:
+Calculation for expected goal `m ∈ (insert k) (x ◃ ns)`:
+m ∈ (insert k) (x ◃ ns)
+= ⟨ “insert after ◃” with Assumption `k > x` ⟩
+— CalcCheck: Found “insert after ◃”
+— CalcCheck: Found assumption `k > x`
+— CalcCheck: ─ OK
+m ∈ x ◃ (insert k) ns
+= ⟨ “Membership in ◃” ⟩
+— CalcCheck: Found (13.11) “Membership in ◃”
+— CalcCheck: ─ OK
+m = x ∨ m ∈ (insert k) ns
+⇐ ⟨ “Monotonicity of ∨” with Induction hypothesis ⟩
+— CalcCheck: Found “Monotonicity of ∨”, “Left-monotonicity of ∨”
+— CalcCheck: Found induction hypothesis `m ∈ ns ⇒ m ∈ (insert k) ns`
+— CalcCheck: ─ OK
+m = x ∨ m ∈ ns
+= ⟨ “Membership in ◃” ⟩
+— CalcCheck: Found (13.11) “Membership in ◃”
+— CalcCheck: ─ OK
+m ∈ x ◃ ns
+= ⟨ Assumption `m ∈ x ◃ ns` ⟩
+— CalcCheck: Found assumption `m ∈ x ◃ ns`
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: All cases covered.
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof not fully justified:
+
+
+[41]
+
+
+Try also a direct induction proof for the following, sharper property: This precisely characterises membership in the result of insert.
+Even though this property is much stronger, it may actually be easier to find its proof due to the fact that it is an equivalence instead of an
+implication:
+
+
+[42]
+
+
+Theorem “Membership in `insert`”: m ∈ (insert k) ns ≡ m = k ∨ m ∈ ns
+— CalcCheck: Variable types: k : ℤ, m : ℤ, ns : Seq ℤ
+Proof:
+Calculation for expected goal `m ∈ (insert k) ns ≡ m = k ∨ m ∈ ns`:
+m = k ∨ m ∈ ns
+= ⟨ “Membership in ▹” ⟩
+— CalcCheck: Found (13.16) “Membership in ▹”
+— CalcCheck: ─ OK
+m ∈ ns ▹ k
+=⟨?⟩
+— CalcCheck: Unification of `𝔹` with `Seq ℤ` clashes!
+While type-checking calculation step `(m ∈ ns ▹ k) : 𝔹 = (k ◃ (m
+◃ ns)) : Seq ℤ`:
+• Empty type options for binary operator `_=_`!
+• Type of the operator `_=_`:
+`A᎑₅₅ → (A᎑₅₅ → 𝔹)`
+• Type of the first argument `(m ∈ ns ▹ k) : 𝔹`:
+`𝔹`, with variable type assignment: `k : ℤ; m : ℤ; ns : Seq ℤ; (m ∈
+ns ▹ k) : 𝔹`
+• Type of the second argument `(k ◃ (m ◃ ns)) : Seq ℤ`:
+`Seq ℤ`, with variable type assignment: `k : ℤ; m : ℤ; ns : Seq ℤ;
+(k ◃ (m ◃ ns)) : Seq ℤ`
+— CalcCheck: “?” does not prove anything!
+k ◃ (m ◃ ns)
+= ⟨ “insert after ◃” with Assumption `k ≤ m` ⟩
+— CalcCheck: Found “insert after ◃”
+— CalcCheck: Assumption `k ≤ m` not in scope!
+— CalcCheck: Could not justify this step!
+m ◃ (insert k) ns
+= ⟨ “insert preserves membership” ⟩
+— CalcCheck: Found “insert preserves membership”
+— CalcCheck: Unification of `Seq ℤ` with `𝔹` clashes!
+While type-checking calculation step `(m ◃ (insert k) ns) : Seq ℤ =
+(m ∈ (insert k) ns) : 𝔹`:
+• Empty type options for binary operator `_=_`!
+• Type of the operator `_=_`:
+`A᎑₁₁₀ → (A᎑₁₁₀ → 𝔹)`
+• Type of the first argument `(m ◃ (insert k) ns) : Seq ℤ`:
+`Seq ℤ`, with variable type assignment: `k : ℤ; m : ℤ; ns : Seq ℤ;
+(m ◃ (insert k) ns) : Seq ℤ`
+• Type of the second argument `(m ∈ (insert k) ns) : 𝔹`:
+`𝔹`, with variable type assignment: `k : ℤ; m : ℤ; ns : Seq ℤ; (m ∈
+
+
+Theorem “Membership in `insert`”:
+m ∈ insert k ns ≡ m = k ∨ m ∈ ns
+Proof:
+m = k ∨ m ∈ ns
+=⟨ “Membership in ▹”⟩
+m ∈ (ns ▹ k)
+=⟨?⟩
+(k ◃ (m ◃ ns))
+=⟨ “insert after ◃” with assumption `k ≤ m` ⟩
+m ◃ insert k ns
+=⟨ “insert preserves membership” ⟩
+m ∈ insert k ns
+
+[43]
+
+(insert k) ns) : 𝔹`
+— CalcCheck: Due to type error, calculation step cannot be checked.
+m ∈ (insert k) ns
+— CalcCheck: 3 out of 4 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+The purpose of insert is of course for insertion into sorted sequences, preserving their sortedness.
+Directly proving the following theorem here (by induction on ns) is not very likely to succeed — explore how far you can get, and try to
+understand what the problem is, and think about possible ways towards a solution.
+(Do not spend too much time on this problem in Week 6. We will return to this problem.)
+
+[44]
+1,1
+
+Check and Save
+
+
+Save
+
+

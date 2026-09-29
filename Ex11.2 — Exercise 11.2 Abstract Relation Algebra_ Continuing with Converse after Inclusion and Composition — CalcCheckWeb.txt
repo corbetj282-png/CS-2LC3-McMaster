@@ -1,0 +1,714 @@
+after Inclusion and Composition
+
+[1]
+
+This notebook continues from Reference Notebook “Abstract RA: Starting from Inclusion and Composition” (Ex11.1) and contains a selection
+of the material in Reference Notebook “Abstract RA: Continuing with Converse”.
+
+[2]
+
+Converse
+[3]
+
+[4]
+
+Declaration: _˘ : A ↔ B → B ↔ A
+— CalcCheck: Operator _˘: Non-associating; precedence
+140
+
+Declaration: _˘ : (A ↔ B) → (B ↔ A)
+
+Axiom “Self-inverse of ˘”: R ˘ ˘
+
+
+=
+
+R
+
+Axiom “Self-inverse of ˘”: (R ˘) ˘ = R
+
+
+[5]
+
+[6]
+
+[7]
+
+
+Lemma “Cancellation of ˘”:
+R ˘ = S ˘ ≡ R = S
+Proof:
+Using “Mutual implication”:
+Subproof for `R ˘ = S ˘ ⇒ R = S`:
+Assuming `R ˘ = S ˘`:
+R = S
+=⟨ “Self-inverse of ˘” , assumption `R ˘ = S ˘` , “Self
+true
+Subproof for `R = S ⇒ R ˘ = S ˘`:
+Assuming `R = S`:
+R ˘ = S ˘
+=⟨ assumption `R = S` , “Reflexivity of =”⟩
+true
+
+Axiom “Monotonicity of ˘”: R ⊆ S
+
+⇒
+
+R ˘ ⊆ S ˘
+
+Activate monotonicity property “Monotonicity of ˘”
+
+
+Lemma “Cancellation of ˘”: R ˘ = S ˘ ≡ R = S
+Proof:
+Using “Mutual implication”:
+— CalcCheck: Found (3.80) “Mutual implication”
+Subproof for `R ˘ = S ˘ ⇒ R = S`:
+Assuming `R ˘ = S ˘`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `R = S`:
+R=S
+= ⟨ “Self-inverse of ˘”, Assumption `R ˘ = S ˘`, “Self-inverse of ˘”,
+“Reflexivity of =” ⟩
+— CalcCheck: Found “Self-inverse of ˘”
+— CalcCheck: Found assumption `R ˘ = S ˘`
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `R = S ⇒ R ˘ = S ˘`:
+Assuming `R = S`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `R ˘ = S ˘`:
+R˘=S˘
+= ⟨ Assumption `R = S`, “Reflexivity of =” ⟩
+— CalcCheck: Found assumption `R = S`
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Axiom “Monotonicity of ˘”: R ⊆ S ⇒ R ˘ ⊆ S ˘
+
+Activate monotonicity property “Monotonicity of ˘”
+— CalcCheck: Found monotonicity of `_˘` in argument position 0 from
+`_⊆_` to `_⊆_`
+
+
+[8]
+
+[9]
+
+
+Theorem “Isotonicity of ˘”: R ⊆ S ≡ R ˘ ⊆ S ˘
+Proof:
+Using “Mutual implication”:
+Subproof for `R ⊆ S ⇒ R ˘ ⊆ S ˘`:
+By “Monotonicity of ˘”
+Subproof for `R ˘ ⊆ S ˘ ⇒ R ⊆ S`:
+Assuming `R ˘ ⊆ S ˘`:
+R ⊆ S
+=⟨ “Left-identity of ⇒”⟩
+true ⇒ R ⊆ S
+=⟨ assumption `R ˘ ⊆ S ˘` , “Self-inverse of ˘”⟩
+R ˘ ⊆ S ˘ ⇒ R ˘ ˘ ⊆ S ˘ ˘
+=⟨ “Monotonicity of ˘”⟩
+true
+
+Axiom “Converse of 𝕀”:
+Axiom “Converse of ⨾”:
+
+𝕀 ˘
+(R ⨾ S) ˘
+
+Theorem “Isotonicity of ˘”: R ⊆ S ≡ R ˘ ⊆ S ˘
+Proof:
+Using “Mutual implication”:
+— CalcCheck: Found (3.80) “Mutual implication”
+Subproof for `R ⊆ S ⇒ R ˘ ⊆ S ˘`:
+By “Monotonicity of ˘”
+— CalcCheck: Found “Monotonicity of ˘”
+Subproof for `R ˘ ⊆ S ˘ ⇒ R ⊆ S`:
+Assuming `R ˘ ⊆ S ˘`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `R ⊆ S`:
+R⊆S
+= ⟨ “Left-identity of ⇒” ⟩
+— CalcCheck: Found (3.73) “Left-identity of
+⇒”
+— CalcCheck: ─ OK
+true ⇒ R ⊆ S
+= ⟨ Assumption `R ˘ ⊆ S ˘`, “Self-inverse of ˘” ⟩
+— CalcCheck: Found assumption `R ˘ ⊆ S ˘`
+— CalcCheck: Found “Self-inverse of ˘”
+— CalcCheck: ─ OK
+R ˘ ⊆ S ˘ ⇒ (R ˘) ˘ ⊆ (S ˘) ˘
+= ⟨ “Monotonicity of ˘” ⟩
+— CalcCheck: Found “Monotonicity of ˘”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+= 𝕀
+= S ˘ ⨾ R ˘
+
+Axiom “Converse of 𝕀”: 𝕀 ˘ = 𝕀
+Axiom “Converse of ⨾”: (R ⨾ S) ˘ = S ˘ ⨾ R ˘
+
+[10]
+
+Homogeneous Relation Properties involving Converse (on top of ⊆, ⨾, 𝕀)
+
+
+[11]
+
+[12]
+
+
+Declaration: symmetric : A ↔ A → 𝔹
+Declaration: equivalence : A ↔ A → 𝔹
+
+Declaration: symmetric : A ↔ A → 𝔹
+Declaration: equivalence : A ↔ A → 𝔹
+
+Axiom “Definition of symmetry”:
+Axiom “Definition of equivalence”:
+
+symmetric R
+equivalence R
+
+≡
+≡
+
+R ˘ ⊆ Axiom “Definition of symmetry”: symmetric R ≡ R ˘ ⊆ R
+refle Axiom “Definition of equivalence”: equivalence R ≡ reflexive R ∧ (symmetric
+∧ sym R ∧ transitive R)
+∧ tra
+
+[13]
+
+In the lecture, “Definition of symmetry” starts as an equality, whereas here it starts as an inclusion, to make proofs of symmetry easier.
+We associate the corresponding equality with the same theorem name:
+
+[14]
+
+Lemma “Definition of symmetry”: symmetric R ≡ R ˘ = R
+Lemma “Definition of symmetry”:
+Proof:
+symmetric R
+≡
+R ˘ = R
+Calculation for expected goal `symmetric R ≡ R ˘ = R`:
+Proof:
+R˘=R
+R ˘ = R
+= ⟨ “Mutual inclusion” ⟩
+=⟨ “Mutual inclusion” ⟩
+— CalcCheck: Found “Mutual inclusion”
+R ˘ ⊆ R ∧ R ⊆ R ˘
+— CalcCheck: ─ OK
+=⟨ “Isotonicity of ˘” , “Self-inverse of ˘” , “Idempotency of ∧
+R˘⊆R∧R⊆R˘
+symmetric R
+= ⟨ “Isotonicity of ˘”, “Self-inverse of ˘”, “Idempotency of ∧”, “Definition
+of symmetry” ⟩
+— CalcCheck: Found “Isotonicity of ˘”
+— CalcCheck: Found “Self-inverse of ˘”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: Found “Definition of symmetry”
+— CalcCheck: ─ OK
+symmetric R
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[15]
+
+[16]
+
+
+Theorem “Reflexivity of converse”:
+reflexive R ≡ reflexive (R ˘)
+Proof:
+reflexive (R ˘)
+=⟨ “Definition of reflexivity”⟩
+𝕀 ⊆ (R ˘)
+=⟨ “Isotonicity of ˘” , “Self-inverse of ˘”⟩
+𝕀 ˘ ⊆ R
+=⟨ “Converse of 𝕀” , “Definition of reflexivity”⟩
+reflexive R
+
+Theorem “Reflexivity of converse”: reflexive R ≡ reflexive (R
+˘)
+Proof:
+Calculation for expected goal `reflexive R ≡ reflexive (R ˘)`:
+reflexive (R ˘)
+= ⟨ “Definition of reflexivity” ⟩
+— CalcCheck: Found “Definition of reflexivity”
+— CalcCheck: ─ OK
+𝕀⊆R˘
+= ⟨ “Isotonicity of ˘”, “Self-inverse of ˘” ⟩
+— CalcCheck: Found “Isotonicity of ˘”
+— CalcCheck: Found “Self-inverse of ˘”
+— CalcCheck: ─ OK
+𝕀˘⊆R
+= ⟨ “Converse of 𝕀”, “Definition of reflexivity” ⟩
+— CalcCheck: Found “Converse of 𝕀”
+— CalcCheck: Found “Definition of reflexivity”
+— CalcCheck: ─ OK
+reflexive R
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem “Symmetry of converse”: symmetric R ≡ symmetric (R ˘)
+Theorem “Symmetry of converse”:
+Proof:
+symmetric R ≡ symmetric (R ˘)
+Calculation for expected goal `symmetric R ≡ symmetric (R ˘)`:
+Proof:
+symmetric (R ˘)
+symmetric (R ˘)
+= ⟨ “Definition of symmetry” ⟩
+=⟨ “Definition of symmetry”⟩
+— CalcCheck: Found “Definition of symmetry”, “Definition of
+R ˘ = R ˘ ˘
+symmetry”
+=⟨ “Self-inverse of ˘” , “Symmetry of =” , “Definition of symmetry
+— CalcCheck: ─ OK
+symmetric R
+R ˘ = (R ˘) ˘
+= ⟨ “Self-inverse of ˘”, “Symmetry of =”, “Definition of symmetry” ⟩
+— CalcCheck: Found “Self-inverse of ˘”
+— CalcCheck: Found (1.3) “Symmetry of =”
+— CalcCheck: Found “Definition of symmetry”, “Definition of
+symmetry”
+— CalcCheck: ─ OK
+symmetric R
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[17]
+
+Heterogeneous Relation Properties
+[18]
+
+[19]
+
+[20]
+
+→
+→
+→
+
+Declaration: univalent , total : A ↔ B → 𝔹
+Declaration: injective , surjective : A ↔ B → 𝔹
+Declaration: mapping , bijective : A ↔ B → 𝔹
+
+Declaration: univalent, total :
+Declaration: injective, surjective :
+Declaration: mapping, bijective :
+
+A ↔ B
+A ↔ B
+A ↔ B
+
+Axiom “Definition of univalence”:
+Axiom “Definition of totality”:
+Axiom “Definition of injectivity”:
+Axiom “Definition of surjectivity”:
+Axiom “Definition of mappings”:
+
+univalent R
+total R
+injective R
+surjective R
+mapping R
+
+≡
+≡
+≡
+≡
+≡
+
+Axiom “Definition of bijectivity”:
+
+bijective R
+
+≡
+
+𝔹
+𝔹
+𝔹
+
+R ˘ ⨾ R ⊆ 𝕀
+𝕀 ⊆ R ⨾ R ˘
+R ⨾ R ˘ ⊆ 𝕀
+𝕀 ⊆ R ˘ ⨾ R
+univalent R
+∧ total R
+injective R
+∧ surjective R
+
+Axiom “Definition of univalence”: univalent R ≡ R ˘ ⨾ R ⊆ 𝕀
+Axiom “Definition of totality”: total R ≡ 𝕀 ⊆ R ⨾ R ˘
+Axiom “Definition of injectivity”: injective R ≡ R ⨾ R ˘ ⊆ 𝕀
+Axiom “Definition of surjectivity”: surjective R ≡ 𝕀 ⊆ R ˘ ⨾ R
+Axiom “Definition of mappings”: mapping R ≡ univalent R ∧ total
+R
+Axiom “Definition of bijectivity”: bijective R ≡ injective R ∧
+surjective R
+
+Lemma “Definition of mappings”: mapping R ≡ R ˘ ⨾ R ⊆ 𝕀 ∧ 𝕀 ⊆ R ⨾
+R ˘ ⨾ R ⊆ 𝕀
+∧ 𝕀 ⊆ R ⨾ R ˘ R˘
+Proof: By “Definition of mappings”, “Definition of univalence”, “Def Proof:
+By “Definition of mappings”, “Definition of univalence”, “Definition of
+totality”
+— CalcCheck: Found “Definition of mappings”
+— CalcCheck: Found “Definition of univalence”
+— CalcCheck: Found “Definition of totality”
+Lemma “Definition of mappings”:
+
+
+mapping R
+
+≡
+
+
+[21]
+
+
+Theorem “𝕀 is mapping”: mapping 𝕀
+Proof:
+Using “Definition of mappings”:
+𝕀 ˘ ⨾ 𝕀 ⊆ 𝕀 ∧ 𝕀 ⊆ 𝕀 ⨾ 𝕀 ˘
+=⟨“Converse of 𝕀”⟩
+𝕀 ⨾ 𝕀 ⊆ 𝕀 ∧ 𝕀 ⊆ 𝕀 ⨾ 𝕀
+=⟨ “Identity of ⨾” , “Idempotency of ∧” , “Reflexivity of ⊆” ⟩
+true
+
+
+Theorem “𝕀 is mapping”: mapping 𝕀
+Proof:
+Using “Definition of mappings”:
+— CalcCheck: Found “Definition of mappings”, “Definition of
+mappings”
+Subproof establishing `𝕀 ˘ ⨾ 𝕀 ⊆ 𝕀 ∧ 𝕀 ⊆ 𝕀 ⨾ 𝕀 ˘`:
+𝕀˘⨾𝕀⊆𝕀∧𝕀⊆𝕀⨾𝕀˘
+= ⟨ “Converse of 𝕀” ⟩
+— CalcCheck: Found “Converse of 𝕀”
+— CalcCheck: ─ OK
+𝕀⨾𝕀⊆𝕀∧𝕀⊆𝕀⨾𝕀
+= ⟨ “Identity of ⨾”, “Idempotency of ∧”, “Reflexivity of ⊆” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: Found “Reflexivity of ⊆”, “Reflexivity of
+⊆”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+
+
+[22]
+
+[23]
+
+
+Theorem “Composition of mappings”:
+mapping F ∧ mapping G ⇒ mapping (F ⨾ G)
+Proof:
+Assuming `mapping F ∧ mapping G`:
+mapping (F ⨾ G)
+=⟨ “Definition of mappings”⟩
+(F ⨾ G) ˘ ⨾ (F ⨾ G) ⊆ 𝕀 ∧ 𝕀 ⊆ (F ⨾ G) ⨾ (F ⨾ G) ˘
+=⟨ “Converse of ⨾”⟩
+(G ˘ ⨾ F ˘) ⨾ (F ⨾ G) ⊆ 𝕀 ∧ 𝕀 ⊆ (F ⨾ G) ⨾ (G ˘ ⨾ F ˘)
+=⟨ “Converse of ⨾”⟩
+(G ˘ ⨾ F ˘) ⨾ (F ⨾ G) ⊆ 𝕀 ∧ 𝕀 ⊆ (F ⨾ G) ⨾ (G ˘ ⨾ F ˘)
+=⟨?⟩
+(F ˘ ⨾ F ⊆ 𝕀 ∧ 𝕀 ⊆ F ⨾ F ˘) ∧ (G ˘ ⨾ G ⊆ 𝕀 ∧ 𝕀 ⊆ G ⨾ G ˘)
+=⟨“Definition of mappings”⟩
+mapping F ∧ mapping G
+=⟨ assumption `mapping F ∧ mapping G`⟩
+true
+
+Theorem “Composition of mappings”: mapping F ∧ mapping G ⇒
+mapping (F ⨾ G)
+Proof:
+Assuming `mapping F ∧ mapping G`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `mapping (F ⨾ G)`:
+mapping (F ⨾ G)
+= ⟨ “Definition of mappings” ⟩
+— CalcCheck: Found “Definition of mappings”, “Definition of
+mappings”
+— CalcCheck: ─ OK
+(F ⨾ G) ˘ ⨾ (F ⨾ G) ⊆ 𝕀 ∧ 𝕀 ⊆ (F ⨾ G) ⨾ (F ⨾ G) ˘
+= ⟨ “Converse of ⨾” ⟩
+— CalcCheck: Found “Converse of ⨾”
+— CalcCheck: ─ OK
+(G ˘ ⨾ F ˘) ⨾ (F ⨾ G) ⊆ 𝕀 ∧ 𝕀 ⊆ (F ⨾ G) ⨾ (G ˘ ⨾ F ˘)
+= ⟨ “Converse of ⨾” ⟩
+— CalcCheck: Found “Converse of ⨾”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(G ˘ ⨾ F ˘) ⨾ (F ⨾ G) ⊆ 𝕀 ∧ 𝕀 ⊆ (F ⨾ G) ⨾ (G ˘ ⨾ F ˘)
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+(F ˘ ⨾ F ⊆ 𝕀 ∧ 𝕀 ⊆ F ⨾ F ˘) ∧ (G ˘ ⨾ G ⊆ 𝕀 ∧ 𝕀 ⊆ G ⨾ G ˘)
+= ⟨ “Definition of mappings” ⟩
+— CalcCheck: Found “Definition of mappings”, “Definition of
+mappings”
+— CalcCheck: ─ OK
+mapping F ∧ mapping G
+= ⟨ Assumption `mapping F ∧ mapping G` ⟩
+— CalcCheck: Found assumption `mapping F ∧ mapping G`
+— CalcCheck: ─ OK
+true
+— CalcCheck: 1 out of 6 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+If a total relation is contained in a univalent relation, then both are equal.
+
+
+[24]
+
+
+Theorem “total in univalent”: total R ⇒ (univalent S ⇒ (R ⊆ S ⇒ R = S))
+Proof:
+Assuming `total R` and using with “Definition of totality”
+— CalcCheck: Found “Definition of totality” , `univalent S` and using with
+“Definition of univalence”
+— CalcCheck: Found “Definition of univalence” , `R ⊆ S`:
+— CalcCheck: Assumptions match goal
+Calculation for expected goal `R = S`:
+R=S
+= ⟨ “Mutual inclusion” ⟩
+— CalcCheck: Found “Mutual inclusion”
+— CalcCheck: ─ OK
+R⊆S∧S⊆R
+= ⟨ Assumption `R ⊆ S`, “Identity of ∧” ⟩
+— CalcCheck: Found assumption `R ⊆ S`
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+S⊆R
+= ⟨ Assumption `R ⊆ S`, “Identity of ∧” ⟩
+— CalcCheck: Found assumption `R ⊆ S`
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+S⊆R
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Proof for this:
+Calculation for expected goal `S ⊆ R`:
+S
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+𝕀⨾S
+⊆ ⟨ “Monotonicity of ⨾” with Assumption `total R` ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of
+⨾”, “Monotonicity of ⨾”
+— CalcCheck: Found assumption `total R`
+— CalcCheck: ─ OK
+R ⨾ (R ˘ ⨾ S)
+⊆ ⟨ “Monotonicity of ⨾” with “Monotonicity of ⨾” with “Monotonicity of ˘”
+with Assumption `R ⊆ S` ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of
+
+
+Theorem “total in univalent”:
+total R ⇒ univalent S ⇒ R ⊆ S ⇒ R = S
+Proof:
+Assuming `total R` and using with “Definition of totali
+R = S
+=⟨ “Mutual inclusion”⟩
+R ⊆ S ∧ S ⊆ R
+=⟨ Assumption `R ⊆ S` , “Identity of ∧”⟩
+S ⊆ R
+=⟨ Assumption `R ⊆ S` , “Identity of ∧”⟩
+S ⊆ R
+Proof for this:
+S
+=⟨“Identity of ⨾”⟩
+𝕀 ⨾ S
+⊆⟨ “Monotonicity of ⨾” with assumption `total R`⟩
+R ⨾ R ˘ ⨾ S
+⊆⟨ “Monotonicity of ⨾” with “Monotonicity of ⨾” with
+R ⨾ S ˘ ⨾ S
+⊆⟨ “Monotonicity of ⨾” with assumption `univalent S`
+R ⨾ 𝕀
+=⟨ “Identity of ⨾”⟩
+R
+
+
+⨾”, “Monotonicity of ⨾”
+— CalcCheck: Found “Monotonicity of ˘”
+— CalcCheck: Found assumption `R ⊆ S`
+— CalcCheck: ─ OK
+R ⨾ (S ˘ ⨾ S)
+⊆ ⟨ “Monotonicity of ⨾” with Assumption `univalent S` ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of
+⨾”, “Monotonicity of ⨾”
+— CalcCheck: Found assumption `univalent S`
+— CalcCheck: ─ OK
+R⨾𝕀
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+R
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[25]
+
+[26]
+
+
+Theorem “Flip `⊆-univalent-⨾`”: univalent F ⇒ (Q ⊆ F ⨾ R ⇒ F ˘ ⨾ Q ⊆ R)
+Theorem “Flip `⊆-univalent-⨾`”:
+Proof:
+univalent F ⇒ Q ⊆ F ⨾ R ⇒ F ˘ ⨾ Q ⊆ R
+Assuming `univalent F` and using with “Definition of univalence”
+Proof:
+— CalcCheck: Found “Definition of univalence” , `Q ⊆ F ⨾ R`:
+Assuming `univalent F` and using with “Definition of unival
+— CalcCheck: Assumptions match goal
+F ˘ ⨾ Q
+Calculation for expected goal `F ˘ ⨾ Q ⊆ R`:
+⊆⟨“Monotonicity of ⨾” with assumption `Q ⊆ F ⨾ R`⟩
+F˘⨾Q
+F ˘ ⨾ F ⨾ R
+⊆ ⟨ “Monotonicity of ⨾” with Assumption `Q ⊆ F ⨾ R` ⟩
+=⟨“Associativity of ⨾”⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of
+(F ˘ ⨾ F) ⨾ R
+⨾”, “Monotonicity of ⨾”
+⊆⟨ “Monotonicity of ⨾” with assumption `univalent F`⟩
+— CalcCheck: Found assumption `Q ⊆ F ⨾ R`
+𝕀 ⨾ R
+— CalcCheck: ─ OK
+=⟨ “Identity of ⨾”⟩
+F ˘ ⨾ (F ⨾ R)
+= ⟨ “Associativity of ⨾” ⟩
+R
+— CalcCheck: Found “Associativity of ⨾”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(F ˘ ⨾ F) ⨾ R
+⊆ ⟨ “Monotonicity of ⨾” with Assumption `univalent F` ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of
+⨾”, “Monotonicity of ⨾”
+— CalcCheck: Found assumption `univalent F`
+— CalcCheck: ─ OK
+𝕀⨾R
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+R
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+The inverse of a mapping is its converse:
+
+
+[27]
+
+1,1
+
+
+Theorem “Inverse of mapping”: mapping F ⇒ (G is-inverse-of F ⇒ G = F ˘)
+Proof:
+Assuming `mapping F` and using with “Definition of mappings”
+— CalcCheck: Found “Definition of mappings”, “Definition of mappings” , `G is-inverse-of
+F` and using with “Definition of inverse”
+— CalcCheck: Found “Definition of inverse”:
+— CalcCheck: Assumptions match goal
+Using “Mutual inclusion”:
+— CalcCheck: Found “Mutual inclusion”
+Subproof for `G ⊆ F ˘`:
+F˘
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+𝕀⨾F˘
+= ⟨ Assumption `G is-inverse-of F` ⟩
+— CalcCheck: Found assumption `G is-inverse-of F`
+— CalcCheck: ─ OK
+(G ⨾ F) ⨾ F ˘
+⊇ ⟨ “Monotonicity of ⨾” with Assumption `mapping F` ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of ⨾”,
+“Monotonicity of ⨾”
+— CalcCheck: Found assumption `mapping F`
+— CalcCheck: ─ OK
+G⨾𝕀
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+G
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `F ˘ ⊆ G`:
+F˘
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+F˘⨾𝕀
+= ⟨ Assumption `G is-inverse-of F` ⟩
+— CalcCheck: Found assumption `G is-inverse-of F`
+— CalcCheck: ─ OK
+F ˘ ⨾ (F ⨾ G)
+⊆ ⟨ “Monotonicity of ⨾” with Assumption `mapping F` ⟩
+
+
+Theorem “Inverse of mapping”:
+mapping F ⇒ G is-inverse-of F ⇒ G = F ˘
+Proof:
+Assuming `mapping F` and using with “Definition of
+`G is-inverse-of F` and using with “Defin
+Using “Mutual inclusion”:
+Subproof for `G ⊆ F ˘`:
+F ˘
+=⟨ “Identity of ⨾” ⟩
+𝕀 ⨾ F ˘
+=⟨ Assumption `G is-inverse-of F` ⟩
+(G ⨾ F) ⨾ F ˘
+⊇⟨ “Monotonicity of ⨾” with Assumption `mapp
+G ⨾ 𝕀
+=⟨ “Identity of ⨾” ⟩
+G
+Subproof for `F ˘ ⊆ G`:
+F ˘
+=⟨ “Identity of ⨾” ⟩
+F ˘ ⨾ 𝕀
+=⟨ Assumption `G is-inverse-of F` ⟩
+F ˘ ⨾ (F ⨾ G)
+⊆⟨ “Monotonicity of ⨾” with Assumption `mapp
+𝕀 ⨾ G
+=⟨ “Identity of ⨾” ⟩
+G
+
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of ⨾”,
+“Monotonicity of ⨾”
+— CalcCheck: Found assumption `mapping F`
+— CalcCheck: ─ OK
+𝕀⨾G
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+G
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

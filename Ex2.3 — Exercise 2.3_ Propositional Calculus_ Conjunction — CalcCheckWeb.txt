@@ -1,0 +1,1608 @@
+Conjunction
+
+[1]
+
+This notebook follows LADM section 3.5 to introduce conjunction using the single axiom “Golden rule”.
+As explained there, due to associativity of equivalence, this axiom has again many readings; the
+“canonical reading” in the context here is:
+Direct definition of conjunction: (p ∧ q) = (p ≡ q ≡ p ∨ q)
+However, a few more readings will be used routinely:
+Equivalence of two formulations of implication: (p ∧ q ≡ p) = (q ≡ p ∨ q)
+One alternative formulation of equivalence: (p ≡ q) = (p ∧ q ≡ p ∨ q)
+…
+
+[2]
+
+[3]
+
+[4]
+
+Axiom (3.35) “Golden rule”: p ∧ q ≡ p ≡ q ≡ p ∨ q
+
+Axiom (3.35) “Golden rule”: p ∧ q ≡ (p ≡ (q ≡ p
+∨ q))
+
+The golden rule is the only LADM axiom for conjunction.
+
+With the golden rule, it is particularly easy to make CalcCheck time-out:
+Most time-outs are due to incorrect steps!
+Frequently, splitting your proof into smaller steps will either solve the problem, or make the
+underlying error more obvious.
+Supplying an explicit substitution via “ with `p, q ≔ … , …` ” should normally be sufficient to
+resolve the problem — however, if such a step is not justified, CalcCheck may still run into a timeout.
+If you have a hint that times out, then CalcCheck automatically inserts “ ? , ” at the beginning of
+that hint — hints that contain ? are not checked, so as long as you leave that ? in that hint, it will not
+give rise to time-outs anymore.
+
+
+To try that out, you can try the following step instead of a proof for Theorem (3.36) “Symmetry
+of ∧”:
+Proof:
+p ∧ q
+≡⟨ “Golden rule” ⟩
+q ∧ r
+Therefore, if you have a hint that times out, and you are not working on fixing it, keep that “ ? , ”
+prefix there to reduce load on the server.
+Superfluous re-checking of hints that time out constitutes a denial of service attack, and, as
+such, a violation of academic integrity.
+Please avoid saving versions that contain time-outs!
+
+[5]
+
+Read LADM section 3.5 while you work through this notebook!
+
+
+[6]
+
+
+Theorem (3.36) “Symmetry of ∧”: p ∧ q ≡ q ∧ p
+Proof:
+p ∧ q
+≡⟨“Golden rule”⟩
+p ≡ q ≡ p ∨ q
+≡⟨“Symmetry of ∨”⟩
+p ≡ q ≡ q ∨ p
+≡⟨“Associativity of ≡”⟩
+q ≡ p ≡ q ∨ p
+≡⟨“Golden rule”⟩
+q ∧ p
+
+
+Theorem (3.36) “Symmetry of ∧”: p ∧ q ≡ q ∧ p
+Proof:
+Calculation for expected goal `p ∧ q ≡ q ∧ p`:
+p∧q
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden
+rule”
+— CalcCheck: ─ OK
+p ≡ (q ≡ p ∨ q)
+≡ ⟨ “Symmetry of ∨” ⟩
+— CalcCheck: Found (3.24) “Symmetry
+of ∨”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+p ≡ (q ≡ q ∨ p)
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1)
+“Associativity of ≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+q ≡ (p ≡ q ∨ p)
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden
+rule”
+— CalcCheck: ─ OK
+q∧p
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[7]
+
+
+Theorem (3.37) “Associativity of ∧”: (p ∧ q) ∧ r ≡ p
+∧ (q ∧ r)
+Proof:
+Calculation for expected goal `(p ∧ q) ∧ r ≡ p ∧
+(q ∧ r)`:
+(p ∧ q) ∧ r
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+p ∧ q ≡ (r ≡ (p ∧ q) ∨ r)
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+(p ≡ (q ≡ p ∨ q)) ≡ (r ≡ (p ≡ (q ≡ p ∨ q)) ∨ r)
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1) “Associativity of
+≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+p ≡ (q ≡ ((p ∨ q ≡ r) ≡ (p ≡ (q ≡ p ∨ q)) ∨ r))
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of
+∨ over ≡”
+— CalcCheck: ─ OK
+p ≡ (q ≡ ((p ∨ q ≡ r) ≡ (p ∨ r ≡ (q ≡ p ∨ q) ∨
+r)))
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of
+∨ over ≡”
+— CalcCheck: ─ OK
+p ≡ (q ≡ ((p ∨ q ≡ r) ≡ (p ∨ r ≡ (q ∨ r ≡ p ∨ (q
+∨ r)))))
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1) “Associativity of
+≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+p ≡ (p ∨ r ≡ (p ∨ q ≡ (q ≡ (r ≡ (q ∨ r ≡ p ∨ (q ∨
+r))))))
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+p ≡ (p ∨ r ≡ (p ∨ q ≡ (q ∧ r ≡ p ∨ (q ∨ r))))
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1) “Associativity of
+≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+p ≡ (q ∧ r ≡ (p ∨ r ≡ (p ∨ q ≡ p ∨ (q ∨ r))))
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of
+∨ over ≡”
+— CalcCheck: ─ OK
+p ≡ (q ∧ r ≡ (p ∨ (r ≡ q) ≡ p ∨ (q ∨ r)))
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of
+
+
+Theorem (3.37) “Associativity of ∧”: (p ∧ q) ∧
+Proof:
+(p ∧ q) ∧ r
+≡ ⟨ “Golden rule” ⟩
+(p ∧ q) ≡ (r ≡ (p ∧ q) ∨ r)
+≡ ⟨ “Golden rule” ⟩
+(p ≡ (q ≡ p ∨ q)) ≡ (r ≡ (p ≡ (q ≡ p ∨ q))
+≡ ⟨ “Associativity of ≡” ⟩
+p ≡ (q ≡ ((p ∨ q ≡ r) ≡ (p ≡ (q ≡ p ∨ q))
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+p ≡ (q ≡ ((p ∨ q ≡ r) ≡ (p ∨ r) ≡ (q ≡ p ∨
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+p ≡ q ≡ (p ∨ q ≡ r) ≡ (p ∨ r) ≡ (q ∨ r) ≡
+≡ ⟨ “Associativity of ≡” ⟩
+p ≡ (p ∨ r) ≡ (p ∨ q) ≡ q ≡ r ≡ (q ∨ r) ≡
+≡ ⟨ “Golden rule” ⟩
+p ≡ (p ∨ r) ≡ (p ∨ q) ≡ (q ∧ r) ≡ (p ∨ q
+≡ ⟨ “Associativity of ≡” ⟩
+p ≡ (q ∧ r) ≡ (p ∨ r) ≡ (p ∨ q) ≡ (p ∨ q
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+p ≡ (q ∧ r) ≡ (p ∨ (r ≡ q)) ≡ (p ∨ (q ∨ r
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+p ≡ (q ∧ r) ≡ (p ∨ ((r ≡ q) ≡ (q ∨ r)))
+≡ ⟨ “Golden rule” ⟩
+p ≡ (q ∧ r) ≡ (p ∨ (q ∧ r))
+≡ ⟨ “Golden rule” ⟩
+p ∧ (q ∧ r)
+
+[8]
+
+Activate associativity property (3.37)
+Activate symmetry property (3.36)
+
+
+∨ over ≡”
+— CalcCheck: ─ OK
+p ≡ (q ∧ r ≡ p ∨ ((r ≡ q) ≡ q ∨ r))
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+p ≡ (q ∧ r ≡ p ∨ (q ∧ r))
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+p ∧ (q ∧ r)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Activate associativity property (3.37)
+— CalcCheck: Found associativity of
+`_∧_`
+Activate symmetry property (3.36)
+— CalcCheck: Found symmetry of `_∧_`
+
+
+[9]
+
+[10]
+
+
+Theorem (3.38) “Idempotency of ∧”: p ∧ p ≡ p
+Proof:
+p ∧ p
+≡⟨“Golden rule”⟩
+p ≡ p ≡ p ∨ p
+≡⟨“Idempotency of ∨”⟩
+p ≡ p ≡ p
+≡⟨“Identity of ≡”⟩
+p
+
+Theorem (3.38) “Idempotency of ∧”: p ∧ p ≡ p
+Proof:
+Calculation for expected goal `p ∧ p ≡ p`:
+p∧p
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden
+rule”
+— CalcCheck: ─ OK
+p ≡ (p ≡ p ∨ p)
+≡ ⟨ “Idempotency of ∨” ⟩
+— CalcCheck: Found (3.26)
+“Idempotency of ∨”
+— CalcCheck: ─ OK
+p ≡ (p ≡ p)
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+p
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem (3.39) “Identity of ∧”: p ∧ true ≡ p
+Proof:
+p ∧ true
+≡ ⟨ “Golden rule” ⟩
+p ≡ true ≡ p ∨ true
+≡ ⟨ “Zero of ∨” ⟩
+p ≡ true ≡ true
+≡⟨“Identity of ≡”⟩
+p
+
+Theorem (3.39) “Identity of ∧”: p ∧ true ≡ p
+Proof:
+Calculation for expected goal `p ∧ true ≡
+p`:
+p ∧ true
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden
+rule”
+— CalcCheck: ─ OK
+p ≡ (true ≡ p ∨ true)
+≡ ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of
+∨”
+— CalcCheck: ─ OK
+p ≡ (true ≡ true)
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity
+of ≡”
+— CalcCheck: ─ OK
+p
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─
+OK
+
+
+[11]
+
+[12]
+
+
+Theorem (3.40) “Zero of ∧”: p ∧ false ≡ false
+Proof:
+p ∧ false
+≡ ⟨“Golden rule”⟩
+p ≡ false ≡ p ∨ false
+≡ ⟨“Identity of ∨”⟩
+p ≡ false ≡ p
+≡ ⟨ “Associativity of ≡” ⟩
+p ≡ p ≡ false
+≡⟨“Identity of ≡”⟩
+true ≡ false
+≡⟨“Identity of ≡”⟩
+false
+
+Theorem (3.40) “Zero of ∧”: p ∧ false ≡ false
+Proof:
+Calculation for expected goal `p ∧ false ≡
+false`:
+p ∧ false
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden
+rule”
+— CalcCheck: ─ OK
+p ≡ (false ≡ p ∨ false)
+≡ ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of
+∨”
+— CalcCheck: ─ OK
+p ≡ (false ≡ p)
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1)
+“Associativity of ≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+p ≡ (p ≡ false)
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of
+≡”
+— CalcCheck: ─ OK
+true ≡ false
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of
+≡”
+— CalcCheck: ─ OK
+false
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem (3.41) “Distributivity of ∧ over ∧”:
+Proof:
+p ∧ (q ∧ r)
+≡⟨“Idempotency of ∧”⟩
+(p ∧ q) ∧ (r ∧ p ∧ p)
+≡⟨“Idempotency of ∧”⟩
+(p ∧ q) ∧ (r ∧ p ∧ p ∧ p)
+≡⟨“Idempotency of ∧”⟩
+(p ∧ q) ∧ (p ∧ r)
+
+Theorem (3.41) “Distributivity of ∧ over ∧”: p ∧ (q ∧ r)
+≡ (p ∧ q) ∧ (p ∧ r)
+Proof:
+Calculation for expected goal `p ∧ (q ∧ r) ≡ (p ∧ q) ∧
+(p ∧ r)`:
+p ∧ (q ∧ r)
+≡ ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+(p ∧ q) ∧ (r ∧ (p ∧ p))
+≡ ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+(p ∧ q) ∧ (r ∧ (p ∧ (p ∧ p)))
+≡ ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+(p ∧ q) ∧ (p ∧ r)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[13]
+
+
+Theorem (3.42) “Contradiction”: p ∧ ¬ p ≡ false
+Proof:
+p ∧ ¬ p
+≡ ⟨“Golden rule”⟩
+p ≡ ¬ p ≡ p ∨ ¬ p
+≡ ⟨“Excluded middle”⟩
+p ≡ ¬ p ≡ true
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+false ≡ true
+≡ ⟨ “Identity of ≡” ⟩
+false
+
+
+Theorem (3.42) “Contradiction”: p ∧ ¬ p ≡ false
+Proof:
+Calculation for expected goal `p ∧ ¬ p ≡ false`:
+p∧¬p
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+p ≡ (¬ p ≡ p ∨ ¬ p)
+≡ ⟨ “Excluded middle” ⟩
+— CalcCheck: Found (3.28) “Excluded
+middle”
+— CalcCheck: ─ OK
+p ≡ (¬ p ≡ true)
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+— CalcCheck: Found (3.15) “Definition of
+¬ from ≡”
+— CalcCheck: ─ OK
+false ≡ true
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+false
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[14]
+
+
+Theorem (3.43) (3.43a) “Absorption”: p ∧ (p ∨ q) ≡
+Proof:
+p ∧ (p ∨ q)
+≡ ⟨“Golden rule”⟩
+p ≡ (p ∨ q) ≡ (p ∨ (p ∨ q))
+≡ ⟨ “Associativity of ∨” ⟩
+p ≡ (p ∨ q) ≡ (p ∨ p) ∨ q
+≡ ⟨ “Idempotency of ∨” ⟩
+p ≡ (p ∨ q) ≡ (p ∨ q)
+≡ ⟨ “Identity of ≡” ⟩
+p ≡ true
+≡ ⟨ “Identity of ≡” ⟩
+p
+
+
+Theorem (3.43) (3.43a) “Absorption”: p ∧ (p ∨ q)
+≡p
+Proof:
+Calculation for expected goal `p ∧ (p ∨ q) ≡
+p`:
+p ∧ (p ∨ q)
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden
+rule”
+— CalcCheck: ─ OK
+p ≡ (p ∨ q ≡ p ∨ (p ∨ q))
+≡ ⟨ “Associativity of ∨” ⟩
+— CalcCheck: Found (3.25)
+“Associativity of ∨”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+p ≡ (p ∨ q ≡ (p ∨ p) ∨ q)
+≡ ⟨ “Idempotency of ∨” ⟩
+— CalcCheck: Found (3.26)
+“Idempotency of ∨”
+— CalcCheck: ─ OK
+p ≡ (p ∨ q ≡ p ∨ q)
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+p ≡ true
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+p
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[15]
+
+
+Theorem (3.43) (3.43b) “Absorption”: p ∨ (p ∧ q)
+Proof:
+p ∨ (p ∧ q)
+≡ ⟨“Golden rule”⟩
+p ∨ (p ≡ q ≡ (p ∨ q))
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+p ∨ p ≡ p ∨ q ≡ p ∨ (p ∨ q)
+≡ ⟨ “Idempotency of ∨” ⟩
+p ≡ p ∨ q ≡ p ∨ (p ∨ q)
+≡ ⟨“Golden rule”⟩
+p ∧ (p ∨ q)
+≡ ⟨ “Absorption” ⟩
+p
+
+
+Theorem (3.43) (3.43b) “Absorption”: p ∨ (p ∧ q) ≡
+p
+Proof:
+Calculation for expected goal `p ∨ (p ∧ q) ≡ p`:
+p ∨ (p ∧ q)
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+p ∨ (p ≡ (q ≡ p ∨ q))
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of
+∨ over ≡”
+— CalcCheck: ─ OK
+p ∨ p ≡ (p ∨ q ≡ p ∨ (p ∨ q))
+≡ ⟨ “Idempotency of ∨” ⟩
+— CalcCheck: Found (3.26) “Idempotency
+of ∨”
+— CalcCheck: ─ OK
+p ≡ (p ∨ q ≡ p ∨ (p ∨ q))
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+p ∧ (p ∨ q)
+≡ ⟨ “Absorption” ⟩
+— CalcCheck: Found (3.43a) “Absorption”
+— CalcCheck: ─ OK
+p
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[16]
+
+
+Theorem (3.44) (3.44a) “Absorption”: p ∧ (¬ p ∨ q Theorem (3.44) (3.44a) “Absorption”: p ∧ (¬ p ∨ q)
+≡p∧q
+Proof:
+Proof:
+p ∧ (¬ p ∨ q)
+Calculation for expected goal `p ∧ (¬ p ∨ q) ≡ p
+≡ ⟨“Golden rule”⟩
+∧ q`:
+p ≡ (¬ p ∨ q) ≡ p ∨ (¬ p ∨ q)
+p ∧ (¬ p ∨ q)
+≡ ⟨ “Distributivity of ∨ over ∨” ⟩
+≡ ⟨ “Golden rule” ⟩
+p ≡ (¬ p ∨ q) ≡ (p ∨ ¬ p) ∨ (p ∨ q)
+— CalcCheck: Found (3.35) “Golden rule”
+≡ ⟨ “Excluded middle” ⟩
+— CalcCheck: ─ OK
+p ≡ (¬ p ∨ q) ≡ true ∨ (p ∨ q)
+p ≡ (¬ p ∨ q ≡ p ∨ (¬ p ∨ q))
+≡ ⟨“Zero of ∨”⟩
+≡ ⟨ “Distributivity of ∨ over ∨” ⟩
+p ≡ (¬ p ∨ q) ≡ true
+— CalcCheck: Found (3.31) “Distributivity of
+≡ ⟨ “Identity of ≡” ⟩
+∨ over ∨”
+p ≡ (¬ p ∨ q)
+— CalcCheck: ─ OK
+p
+≡
+(¬ p ∨ q ≡ (p ∨ ¬ p) ∨ (p ∨ q))
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+≡ ⟨ “Excluded middle” ⟩
+p ≡ ((p ≡ false) ∨ q)
+— CalcCheck: Found (3.28) “Excluded
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+middle”
+p ≡ (p ∨ q ≡ false ∨ q)
+— CalcCheck: ─ OK
+≡ ⟨ “Identity of ∨” ⟩
+p ≡ (¬ p ∨ q ≡ true ∨ (p ∨ q))
+p ≡ (p ∨ q ≡ q)
+≡ ⟨ “Zero of ∨” ⟩
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+q ≡ p ≡ (p ∨ q)
+— CalcCheck: ─ OK
+≡ ⟨“Golden rule”⟩
+p ≡ (¬ p ∨ q ≡ true)
+p ∧ q
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+p≡¬p∨q
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+— CalcCheck: Found (3.15) “Definition of ¬
+from ≡”
+— CalcCheck: ─ OK
+p ≡ (p ≡ false) ∨ q
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of
+∨ over ≡”
+— CalcCheck: ─ OK
+p ≡ (p ∨ q ≡ false ∨ q)
+≡ ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+p ≡ (p ∨ q ≡ q)
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1) “Associativity of
+≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+q ≡ (p ≡ p ∨ q)
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+p∧q
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[17]
+
+[18]
+
+
+Theorem (3.44) (3.44b) “Absorption”: p ∨ (¬ p ∧ q Theorem (3.44) (3.44b) “Absorption”: p ∨ (¬ p ∧ q)
+≡p∨q
+Proof:
+Proof:
+p ∨ (¬ p ∧ q)
+Calculation for expected goal `p ∨ (¬ p ∧ q) ≡ p
+≡ ⟨“Golden rule”⟩
+∨ q`:
+p ∨ (¬ p ≡ q ≡ (¬ p ∨ q))
+p ∨ (¬ p ∧ q)
+≡ ⟨“Distributivity of ∨ over ≡”⟩
+≡ ⟨ “Golden rule” ⟩
+p ∨ ¬ p ≡ p ∨ q ≡ p ∨ (¬ p ∨ q)
+— CalcCheck: Found (3.35) “Golden rule”
+≡ ⟨“Excluded middle”⟩
+— CalcCheck: ─ OK
+true ≡ p ∨ q ≡ p ∨ (¬ p ∨ q)
+p ∨ (¬ p ≡ (q ≡ ¬ p ∨ q))
+≡ ⟨“Identity of ≡”⟩
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+p ∨ q ≡ p ∨ (¬ p ∨ q)
+— CalcCheck: Found (3.27) “Distributivity of
+≡ ⟨“Distributivity of ∨ over ∨”⟩
+∨ over ≡”
+p ∨ q ≡ (p ∨ ¬ p) ∨ (p ∨ q)
+— CalcCheck: ─ OK
+p
+∨
+¬ p ≡ (p ∨ q ≡ p ∨ (¬ p ∨ q))
+≡ ⟨“Excluded middle”⟩
+≡ ⟨ “Excluded middle” ⟩
+p ∨ q ≡ true ∨ (p ∨ q)
+— CalcCheck: Found (3.28) “Excluded
+≡ ⟨“Zero of ∨”⟩
+middle”
+p ∨ q ≡ true
+— CalcCheck: ─ OK
+≡ ⟨“Identity of ≡”⟩
+true ≡ (p ∨ q ≡ p ∨ (¬ p ∨ q))
+p ∨ q
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+p ∨ q ≡ p ∨ (¬ p ∨ q)
+≡ ⟨ “Distributivity of ∨ over ∨” ⟩
+— CalcCheck: Found (3.31) “Distributivity of
+∨ over ∨”
+— CalcCheck: ─ OK
+p ∨ q ≡ (p ∨ ¬ p) ∨ (p ∨ q)
+≡ ⟨ “Excluded middle” ⟩
+— CalcCheck: Found (3.28) “Excluded
+middle”
+— CalcCheck: ─ OK
+p ∨ q ≡ true ∨ (p ∨ q)
+≡ ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+p ∨ q ≡ true
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+p∨q
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+We also include two variants modulo double negation that are not listed in LADM:
+
+
+[19]
+
+
+Theorem (3.44) (3.44c) “Absorption”: ¬ p ∧ (p ∨ q) ≡ ¬ p ∧ q
+Proof:
+Calculation for expected goal `¬ p ∧ (p ∨ q) ≡ ¬ p ∧ q`:
+¬ p ∧ (p ∨ q)
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+¬ p ∧ (q ≡ (p ≡ p ∧ q))
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1) “Associativity of ≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+¬ p ∧ (p ∧ q ≡ (q ≡ p))
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+¬ p ≡ ((p ∧ q ≡ (q ≡ p)) ≡ ¬ p ∨ (p ∧ q ≡ (q ≡ p)))
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of ∨ over ≡”
+— CalcCheck: ─ OK
+¬ p ≡ ((p ∧ q ≡ (q ≡ p)) ≡ (¬ p ∨ (p ∧ q) ≡ (¬ p ∨ q ≡ ¬ p ∨ p)))
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1) “Associativity of ≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+¬ p ≡ (q ≡ (¬ p ∨ q ≡ ((p ∧ q ≡ p) ≡ (¬ p ∨ (p ∧ q) ≡ ¬ p ∨ p))))
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+¬ p ∧ q ≡ ((p ∧ q ≡ p) ≡ (¬ p ∨ (p ∧ q) ≡ ¬ p ∨ p))
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of ∨ over ≡”
+— CalcCheck: ─ OK
+¬ p ∧ q ≡ ((p ∧ q ≡ p) ≡ ¬ p ∨ (p ∧ q ≡ p))
+≡ ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+¬ p ∧ q ≡ (false ∨ (p ∧ q ≡ p) ≡ ¬ p ∨ (p ∧ q ≡ p))
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of ∨ over ≡”
+— CalcCheck: ─ OK
+¬ p ∧ q ≡ (false ≡ ¬ p) ∨ (p ∧ q ≡ p)
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+— CalcCheck: Found (3.15) “Definition of ¬ from ≡”
+— CalcCheck: ─ OK
+¬ p ∧ q ≡ p ∨ (p ∧ q ≡ p)
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of ∨ over ≡”
+— CalcCheck: ─ OK
+¬ p ∧ q ≡ (p ∨ (p ∧ q) ≡ p ∨ p)
+≡ ⟨ “Idempotency of ∨” ⟩
+— CalcCheck: Found (3.26) “Idempotency of ∨”
+— CalcCheck: ─ OK
+¬ p ∧ q ≡ (p ∨ (p ∧ q) ≡ p)
+≡ ⟨ “Absorption” ⟩
+— CalcCheck: Found (3.44a) “Absorption”, (3.44b)
+
+
+Theorem (3.44) (3.44c) “Absorptio
+Proof:
+¬ p ∧ (p ∨ q)
+≡ ⟨“Golden rule”⟩
+¬ p ∧ (q ≡ p ≡ (p ∧ q))
+≡ ⟨“Associativity of ≡”⟩
+¬ p ∧ ((p ∧ q) ≡ q ≡ p)
+≡ ⟨“Golden rule”⟩
+¬ p ≡ ((p ∧ q) ≡ q ≡ p) ≡ ¬ p
+≡ ⟨“Distributivity of ∨ over ≡”
+¬ p ≡ ((p ∧ q) ≡ q ≡ p) ≡ ¬ p
+≡ ⟨“Associativity of ≡”⟩
+¬ p ≡ q ≡ ¬ p ∨ q ≡ ((p ∧ q)
+≡ ⟨“Golden rule”⟩
+(¬ p ∧ q) ≡ ((p ∧ q) ≡ p) ≡ ¬
+≡ ⟨“Distributivity of ∨ over ≡”
+(¬ p ∧ q) ≡ ((p ∧ q) ≡ p) ≡ ¬
+≡ ⟨“Identity of ∨”⟩
+(¬ p ∧ q) ≡ false ∨ ((p ∧ q)
+≡ ⟨“Distributivity of ∨ over ≡”
+(¬ p ∧ q) ≡ (false ≡ ¬ p) ∨ (
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+(¬ p ∧ q) ≡ (p) ∨ ((p ∧ q) ≡
+≡ ⟨“Distributivity of ∨ over ≡”
+(¬ p ∧ q) ≡ (p ∨ (p ∧ q)) ≡ (
+≡ ⟨ “Idempotency of ∨” ⟩
+(¬ p ∧ q) ≡ (p ∨ (p ∧ q)) ≡ p
+≡ ⟨ “Absorption” ⟩
+(¬ p ∧ q) ≡ p ≡ p
+≡ ⟨“Identity of ≡”⟩
+(¬ p ∧ q)
+
+
+“Absorption”, (3.43b) “Absorption”, (3.43a) “Absorption”
+— CalcCheck: ─ OK
+¬ p ∧ q ≡ (p ≡ p)
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+¬p∧q
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[20]
+
+
+Theorem (3.44) (3.44d) “Absorption”: ¬ p ∨ (p ∧ q Theorem (3.44) (3.44d) “Absorption”: ¬ p ∨ (p ∧ q)
+≡¬p∨q
+Proof:
+Proof:
+¬ p ∨ (p ∧ q)
+Calculation for expected goal `¬ p ∨ (p ∧ q) ≡ ¬
+≡ ⟨ “Golden rule” ⟩
+p ∨ q`:
+¬ p ∨ (p ≡ q ≡ (p ∨ q))
+¬ p ∨ (p ∧ q)
+≡ ⟨“Distributivity of ∨ over ≡”⟩
+≡ ⟨ “Golden rule” ⟩
+(¬ p ∨ p) ≡ (¬ p ∨ q) ≡ (¬ p ∨ (p ∨ q))
+— CalcCheck: Found (3.35) “Golden rule”
+≡ ⟨“Excluded middle”⟩
+— CalcCheck: ─ OK
+true ≡ (¬ p ∨ q) ≡ (¬ p ∨ (p ∨ q))
+¬ p ∨ (p ≡ (q ≡ p ∨ q))
+≡ ⟨“Identity of ≡”⟩
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+(¬ p ∨ q) ≡ (¬ p ∨ (p ∨ q))
+— CalcCheck: Found (3.27) “Distributivity of
+≡ ⟨ “Associativity of ≡” ⟩
+∨ over ≡”
+(¬ p ∨ q) ≡ (¬ p ∨ p) ∨ q
+— CalcCheck: ─ OK
+¬
+p
+∨ p ≡ (¬ p ∨ q ≡ ¬ p ∨ (p ∨ q))
+≡ ⟨“Excluded middle”⟩
+≡ ⟨ “Excluded middle” ⟩
+(¬ p ∨ q) ≡ true ∨ q
+— CalcCheck: Found (3.28) “Excluded
+≡ ⟨“Zero of ∨”⟩
+middle”
+(¬ p ∨ q) ≡ true
+— CalcCheck: ─ OK
+≡ ⟨“Identity of ≡”⟩
+true ≡ (¬ p ∨ q ≡ ¬ p ∨ (p ∨ q))
+(¬ p ∨ q)
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+¬ p ∨ q ≡ ¬ p ∨ (p ∨ q)
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1) “Associativity of
+≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+¬ p ∨ q ≡ (¬ p ∨ p) ∨ q
+≡ ⟨ “Excluded middle” ⟩
+— CalcCheck: Found (3.28) “Excluded
+middle”
+— CalcCheck: ─ OK
+¬ p ∨ q ≡ true ∨ q
+≡ ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+¬ p ∨ q ≡ true
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+¬p∨q
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[21]
+
+
+Theorem (3.45) “Distributivity of ∨ over ∧”:
+Proof:
+p ∨ (q ∧ r)
+≡ ⟨ “Golden rule” ⟩
+p ∨ (q ≡ r ≡ (q ∨ r))
+≡ ⟨“Distributivity of ∨ over ≡”⟩
+(p ∨ q) ≡ (p ∨ r) ≡ (p ∨ (q ∨ r))
+≡ ⟨“Distributivity of ∨ over ∨”⟩
+(p ∨ q) ≡ (p ∨ r) ≡ ((p ∨ q) ∨ (p ∨ r))
+≡ ⟨ “Golden rule” ⟩
+(p ∨ q) ∧ (p ∨ r)
+
+
+Theorem (3.45) “Distributivity of ∨ over ∧”: p ∨ (q ∧ r)
+≡ (p ∨ q) ∧ (p ∨ r)
+Proof:
+Calculation for expected goal `p ∨ (q ∧ r) ≡ (p ∨ q) ∧
+(p ∨ r)`:
+p ∨ (q ∧ r)
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+p ∨ (q ≡ (r ≡ q ∨ r))
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of ∨
+over ≡”
+— CalcCheck: ─ OK
+p ∨ q ≡ (p ∨ r ≡ p ∨ (q ∨ r))
+≡ ⟨ “Distributivity of ∨ over ∨” ⟩
+— CalcCheck: Found (3.31) “Distributivity of ∨
+over ∨”
+— CalcCheck: ─ OK
+p ∨ q ≡ (p ∨ r ≡ (p ∨ q) ∨ (p ∨ r))
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+(p ∨ q) ∧ (p ∨ r)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[22]
+
+
+Theorem “Distributivity of ∧ over ∨”: p ∧ (q ∨
+Proof:
+p ∧ (q ∨ r)
+≡ ⟨ “Golden rule” ⟩
+p ≡ (q ∨ r) ≡ p ∨ (q ∨ r)
+≡ ⟨ “Identity of ∨” ⟩
+p ≡ false ∨ (q ∨ r) ≡ p ∨ (q ∨ r)
+≡ ⟨“Distributivity of ∨ over ≡”⟩
+p ≡ false ∨ (q ∨ r) ≡ p ∨ (q ∨ r)
+≡ ⟨“Distributivity of ∨ over ≡”⟩
+p ≡ (q ∨ r) ∨ (false ≡ p)
+≡ ⟨“Distributivity of ∨ over ≡”⟩
+p ≡ (q ∨ r) ∨ (false ≡ p)
+≡ ⟨“Definition of ¬ from ≡”⟩
+p ≡ (q ∨ r) ∨ (¬ p ≡ p ≡ p)
+≡ ⟨“Identity of ≡”⟩
+p ≡ (q ∨ r) ∨ (¬ p)
+
+
+Theorem “Distributivity of ∧ over ∨”: p ∧ (q ∨ r) ≡ (p
+∧ q) ∨ (p ∧ r)
+Proof:
+Calculation for expected goal `p ∧ (q ∨ r) ≡ (p ∧ q)
+∨ (p ∧ r)`:
+p ∧ (q ∨ r)
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+p ≡ (q ∨ r ≡ p ∨ (q ∨ r))
+≡ ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+p ≡ (false ∨ (q ∨ r) ≡ p ∨ (q ∨ r))
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of ∨
+over ≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+p ≡ (false ∨ (q ∨ r) ≡ p ∨ (q ∨ r))
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of ∨
+over ≡”
+— CalcCheck: ─ OK
+p ≡ (q ∨ r) ∨ (false ≡ p)
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of ∨
+over ≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+p ≡ (q ∨ r) ∨ (false ≡ p)
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+— CalcCheck: Found (3.15) “Definition of ¬
+from ≡”
+— CalcCheck: ─ OK
+p ≡ (q ∨ r) ∨ (¬ p ≡ (p ≡ p))
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+p ≡ (q ∨ r) ∨ ¬ p
+— CalcCheck: Could not match calculation with stated
+goal.
+
+
+[23]
+
+
+Theorem (3.47) (3.47a) “De Morgan”: ¬ (p ∧ q) ≡ ¬
+p∨¬q
+Proof:
+Calculation for expected goal `¬ (p ∧ q) ≡ ¬ p ∨
+¬ q`:
+¬ (p ∧ q) ≡ ¬ p ∨ ¬ q
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+¬ (p ≡ (q ≡ p ∨ q)) ≡ (¬ p ≡ (¬ q ≡ ¬ p ∧ ¬ q))
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+(p ≡ (q ≡ p ∨ q)) ≡ ¬ (¬ p ≡ (¬ q ≡ ¬ p ∧ ¬ q))
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+(p ≡ (q ≡ p ∨ q)) ≡ (true ≡ ¬ (¬ p ≡ (¬ q ≡ ¬ p
+∧ ¬ q)))
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+(p ≡ (q ≡ p ∨ q)) ≡ (¬ true ≡ (¬ p ≡ (¬ q ≡ ¬ p
+∧ ¬ q)))
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1) “Associativity of
+≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+p ≡ (q ≡ (p ∨ q ≡ (¬ true ≡ (¬ p ≡ (¬ q ≡ ¬ p ∧
+¬ q)))))
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+¬ p ≡ (q ≡ (p ∨ q ≡ (true ≡ (¬ p ≡ (¬ q ≡ ¬ p ∧
+¬ q)))))
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+q ≡ (p ∨ q ≡ (¬ q ≡ ¬ p ∧ ¬ q))
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+— CalcCheck: Found (3.15) “Definition of ¬
+from ≡”
+— CalcCheck: ─ OK
+false ≡ (p ∨ q ≡ ¬ p ∧ ¬ q)
+≡ ⟨ (3.32) ⟩
+— CalcCheck: Found (3.32) `p ∨ q ≡ (p ∨ ¬
+q ≡ p)`
+— CalcCheck: ─ OK
+false ≡ ((p ∨ ¬ q ≡ p) ≡ ¬ p ∧ ¬ q)
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1) “Associativity of
+≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+false ≡ (p ≡ (p ∨ ¬ q ≡ ¬ p ∧ ¬ q))
+
+
+Theorem (3.47) (3.47a) “De Morgan”: ¬(p ∧ q) ≡
+Proof:
+¬(p ∧ q) ≡ ¬ p ∨ ¬ q
+≡ ⟨“Golden rule”⟩
+¬(p ≡ q ≡ (p ∨ q)) ≡ (¬ p ≡ ¬ q ≡ (¬ p ∧ ¬
+≡ ⟨“¬ connection”⟩
+(p ≡ q ≡ (p ∨ q)) ≡ ¬ (¬ p ≡ ¬ q ≡ (¬ p ∧
+≡ ⟨“Identity of ≡”⟩
+(p ≡ q ≡ (p ∨ q)) ≡ true ≡ ¬ (¬ p ≡ ¬ q ≡
+≡ ⟨“¬ connection”⟩
+(p ≡ q ≡ (p ∨ q)) ≡ ¬ true ≡ (¬ p ≡ ¬ q ≡
+≡ ⟨“Associativity of ≡”⟩
+p ≡ q ≡ (p ∨ q) ≡ ¬ true ≡ ¬ p ≡ ¬ q ≡ (¬
+≡ ⟨“¬ connection”⟩
+¬ p ≡ q ≡ (p ∨ q) ≡ true ≡ ¬ p ≡ ¬ q ≡ (¬
+≡ ⟨“Identity of ≡”⟩
+q ≡ (p ∨ q) ≡ ¬ q ≡ (¬ p ∧ ¬ q)
+≡ ⟨“Definition of ¬ from ≡”⟩
+false ≡ (p ∨ q) ≡ (¬ p ∧ ¬ q)
+≡ ⟨(3.32)⟩
+false ≡ ((p ∨ ¬ q) ≡ p) ≡ (¬ p ∧ ¬ q)
+≡ ⟨“Associativity of ≡”⟩
+false ≡ p ≡ (p ∨ ¬ q) ≡ (¬ p ∧ ¬ q)
+≡ ⟨“Golden rule”⟩
+false ≡ p ≡ (p ∨ ¬ q) ≡ (¬ p ≡ ¬ q ≡ (¬ p
+≡ ⟨“Associativity of ≡”⟩
+¬ p ≡ ¬ q ≡ false ≡ p ≡ (p ∨ ¬ q) ≡ (¬ p
+≡ ⟨“Distributivity of ∨ over ≡”⟩
+¬ p ≡ ¬ q ≡ false ≡ p ≡ ¬ q ∨ (¬ p ≡ p)
+≡ ⟨“Definition of ¬ from ≡”⟩
+¬ p ≡ ¬ q ≡ false ≡ p ≡ (¬ q ∨ false)
+≡ ⟨“Identity of ∨”⟩
+¬ p ≡ ¬ q ≡ false ≡ p ≡ ¬ q
+≡ ⟨“Identity of ≡”⟩
+¬ p ≡ false ≡ p
+≡ ⟨“Definition of ¬ from ≡”⟩
+false ≡ false
+≡ ⟨“Identity of ≡”⟩
+true
+
+
+≡ ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+false ≡ (p ≡ (p ∨ ¬ q ≡ (¬ p ≡ (¬ q ≡ ¬ p ∨ ¬
+q))))
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1) “Associativity of
+≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+¬ p ≡ (¬ q ≡ (false ≡ (p ≡ (p ∨ ¬ q ≡ ¬ p ∨ ¬
+q))))
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of
+∨ over ≡”
+— CalcCheck: ─ OK
+¬ p ≡ (¬ q ≡ (false ≡ (p ≡ ¬ q ∨ (¬ p ≡ p))))
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+— CalcCheck: Found (3.15) “Definition of ¬
+from ≡”
+— CalcCheck: ─ OK
+¬ p ≡ (¬ q ≡ (false ≡ (p ≡ ¬ q ∨ false)))
+≡ ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+¬ p ≡ (¬ q ≡ (false ≡ (p ≡ ¬ q)))
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+¬ p ≡ (false ≡ p)
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+— CalcCheck: Found (3.15) “Definition of ¬
+from ≡”
+— CalcCheck: ─ OK
+false ≡ false
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[24]
+
+[25]
+
+
+Theorem (3.47) (3.47b) “De Morgan”: ¬(p ∨ q) ≡ ¬
+Proof:
+¬(p ∨ q) ≡ ¬ p ∧ ¬ q
+≡ ⟨“¬ connection”⟩
+(p ∨ q) ≡ ¬ (¬ p ∧ ¬ q)
+≡ ⟨“De Morgan”⟩
+(p ∨ q) ≡ (¬ ¬ p ∨ ¬ ¬ q)
+≡ ⟨“Double negation”⟩
+(p ∨ q) ≡ (p ∨ q)
+≡ ⟨“Identity of ≡”⟩
+true
+
+Theorem (3.47) (3.47b) “De Morgan”: ¬ (p ∨ q) ≡
+¬p∧¬q
+Proof:
+Calculation for expected goal `¬ (p ∨ q) ≡ ¬ p ∧
+¬ q`:
+¬ (p ∨ q) ≡ ¬ p ∧ ¬ q
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+p ∨ q ≡ ¬ (¬ p ∧ ¬ q)
+≡ ⟨ “De Morgan” ⟩
+— CalcCheck: Found (3.47a) “De Morgan”
+— CalcCheck: ─ OK
+p ∨ q ≡ ¬ (¬ p) ∨ ¬ (¬ q)
+≡ ⟨ “Double negation” ⟩
+— CalcCheck: Found (3.12) “Double
+negation”
+— CalcCheck: ─ OK
+p∨q≡p∨q
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem (3.48) is another name-less theorem worth remembering:
+
+
+[26]
+
+
+Theorem (3.48): p ∧ q ≡ p ∧ ¬ q ≡ ¬ p
+Proof:
+p ∧ q ≡ p ∧ ¬ q
+≡ ⟨“Identity of ≡”⟩
+true ≡ p ∧ q ≡ p ∧ ¬ q
+≡ ⟨“Double negation”⟩
+¬ ¬ true ≡ p ∧ q ≡ p ∧ ¬ q
+≡ ⟨“¬ connection”⟩
+¬ true ≡ ¬ (p ∧ q) ≡ p ∧ ¬ q
+≡ ⟨“De Morgan”⟩
+¬ true ≡ (¬ p ∨ ¬ q) ≡ p ∧ ¬ q
+≡ ⟨“¬ connection”⟩
+true ≡ (¬ p ∨ ¬ q) ≡ ¬ (p ∧ ¬ q)
+≡ ⟨“De Morgan”⟩
+true ≡ (¬ p ∨ ¬ q) ≡ (¬ p ∨ ¬ ¬ q)
+≡ ⟨“Double negation”⟩
+true ≡ (¬ p ∨ ¬ q) ≡ (¬ p ∨ q)
+≡ ⟨“Identity of ≡”⟩
+(¬ p ∨ ¬ q) ≡ (¬ p ∨ q)
+≡ ⟨“Distributivity of ∨ over ≡”⟩
+(¬ p ∨ (¬ q ≡ q))
+≡ ⟨“Definition of ¬ from ≡”⟩
+(¬ p ∨ false)
+≡ ⟨“Identity of ∨”⟩
+(¬ p )
+
+
+Theorem (3.48): p ∧ q ≡ (p ∧ ¬ q ≡ ¬ p)
+Proof:
+Calculation for expected goal `p ∧ q ≡ (p ∧ ¬ q ≡ ¬
+p)`:
+p∧q≡p∧¬q
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true ≡ (p ∧ q ≡ p ∧ ¬ q)
+≡ ⟨ “Double negation” ⟩
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+¬ (¬ true) ≡ (p ∧ q ≡ p ∧ ¬ q)
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+¬ true ≡ (¬ (p ∧ q) ≡ p ∧ ¬ q)
+≡ ⟨ “De Morgan” ⟩
+— CalcCheck: Found (3.47a) “De Morgan”,
+(3.47b) “De Morgan”
+— CalcCheck: ─ OK
+¬ true ≡ (¬ p ∨ ¬ q ≡ p ∧ ¬ q)
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+true ≡ (¬ p ∨ ¬ q ≡ ¬ (p ∧ ¬ q))
+≡ ⟨ “De Morgan” ⟩
+— CalcCheck: Found (3.47a) “De Morgan”,
+(3.47b) “De Morgan”
+— CalcCheck: ─ OK
+true ≡ (¬ p ∨ ¬ q ≡ ¬ p ∨ ¬ (¬ q))
+≡ ⟨ “Double negation” ⟩
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+true ≡ (¬ p ∨ ¬ q ≡ ¬ p ∨ q)
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+¬p∨¬q≡¬p∨q
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of ∨
+over ≡”
+— CalcCheck: ─ OK
+¬ p ∨ (¬ q ≡ q)
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+— CalcCheck: Found (3.15) “Definition of ¬ from
+≡”
+— CalcCheck: ─ OK
+¬ p ∨ false
+≡ ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+¬p
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[27]
+
+
+Theorem (3.49) “Semi-distributivity of ∧ over ≡”: p ∧ (q ≡ r)
+≡ (p ∧ q ≡ (p ∧ r ≡ p))
+Proof:
+Calculation for expected goal `p ∧ (q ≡ r) ≡ (p ∧ q ≡ (p ∧ r
+≡ p))`:
+p ∧ (q ≡ r) ≡ p ∧ q
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true ≡ (p ∧ (q ≡ r) ≡ p ∧ q)
+≡ ⟨ “Double negation” ⟩
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+¬ (¬ true) ≡ (p ∧ (q ≡ r) ≡ p ∧ q)
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+¬ true ≡ (¬ (p ∧ (q ≡ r)) ≡ p ∧ q)
+≡ ⟨ “De Morgan” ⟩
+— CalcCheck: Found (3.47a) “De Morgan”, (3.47b)
+“De Morgan”
+— CalcCheck: ─ OK
+¬ true ≡ (¬ p ∨ ¬ (q ≡ r) ≡ p ∧ q)
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+true ≡ (¬ p ∨ ¬ (q ≡ r) ≡ ¬ (p ∧ q))
+≡ ⟨ “De Morgan” ⟩
+— CalcCheck: Found (3.47a) “De Morgan”, (3.47b)
+“De Morgan”
+— CalcCheck: ─ OK
+true ≡ (¬ p ∨ ¬ (q ≡ r) ≡ ¬ p ∨ ¬ q)
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+¬ p ∨ ¬ (q ≡ r) ≡ ¬ p ∨ ¬ q
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of ∨ over
+≡”
+— CalcCheck: ─ OK
+¬ p ∨ (¬ (q ≡ r) ≡ ¬ q)
+≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+— CalcCheck: Found (3.9) “Commutativity of ¬ with
+≡”
+— CalcCheck: ─ OK
+¬ p ∨ ((¬ r ≡ q) ≡ ¬ q)
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1) “Associativity of ≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+¬ p ∨ ((¬ q ≡ q) ≡ ¬ r)
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+— CalcCheck: Found (3.15) “Definition of ¬ from ≡”
+— CalcCheck: ─ OK
+¬ p ∨ (false ≡ ¬ r)
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+
+
+Theorem (3.49) “Semi-distributivity of ∧
+Proof:
+p ∧ (q ≡ r) ≡ p ∧ q
+≡ ⟨“Identity of ≡”⟩
+true ≡ p ∧ (q ≡ r) ≡ p ∧ q
+≡ ⟨“Double negation”⟩
+¬ ¬ true ≡ p ∧ (q ≡ r) ≡ p ∧ q
+≡ ⟨“¬ connection”⟩
+¬ true ≡ ¬ (p ∧ (q ≡ r)) ≡ p ∧ q
+≡ ⟨“De Morgan”⟩
+¬ true ≡ (¬ p ∨ ¬ (q ≡ r)) ≡ p ∧ q
+≡ ⟨“¬ connection”⟩
+true ≡ (¬ p ∨ ¬ (q ≡ r)) ≡ ¬ (p ∧ q)
+≡ ⟨“De Morgan”⟩
+true ≡ (¬ p ∨ ¬ (q ≡ r)) ≡ (¬ p ∨ ¬
+≡ ⟨“Identity of ≡”⟩
+(¬ p ∨ ¬ (q ≡ r)) ≡ (¬ p ∨ ¬ q)
+≡ ⟨“Distributivity of ∨ over ≡”⟩
+(¬ p ∨ (¬ (q ≡ r) ≡ ¬ q))
+≡ ⟨“Commutativity of ¬ with ≡”⟩
+¬ p ∨ ((¬ r ≡ q) ≡ ¬ q)
+≡ ⟨“Associativity of ≡”⟩
+¬ p ∨ ((¬ q ≡ q) ≡ ¬ r)
+≡ ⟨“Definition of ¬ from ≡”⟩
+¬ p ∨ ((false) ≡ ¬ r)
+≡ ⟨“Distributivity of ∨ over ≡”⟩
+(¬ p ∨ false) ≡ (¬ p ∨ ¬ r)
+≡ ⟨“Identity of ∨”⟩
+¬ p ≡ (¬ p ∨ ¬ r)
+≡ ⟨“¬ connection”⟩
+p ≡ ¬ (¬ p ∨ ¬ r)
+≡ ⟨“De Morgan”⟩
+p ≡ (¬ ¬ p ∧ ¬ ¬ r)
+≡ ⟨“Double negation”⟩
+p ≡ (p ∧ r)
+
+
+— CalcCheck: Found (3.27) “Distributivity of ∨ over
+≡”
+— CalcCheck: ─ OK
+¬ p ∨ false ≡ ¬ p ∨ ¬ r
+≡ ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+¬p≡¬p∨¬r
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+p ≡ ¬ (¬ p ∨ ¬ r)
+≡ ⟨ “De Morgan” ⟩
+— CalcCheck: Found (3.47a) “De Morgan”, (3.47b)
+“De Morgan”
+— CalcCheck: ─ OK
+p ≡ ¬ (¬ p) ∧ ¬ (¬ r)
+≡ ⟨ “Double negation” ⟩
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+p≡p∧r
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[28]
+
+
+Theorem (3.50) “Strong modus monens for ≡”: p ∧
+Proof:
+p ∧ (q ≡ p)
+≡ ⟨“Semi-distributivity of ∧ over ≡”⟩
+(p ∧ q) ≡ (p ∧ p) ≡ p
+≡ ⟨“Idempotency of ∧”⟩
+(p ∧ q) ≡ p ≡ p
+≡ ⟨“Identity of ≡”⟩
+(p ∧ q)
+
+
+Theorem (3.50) “Strong modus monens for ≡”: p ∧ (q
+≡ p) ≡ p ∧ q
+Proof:
+Calculation for expected goal `p ∧ (q ≡ p) ≡ p ∧ q`:
+p ∧ (q ≡ p)
+≡ ⟨ “Semi-distributivity of ∧ over ≡” ⟩
+— CalcCheck: Found (3.49) “Semidistributivity of ∧ over ≡”
+— CalcCheck: ─ OK
+p ∧ q ≡ (p ∧ p ≡ p)
+≡ ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of
+∧”
+— CalcCheck: ─ OK
+p ∧ q ≡ (p ≡ p)
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+p∧q
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[29]
+
+
+Theorem (3.51) “Replacement”: (p ≡ q) ∧ (r ≡ p
+Proof:
+(p ≡ q) ∧ (r ≡ p)
+≡ ⟨“Semi-distributivity of ∧ over ≡”⟩
+(p ≡ q) ∧ r ≡ (p ≡ q) ∧ p ≡ (p ≡ q)
+≡ ⟨“Semi-distributivity of ∧ over ≡”⟩
+(p ∧ r) ≡ (r ∧ q) ≡ r ≡ (p ∧ p) ≡ (p ∧ q)
+≡ ⟨“Idempotency of ∧”⟩
+(p ∧ r) ≡ (r ∧ q) ≡ r ≡ p ≡ (p ∧ q) ≡ p ≡
+≡ ⟨“Identity of ≡”⟩
+(p ∧ r) ≡ (r ∧ q) ≡ r ≡ p ≡ (p ∧ q) ≡ p ≡
+≡ ⟨“Semi-distributivity of ∧ over ≡”⟩
+(p ∧ r) ≡ q ∧ (r ≡ p) ≡ r ≡ p ≡ p ≡ (p ≡ q
+≡ ⟨“Identity of ≡”⟩
+(p ∧ r) ≡ q ∧ (r ≡ p) ≡ r ≡ (p ≡ q) ≡ q
+≡ ⟨“Associativity of ≡”⟩
+(p ∧ r) ≡ q ∧ (r ≡ p) ≡ (p ≡ q) ≡ (r ≡ q)
+
+
+Theorem (3.51) “Replacement”: (p ≡ q) ∧ (r ≡ p) ≡ (p
+≡ q) ∧ (r ≡ q)
+Proof:
+Calculation for expected goal `(p ≡ q) ∧ (r ≡ p) ≡ (p
+≡ q) ∧ (r ≡ q)`:
+(p ≡ q) ∧ (r ≡ p)
+≡ ⟨ “Semi-distributivity of ∧ over ≡” ⟩
+— CalcCheck: Found (3.49) “Semi-distributivity
+of ∧ over ≡”
+— CalcCheck: ─ OK
+(p ≡ q) ∧ r ≡ ((p ≡ q) ∧ p ≡ (p ≡ q))
+≡ ⟨ “Semi-distributivity of ∧ over ≡” ⟩
+— CalcCheck: Found (3.49) “Semi-distributivity
+of ∧ over ≡”
+— CalcCheck: ─ OK
+p ∧ r ≡ (r ∧ q ≡ (r ≡ (p ∧ p ≡ (p ∧ q ≡ (p ≡ (p ≡
+q))))))
+≡ ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of
+∧”
+— CalcCheck: ─ OK
+p ∧ r ≡ (r ∧ q ≡ (r ≡ (p ≡ (p ∧ q ≡ (p ≡ (p ≡ q))))))
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+p ∧ r ≡ (r ∧ q ≡ (r ≡ (p ≡ (p ∧ q ≡ (p ≡ ((p ≡ q) ≡
+(q ≡ q)))))))
+≡ ⟨ “Semi-distributivity of ∧ over ≡” ⟩
+— CalcCheck: Found (3.49) “Semi-distributivity
+of ∧ over ≡”
+— CalcCheck: ─ OK
+p ∧ r ≡ (q ∧ (r ≡ p) ≡ (r ≡ (p ≡ (p ≡ ((p ≡ q) ≡
+q)))))
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+p ∧ r ≡ (q ∧ (r ≡ p) ≡ (r ≡ ((p ≡ q) ≡ q)))
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1) “Associativity of ≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+p ∧ r ≡ (q ∧ (r ≡ p) ≡ ((p ≡ q) ≡ (r ≡ q)))
+— CalcCheck: Could not match calculation with stated
+goal.
+
+
+[30]
+
+
+Theorem (3.52) “Alternative definition of ≡”: p ≡ (q ≡ (p
+∧ q) ∨ (¬ p ∧ ¬ q))
+Proof:
+Calculation for expected goal `p ≡ (q ≡ (p ∧ q) ∨ (¬ p ∧
+¬ q))`:
+(p ∧ q) ∨ (¬ p ∧ ¬ q)
+≡ ⟨ “Distributivity of ∨ over ∧” ⟩
+— CalcCheck: Found (3.45) “Distributivity of ∨
+over ∧”
+— CalcCheck: A cycle of length 8 begins here.
+— CalcCheck: ─ OK
+((p ∧ q) ∨ ¬ p) ∧ ((p ∧ q) ∨ ¬ q)
+≡ ⟨ “Distributivity of ∨ over ∧” ⟩
+— CalcCheck: Found (3.45) “Distributivity of ∨
+over ∧”
+— CalcCheck: A cycle of length 8 begins here.
+— CalcCheck: ─ OK
+((p ∨ ¬ p) ∧ (q ∨ ¬ p)) ∧ ((p ∨ ¬ q) ∧ (q ∨ ¬ q))
+≡ ⟨ “Excluded middle” ⟩
+— CalcCheck: Found (3.28) “Excluded middle”
+— CalcCheck: A cycle of length 8 begins here.
+— CalcCheck: ─ OK
+(true ∧ (q ∨ ¬ p)) ∧ ((p ∨ ¬ q) ∧ true)
+≡ ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: A cycle of length 8 begins here.
+— CalcCheck: ─ OK
+(q ∨ ¬ p) ∧ (p ∨ ¬ q)
+≡ ⟨ “Distributivity of ∧ over ∨” ⟩
+— CalcCheck: Found “Distributivity of ∧ over ∨”
+— CalcCheck: A cycle of length 8 begins here.
+— CalcCheck: ─ OK
+((q ∨ ¬ p) ∧ p) ∨ ((q ∨ ¬ p) ∧ ¬ q)
+≡ ⟨ “Distributivity of ∧ over ∨” ⟩
+— CalcCheck: Found “Distributivity of ∧ over ∨”
+— CalcCheck: ─ OK
+((q ∧ p) ∨ (¬ p ∧ p)) ∨ ((q ∧ ¬ q) ∨ (¬ p ∧ ¬ q))
+≡ ⟨ “Contradiction” ⟩
+— CalcCheck: Found (3.42) “Contradiction”
+— CalcCheck: ─ OK
+((q ∧ p) ∨ false) ∨ (false ∨ (¬ p ∧ ¬ q))
+≡ ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+(q ∧ p) ∨ (¬ p ∧ ¬ q)
+≡ ⟨ “Distributivity of ∨ over ∧” ⟩
+— CalcCheck: Found (3.45) “Distributivity of ∨
+over ∧”
+— CalcCheck: ─ OK
+((q ∧ p) ∨ ¬ p) ∧ ((q ∧ p) ∨ ¬ q)
+≡ ⟨ “Distributivity of ∨ over ∧” ⟩
+— CalcCheck: Found (3.45) “Distributivity of ∨
+over ∧”
+— CalcCheck: ─ OK
+((q ∨ ¬ p) ∧ (p ∨ ¬ p)) ∧ ((q ∨ ¬ q) ∧ (p ∨ ¬ q))
+≡ ⟨ “Excluded middle” ⟩
+
+
+Theorem (3.52) “Alternative definition of
+Proof:
+(p ∧ q) ∨ (¬ p ∧ ¬ q)
+≡ ⟨“Distributivity of ∨ over ∧”⟩
+((p ∧ q) ∨ ¬ p) ∧ ((p ∧ q) ∨ ¬ q)
+≡ ⟨“Distributivity of ∨ over ∧”⟩
+((p ∨ ¬ p) ∧ (q ∨ ¬ p)) ∧ ((p ∨ ¬ q)
+≡ ⟨“Excluded middle”⟩
+(true ∧ (q ∨ ¬ p)) ∧ ((p ∨ ¬ q) ∧ tru
+≡ ⟨“Identity of ∧”⟩
+((q ∨ ¬ p)) ∧ ((p ∨ ¬ q))
+≡ ⟨“Distributivity of ∧ over ∨”⟩
+((q ∨ ¬ p) ∧ p) ∨ ((q ∨ ¬ p) ∧ ¬ q)
+≡ ⟨“Distributivity of ∧ over ∨”⟩
+((q ∧ p) ∨ (¬ p ∧ p)) ∨ ((q ∧ ¬ q) ∨
+≡ ⟨“Contradiction”⟩
+((q ∧ p) ∨ false) ∨ (false ∨ (¬ p ∧ ¬
+≡ ⟨“Identity of ∨”⟩
+(q ∧ p) ∨ (¬ p ∧ ¬ q)
+≡ ⟨“Distributivity of ∨ over ∧”⟩
+((q ∧ p) ∨ ¬ p) ∧ ((q ∧ p) ∨ ¬ q)
+≡ ⟨“Distributivity of ∨ over ∧”⟩
+((q ∨ ¬ p) ∧ (p ∨ ¬ p)) ∧ ((q ∨ ¬ q)
+≡ ⟨“Excluded middle”⟩
+((q ∨ ¬ p) ∧ true) ∧ (true ∧ (p ∨ ¬ q
+≡ ⟨“Identity of ∧”⟩
+((q ∨ ¬ p)) ∧ ((p ∨ ¬ q))
+
+[31]
+
+1,1
+
+— CalcCheck: Found (3.28) “Excluded middle”
+— CalcCheck: ─ OK
+((q ∨ ¬ p) ∧ true) ∧ (true ∧ (p ∨ ¬ q))
+≡ ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+(q ∨ ¬ p) ∧ (p ∨ ¬ q)
+— CalcCheck: Could not match calculation with stated
+goal.
+
+Theorem (3.53) “Exclusive or” “Alterna Theorem (3.53) “Exclusive or” “Alternative definition of ≢”: (p ≢
+q) ≡ (¬ p ∧ q) ∨ (p ∧ ¬ q)
+(p ≢q) ≡ (¬ p ∧ q) ∨ (p ∧ ¬ q)
+Proof:
+Proof:
+Calculation for expected goal `(p ≢ q) ≡ (¬ p ∧ q) ∨ (p ∧ ¬ q)`:
+(¬ p ∧ q) ∨ (p ∧ ¬ q)
+(¬ p ∧ q) ∨ (p ∧ ¬ q)
+≡ ⟨“Distributivity of ∨ over ∧”⟩
+≡ ⟨ “Distributivity of ∨ over ∧” ⟩
+((¬ p ∧ q) ∨ p) ∧ ((¬ p ∧ q) ∨ ¬ q
+— CalcCheck: Found (3.45) “Distributivity of ∨ over ∧”
+≡ ⟨“Distributivity of ∨ over ∧”⟩
+— CalcCheck: ─ OK
+((¬ p ∨ p) ∧ q ∨ p)) ∨ p) ∧ ((¬ p
+((¬ p ∧ q) ∨ p) ∧ ((¬ p ∧ q) ∨ ¬ q)
+≡ ⟨ “Distributivity of ∨ over ∧” ⟩
+— CalcCheck: Found (3.45) “Distributivity of ∨ over ∧”
+— CalcCheck: Due to parse error in the expression below,
+this calculation step cannot be checked.
+⟪ Parse error: (line 8, column 22):
+unexpected "p"
+expecting white space, or "╍╍╍"
+Missing parentheses: _∧_ does not associate with _∨_
+⟫
+— CalcCheck: 1 out of 2 steps not justified
+— CalcCheck: Could not match calculation with stated goal.
+
+
+[32]
+
+
+Theorem (3.55): (p ∧ q) ∧ r ≡ p ≡ q ≡ r
+
+Theorem (3.55): (p ∧ q) ∧ r ≡ (p ≡ (q ≡ (r ≡ (p ∨ q ≡ (q ∨ r ≡ (r
+∨ p ≡ p ∨ (q ∨ r)))))))
+— CalcCheck: Theorem (3.55): Proof missing!
+
+Check and Save
+
+
+Save
+
+

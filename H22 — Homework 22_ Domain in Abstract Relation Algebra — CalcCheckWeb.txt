@@ -1,0 +1,414 @@
+[1]
+
+The Reference Notebooks containing our previous development of abstract relation algebra involving ⊆, ⨾, ˘, and ∩ are preloaded here, and also
+Exercise 11.4 which adds the modal rules and the Dedekind rule.
+Be aware that composition ⨾ has higher precedence than intersection ∩!
+As in Ex11.4, the monotonicity properties of the relation operations are activated here, and the keyword Monotonicity is enabled: Where
+before you had to write
+S ˘ ⨾ R ˘ ⨾ R ⨾ S
+⊆⟨ “Monotonicity of ⨾” with “Monotonicity of ⨾” with
+Assumption `R ˘ ⨾ R ⊆ 𝕀`, “Identity of ⨾” ⟩
+S ˘ ⨾ S
+you now can just write the following:
+S ˘ ⨾ R ˘ ⨾ R ⨾ S
+⊆⟨ Monotonicity with Assumption `R ˘ ⨾ R ⊆ 𝕀`, “Identity of ⨾” ⟩
+S ˘ ⨾ S
+This Monotonicity is a keyword (like Evaluation and Assumption), not a theorem name, and therefore has to be used without quotation
+marks. It only makes sense before with.
+Antisymmetry of inclusion ⊆ is also activated here, so that instead of
+
+
+Using “Mutual inclusion”:
+Subproof for `R ⊆ S`:
+...
+Subproof for `S ⊆ R`:
+...
+you can now write:
+R
+⊆⟨ ... ⟩
+S
+⊆⟨ ... ⟩
+R
+for a proof of R = S.
+[2]
+
+Antisymmetry of inclusion ⊆ is also activated here, so that instead of
+Using “Mutual inclusion”:
+Subproof for `R ⊆ S`:
+...
+Subproof for `S ⊆ R`:
+...
+you can now write:
+R
+⊆⟨ ... ⟩
+S
+⊆⟨ ... ⟩
+R
+for a proof of R = S.
+
+[3]
+
+Prove all theorems below — these are a selection from Reference Notebook “Abstract RA: Domain dom”, and some of the additional theorems
+there may come in useful here.
+Where the theorems you prove have numbers, you are not allowed to use numbered theorems with equal or larger numbers (or
+theorems occurring after the current theorem in this notebook).
+(Theorems with larger numbers may still be offered by theorem name completion, but will not be accepted by the proof checker.)
+
+
+Even though theorem numbers are relevant for which theorems you are allowed to use, you still do not have to refer to theorems by their
+numbers — it remains preferred that you refer to named theorems by (one of) their names.
+Up to four hint items are allowed per hint.
+You should not need to introduce additional auxiliary theorems.
+
+[4]
+
+[5]
+
+[6]
+
+[7]
+
+Before you start, you want to be generally familiar with the content of the “Abstract RA” Reference Notebooks, and have worked through a
+good portion of Exercises 11.1 to 11.4.
+
+We start with proving additional useful properties of subidentities (which are also called “coreflexives”):
+
+Useful Properties of Subidentities
+
+Theorem (dom.100) “Converse of subidentity”: q ⊆ 𝕀
+Proof:
+Assuming `q ⊆ 𝕀`:
+q ˘
+⊆⟨ “Monotonicity of ˘” with assumption `q ⊆ 𝕀`⟩
+𝕀 ˘
+=⟨ “Converse of 𝕀”⟩
+𝕀
+
+
+⇒
+
+q ˘ ⊆ 𝕀
+
+
+[8]
+
+
+Theorem (dom.101) “Subidentity included in ˘”: q ⊆ 𝕀 ⇒ q ⊆ q ˘
+Proof:
+Assuming `q ⊆ 𝕀`:
+q
+=⟨ “Idempotency of ∩”⟩
+q ∩ q
+=⟨ “Identity of ⨾”⟩
+(𝕀 ⨾ q ) ∩ q
+⊆⟨ “Dedekind rule” ⟩
+(𝕀 ∩ q ⨾ q ˘) ⨾ (q ∩ 𝕀 ˘ ⨾ q )
+=⟨ “Converse of 𝕀” , “Identity of ⨾” , “Idempotency of ∩” ⟩
+(𝕀 ∩ q ⨾ q ˘) ⨾ (q)
+⊆⟨ “Monotonicity of ⨾” with assumption `q ⊆ 𝕀` ⟩
+(𝕀 ∩ q ⨾ q ˘) ⨾ (𝕀)
+=⟨ “Identity of ⨾” ⟩
+(𝕀 ∩ q ⨾ q ˘)
+⊆⟨ “Monotonicity of ∩” with “Monotonicity of ⨾” with assumption `q ⊆
+(𝕀 ∩ 𝕀 ⨾ q ˘)
+=⟨ “Identity of ⨾”⟩
+(𝕀 ∩ q ˘)
+⊆⟨ “Weakening for ∩”⟩
+q ˘
+
+
+[9]
+
+
+Theorem (dom.102) “Symmetry of subidentity”: q ⊆ 𝕀 ⇒ q ˘ = q
+Proof:
+Assuming `q ⊆ 𝕀`:
+Using “Mutual inclusion”:
+Subproof for `q ˘ ⊆ q`:
+q ˘
+=⟨ “Idempotency of ∩”⟩
+q ˘ ∩ q ˘
+=⟨ “Identity of ⨾”⟩
+(𝕀 ⨾ q ˘) ∩ q ˘
+⊆⟨ “Dedekind rule” ⟩
+(𝕀 ∩ q ˘ ⨾ q ˘ ˘) ⨾ (q ˘ ∩ 𝕀 ˘ ⨾ q ˘)
+=⟨ “Converse of 𝕀” , “Self-inverse of ˘” ⟩
+(𝕀 ∩ q ˘ ⨾ q) ⨾ (q ˘ ∩ 𝕀 ⨾ q ˘)
+⊆⟨ “Monotonicity of ⨾” with “Monotonicity of ∩” with “Monotonici
+(𝕀 ∩ q ˘ ⨾ q) ⨾ (q ˘ ∩ 𝕀 ⨾ 𝕀 ˘)
+=⟨ “Converse of 𝕀” , “Identity of ⨾” ⟩
+(𝕀 ∩ q ˘ ⨾ q) ⨾ (q ˘ ∩ 𝕀)
+⊆⟨ “Monotonicity of ⨾” with “Monotonicity of ∩” with “Monotonici
+(𝕀 ∩ 𝕀 ˘ ⨾ q) ⨾ (q ˘ ∩ 𝕀)
+=⟨ “Converse of 𝕀” , “Identity of ⨾”⟩
+(𝕀 ∩ q) ⨾ (q ˘ ∩ 𝕀)
+⊆⟨ “Monotonicity of ⨾” with “Monotonicity of ∩” with “Monotonici
+(𝕀 ∩ q) ⨾ (𝕀 ˘ ∩ 𝕀)
+=⟨ “Converse of 𝕀” , “Idempotency of ∩” , “Identity of ⨾”⟩
+(𝕀 ∩ q)
+⊆⟨“Weakening for ∩”⟩
+q
+Subproof for `q ⊆ q ˘`:
+By “Subidentity included in ˘” with assumption `q ⊆ 𝕀`
+
+
+[10]
+
+
+Theorem (dom.103) “Idempotency of subidentity”: q ⊆ 𝕀 ⇒ q ⨾ q = q
+Proof:
+Assuming `q ⊆ 𝕀`:
+Using “Mutual inclusion”:
+Subproof for `q ⨾ q ⊆ q`:
+q ⨾ q
+⊆⟨ “Monotonicity of ⨾” with assumption `q ⊆ 𝕀`⟩
+𝕀 ⨾ q
+=⟨ “Identity of ⨾”⟩
+q
+Subproof for `q ⊆ q ⨾ q`:
+q
+=⟨ “Idempotency of ∩” ⟩
+q ∩ q
+=⟨ “Identity of ⨾” ⟩
+𝕀 ⨾ q ∩ q
+⊆⟨ “Dedekind rule” ⟩
+(𝕀 ∩ q ⨾ q ˘) ⨾ (q ∩ 𝕀 ˘ ⨾ q)
+=⟨ “Converse of 𝕀” , “Identity of ⨾” , “Idempotency of ∩” ⟩
+(𝕀 ∩ q ⨾ q ˘) ⨾ (q)
+⊆⟨ “Monotonicity of ⨾” with “Monotonicity of ∩” with “Monotonicit
+(𝕀 ∩ 𝕀 ⨾ q ˘) ⨾ (q)
+=⟨ “Identity of ⨾” ⟩
+(𝕀 ∩ q ˘) ⨾ (q)
+=⟨ “Symmetry of subidentity” with assumption `q ⊆ 𝕀` ⟩
+(𝕀 ∩ q) ⨾ (q)
+⊆⟨ “Monotonicity of ⨾” with “Weakening for ∩” ⟩
+q ⨾ q
+
+
+[11]
+
+
+Theorem (dom.107) “Sub-commutativity of subidentities”:
+p ⊆ 𝕀 ∧ q ⊆ 𝕀
+⇒
+p ⨾ q ⊆ q ⨾ p
+Proof:
+Assuming `p ⊆ 𝕀`:
+Assuming `q ⊆ 𝕀`:
+p ⨾ q
+=⟨“Idempotency of subidentity” with assumption `p ⊆ 𝕀` , “Idempoten
+(p ⨾ p) ⨾ (q ⨾ q)
+=⟨ “Associativity of ⨾” ⟩
+(p ⨾ (q ⨾ q) ⨾ p)
+=⟨ “Associativity of ⨾” ⟩
+=⟨“Identity of ⨾” ⟩
+q ⨾ 𝕀
+⊆⟨ assumption `p ⊆ 𝕀`
+q ⨾ p
+
+[12]
+
+⟩
+
+Theorem (dom.108) “Commutativity of subidentities”:
+p ⊆ 𝕀 ∧ q ⊆ 𝕀
+⇒
+p ⨾ q = q ⨾ p
+Proof:
+Assuming `p ⊆ 𝕀 ∧ q ⊆ 𝕀`:
+Using “Mutual inclusion”:
+Subproof for `p ⨾ q ⊆ q ⨾ p`:
+By “Sub-commutativity of subidentities” with assumption `p ⊆ 𝕀
+Subproof for ` q ⨾ p ⊆ p ⨾ q`:
+q ⨾ p
+⊆⟨ “Sub-commutativity of subidentities” with assumption `p ⊆ 𝕀 ∧
+p ⨾ q
+
+
+[13]
+
+
+Theorem (dom.109) “Modal rule with injective”:
+injective Q ⇒
+Q ⨾ R ∩ S = Q ⨾ (R ∩ Q ˘ ⨾ S)
+Proof:
+Assuming `injective Q` and using with “Definition of injectivity”:
+Q ⨾ R ∩ S
+⊆⟨ “Dedekind rule”⟩
+(Q ∩ S ⨾ R ˘) ⨾ (R ∩ Q ˘ ⨾ S)
+
+[14]
+
+Domain via Intersection, Composition, and Converse
+[15]
+
+In the abstract relation-algebraic setting, we are only dealing with types A ↔ B that we understand to be populated by relations; we do not have
+anything corresponding to the set types of set theory, and therefore we have no direct way to express Dom, ◁, ⦇_⦈, etc..
+One candidate for “relations representing sets” are subidentities: In set theory, id A is a relation that can just serve as a representation of set A,
+and we have seen that this allows us to define ◁:
+Theorem (14.237) “Domain restriction via ⨾”:
+
+A ◁ R
+
+=
+
+id A ⨾ R
+
+In the abstract relation-algebraic setting, the role of the operation
+Dom : (A ↔ B) → set A
+is taken by the new operation
+dom : (A ↔ B) → (A ↔ A)
+taking each relation R to the subidentity relation representing the set Dom R:
+
+[16]
+
+[17]
+
+Declaration: dom : (A ↔ B) → (A ↔ A)
+Declaration: ran : (A ↔ B) → (B ↔ B)
+
+These operations dom and ran can be defined via intersection, composition, and converse:
+
+
+[18]
+
+[19]
+
+[20]
+
+[21]
+
+[22]
+
+[23]
+
+[24]
+
+
+Axiom (dom.200) “`dom` via ∩” “Relation-algebraic definition of `dom`”:
+dom R = R ⨾ R ˘ ∩ 𝕀
+
+Axiom (dom.201) “`ran` via ∩” “Relation-algebraic definition of `ran`”:
+ran R = R ˘ ⨾ R ∩ 𝕀
+
+The remainder of this notebook contains a selection of theorems the same sequence as in Reference Notebook “Subidentity Relations in Set
+Theory”. However, here these need to be proven in the very different setting of abstract relation algebra (that is, no _⦗_⦘_, no “Relation
+extensionality”).
+
+The operators dom and ran are ˘-dual to each other:
+
+Theorem (dom.202) “`dom` of converse” “`ran` via `dom`”: dom (R ˘) = ran R
+Proof:
+dom (R ˘)
+=⟨ “`dom` via ∩” , “Self-inverse of ˘” , “`ran` via ∩”⟩
+ran R
+
+Theorem (dom.203) “`ran` of converse” “`dom` via `ran`”: ran (R ˘) = dom R
+Proof:
+ran (R ˘)
+=⟨ “`ran` via ∩” , “Self-inverse of ˘” , “`dom` via ∩”⟩
+dom R
+
+Due to this duality, the proofs for properties of ran can frequently be made much shorter than the proofs for the corresponding properties of
+dom, by just invoking the property of dom and adapting for the ˘-duality. (As far as the dom property has to be proven first…)
+
+
+[25]
+
+[26]
+
+[27]
+
+
+Theorem (dom.204) “Subidentity `dom`”:
+Proof:
+dom R
+=⟨ “`dom` via ∩”⟩
+R ⨾ R ˘ ∩ 𝕀
+⊆⟨ “Weakening for ∩”⟩
+𝕀
+
+dom R ⊆ 𝕀
+
+Theorem (dom.205) “Subidentity `ran`”:
+Proof:
+ran R
+=⟨ “`ran` via ∩”⟩
+R ˘ ⨾ R ∩ 𝕀
+⊆⟨ “Weakening for ∩”⟩
+𝕀
+
+ran R ⊆ 𝕀
+
+Theorem (dom.206) “Symmetry of `dom`” “Converse of `dom`”:
+(dom R) ˘ = dom R
+Proof:
+(dom R) ˘
+=⟨ “`dom` via ∩”⟩
+(R ⨾ R ˘ ∩ 𝕀) ˘
+=⟨ “Converse of ∩” , “Converse of 𝕀” , “Converse of ⨾” , “Self-inverse of
+(R ⨾ R ˘) ∩ 𝕀
+=⟨ “`dom` via ∩”⟩
+dom R
+
+
+[28]
+
+[29]
+
+
+Theorem (dom.212) “Absorption of `dom`”: dom R ⨾ R = R
+Proof:
+dom R ⨾ R
+⊆⟨ “Monotonicity of ⨾” with “Subidentity `dom`”⟩
+𝕀 ⨾ R
+=⟨ “Identity of ⨾”⟩
+R
+
+Theorem (dom.213) “Absorption of `ran`”: R ⨾ ran R = R
+Proof:
+R ⨾ ran R
+⊆⟨ “Monotonicity of ⨾” with “Subidentity `ran`”⟩
+R ⨾ 𝕀
+=⟨ “Identity of ⨾”⟩
+R
+
+
+[30]
+
+
+Theorem (dom.220) “Least left-preserver is `dom`”:
+d ⊆ 𝕀 ∧ R ⊆ d ⨾ R ⇒ dom R ⊆ d
+Proof:
+Assuming `d ⊆ 𝕀`:
+Assuming `R ⊆ d ⨾ R`:
+dom R ⊆ d
+=⟨ “`dom` via ∩”⟩
+(R ⨾ R ˘ ∩ 𝕀) ⊆ d
+=⟨ assumption `d ⊆ 𝕀`⟩
+(R ⨾ R ˘ ∩ 𝕀) ⊆ 𝕀
+=⟨ assumption `d ⊆ 𝕀`⟩
+
+=⟨ ? ⟩
+true
+
+[31]
+
+Theorem (dom.221) “Least right-preserver is `ran`”:
+d ⊆ 𝕀 ∧ R ⊆ R ⨾ d ⇒ ran R ⊆ d
+Proof:
+Assuming `d ⊆ 𝕀`:
+Assuming `R ⊆ R ⨾ d`:
+ran R
+=⟨ “`ran` via ∩”⟩
+R ˘ ⨾ R ∩ 𝕀
+=⟨ “Identity of ∧” with assumption `d ⊆ 𝕀`⟩
+(d ⊆ 𝕀) ∧ (R ˘ ⨾ R ∩ 𝕀)
+
+
+Check and Save
+
+
+Save
+
+

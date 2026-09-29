@@ -1,0 +1,855 @@
+[1]
+
+Welcome to 2LC3!
+In this class we aim to teach you to reason effectively by starting out with making all reasoning steps explicitly
+clear.
+Some calculations were shown in the first lecture; the general shape of a calculation is a sequence of expressions,
+where two consecutive expressions are separated by a calculation operator (such as = or ≡ or ⇒) and a hint
+enclosed in angle brackets “⟨” and “⟩”, which in this role are also referred to as hint brackets:
+Calculation:
+⟪expression⟫
+⟪calcOp⟫⟨ ⟪hint⟫ ⟩
+⟪expression⟫
+⟪calcOp⟫⟨ ⟪hint⟫ ⟩
+...
+⟪calcOp⟫⟨ ⟪hint⟫ ⟩
+⟪expression⟫
+In this kind of presentation, a hint between two expressions needs to justify that these two expressions are related
+via the calculation operator. For example:
+
+[2]
+
+[3]
+
+Calculation:
+p
+⇒⟨ “Reflexivity of ⇒” ⟩
+p
+
+Calculation:
+p
+⇒ ⟨ “Reflexivity of ⇒” ⟩
+— CalcCheck: Found (3.80.1) “Reflexivity of ⇒ wrt. ≡”,
+(3.71) “Reflexivity of ⇒”
+— CalcCheck: ─ OK
+p
+— CalcCheck: All steps OK
+
+With focus on the previous “code cell” (the box containing that calculation), you can hit Ctrl-Enter to have the
+server perform a syntax check of that cell (and all those before it).
+Try that!
+You’ll see to the right the result of the syntax check, which is a rendering of the cell contents as parsed by the
+server if that parse was successful. Otherwise you will see parse errors indicated.
+You can try that, too, by, for example, randomly adding single parentheses or operators in different places — do
+try that! please look carefully at the parse errors, since usually they indicate quite precisely where and what the
+
+
+problem is.
+(After you experiment with parse errors, restore the original content of the cell above:
+Calculation:
+p
+⇒⟨ “Reflexivity of ⇒” ⟩
+p
+)
+As you will have guessed by now, indentation is relevant, similar to Haskell. For the next level, two additional
+spaces of indentation are needed.
+Again with focus on a code cell — try the one containing the calculation above — you can hit Ctrl-Alt-Enter
+to have the server perform a proof check of that cell (and all those before it).
+
+[4]
+
+[5]
+
+[6]
+
+[7]
+
+[8]
+
+Calculation:
+p ∧ p
+≡⟨ “Idempotency of ∧” ⟩
+p
+
+Calculation:
+p∧p
+≡ ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency
+of ∧”
+— CalcCheck: ─ OK
+p
+— CalcCheck: All steps OK
+
+(We are using “≡” for equivalence of propositions, not the “bi-implication” symbol “⇔”.)
+
+Calculation:
+3 · (x + y)
+=⟨ “Distributivity of · over +” ⟩
+3 · x + 3 · y
+
+Calculation:
+3 · (x + y)
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of ·
+over +”
+— CalcCheck: ─ OK
+3 ·x+ 3 ·y
+— CalcCheck: All steps OK
+
+(As in Haskell, juxtaposition will be used for function application. That is, “f x” is the expression denoting
+application of function f to argument x. Multiplication of numbers will always use the infix operator “·”, which
+you obtain by typing “\.” or “\cdot”.)
+
+In these three example calculations, each hint consists just of a single theorem reference. The most frequent kind
+of theorem reference is via a theorem name enclosed in “pretty double quotes” 🙶 and ”.
+
+
+While typing in hints, you can use theorem name completion by typing first the plain double-quote character “"”,
+then at least the first three characters of the theorem name, and then hitting the TAB key — see “Getting Started
+with CalcCheckWeb” for details, and start familiarising yourself with that document.
+
+[9]
+
+The last of the three calculations above is set in the context of integers, for which we use the type symbol “ℤ”.
+The infix operators for addition and multiplication have been declared as follows:
+Declaration: _+_ : ℤ → ℤ → ℤ
+Declaration: _·_ : ℤ → ℤ → ℤ
+For the basic laws for these, we follow the presentation in chapter 15 of LADM:
+Axiom (15.1) (15.1a) “Associativity of +”: (a + b) + c = a + (b + c)
+Axiom (15.1) (15.1b) “Associativity of ·”: (a · b) · c = a · (b · c)
+Axiom (15.2) (15.2a) “Symmetry of +”: a + b = b + a
+Axiom (15.2) (15.2b) “Symmetry of ·”: a · b = b · a
+Axiom (15.3) “Additive identity” “Identity of +”: 0 + a = a
+Axiom (15.4) “Multiplicative identity” “Identity of ·”: 1 · a = a
+Axiom (15.5) “Distributivity” “Distributivity of · over +”: a · (b + c) = a · b + a · c
+Axiom (15.9) “Zero of ·”: a · 0 = 0
+In particular for theorems following LADM, we will be listing also theorem numners, such as (15.3). Theorem
+numbers can also be used as theorem references; these include the round parentheses, and never contain spaces.
+For example:
+
+[10]
+
+[11]
+
+Calculation:
+1 · (x + y)
+=⟨ (15.4) ⟩
+x + y
+
+Calculation:
+1 · (x + y)
+= ⟨ (15.4) ⟩
+— CalcCheck: Found (15.4) “Multiplicative
+identity”
+— CalcCheck: ─ OK
+x+ y
+— CalcCheck: All steps OK
+
+However, only using theorem numbers generally makes for proofs that are not very readable. Using theorem
+names is therefore strongly preferred.
+You can use both, in either sequence, for documentation and/or disambiguation:
+
+[12]
+
+[13]
+
+Calculation:
+3 · (x · y)
+=⟨ “Associativity of ·” (15.1) ⟩
+(3 · x) · y
+
+Calculation:
+3 · (x · y)
+= ⟨ “Associativity of ·” (15.1) ⟩
+— CalcCheck: Found (15.1b) “Associativity
+of ·”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(3 · x) · y
+— CalcCheck: All steps OK
+
+The symbol “-” is used, as usual in mathematics, both as a unary prefix operator and as a binary infix operator:
+
+
+Declaration: -_ : ℤ → ℤ
+Declaration: _-_ : ℤ → ℤ → ℤ
+The basic laws for these are:
+Axiom (15.13) “Unary minus”: a + (- a) = 0
+Axiom (15.14) “Subtraction”: a - b = a + (- b)
+
+[14]
+
+[15]
+
+[16]
+
+With these theorems in hand, you can already calculate a lot. However, what you might expect to be
+straightforward simplification calculations may end up being rather unintuitive — nevertheless, make sure you
+understand each step!
+
+Calculation:
+3 · (x - 4 · y)
+=⟨ “Subtraction” ⟩
+3 · (x + - (4 · y))
+=⟨ “Distributivity of · over +” ⟩
+3 · x + 3 · - (4 · y)
+=⟨ “Identity of +” ⟩
+3 · x + 3 · - (4 · y) + 0
+=⟨ “Unary minus” ⟩
+3 · x + 3 · - (4 · y) + 3 · 4 · y + - (3 · 4
+=⟨ “Distributivity of · over +” ⟩
+3 · x + 3 · (- (4 · y) + 4 · y) + - (3 · 4 ·
+=⟨ “Unary minus” ⟩
+3 · x + 3 · 0 + - (3 · 4 · y)
+=⟨ “Zero of ·” ⟩
+3 · x + 0 + - (3 · 4 · y)
+=⟨ “Identity of +” ⟩
+3 · x + - (3 · 4 · y)
+=⟨ “Subtraction” ⟩
+3 · x - 3 · 4 · y
+
+Calculation:
+3 · (x - 4 · y)
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+3 · (x + - (4 · y))
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of ·
+over +”
+— CalcCheck: ─ OK
+3 · x + 3 · - (4 · y)
+= ⟨ “Identity of +” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+(3 · x + 3 · - (4 · y)) + 0
+= ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: ─ OK
+((3 · x + 3 · - (4 · y)) + (3 · 4) · y) + - ((3 · 4) · y)
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of ·
+over +”
+— CalcCheck: ─ OK
+(3 · x + 3 · (- (4 · y) + 4 · y)) + - ((3 · 4) · y)
+= ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: ─ OK
+(3 · x + 3 · 0) + - ((3 · 4) · y)
+= ⟨ “Zero of ·” ⟩
+— CalcCheck: Found (15.9) “Zero of ·”
+— CalcCheck: ─ OK
+(3 · x + 0) + - ((3 · 4) · y)
+= ⟨ “Identity of +” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+3 · x + - ((3 · 4) · y)
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+3 · x - (3 · 4) · y
+— CalcCheck: All steps OK
+
+By trying things like this, you notice that you need more theorems.
+
+
+Calculations are also a good way for proving theorems; the one we are missing above can be proven by
+abstracting away the core of the calculation above:
+
+[17]
+
+[18]
+
+Theorem (15.29) “Distributivity of · over -”:
+a · (b - c) = a · b - a · c
+Proof:
+a · (b - c)
+=⟨ “Subtraction” ⟩
+a · (b + - c)
+=⟨ “Distributivity of · over +” ⟩
+a · b + a · - c
+=⟨ “Identity of +” ⟩
+a · b + a · - c + 0
+=⟨ “Unary minus” ⟩
+a · b + a · - c + a · c + - (a · c)
+=⟨ “Distributivity of · over +” ⟩
+a · b + a · (- c + c) + - (a · c)
+=⟨ “Unary minus” ⟩
+a · b + a · 0 + - (a · c)
+=⟨ “Zero of ·” ⟩
+a · b + 0 + - (a · c)
+=⟨ “Identity of +” ⟩
+a · b + - (a · c)
+=⟨ “Subtraction” ⟩
+a · b - a · c
+
+Theorem (15.29) “Distributivity of · over -”: a · (b - c) =
+a·b-a·c
+Proof:
+Calculation for expected goal `a · (b - c) = a · b - a ·
+c`:
+a · (b - c)
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+a · (b + - c)
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of ·
+over +”
+— CalcCheck: ─ OK
+a·b+a·-c
+= ⟨ “Identity of +” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+(a · b + a · - c) + 0
+= ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: ─ OK
+((a · b + a · - c) + a · c) + - (a · c)
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of ·
+over +”
+— CalcCheck: ─ OK
+(a · b + a · (- c + c)) + - (a · c)
+= ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: ─ OK
+(a · b + a · 0) + - (a · c)
+= ⟨ “Zero of ·” ⟩
+— CalcCheck: Found (15.9) “Zero of ·”
+— CalcCheck: ─ OK
+(a · b + 0) + - (a · c)
+= ⟨ “Identity of +” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+a · b + - (a · c)
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+a·b-a·c
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+The following is a simpler theorem proven using the same idea, and presented as a fill-in-the-blanks questions,
+which you recognise from the occurrences of “?₁” as hints.
+In such “fill in the blanks” questions, replace each occurrence of “?₁” with the appropriate reason for the
+respective step.
+In the following, each of these reasons will be the theorem name of one of the theorems listed above.
+
+
+Important: Don’t change anything else in a fill-in-the-blanks question!
+
+[19]
+
+[20]
+
+Theorem (15.20) “Negation as multiplication”:
+- a = (- 1) · a
+Proof:
+(- 1) · a
+=⟨ “Additive identity” ⟩
+0 + (- 1) · a
+=⟨ “Unary minus” ⟩
+-(1 · a) + 1 · a + (- 1) · a
+=⟨ “Multiplicative identity” ⟩
+(- a) + 1 · a + (- 1) · a
+=⟨ “Distributivity of · over +” ⟩
+(- a) + (1 + (- 1)) · a
+=⟨ “Unary minus” ⟩
+(- a) + 0 · a
+=⟨ “Zero of ·” ⟩
+(- a) + 0
+=⟨ “Additive identity” ⟩
+- a
+
+Theorem (15.20) “Negation as multiplication”: - a = 1·a
+Proof:
+Calculation for expected goal `- a = - 1 · a`:
+-1·a
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive
+identity”
+— CalcCheck: ─ OK
+0+-1·a
+= ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: ─ OK
+(- (1 · a) + 1 · a) + - 1 · a
+= ⟨ “Multiplicative identity” ⟩
+— CalcCheck: Found (15.4) “Multiplicative
+identity”
+— CalcCheck: ─ OK
+(- a + 1 · a) + - 1 · a
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of ·
+over +”
+— CalcCheck: ─ OK
+- a + (1 + - 1) · a
+= ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: ─ OK
+-a+0·a
+= ⟨ “Zero of ·” ⟩
+— CalcCheck: Found (15.9) “Zero of ·”
+— CalcCheck: ─ OK
+-a+0
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive
+identity”
+— CalcCheck: ─ OK
+-a
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Once a theorem is stated in a notebook, you can use it no matter whether you proved it or not.
+Proving the following theorems should now be quite easy to prove, and are provided as practice opportunity:
+
+
+[21]
+
+[22]
+
+
+Theorem (15.19) “Distributivity of unary minus ov
+- (a + b) = (- a) + (- b)
+Proof:
+- (a + b)
+=⟨ “Negation as multiplication” ⟩
+(- 1) · ( a + b )
+=⟨ “Distributivity of · over +” ⟩
+- 1 · a + (- 1) · b
+=⟨ “Negation as multiplication” ⟩
+( - a ) + ( - b )
+
+Theorem (15.21): (- a) · b = a · (- b)
+Proof:
+(- a) · b
+=⟨ “Negation as multiplication” ⟩
+((- 1) · a) · b
+=⟨ “Associativity of ·” ⟩
+a · ((- 1) · b)
+=⟨ “Negation as multiplication” ⟩
+a · (- b)
+
+
+Theorem (15.19) “Distributivity of unary minus over +”: (a + b) = - a + - b
+Proof:
+Calculation for expected goal `- (a + b) = - a + - b`:
+- (a + b)
+= ⟨ “Negation as multiplication” ⟩
+— CalcCheck: Found (15.20) “Negation as
+multiplication”
+— CalcCheck: ─ OK
+- 1 · (a + b)
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of · over
++”
+— CalcCheck: ─ OK
+-1·a+-1·b
+= ⟨ “Negation as multiplication” ⟩
+— CalcCheck: Found (15.20) “Negation as
+multiplication”
+— CalcCheck: ─ OK
+-a+-b
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem (15.21): - a · b = a · - b
+Proof:
+Calculation for expected goal `- a · b = a · - b`:
+-a·b
+= ⟨ “Negation as multiplication” ⟩
+— CalcCheck: Found (15.20) “Negation as
+multiplication”
+— CalcCheck: ─ OK
+(- 1 · a) · b
+= ⟨ “Associativity of ·” ⟩
+— CalcCheck: Found (15.1b) “Associativity of
+·”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+a · (- 1 · b)
+= ⟨ “Negation as multiplication” ⟩
+— CalcCheck: Found (15.20) “Negation as
+multiplication”
+— CalcCheck: ─ OK
+a·-b
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[23]
+
+[24]
+
+
+Theorem (15.22) “Commutativity of unary minus wit
+a · (- b) = - (a · b)
+Proof:
+a · (- b)
+=⟨ “Negation as multiplication” ⟩
+a · ((- 1) · b)
+=⟨ “Associativity of ·” ⟩
+(a · b) · (- 1)
+=⟨ “Negation as multiplication” ⟩
+- (a · b)
+
+Theorem (15.22) “Commutativity of unary minus with ·”: a
+· - b = - (a · b)
+Proof:
+Calculation for expected goal `a · - b = - (a · b)`:
+a·-b
+= ⟨ “Negation as multiplication” ⟩
+— CalcCheck: Found (15.20) “Negation as
+multiplication”
+— CalcCheck: ─ OK
+a · (- 1 · b)
+= ⟨ “Associativity of ·” ⟩
+— CalcCheck: Found (15.1b) “Associativity of ·”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(a · b) · - 1
+= ⟨ “Negation as multiplication” ⟩
+— CalcCheck: Found (15.20) “Negation as
+multiplication”
+— CalcCheck: ─ OK
+- (a · b)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem (15.25a) “Mutual associativity of + and - Theorem (15.25a) “Mutual associativity of + and -”: a + (b
+- c) = (a + b) - c
+a + (b - c) = (a + b) - c
+Proof:
+Proof:
+Calculation for expected goal `a + (b - c) = (a + b) - c`:
+a + (b - c)
+a + (b - c)
+=⟨ “Subtraction” ⟩
+= ⟨ “Subtraction” ⟩
+a + (b + (- c))
+— CalcCheck: Found (15.14) “Subtraction”
+=⟨ “Associativity of +” ⟩
+— CalcCheck: ─ OK
+( a + b ) + (- c)
+a + (b + - c)
+=⟨ “Subtraction” ⟩
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found (15.1a) “Associativity of +”
+(a + b) - c
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(a + b) + - c
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+(a + b) - c
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[25]
+
+[26]
+
+[27]
+
+
+Theorem (15.25b) “Subtraction of addition”:
+a - (b + c) = (a - b) - c
+Proof:
+a - (b + c)
+=⟨ “Subtraction” ⟩
+a + (- (b + c))
+=⟨ “Negation as multiplication” ⟩
+a + ((- 1) · (b + c))
+=⟨ “Distributivity of · over +” ⟩
+a + ( (- 1) · b ) + ( (- 1 · c ))
+=⟨ “Negation as multiplication” ⟩
+a + ( - b ) + ( - c )
+=⟨ “Subtraction” ⟩
+( a - b ) - c
+
+Theorem (15.25b) “Subtraction of addition”: a - (b + c)
+= (a - b) - c
+Proof:
+Calculation for expected goal `a - (b + c) = (a - b) c`:
+a - (b + c)
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+a + - (b + c)
+= ⟨ “Negation as multiplication” ⟩
+— CalcCheck: Found (15.20) “Negation as
+multiplication”
+— CalcCheck: ─ OK
+a + - 1 · (b + c)
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of ·
+over +”
+— CalcCheck: ─ OK
+(a + - 1 · b) + - 1 · c
+= ⟨ “Negation as multiplication” ⟩
+— CalcCheck: Found (15.20) “Negation as
+multiplication”
+— CalcCheck: ─ OK
+(a + - b) + - c
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+(a - b) - c
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+(You can certainly just add more cells here and prove more useful theorems yourself, and then use them below.)
+
+To be able to tackle the calculation resolving the problem posed on the opening slide of the first lecture, you’ll
+need a new kind of hints:
+Fact `⟪proposition⟫`
+proves ⟪proposition⟫ only if ⟪proposition⟫ contains no variables, and only operators and constants
+enabled for evaluation in the current notebook. For example:
+
+[28]
+
+[29]
+
+Calculation:
+3 · (4 · 5 + x · y)
+=⟨ Fact `4 · 5 = 20` ⟩
+3 · (20 + x · y)
+
+Calculation:
+3 · (4 · 5 + x · y)
+= ⟨ Fact `4 · 5 = 20` ⟩
+— CalcCheck: ─ OK
+3 · (20 + x · y)
+— CalcCheck: All steps OK
+
+You’ll also need two more theorems:
+(15.8) “Cancellation of +”: a + b = a + c ≡ b = c
+(15.7) “Cancellation of ·”: c ≠ 0 ⇒ (c · a = c · b ≡ a = b)
+
+
+See the following calculation for examples of their use:
+[30]
+
+[31]
+
+Calculation:
+Assuming `x ≠ 0`:
+5 · x + y = 5 · 7 + y
+≡⟨ “Cancellation of +” ⟩
+5 · x = 5 · 7
+≡⟨ “Cancellation of ·” with Fact `5 ≠ 0` ⟩
+x = 7
+≡⟨ “Cancellation of ·” with assumption `x ≠ 0` ⟩
+x · x = 7 · x
+
+Calculation:
+Assuming `x ≠ 0`:
+5 ·x+ y= 5 ·7 + y
+≡ ⟨ “Cancellation of +” ⟩
+— CalcCheck: Found (15.8) “Cancellation
+of +”
+— CalcCheck: ─ OK
+5 ·x= 5 ·7
+≡ ⟨ “Cancellation of ·” with Fact `5 ≠ 0` ⟩
+— CalcCheck: Found (15.7) “Cancellation
+of ·”
+— CalcCheck: ─ OK
+x= 7
+≡ ⟨ “Cancellation of ·” with Assumption `x ≠ 0` ⟩
+— CalcCheck: Found (15.7) “Cancellation
+of ·”
+— CalcCheck: Found assumption `x ≠ 0`
+— CalcCheck: ─ OK
+x·x= 7 ·x
+— CalcCheck: All steps OK
+
+With that, you should be able to finish the following calculation to solve the problem from the opening slide of the
+first lecture.
+When you see
+⟪expression₁⟫
+⟪calcOp⟫⟨ ? ⟩
+⟪expression₂⟫
+with just “?” (not “?₁”), you are expected to replace the single step
+⟪calcOp⟫⟨ ? ⟩
+with arbitrarily many steps producing a calculation that relates ⟪expression₁⟫ with ⟪expression₂⟫ via
+⟪calcOp⟫.
+And the “?” in the final expression below needs to be replaced with the right number.
+
+
+[32]
+
+1,1
+
+
+Calculation:
+Assuming `x ≠ 0`:
+(16 + 4 · x) · (12 - x) = (16 + x) · 12
+≡ ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+(16 + 4 · x) · (12 + - x) = (16 + x) · 12
+≡ ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of · over
++”
+— CalcCheck: ─ OK
+(16 + 4 · x) · 12 + (16 + 4 · x) · - x = 16 · 12 + x · 12
+≡ ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of · over
++”
+— CalcCheck: ─ OK
+(16 · 12 + (4 · 12) · x) + (16 · - x + (4 · - x) · x) = 16 ·
+12 + x · 12
+≡ ⟨ Fact `16 · 12 = 192` ⟩
+— CalcCheck: ─ OK
+(192 + (4 · 12) · x) + (16 · - x + (4 · - x) · x) = 192 + x
+· 12
+≡ ⟨ “Cancellation of +” ⟩
+— CalcCheck: Found (15.8) “Cancellation of +”
+— CalcCheck: ─ OK
+(4 · 12) · x + (16 · - x + (4 · x) · - x) = x · 12
+≡ ⟨ Fact `4 · 12 = 48` ⟩
+— CalcCheck: ─ OK
+48 · x + (16 · - x + (4 · x) · - x) = x · 12
+≡ ⟨ “Associativity of +” ⟩
+— CalcCheck: Found (15.1a) “Associativity of +”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(48 · x + 16 · - x) + (4 · x) · - x = x · 12
+≡ ⟨ “Commutativity of unary minus with ·” ⟩
+— CalcCheck: Found (15.22) “Commutativity of
+unary minus with ·”
+— CalcCheck: ─ OK
+(48 · x + - 16 · x) + (4 · x) · - x = x · 12
+≡ ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of · over
++”
+— CalcCheck: ─ OK
+(48 + - 16) · x + (4 · x) · - x = x · 12
+≡ ⟨ Fact `48 + - 16 = 32` ⟩
+— CalcCheck: ─ OK
+32 · x + (4 · x) · - x = x · 12
+≡ ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of · over
++”
+— CalcCheck: ─ OK
+(32 + 4 · - x) · x = x · 12
+≡ ⟨ “Symmetry of ·” ⟩
+— CalcCheck: Found (15.2b) “Symmetry of ·”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+x · (32 + 4 · - x) = x · 12
+≡ ⟨ “Cancellation of ·” with Assumption `x ≠ 0` ⟩
+— CalcCheck: Found (15.7) “Cancellation of ·”
+— CalcCheck: Found assumption `x ≠ 0`
+— CalcCheck: ─ OK
+
+
+Calculation:
+Assuming `x ≠ 0`:
+(16 + 4 · x) · (12 - x) = (16 + x) · 12
+≡ ⟨ “Subtraction” ⟩
+(16 + 4 · x) · (12 + (- x)) = (16 + x)
+≡ ⟨ “Distributivity of · over +” ⟩
+(16 + 4 · x) · 12 + (16 + 4 · x) · (- x
+≡ ⟨ “Distributivity of · over +” ⟩
+(16 · 12 + 4 · 12 · x) + (16 · (- x) +
+≡ ⟨ Fact `16 · 12 = 192` ⟩
+( 192 + 4· 12 · x) + (16 · (- x) + 4 ·
+≡ ⟨ “Cancellation of +” ⟩
+4 · 12 · x + (16 · (- x) + 4 · x · (- x
+≡ ⟨ Fact `4 · 12 = 48` ⟩
+(48 · x) + (16 · (- x) + 4 · x · (- x))
+≡ ⟨ “Associativity of +”⟩
+(48 · x + 16 · (- x)) + 4 · x · (- x) =
+≡ ⟨ “Commutativity of unary minus with ·” ⟩
+(48 · x + (- 16) · x ) + 4 · x · (- x)
+≡ ⟨ “Distributivity of · over +” ⟩
+( 48 + (- 16)) · x + 4 · x · (- x) = x
+≡ ⟨ Fact `48 + (- 16) = 32` ⟩
+32 · x + 4 · x · - x = x · 12
+≡ ⟨ “Distributivity of · over +” ⟩
+(32 + 4 · (- x)) · x = x · 12
+≡ ⟨ “Symmetry of ·” ⟩
+x · ( 32 + 4 · (- x)) = x · 12
+≡ ⟨ “Cancellation of ·” with assumption `x
+32 + 4 · (- x) = 12
+≡ ⟨ Fact `32 = 12 + 20` ⟩
+(12 + 20 + 4 · - x) = 12
+≡ ⟨ “Additive identity” ⟩
+12 + (20 + 4 · (- x)) = 0 + 12
+≡ ⟨ “Cancellation of +” ⟩
+(20 + 4 · (- x)) = 0
+≡ ⟨ Fact `20 = 4 · 5` ⟩
+( 4 · 5 + 4 · (- x)) = 0
+≡ ⟨ “Distributivity of · over +” ⟩
+( 5 + (- x)) · 4 = 0
+≡ ⟨ Fact `0 = 0 · 4` ⟩
+( 5 + (- x)) · 4 = 0 · 4
+≡ ⟨ “Cancellation of ·” with Fact `4 ≠ 0` ⟩
+( 5 + (- x)) = 0
+≡ ⟨ “Unary minus” ⟩
+5 + (- x) = 5 + (- 5)
+≡ ⟨ “Cancellation of +” ⟩
+- x = - 5
+≡ ⟨ “Negation as multiplication” ⟩
+(- 1) · x = (- 1) · 5
+= ⟨ “Cancellation of ·” with Fact ` - 1 ≠ 0
+x = 5
+
+
+32 + 4 · - x = 12
+≡ ⟨ Fact `32 = 12 + 20` ⟩
+— CalcCheck: ─ OK
+(12 + 20) + 4 · - x = 12
+≡ ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+12 + (20 + 4 · - x) = 0 + 12
+≡ ⟨ “Cancellation of +” ⟩
+— CalcCheck: Found (15.8) “Cancellation of +”
+— CalcCheck: ─ OK
+20 + 4 · - x = 0
+≡ ⟨ Fact `20 = 4 · 5` ⟩
+— CalcCheck: ─ OK
+4 ·5 + 4 ·- x= 0
+≡ ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of · over
++”
+— CalcCheck: ─ OK
+(5 + - x) · 4 = 0
+≡ ⟨ Fact `0 = 0 · 4` ⟩
+— CalcCheck: ─ OK
+(5 + - x) · 4 = 0 · 4
+≡ ⟨ “Cancellation of ·” with Fact `4 ≠ 0` ⟩
+— CalcCheck: Found (15.7) “Cancellation of ·”
+— CalcCheck: ─ OK
+5 + - x= 0
+≡ ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: ─ OK
+5 + - x= 5 + - 5
+≡ ⟨ “Cancellation of +” ⟩
+— CalcCheck: Found (15.8) “Cancellation of +”
+— CalcCheck: ─ OK
+- x= - 5
+≡ ⟨ “Negation as multiplication” ⟩
+— CalcCheck: Found (15.20) “Negation as
+multiplication”
+— CalcCheck: ─ OK
+- 1 ·x= - 1 ·5
+= ⟨ “Cancellation of ·” with Fact `- 1 ≠ 0` ⟩
+— CalcCheck: Found (15.7) “Cancellation of ·”
+— CalcCheck: ─ OK
+x= 5
+— CalcCheck: All steps OK
+
+
+Check and Save
+
+
+Save
+
+

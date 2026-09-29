@@ -1,0 +1,465 @@
+[1]
+
+The Reference Notebooks “Abstract RA: Starting from Inclusion and Composition” and “Abstract RA: Continuing with Converse”), and
+“Abstract RA: Intersection” containing our previous development of abstract relation algebra involving ⊆, ⨾, ˘, and ∩ are preloaded here.
+Be aware that composition ⨾ has higher precedence than intersection ∩!
+The monotonicity properties of the relation operations are activated here, and the keyword Monotonicity is enabled: Where before you had to
+write
+S ˘ ⨾ R ˘ ⨾ R ⨾ S
+⊆⟨ “Monotonicity of ⨾” with “Monotonicity of ⨾” with
+Assumption `R ˘ ⨾ R ⊆ 𝕀`, “Identity of ⨾” ⟩
+S ˘ ⨾ S
+you now can just write the following:
+S ˘ ⨾ R ˘ ⨾ R ⨾ S
+⊆⟨ Monotonicity with Assumption `R ˘ ⨾ R ⊆ 𝕀`, “Identity of ⨾” ⟩
+S ˘ ⨾ S
+This Monotonicity is a keyword (like Evaluation and Assumption), not a theorem name, and therefore has to be used without quotation
+marks. It only makes sense before with.
+Antisymmetry of inclusion ⊆ is also activated here, so that instead of
+
+
+Using “Mutual inclusion”:
+Subproof for `R ⊆ S`:
+...
+Subproof for `S ⊆ R`:
+...
+you can now write:
+R
+⊆⟨ ... ⟩
+S
+⊆⟨ ... ⟩
+R
+for a proof of R = S.
+[2]
+
+In the previous material, we introduced the inclusion order _⊆_ and the converse ˘_, composition _⨾_, and intersection _∩_ operators, and we
+have seen that many properties can already be formalised in that context, and many useful theorems proven.
+Many of the “typically relation-algebraic” theorems however only become available as consequences of adding the Dedekind rule (or,
+equivalently, a modal rule) to the theory:
+
+[3]
+
+Axiom “Dedekind rule”:
+(Q ⨾ R) ∩ S ⊆ (Q ∩ S ⨾ R ˘) ⨾ (R ∩ Q ˘ ⨾ S)
+
+
+Axiom “Dedekind rule”: Q ⨾ R ∩ S ⊆ (Q ∩ S ⨾ R ˘) ⨾ (R ∩ Q ˘
+⨾ S)
+
+
+[4]
+
+[5]
+
+[6]
+
+
+Theorem “Modal rule”:
+(Q ⨾ R) ∩ S ⊆ (Q ∩ S ⨾ R ˘) ⨾ R
+Proof:
+(Q ⨾ R) ∩ S
+⊆⟨ “Dedekind rule” ⟩
+(Q ∩ S ⨾ R ˘) ⨾ (R ∩ Q ˘ ⨾ S)
+⊆⟨ “Monotonicity of ⨾” with “Weakening for ∩” ⟩
+(Q ∩ S ⨾ R ˘) ⨾ R
+
+Theorem “Modal rule”: Q ⨾ R ∩ S ⊆ (Q ∩ S ⨾ R ˘) ⨾ R
+Proof:
+Calculation for expected goal `Q ⨾ R ∩ S ⊆ (Q ∩ S ⨾ R ˘) ⨾ R`:
+Q ⨾R∩S
+⊆ ⟨ “Dedekind rule” ⟩
+— CalcCheck: Found “Dedekind rule”
+— CalcCheck: ─ OK
+(Q ∩ S ⨾ R ˘) ⨾ (R ∩ Q ˘ ⨾ S)
+⊆ ⟨ “Monotonicity of ⨾” with “Weakening for ∩” ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of ⨾”,
+“Monotonicity of ⨾”
+— CalcCheck: Found “Weakening for ∩”
+— CalcCheck: ─ OK
+(Q ∩ S ⨾ R ˘) ⨾ R
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem “Modal rule”:
+(Q ⨾ R) ∩ S ⊆ Q ⨾ (R ∩ Q ˘ ⨾ S)
+Proof:
+(Q ⨾ R) ∩ S
+⊆⟨ “Dedekind rule” ⟩
+(Q ∩ S ⨾ R ˘) ⨾ (R ∩ Q ˘ ⨾ S)
+⊆⟨ “Monotonicity of ⨾” with “Weakening for ∩” ⟩
+Q ⨾ (R ∩ Q ˘ ⨾ S)
+
+Theorem “Modal rule”: Q ⨾ R ∩ S ⊆ Q ⨾ (R ∩ Q ˘ ⨾ S)
+Proof:
+Calculation for expected goal `Q ⨾ R ∩ S ⊆ Q ⨾ (R ∩ Q ˘ ⨾ S)`:
+Q ⨾R∩S
+⊆ ⟨ “Dedekind rule” ⟩
+— CalcCheck: Found “Dedekind rule”
+— CalcCheck: ─ OK
+(Q ∩ S ⨾ R ˘) ⨾ (R ∩ Q ˘ ⨾ S)
+⊆ ⟨ “Monotonicity of ⨾” with “Weakening for ∩” ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of ⨾”,
+“Monotonicity of ⨾”
+— CalcCheck: Found “Weakening for ∩”
+— CalcCheck: ─ OK
+Q ⨾ (R ∩ Q ˘ ⨾ S)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+One simple consequence of any modal rule is the following theorem (also known as “co-difunctionality”); the name “Hesitation” is intended to
+suggest that whenever you can make a step forward to some place, you can also first make a step forward, then one back, and finally another
+one forward to the same place (due to the implicit assumption that the place you started from is still available for the backwards step after the
+first step forward).
+
+
+(To be able to apply the modal rule, you need to somehow convert the starting point R into an expression of shape “X ⨾ Y ∩ Z”. Idempotency
+and identity laws may come in handy for that…)
+[7]
+
+Theorem “Hesitation”: R ⊆ R ⨾ R ˘ ⨾ R
+Proof:
+R
+=⟨ “Idempotency of ∩” , “Identity of ⨾”⟩
+R ⨾ 𝕀 ∩ R
+⊆ ⟨ “Modal rule” ⟩
+R ⨾ (𝕀 ∩ R ˘ ⨾ R)
+⊆ ⟨ “Monotonicity of ⨾” with “Weakening for ∩” ⟩
+R ⨾ (R ˘ ⨾ R)
+
+Theorem “Hesitation”: R ⊆ R ⨾ (R ˘ ⨾ R)
+Proof:
+Calculation for expected goal `R ⊆ R ⨾ (R ˘ ⨾ R)`:
+R
+= ⟨ “Idempotency of ∩”, “Identity of ⨾” ⟩
+— CalcCheck: Found “Idempotency of ∩”
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+R⨾𝕀∩R
+⊆ ⟨ “Modal rule” ⟩
+— CalcCheck: Found “Modal rule”
+— CalcCheck: ─ OK
+R ⨾ (𝕀 ∩ R ˘ ⨾ R)
+⊆ ⟨ “Monotonicity of ⨾” with “Weakening for ∩” ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of ⨾”,
+“Monotonicity of ⨾”
+— CalcCheck: Found “Weakening for ∩”
+— CalcCheck: ─ OK
+R ⨾ (R ˘ ⨾ R)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[8]
+
+Homogeneous Relation Properties (continued)
+[9]
+
+The following theorem is a good candidate for being proven via a cyclic inclusion chain (after assuming the antecedents):
+
+
+[10]
+
+[11]
+
+
+Theorem “PER factoring”:
+symmetric Q ⇒ transitive Q ⇒ Q ⨾ R ∩ Q = Q ⨾ (R ∩ Q)
+Proof:
+Assuming `symmetric Q` and using with “Definition of symmetry”:
+Assuming `transitive Q` and using with “Definition of transit
+Q ⨾ (R ∩ Q)
+⊆⟨ “Sub-distributivity of ⨾ over ∩” ⟩
+(Q ⨾ R) ∩ (Q ⨾ Q)
+⊆⟨ “Monotonicity of ∩” with Assumption `transitive Q`⟩
+(Q ⨾ R) ∩ Q
+⊆⟨ “Modal rule” ⟩
+Q ⨾ (R ∩ Q ˘ ⨾ Q)
+=⟨ Assumption `symmetric Q` ⟩
+Q ⨾ (R ∩ Q ⨾ Q)
+⊆⟨ Monotonicity with Assumption `transitive Q`⟩
+Q ⨾ (R ∩ Q)
+
+Theorem “PER factoring”: symmetric Q ⇒ (transitive Q ⇒ Q ⨾ R ∩ Q =
+Q ⨾ (R ∩ Q))
+Proof:
+Assuming `symmetric Q` and using with “Definition of symmetry”
+— CalcCheck: Found “Definition of symmetry”, “Definition of symmetry”:
+— CalcCheck: Assumption matches goal
+Assuming `transitive Q` and using with “Definition of transitivity”
+— CalcCheck: Found “Definition of transitivity”:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `Q ⨾ R ∩ Q = Q ⨾ (R ∩ Q)`:
+Q ⨾ (R ∩ Q)
+⊆ ⟨ “Sub-distributivity of ⨾ over ∩” ⟩
+— CalcCheck: Found “Sub-distributivity of ⨾ over ∩”
+— CalcCheck: ─ OK
+Q ⨾R∩Q ⨾Q
+⊆ ⟨ “Monotonicity of ∩” with Assumption `transitive Q` ⟩
+— CalcCheck: Found “Monotonicity of ∩”
+— CalcCheck: Found assumption `transitive Q`
+— CalcCheck: ─ OK
+Q ⨾R∩Q
+⊆ ⟨ “Modal rule” ⟩
+— CalcCheck: Found “Modal rule”
+— CalcCheck: ─ OK
+Q ⨾ (R ∩ Q ˘ ⨾ Q)
+= ⟨ Assumption `symmetric Q` ⟩
+— CalcCheck: Found assumption `symmetric Q`
+— CalcCheck: ─ OK
+Q ⨾ (R ∩ Q ⨾ Q)
+⊆ ⟨ Monotonicity with Assumption `transitive Q` ⟩
+— CalcCheck: Found assumption `transitive Q`
+— CalcCheck: ─ OK
+Q ⨾ (R ∩ Q)
+— CalcCheck: All steps OK
+— CalcCheck: Cyclic `_⊆_`-calculation matches goal ─ OK
+
+A transitive and symmetric relations is also called a partial equivalence relation (PER), where the word “partial” again really just means “not
+necessarily total”, which in the case of PERs would be understood more naturally as “not necessarily reflexive”.
+This is justified by the fact that equivalence relations are total due to reflexivity — very different kinds of proofs for that are possible here.
+
+
+[12]
+
+
+Theorem “Reflexive implies total”:
+reflexive R ⇒ total R
+Proof:
+Assuming `reflexive R` and using with “Definition of refl
+Using “Definition of totality”:
+𝕀
+⊆⟨ assumption `reflexive R`⟩
+R
+=⟨ “Identity of ⨾”, “Converse of 𝕀” ⟩
+R ⨾ 𝕀 ˘
+⊆⟨ “Monotonicity of ⨾” with
+“Monotonicity of ˘” with Assumption `reflexive R`
+R ⨾ R ˘
+
+
+Theorem “Reflexive implies total”: reflexive R ⇒ total R
+Proof:
+Assuming `reflexive R` and using with “Definition of reflexivity”
+— CalcCheck: Found “Definition of reflexivity”:
+— CalcCheck: Assumption matches goal
+Using “Definition of totality”:
+— CalcCheck: Found “Definition of totality”
+Subproof establishing `𝕀 ⊆ R ⨾ R ˘`:
+𝕀
+⊆ ⟨ Assumption `reflexive R` ⟩
+— CalcCheck: Found assumption `reflexive R`
+— CalcCheck: ─ OK
+R
+= ⟨ “Identity of ⨾”, “Converse of 𝕀” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: Found “Converse of 𝕀”
+— CalcCheck: ─ OK
+R⨾𝕀˘
+⊆ ⟨ “Monotonicity of ⨾” with “Monotonicity of ˘” with Assumption
+`reflexive R` ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity
+of ⨾”, “Monotonicity of ⨾”
+— CalcCheck: Found “Monotonicity of ˘”
+— CalcCheck: Found assumption `reflexive R`
+— CalcCheck: ─ OK
+R⨾R˘
+— CalcCheck: All steps OK
+
+
+[13]
+
+
+Theorem “Idempotency from symmetric and transitive”: symmetric R ⇒
+Theorem “Idempotency from symmetric and transitive”:
+(transitive R ⇒ idempotent R)
+symmetric R ⇒ transitive R ⇒ idempotent R
+Proof:
+Proof:
+Assuming `symmetric R` and using with “Definition of symmetry”
+Assuming `symmetric R` and using with “Definition of symm
+— CalcCheck: Found “Definition of symmetry”, “Definition of symmetry”:
+Assuming `transitive R` and using with “Definition of t
+— CalcCheck: Assumption matches goal
+Using “Definition of idempotency”:
+Assuming `transitive R` and using with “Definition of transitivity”
+Subproof for `R ⨾ R = R`:
+— CalcCheck: Found “Definition of transitivity”:
+R ⨾ R
+— CalcCheck: Assumption matches goal
+⊆⟨ Assumption `transitive R` ⟩
+Using “Definition of idempotency”:
+— CalcCheck: Found “Definition of idempotency”
+R
+Subproof for `R ⨾ R = R`:
+⊆⟨ “Hesitation” ⟩
+R⨾R
+R ⨾ R ˘ ⨾ R
+⊆
+⟨ Assumption `transitive R` ⟩
+=⟨ Assumption `symmetric R` ⟩
+— CalcCheck: Found assumption `transitive R`
+R ⨾ R ⨾ R
+— CalcCheck: ─ OK
+⊆⟨ “Monotonicity of ⨾” with Assumption `trans
+R
+R ⨾ R
+⊆ ⟨ “Hesitation” ⟩
+— CalcCheck: Found “Hesitation”
+— CalcCheck: ─ OK
+R ⨾ (R ˘ ⨾ R)
+= ⟨ Assumption `symmetric R` ⟩
+— CalcCheck: Found assumption `symmetric R`
+— CalcCheck: ─ OK
+R ⨾ (R ⨾ R)
+⊆ ⟨ “Monotonicity of ⨾” with Assumption `transitive R` ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Rightmonotonicity of ⨾”, “Monotonicity of ⨾”
+— CalcCheck: Found assumption `transitive R`
+— CalcCheck: ─ OK
+R⨾R
+— CalcCheck: All steps OK
+— CalcCheck: Cyclic `_⊆_`-calculation matches goal ─ OK
+
+[14]
+
+Heterogeneous Relation Properties (continued)
+
+
+[15]
+
+[16]
+
+
+Theorem “Right-distributivity of ⨾ with univalent over ∩”:
+univalent F ⇒ F ⨾ (R ∩ S) = F ⨾ R ∩ F ⨾ S
+Proof:
+Assuming `univalent F` and using with “Definition of univa
+F ⨾ (R ∩ S)
+⊆⟨ “Sub-distributivity of ⨾ over ∩”⟩
+F ⨾ R ∩ F ⨾ S
+⊆⟨ “Modal rule” ⟩
+F ⨾ (R ∩ F ˘ ⨾ (F ⨾ S))
+⊆⟨ Monotonicity with Assumption `univalent F` ⟩
+F ⨾ (R ∩ 𝕀 ⨾ S)
+=⟨ “Identity of ⨾” ⟩
+F ⨾ (R ∩ S)
+
+Theorem “Right-distributivity of ⨾ with univalent over ∩”: univalent F ⇒ F ⨾ (R
+∩ S) = F ⨾ R ∩ F ⨾ S
+Proof:
+Assuming `univalent F` and using with “Definition of univalence”
+— CalcCheck: Found “Definition of univalence”:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `F ⨾ (R ∩ S) = F ⨾ R ∩ F ⨾ S`:
+F ⨾ (R ∩ S)
+⊆ ⟨ “Sub-distributivity of ⨾ over ∩” ⟩
+— CalcCheck: Found “Sub-distributivity of ⨾ over ∩”
+— CalcCheck: ─ OK
+F⨾R∩F⨾S
+⊆ ⟨ “Modal rule” ⟩
+— CalcCheck: Found “Modal rule”
+— CalcCheck: ─ OK
+F ⨾ (R ∩ F ˘ ⨾ (F ⨾ S))
+⊆ ⟨ Monotonicity with Assumption `univalent F` ⟩
+— CalcCheck: Found assumption `univalent F`
+— CalcCheck: ─ OK
+F ⨾ (R ∩ 𝕀 ⨾ S)
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+F ⨾ (R ∩ S)
+— CalcCheck: All steps OK
+— CalcCheck: Cyclic `_⊆_`-calculation matches goal ─ OK
+
+After assuming the antecedent, proving “Swapping mapping across ⊆” can proceed via a nice cyclic implication chain. It is useful to keep in
+mind that
+“Flipped Transitivity of ⊆”: R ⊆ S ⇒ Q ⊆ R ⇒ Q ⊆ S
+is a monotonicity property for the operation that turns a relation X into the proposition (Q ⊆ X); this maps relation orderings “R ⊆ S” to
+proposition orderings “(Q ⊆ R) ⇒ (Q ⊆ S)”.
+Similarly,
+Axiom “Transitivity of ⊆”: Q ⊆ R ⇒ R ⊆ S ⇒ Q ⊆ S
+is an antitonicity property for the operation mapping a relation X to the proposition (X ⊆ S).
+
+
+[17]
+
+1,1
+
+
+Theorem “Swapping mapping across ⊆”: mapping F ⇒ (R ⨾ F ⊆ S ≡ R ⊆ S ⨾ F ˘)
+Proof:
+Assuming `mapping F` and using with “Definition of mappings”
+— CalcCheck: Found “Definition of mappings”, “Definition of mappings”:
+— CalcCheck: Assumption matches goal
+Using “Mutual implication”:
+— CalcCheck: Found (3.80) “Mutual implication”
+Subproof for `R ⨾ F ⊆ S ⇒ R ⊆ S ⨾ F ˘`:
+Assuming `R ⨾ F ⊆ S`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `R ⊆ S ⨾ F ˘`:
+R
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+R⨾𝕀
+⊆ ⟨ Monotonicity with Assumption `mapping F` ⟩
+— CalcCheck: Found assumption `mapping F`
+— CalcCheck: ─ OK
+R ⨾ (F ⨾ F ˘)
+⊆ ⟨ Monotonicity with Assumption `R ⨾ F ⊆ S` ⟩
+— CalcCheck: Found assumption `R ⨾ F ⊆ S`
+— CalcCheck: ─ OK
+S⨾F˘
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `R ⊆ S ⨾ F ˘ ⇒ R ⨾ F ⊆ S`:
+Assuming `R ⊆ S ⨾ F ˘`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `R ⨾ F ⊆ S`:
+R⨾F
+⊆ ⟨ “Monotonicity of ⨾” with Assumption `R ⊆ S ⨾ F ˘` ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Rightmonotonicity of ⨾”, “Monotonicity of ⨾”
+— CalcCheck: Found assumption `R ⊆ S ⨾ F ˘`
+— CalcCheck: ─ OK
+S ⨾ (F ˘ ⨾ F)
+⊆ ⟨ Monotonicity with Assumption `mapping F` ⟩
+— CalcCheck: Found assumption `mapping F`
+— CalcCheck: ─ OK
+S⨾𝕀
+= ⟨ “Identity of ⨾” ⟩
+
+
+Theorem “Swapping mapping across ⊆”:
+mapping F ⇒ (R ⨾ F ⊆ S ≡ R ⊆ S ⨾ F ˘)
+Proof:
+Assuming `mapping F` and using with “Definition of map
+Using “Mutual implication”:
+Subproof for `R ⨾ F ⊆ S ⇒ R ⊆ S ⨾ F ˘`:
+Assuming `R ⨾ F ⊆ S`:
+R
+=⟨ “Identity of ⨾” ⟩
+R ⨾ 𝕀
+⊆⟨ Monotonicity with Assumption `mapping F` ⟩
+R ⨾ F ⨾ F ˘
+⊆⟨ Monotonicity with Assumption `R ⨾ F ⊆ S` ⟩
+S ⨾ F ˘
+Subproof for `R ⊆ S ⨾ F ˘ ⇒ R ⨾ F ⊆ S`:
+Assuming `R ⊆ S ⨾ F ˘`:
+R ⨾ F
+⊆⟨ “Monotonicity of ⨾” with Assumption `R ⊆ S ⨾
+S ⨾ F ˘ ⨾ F
+⊆⟨ Monotonicity with Assumption `mapping F` ⟩
+S ⨾ 𝕀
+=⟨ “Identity of ⨾” ⟩
+S
+
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+S
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

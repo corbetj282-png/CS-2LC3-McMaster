@@ -1,0 +1,740 @@
+[1]
+
+Propositional logic essentially as presented in LADM chapter 3 is preloaded here, including implication, Leibniz as axiom, and the replacement
+laws.
+Concerning the natural numbers, the setup of the end of Ex5.2 is preloaded here. (So symmetry and associativity properties of + and · are
+activated here.)
+Building on “Predecessor of non-zero” from Ex5.2, we can derive a useful variant:
+
+
+[2]
+
+[3]
+
+
+Theorem “Zero or successor of predecessor”: n = 0 Theorem “Zero or successor of predecessor”: n = 0 ∨ n = suc pred n
+Proof:
+Proof:
+Calculation for expected goal `n = 0 ∨ n = suc pred n`:
+n ≠ 0 ≡ n = suc (pred n)
+— This is “Predec
+n ≠ 0 ≡ n = suc pred n — This is “Predecessor of non-zero”
+⇒⟨ “Definition of ≡” ⟩
+⇒ ⟨ “Definition of ≡” ⟩
+(n ≠ 0 ⇒ n = suc (pred n)) ∧ (n = suc (pred n
+— CalcCheck: Found “Definition of ≡”
+⇒⟨ “Weakening” ⟩
+— CalcCheck: Could not justify this step!
+n ≠ 0 ⇒ n = suc (pred n)
+(n ≠ 0 ⇒ n = suc pred n) ∧ (n = suc pred n ⇒ n ≠ 0)
+≡⟨ “Contrapositive” ⟩
+⇒ ⟨ “Weakening” ⟩
+n ≠ suc (pred n) ⇒ n = 0
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”,
+⇒⟨ “Implication to disjunction” ⟩
+(3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+n = suc (pred n) ∨ n = 0
+— CalcCheck: ─ OK
+n ≠ 0 ⇒ n = suc pred n
+≡⟨ “Symmetry of ∨” ⟩
+≡ ⟨ “Contrapositive” ⟩
+n = 0 ∨ n = suc (pred n)
+— CalcCheck: Found (3.61) “Contrapositive”
+— CalcCheck: Could not justify this step!
+n ≠ suc pred n ⇒ n = 0
+⇒ ⟨ “Implication to disjunction” ⟩
+— CalcCheck: Could not resolve theorem reference “Implication to disjunction”!
+— CalcCheck: Could not justify this step!
+n = suc pred n ∨ n = 0
+≡ ⟨ “Symmetry of ∨” ⟩
+— CalcCheck: Found (3.24) “Symmetry of ∨”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+n = 0 ∨ n = suc pred n
+— CalcCheck: Found “Predecessor of non-zero”
+— CalcCheck: 3 out of 6 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+This theorem can now be used as basis for re-proving all the natural-number theorems where you used induction, but did not use the induction
+hypothesis:
+
+
+[4]
+
+
+Theorem “Right-identity of subtraction”: m - 0 = m
+Theorem “Right-identity of subtraction”: m - 0 = m
+— CalcCheck: Correctness of this proof depends on the not-yet-proven theorem “Zero or
+Proof:
+successor
+of predecessor”: `n = 0 ∨ n = suc pred n`.
+By cases: `m = 0`, `m = suc (pred m)`
+Proof:
+Completeness: By “Zero or successor of predecess
+By cases: `m = 0`, `m = suc pred m`
+Case `m = 0`:
+Completeness:
+m - 0 = m
+By “Zero or successor of predecessor”
+≡⟨ Assumption `m = 0` ⟩
+— CalcCheck: Found “Zero or successor of predecessor”
+0 - 0 = 0
+Case `m = 0`:
+Calculation for expected goal `m - 0 = m`:
+— This is “Subtraction from zero”
+m- 0 = m
+Case `m = suc (pred m)`:
+≡ ⟨ Assumption `m = 0` ⟩
+m - 0
+— CalcCheck: Found assumption `m = 0`
+=⟨ Assumption `m = suc (pred m)` ⟩
+— CalcCheck: ─ OK
+(suc (pred m)) - 0
+0 - 0 = 0 — This is “Subtraction from zero”
+=⟨ “Subtraction of zero from successor” ⟩
+— CalcCheck: Found “Subtraction from zero”
+suc (pred m)
+— CalcCheck: All steps OK
+=⟨ Assumption `m = suc (pred m)` ⟩
+— CalcCheck: Calculation matches goal ─ OK
+m
+Case `m = suc pred m`:
+Calculation for expected goal `m - 0 = m`:
+m- 0
+= ⟨ Assumption `m = suc pred m` ⟩
+— CalcCheck: Found assumption `m = suc pred m`
+— CalcCheck: ─ OK
+suc pred m - 0
+= ⟨ “Subtraction of zero from successor” ⟩
+— CalcCheck: Found “Subtraction of zero from successor”
+— CalcCheck: ─ OK
+suc pred m
+= ⟨ Assumption `m = suc pred m` ⟩
+— CalcCheck: Found assumption `m = suc pred m`
+— CalcCheck: ─ OK
+m
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: All cases covered.
+
+
+[5]
+
+
+Theorem “Subtraction from multiplication with successor”: m · suc n m= m· n
+Proof:
+By cases: `m = 0`, `m = suc pred m`
+Completeness:
+By “Zero or successor of predecessor”
+— CalcCheck: Found “Zero or successor of predecessor”
+Case `m = 0`:
+Calculation for expected goal `m · suc n - m = m · n`:
+m · suc n - m
+= ⟨ “Definition of · for 0” with Assumption `m = 0` ⟩
+— CalcCheck: Found “Definition of · for 0”
+— CalcCheck: Found assumption `m = 0`
+— CalcCheck: ─ OK
+0-m
+= ⟨ “Subtraction from zero” with Assumption `m = 0` ⟩
+— CalcCheck: Found “Subtraction from zero”
+— CalcCheck: Found assumption `m = 0`
+— CalcCheck: ─ OK
+0
+= ⟨ “Definition of · for 0” ⟩
+— CalcCheck: Found “Definition of · for 0”
+— CalcCheck: ─ OK
+0·n
+= ⟨ Assumption `m = 0` ⟩
+— CalcCheck: Found assumption `m = 0`
+— CalcCheck: ─ OK
+m· n
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Case `m = suc pred m`:
+Calculation for expected goal `m · suc n - m = m · n`:
+m · suc n - m
+= ⟨ Assumption `m = suc pred m` ⟩
+— CalcCheck: Found assumption `m = suc pred m`
+— CalcCheck: ─ OK
+suc pred m · suc n - suc pred m
+= ⟨ “Definition of · for `suc`” ⟩
+— CalcCheck: Found “Definition of · for `suc`”
+— CalcCheck: ─ OK
+(pred m · suc n + suc n) - suc pred m
+= ⟨ “Definition of · for `suc`” ⟩
+— CalcCheck: Found “Definition of · for `suc`”
+
+
+Theorem “Subtraction from multiplication with successor”: m · (s
+Proof:
+By cases: `m = 0`, `m = suc (pred m)`
+Completeness: By “Zero or successor of predecessor”
+Case `m = 0`:
+(m · (suc n)) - m
+= ⟨“Definition of · for 0” with assumption `m = 0`⟩
+(0) - m
+= ⟨“Subtraction from zero” with assumption `m = 0`⟩
+0
+= ⟨“Definition of · for 0”⟩
+0 · n
+= ⟨Assumption `m = 0`⟩
+m · n
+Case `m = suc (pred m)`:
+m · (suc n) - m
+= ⟨ Assumption `m = suc (pred m)` ⟩
+(suc (pred m)) · (suc n) - (suc (pred m))
+= ⟨ “Definition of · for `suc`” ⟩
+((pred m) · (suc n) + (suc n)) - (suc (pred m))
+= ⟨ “Definition of · for `suc`” ⟩
+(((pred m) · n + (pred m)) + (suc n)) - (suc (pred m))
+= ⟨ “Associativity of +” ⟩
+((pred m) · n + ((pred m) + suc n)) - (suc (pred m))
+= ⟨ “Shifting `suc` over +” ⟩
+((pred m) · n + suc ((pred m) + n)) - (suc (pred m))
+= ⟨ “Associativity of +” ⟩
+((pred m) · n) + (suc ((pred m) + n) - suc (pred m))
+= ⟨ “Subtraction of successor from successor”⟩
+((pred m) · n) + (((pred m) + n) - (pred m))
+= ⟨ “Symmetry of +”⟩
+((pred m) · n) + (n + (pred m)) - ((pred m))
+= ⟨ “Predecessor”⟩
+((pred m) · n) + (n + (m - 1)) - (m - 1)
+= ⟨ “Subtraction after addition” ⟩
+((pred m) · n) + n
+= ⟨ “Definition of · for `suc`” ⟩
+(suc (pred m)) · n
+= ⟨ Assumption `m = suc (pred m)` ⟩
+m · n
+
+— CalcCheck: ─ OK
+((pred m · n + pred m) + suc n) - suc pred m
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found “Associativity of +”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(pred m · n + (pred m + suc n)) - suc pred m
+= ⟨ “Shifting `suc` over +” ⟩
+— CalcCheck: Found “Shifting `suc` over +”
+— CalcCheck: ─ OK
+(pred m · n + suc (pred m + n)) - suc pred m
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found “Associativity of +”
+— CalcCheck: Could not justify this step!
+pred m · n + (suc (pred m + n) - suc pred m)
+= ⟨ “Subtraction of successor from successor” ⟩
+— CalcCheck: Found “Subtraction of successor from
+successor”
+— CalcCheck: ─ OK
+pred m · n + ((pred m + n) - pred m)
+= ⟨ “Symmetry of +” ⟩
+— CalcCheck: Found “Symmetry of +”
+— CalcCheck: Could not justify this step!
+(pred m · n + (n + pred m)) - pred m
+= ⟨ “Predecessor” ⟩
+— CalcCheck: Found “Predecessor”
+— CalcCheck: ─ OK
+(pred m · n + (n + (m - 1))) - (m - 1)
+= ⟨ “Subtraction after addition” ⟩
+— CalcCheck: Found “Subtraction after addition”
+— CalcCheck: ─ OK
+pred m · n + n
+= ⟨ “Definition of · for `suc`” ⟩
+— CalcCheck: Found “Definition of · for `suc`”
+— CalcCheck: ─ OK
+suc pred m · n
+= ⟨ Assumption `m = suc pred m` ⟩
+— CalcCheck: Found assumption `m = suc pred m`
+— CalcCheck: ─ OK
+m· n
+— CalcCheck: 2 out of 12 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: All cases covered.
+
+
+[6]
+
+
+Theorem “Zero sum”: 0 = a + b ≡ 0 = a ∧ 0 = b
+Proof:
+By induction on `a : ℕ`:
+Base case:
+Calculation for expected goal `0 = 0 + b ≡ 0 = 0 ∧ 0 = b`:
+0=0+b
+= ⟨ “Left-identity of +” ⟩
+— CalcCheck: Found “Definition of + for 0”
+— CalcCheck: ─ OK
+0=b
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+true ∧ 0 = b
+= ⟨ Fact `0 = 0`
+— CalcCheck: OK (no change)
+
+⟩
+— CalcCheck: ─ OK
+0=0∧0=b
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+By induction on `b : ℕ`:
+Base case:
+Calculation for expected goal `0 = suc a + 0 ≡ 0 = suc a ∧ 0
+= 0`:
+0 = suc a + 0
+= ⟨ “Right-identity of +” ⟩
+— CalcCheck: Found “Right-identity of +”
+— CalcCheck: ─ OK
+0 = suc a
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+0 = suc a ∧ true
+= ⟨ Fact `0 = 0`
+— CalcCheck: OK (no change)
+
+⟩
+— CalcCheck: ─ OK
+0 = suc a ∧ 0 = 0
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+
+
+Theorem “Zero sum”:
+0 = a + b ≡ 0 = a ∧ 0 = b
+Proof:
+By induction on `a : ℕ`:
+Base case:
+0 = 0 + b
+=⟨“Left-identity of +”⟩
+0 = b
+=⟨“Identity of ∧”⟩
+true ∧ 0 = b
+=⟨Fact `0 = 0`⟩
+0 = 0 ∧ 0 = b
+Induction step:
+By induction on `b : ℕ`:
+Base case:
+0 = suc(a) + 0
+=⟨“Right-identity of +”⟩
+0 = suc(a)
+=⟨“Identity of ∧”⟩
+0 = suc(a) ∧ true
+=⟨Fact `0 = 0`⟩
+0 = suc(a) ∧ 0 = 0
+Induction step:
+0 = suc(a) + suc(b)
+=⟨“Successor”⟩
+0 = suc(a) + b + 1
+=⟨“Definition of + for `suc`”⟩
+0 = suc(a + b + 1)
+=⟨“Zero is not successor”⟩
+false
+=⟨“Zero is not successor”⟩
+0 = suc (a)
+=⟨“Identity of ∨”⟩
+(0 = suc (a)) ∨ false
+=⟨“Zero is not successor”⟩
+(0 = suc (a)) ∨ (0 = suc(b))
+=⟨“Golden rule”⟩
+(0 = suc (a)) ∧ (0 = suc(b)) ≡ (0 = suc(a)) ≡ (0
+=⟨“Zero is not successor”⟩
+(0 = suc (a)) ∧ (0 = suc(b)) ≡ false ≡ false
+
+Calculation for expected goal `0 = suc a + suc b ≡ 0 = suc a ∧
+0 = suc b`:
+0 = suc a + suc b
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+0 = (suc a + b) + 1
+= ⟨ “Definition of + for `suc`” ⟩
+— CalcCheck: Found “Definition of + for `suc`”
+— CalcCheck: ─ OK
+0 = suc ((a + b) + 1)
+= ⟨ “Zero is not successor” ⟩
+— CalcCheck: Found “Zero is not successor”, “Zero is
+not successor”
+— CalcCheck: ─ OK
+false
+= ⟨ “Zero is not successor” ⟩
+— CalcCheck: Found “Zero is not successor”, “Zero is
+not successor”
+— CalcCheck: ─ OK
+0 = suc a
+= ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+0 = suc a ∨ false
+= ⟨ “Zero is not successor” ⟩
+— CalcCheck: Found “Zero is not successor”, “Zero is
+not successor”
+— CalcCheck: ─ OK
+0 = suc a ∨ 0 = suc b
+= ⟨ “Golden rule” ⟩
+— CalcCheck: Found (3.35) “Golden rule”
+— CalcCheck: ─ OK
+0 = suc a ∧ 0 = suc b ≡ (0 = suc a ≡ 0 = suc b)
+= ⟨ “Zero is not successor” ⟩
+— CalcCheck: Found “Zero is not successor”, “Zero is
+not successor”
+— CalcCheck: ─ OK
+0 = suc a ∧ 0 = suc b ≡ (false ≡ false)
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+0 = suc a ∧ 0 = suc b ≡ true
+
+
+=⟨“Identity of ≡”⟩
+(0 = suc (a)) ∧ (0 = suc(b)) ≡ true
+=⟨“Identity of ≡”⟩
+(0 = suc (a)) ∧ (0 = suc(b))
+
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+0 = suc a ∧ 0 = suc b
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[7]
+
+
+In preparation for the proof of “Cancellation of ·” below, first show the following lemmas:
+
+
+[8]
+
+
+Lemma “Zero is not product of successors”:
+suc a · suc b = 0 ≡ false
+Proof:
+suc a · suc b = 0
+=⟨“Successor”⟩
+suc a · (b + 1) = 0
+=⟨“Definition of · for `suc`”⟩
+(b + 1) + a · (b + 1) = 0
+=⟨“Successor”⟩
+(b + 1) + a · suc(b) = 0
+=⟨“Definition of · for `suc`”⟩
+(b + 1) + a + (a · b) = 0
+=⟨“Associativity of +”⟩
+(a + b) + 1 + (a · b) = 0
+=⟨“Associativity of +”⟩
+(a + b) + (a · b) + 1 = 0
+=⟨“Successor”⟩
+suc((a + b) + (a · b)) = 0
+=⟨“Zero is not successor”⟩
+false
+
+
+Lemma “Zero is not product of successors”: suc a · suc b = 0 ≡
+false
+Proof:
+Calculation for expected goal `suc a · suc b = 0 ≡ false`:
+suc a · suc b = 0
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+suc a · (b + 1) = 0
+= ⟨ “Definition of · for `suc`” ⟩
+— CalcCheck: Found “Definition of · for `suc`”
+— CalcCheck: ─ OK
+(b + 1) + a · (b + 1) = 0
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+(b + 1) + a · suc b = 0
+= ⟨ “Definition of · for `suc`” ⟩
+— CalcCheck: Found “Definition of · for `suc`”
+— CalcCheck: ─ OK
+((b + 1) + a) + a · b = 0
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found “Associativity of +”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+((a + b) + 1) + a · b = 0
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found “Associativity of +”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+((a + b) + a · b) + 1 = 0
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+suc ((a + b) + a · b) = 0
+= ⟨ “Zero is not successor” ⟩
+— CalcCheck: Found “Zero is not successor”, “Zero is not
+successor”
+— CalcCheck: ─ OK
+false
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[9]
+
+
+Proving the following auxiliary lemma will require induction:
+
+
+[10]
+
+
+Lemma “Cancellation of multiplication with successor”: suc c · a = suc
+c·b≡a=b
+Proof:
+By induction on `c : ℕ`:
+Base case:
+Calculation for expected goal `suc 0 · a = suc 0 · b ≡ a = b`:
+suc 0 · a = suc 0 · b
+= ⟨ Fact `suc 0 = 1` ⟩
+— CalcCheck: ─ OK
+1·a=1·b
+= ⟨ “Left-identity of ·” ⟩
+— CalcCheck: Found “Left-identity of ·”
+— CalcCheck: ─ OK
+a=b
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `suc (suc c) · a = suc (suc c) · b ≡ a
+= b`:
+suc (suc c) · a = suc (suc c) · b
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+suc (c + 1) · a = suc (c + 1) · b
+= ⟨ “Definition of + for `suc`” ⟩
+— CalcCheck: Found “Definition of + for `suc`”
+— CalcCheck: ─ OK
+(suc c + 1) · a = (suc c + 1) · b
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found “Distributivity of · over +”
+— CalcCheck: ─ OK
+suc c · a + 1 · a = suc c · b + 1 · b
+= ⟨ “Left-identity of ·” ⟩
+— CalcCheck: Found “Left-identity of ·”
+— CalcCheck: ─ OK
+suc c · a + a = suc c · b + b
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `suc c · a = suc c ·
+b ≡ a = b`
+— CalcCheck: Could not justify this step!
+a+a=b+b
+= ⟨ “Left-identity of ·” ⟩
+— CalcCheck: Found “Left-identity of ·”
+
+
+Lemma “Cancellation of multiplication with successor”:
+suc c · a = suc c · b ≡ a = b
+Proof:
+By induction on `c : ℕ`:
+Base case:
+suc 0 · a = suc 0 · b
+=⟨Fact `suc 0 = 1`⟩
+1 · a = 1 · b
+=⟨“Left-identity of ·”⟩
+a = b
+Induction step:
+suc (suc c) · a = suc (suc c) · b
+=⟨“Successor”⟩
+suc (c + 1) · a = suc (c + 1) · b
+=⟨“Definition of + for `suc`”⟩
+(suc (c) + (1)) · a = (suc c + (1)) · b
+=⟨“Distributivity of · over +”⟩
+suc (c) · a + (1 · a) = suc c · b + (1 · b)
+=⟨“Left-identity of ·”⟩
+suc (c) · a + a = suc c · b + b
+=⟨Induction hypothesis⟩
+a + a = b + b
+=⟨“Left-identity of ·”⟩
+1 · a + 1 · a = 1 · b + 1 · b
+=⟨“Distributivity of · over +”⟩
+a · (1 + 1) = b · (1 + 1)
+=⟨Fact `1 + 1 = 2`⟩
+a · (2) = b · (2)
+= ⟨“Cancellation of ·”⟩
+a · (2) = b · (2)
+= ⟨?⟩
+a = b
+
+
+— CalcCheck: ─ OK
+1·a+1·a=1·b+1·b
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found “Distributivity of · over +”
+— CalcCheck: ─ OK
+a · (1 + 1) = b · (1 + 1)
+= ⟨ Fact `1 + 1 = 2`
+— CalcCheck: Could not justify this step!
+
+⟩
+a·2=b·2
+= ⟨ “Cancellation of ·” ⟩
+— CalcCheck: Could not resolve theorem reference
+“Cancellation of ·”!
+— CalcCheck: OK (no change)
+a·2=b·2
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+a=b
+— CalcCheck: 4 out of 10 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof not fully justified:
+— CalcCheck: one empty hint
+— CalcCheck: 2 inconclusive checks
+
+
+[11]
+
+
+For “Cancellation of ·”, you want to perform case analysis on c, and use “Cancellation of multiplication with successor” from above.
+
+
+[12]
+
+1,1
+
+
+Theorem “Cancellation of ·”: c ≠ 0 ⇒ (c · a = c · b ≡ a = b)
+Proof:
+By cases: `c = 0`, `c ≠ 0`
+Completeness:
+Calculation for expected goal `c = 0 ∨ c ≠ 0`:
+c=0∨c≠0
+= ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+c = 0 ∨ ¬ (c = 0)
+= ⟨ “Excluded middle” ⟩
+— CalcCheck: Found (3.28) “Excluded middle”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Case `c = 0`:
+Calculation for expected goal `c ≠ 0 ⇒ (c · a = c · b ≡ a = b)`:
+c ≠ 0 ⇒ (c · a = c · b ≡ a = b)
+= ⟨ Assumption `c = 0` ⟩
+— CalcCheck: Found assumption `c = 0`
+— CalcCheck: ─ OK
+0 ≠ 0 ⇒ (0 · a = 0 · b ≡ a = b)
+= ⟨ “Zero of ·” ⟩
+— CalcCheck: Found “Zero of ·”
+— CalcCheck: ─ OK
+0 ≠ 0 ⇒ (0 = 0 ≡ a = b)
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+0 ≠ 0 ⇒ (true ≡ a = b)
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+0≠0⇒a=b
+= ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+¬ (0 = 0) ⇒ a = b
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+
+
+Theorem “Cancellation of ·”:
+c ≠ 0 ⇒ (c · a = c · b ≡ a = b)
+Proof:
+By cases: `c = 0` , `c ≠ 0`
+Completeness:
+(c = 0) ∨ (c ≠ 0)
+=⟨“Definition of ≠”⟩
+(c = 0) ∨ ¬(c = 0)
+=⟨“Excluded middle”⟩
+true
+Case `c = 0`:
+c ≠ 0 ⇒ (c · a = c · b ≡ a = b)
+= ⟨Assumption `c = 0`⟩
+0 ≠ 0 ⇒ (0 · a = 0 · b ≡ a = b)
+= ⟨“Zero of ·”⟩
+0 ≠ 0 ⇒ (0 = 0 ≡ a = b)
+= ⟨“Reflexivity of =”⟩
+0 ≠ 0 ⇒ (true ≡ a = b)
+= ⟨“Identity of ≡”⟩
+0 ≠ 0 ⇒ (a = b)
+= ⟨“Definition of ≠”⟩
+¬(0 = 0) ⇒ (a = b)
+= ⟨“Reflexivity of =”⟩
+¬(true) ⇒ (a = b)
+= ⟨“Definition of `false`”⟩
+false ⇒ (a = b)
+= ⟨“ex falso quodlibet”⟩
+true
+Case `c ≠ 0`:
+c ≠ 0 ⇒ (c · a = c · b ≡ a = b)
+= ⟨Assumption `c ≠ 0`⟩
+true ⇒ (c · a = c · b ≡ a = b)
+= ⟨“Left-identity of ⇒”⟩
+(c · a = c · b ≡ a = b)
+= ⟨ “Zero or successor of predecessor” with Assumption
+(c · a = c · b ≡ a = b)[c ≔ (suc (pred c))]
+= ⟨ Substitution ⟩
+(suc (pred c) · a = suc (pred c) · b ≡ a = b)
+= ⟨ “Cancellation of multiplication with successor” ⟩
+true
+
+¬ true ⇒ a = b
+= ⟨ “Definition of `false`” ⟩
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: ─ OK
+false ⇒ a = b
+= ⟨ “ex falso quodlibet” ⟩
+— CalcCheck: Found (3.75) “ex falso quodlibet”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Case `c ≠ 0`:
+Calculation for expected goal `c ≠ 0 ⇒ (c · a = c · b ≡ a = b)`:
+c ≠ 0 ⇒ (c · a = c · b ≡ a = b)
+= ⟨ Assumption `c ≠ 0` ⟩
+— CalcCheck: Found assumption `c ≠ 0`
+— CalcCheck: ─ OK
+true ⇒ (c · a = c · b ≡ a = b)
+= ⟨ “Left-identity of ⇒” ⟩
+— CalcCheck: Found (3.73) “Left-identity of ⇒”
+— CalcCheck: ─ OK
+c·a=c·b≡a=b
+= ⟨ “Zero or successor of predecessor” with Assumption `c ≠ 0`
+
+⟩
+— CalcCheck: Found “Zero or successor of predecessor”
+— CalcCheck: Found assumption `c ≠ 0`
+— CalcCheck: Could not justify this step!
+(c · a = c · b ≡ a = b)[c ≔ suc pred c]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+suc pred c · a = suc pred c · b ≡ a = b
+= ⟨ “Cancellation of multiplication with successor” ⟩
+— CalcCheck: Found “Cancellation of multiplication with
+successor”
+— CalcCheck: ─ OK
+true
+— CalcCheck: 1 out of 5 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: All cases covered.
+
+
+Check and Save
+
+
+Save
+
+

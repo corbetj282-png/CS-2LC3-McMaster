@@ -1,0 +1,634 @@
+[1]
+
+Propositional and predicate logic are preloaded here, and also the sequence material from Ex6.1 and Ex6.2, including in particular head, tail,
+and “Non-empty-sequence decomposition”.
+Four hint items per hint are allowed here.
+
+[2]
+
+[3]
+
+[4]
+
+The topic of this notebook is a correctness proof of a procedural implementation of a sequence membership test.
+
+For natural proofs of some of the theorems here you will probably need additional properties — you can prove these separately as additional
+Lemmas or Theorems, or as closed (by universal quantification) local properties in Side proofs.
+
+A linear-time imperative implementation of ∈ for sequences that are implemented as singly-linked lists can be achieved via a loop with the
+following program:
+xs := xs₀ ⍮
+b := false ⍮
+while xs ≠ 𝜖 do
+if head xs = x
+then
+b := true
+
+
+od
+
+else
+skip
+fi ⍮
+xs := tail xs
+
+You find the statement that this is correct with respect to the postcondition
+b ≡ x ∈ xs₀
+(and precondition true) at the end of the current notebook as Theorem “Correctness of elem”.
+This can be proven using the following invariant:
+∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys)
+
+[5]
+
+The current notebook expects you to prove the main parts of this correctness proof as the following separate theorems:
+“Initialisation for elem”
+“Postcondition for elem”
+“Invariant for elem”
+Complete the theorem statements for these by replacing the passages in “⟪...⟫” with the appropriate material, prove these three theorems, and
+use them to prove “Correctness of elem” at the end of this notebook.
+Some notes:
+Be aware that, where an assumption (A) refers to a conjunction P ∧ Q, the assumption (A) can be invoked without any complications
+in places where you only need P (or Q). (The same holds for theorems that refer to conjunctions.)
+Where you have an ∃-quantification in the antecedent of an implication you are trying to prove, assuming that antecedent and employing the
+“Assuming witness” proof structure is frequently useful.
+You have seen different ways to organise proofs, in particular of conditional commands, in A1.1; use these as you see fit.
+You may need subproofs and/or additional lemmas or local properties.
+
+
+[6]
+
+
+Theorem “Initialisation for `elem`”: true ⇒⁅ (xs := xs₀ ⍮ b := false) ⁆ (∃ ys • ys ⌢
+xs = xs₀ ∧ (b ≡ x ∈ ys) )
+Proof:
+Calculation for expected goal `true ⇒⁅ (xs := xs₀ ⍮ b := false) ⁆ (∃ ys • ys ⌢ xs =
+xs₀ ∧ (b ≡ x ∈ ys) )`:
+true
+Proof:
+= ⟨ “Membership in 𝜖”, “Identity of ≡” ⟩
+true
+— CalcCheck: Found (13.10) “Membership in 𝜖”
+=⟨“Membership in 𝜖” , “Identity of ≡”⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+((false ≡ x ∈ 𝜖))
+— CalcCheck: ─ OK
+=⟨ “Left-identity of ⌢” , “Reflexivity of =” , “Identity
+false ≡ x ∈ 𝜖
+(((𝜖 ⌢ xs₀) = xs₀) ∧ (false ≡ x ∈ 𝜖))
+= ⟨ “Left-identity of ⌢”, “Reflexivity of =”, “Identity of ∧” ⟩
+=⟨ substitution⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+(((ys ⌢ xs₀) = xs₀) ∧ (false ≡ x ∈ ys))[ ys ≔ 𝜖 ]
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: Found (3.39) “Identity of ∧”
+⇒⟨ “∃-Introduction”⟩
+— CalcCheck: ─ OK
+∃ ys ❙ ((ys ⌢ xs₀) = xs₀) • (false ≡ x ∈ ys)
+𝜖
+⌢
+xs₀ = xs₀ ∧ (false ≡ x ∈ 𝜖)
+=⟨ “Trading for ∃”⟩
+=
+⟨
+Substitution
+⟩
+∃ ys • ((ys ⌢ xs₀) = xs₀) ∧ (false ≡ x ∈ ys)
+— CalcCheck: ─ OK
+⇒⁅ xs := xs₀ ⁆⟨ “Assignment” with “Substitution into ∃” w
+(ys ⌢ xs₀ = xs₀ ∧ (false ≡ x ∈ ys))[ys ≔ 𝜖]
+∃ ys • ys ⌢ xs = xs₀ ∧ (false ≡ x ∈ ys)
+⇒ ⟨ “∃-Introduction” ⟩
+⇒⁅ b := false ⁆⟨ “Assignment” with substitution⟩
+— CalcCheck: Found (9.28) “∃-Introduction”, (9.28.1) “∃-Introduction”
+∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys)
+— CalcCheck: ─ OK
+(∃ ys ❙ ys ⌢ xs₀ = xs₀ • false ≡ x ∈ ys )
+= ⟨ “Trading for ∃” ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading for ∃”
+— CalcCheck: ─ OK
+(∃ ys • ys ⌢ xs₀ = xs₀ ∧ (false ≡ x ∈ ys) )
+⇒⁅ xs := xs₀ ⁆ ⟨ “Assignment” with “Substitution into ∃” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: Found (8.11) “Substitution into ∃”
+— CalcCheck: ─ OK
+(∃ ys • ys ⌢ xs = xs₀ ∧ (false ≡ x ∈ ys) )
+⇒⁅ b := false ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+(∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) )
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Theorem “Initialisation for `elem`”:
+true
+╍╍╍ Precondition
+⇒⁅ xs := xs₀ ⍮ b := false ⁆
+(∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys))
+
+
+[7]
+
+
+Theorem “Postcondition for `elem`”: ¬ (xs ≠ 𝜖) ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) ) ⇒ b ≡ x ∈ xs₀
+Proof:
+Calculation for expected goal `¬ (xs ≠ 𝜖) ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) ) ⇒ b ≡ x ∈ xs₀`:
+¬ (xs ≠ 𝜖) ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) )
+= ⟨ “Double negation”, “Definition of ≠” ⟩
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+xs = 𝜖 ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) )
+= ⟨ “Trading for ∃”, “Distributivity of ∧ over ∃” ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading for ∃”
+— CalcCheck: Found (9.21) “Distributivity of ∧ over ∃”
+— CalcCheck: ─ OK
+(∃ ys ❙ ys ⌢ xs = xs₀ • (b ≡ x ∈ ys) ∧ xs = 𝜖 )
+= ⟨ “Trading for ∃”, “Associativity of ∧” ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading for ∃”
+— CalcCheck: Found (3.37) “Associativity of ∧”
+— CalcCheck: ─ OK
+(∃ ys • (ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys)) ∧ xs = 𝜖 )
+= ⟨ Substitution, “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+(∃ ys • (ys ⌢ z = xs₀ ∧ (b ≡ x ∈ ys))[z ≔ 𝜖] ∧ xs = 𝜖 )
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(∃ ys • (ys ⌢ 𝜖 = xs₀ ∧ (b ≡ x ∈ ys)) ∧ xs = 𝜖 )
+⇒ ⟨ “Body weakening for ∃” ⟩
+— CalcCheck: Found (9.26) “Body weakening for ∃”, (9.26.1) “Body weakening for ∃”
+— CalcCheck: ─ OK
+(∃ ys • ys ⌢ 𝜖 = xs₀ ∧ (b ≡ x ∈ ys) )
+= ⟨ “Right-identity of ⌢” ⟩
+— CalcCheck: Found (13.19) “Right-identity of ⌢”
+— CalcCheck: ─ OK
+(∃ ys • ys = xs₀ ∧ (b ≡ x ∈ ys) )
+= ⟨ Substitution, “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+(∃ ys • ys = xs₀ ∧ (b ≡ x ∈ z)[z ≔ xs₀] )
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+
+
+Theorem “Postcondition for `elem`”:
+¬(xs ≠ 𝜖) ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (
+⇒ b ≡ x ∈ xs₀
+Proof:
+¬(xs ≠ 𝜖) ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b
+=⟨ “Double negation” , “Definition of ≠”⟩
+(xs = 𝜖) ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡
+=⟨ “Trading for ∃” , “Distributivity of ∧
+(∃ ys ❙ (ys ⌢ xs = xs₀) • (b ≡ x ∈ ys)
+=⟨ “Trading for ∃” , “Associativity of ∧”
+(∃ ys • ((ys ⌢ xs = xs₀) ∧ (b ≡ x ∈ ys)
+=⟨ substitution , “Replacement” ⟩
+(∃ ys • ((ys ⌢ z = xs₀) ∧ (b ≡ x ∈ ys)
+=⟨ substitution
+⟩
+(∃ ys • ((ys ⌢ 𝜖 = xs₀) ∧ (b ≡ x ∈ ys)
+⇒⟨ “Body weakening for ∃”⟩
+(∃ ys • ys ⌢ 𝜖 = xs₀ ∧ (b ≡ x ∈ ys))
+=⟨ “Right-identity of ⌢”⟩
+(∃ ys • ys = xs₀ ∧ (b ≡ x ∈ ys))
+=⟨ substitution , “Replacement”⟩
+(∃ ys • ys = xs₀ ∧ (b ≡ x ∈ z)[ z ≔ xs₀
+=⟨ substitution⟩
+(∃ ys • ys = xs₀ ∧ (b ≡ x ∈ xs₀))
+=⟨ “Distributivity of ∧ over ∃”⟩
+(∃ ys • ys = xs₀) ∧ (b ≡ x ∈ xs₀)
+⇒⟨“Weakening”⟩
+(b ≡ x ∈ xs₀)
+
+[8]
+
+(∃ ys • ys = xs₀ ∧ (b ≡ x ∈ xs₀) )
+= ⟨ “Distributivity of ∧ over ∃” ⟩
+— CalcCheck: Found (9.21) “Distributivity of ∧ over ∃”
+— CalcCheck: ─ OK
+(∃ ys • ys = xs₀ ) ∧ (b ≡ x ∈ xs₀)
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”,
+(3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+b ≡ x ∈ xs₀
+— CalcCheck: Could not match calculation with stated goal.
+
+For the proof of the invariance theorem, you may need subproofs and/or additional lemmas or local properties.
+
+
+[9]
+
+
+It is frequently useful to adopt the following pattern for straight-line command sequences, when working “bottom-up”, that is, starting with the
+postcondition:
+pre₁ ∧ pre₂
+╍╍╍ Precondition
+⟨ Subproof:
+Assuming (1) `pre₁`,
+(2) `pre₂`:
+?
+╍╍╍ Proof for `intermediate`
+⟩
+intermediate
+⇒⁅ x := ??? ⁆ ⟨ “Assignment” with substitution ⟩ ╍╍╍ first assignment command
+...
+⇒⁅ z := ??? ⁆ ⟨ “Assignment” with substitution ⟩ ╍╍╍ last assignment command
+post
+╍╍╍ Postcondition
+⇒
+
+This makes the pieces of the precondition available in an easy-to-manage way while proving the implication from the precondition to
+intermediate.
+
+
+[10]
+
+
+Lemma “Middle”: (us ▹ x) ⌢ xs = us ⌢ (x ◃ xs)
+Proof:
+By induction on `us : Seq A`:
+Base case:
+Calculation for expected goal `(𝜖 ▹ x) ⌢ xs = 𝜖 ⌢ (x ◃ xs)`:
+(𝜖 ▹ x) ⌢ xs
+= ⟨ “Definition of ▹ for 𝜖” ⟩
+— CalcCheck: Found (13.12) “Definition of ▹ for 𝜖”
+— CalcCheck: ─ OK
+(x ◃ 𝜖) ⌢ xs
+= ⟨ “Mutual associativity of ◃ with ⌢” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with
+⌢”
+— CalcCheck: ─ OK
+x ◃ (𝜖 ⌢ xs)
+= ⟨ “Left-identity of ⌢” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: ─ OK
+x ◃ xs
+= ⟨ “Left-identity of ⌢” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: ─ OK
+𝜖 ⌢ (x ◃ xs)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+For any ` u`:
+Calculation for expected goal `((u ◃ us) ▹ x) ⌢ xs = (u ◃ us) ⌢
+(x ◃ xs)`:
+((u ◃ us) ▹ x) ⌢ xs
+= ⟨ “Definition of ▹ for ◃” ⟩
+— CalcCheck: Found (13.13) “Definition of ▹ for ◃”
+— CalcCheck: ─ OK
+(u ◃ (us ▹ x)) ⌢ xs
+= ⟨ “Mutual associativity of ◃ with ⌢” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with
+⌢”
+— CalcCheck: ─ OK
+u ◃ ((us ▹ x) ⌢ xs)
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `(us ▹ x) ⌢ xs =
+us ⌢ (x ◃ xs)`
+
+
+Lemma “Middle”:
+(us ▹ x) ⌢ xs = us ⌢ (x ◃ xs)
+Proof:
+By induction on `us : Seq A`:
+Base case:
+(𝜖 ▹ x) ⌢ xs
+=⟨ “Definition of ▹ for 𝜖”⟩
+(x ◃ 𝜖) ⌢ xs
+=⟨ “Mutual associativity of ◃ with ⌢”⟩
+x ◃ (𝜖 ⌢ xs)
+=⟨ “Left-identity of ⌢”⟩
+x ◃ (xs)
+=⟨ “Left-identity of ⌢”⟩
+𝜖 ⌢ (x ◃ xs)
+Induction step:
+For any `u`:
+((u ◃ us) ▹ x) ⌢ xs
+=⟨ “Definition of ▹ for ◃”⟩
+(u ◃ (us ▹ x)) ⌢ xs
+=⟨ “Mutual associativity of ◃ with ⌢”⟩
+u ◃ ((us ▹ x) ⌢ xs)
+=⟨ induction hypothesis ⟩
+u ◃ (us ⌢ (x ◃ xs))
+=⟨ “Mutual associativity of ◃ with ⌢”⟩
+(u ◃ us) ⌢ (x ◃ xs)
+
+— CalcCheck: ─ OK
+u ◃ (us ⌢ (x ◃ xs))
+= ⟨ “Mutual associativity of ◃ with ⌢” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with
+⌢”
+— CalcCheck: ─ OK
+(u ◃ us) ⌢ (x ◃ xs)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+[11]
+
+
+[12]
+
+
+Theorem “Invariant for `elem`”: xs ≠ 𝜖 ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) ) ⇒⁅ (if (head xs = x) then
+(b := true) else skip fi ⍮ xs := tail xs) ⁆ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) )
+Proof:
+Side proof for (T) `head xs = x ∧ (xs ≠ 𝜖 ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) )) ⇒⁅ (b := true) ⁆ (∃ ys •
+ys ⌢ tail xs = xs₀ ∧ (b ≡ x ∈ ys) )`:
+head xs = x ∧ (xs ≠ 𝜖 ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) ))
+⇒ ⟨ Subproof for expected goal `head xs = x ∧ (xs ≠ 𝜖 ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) )) ⇒
+(∃ ys • ys ⌢ tail xs = xs₀ ∧ x ∈ ys )`:
+Assuming (1) `head xs = x` , (2) `xs ≠ 𝜖` , (3) `(∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) )`:
+— CalcCheck: Assumptions match goal
+Assuming witness ` us` satisfying (4) `us ⌢ xs = xs₀ ∧ (b ≡ x ∈ us)`
+by Assumption (3)
+— CalcCheck: Found assumption (3):
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `(∃ ys • ys ⌢ tail xs = xs₀ ∧ x ∈ ys )`:
+(∃ ys • ys ⌢ tail xs = xs₀ ∧ x ∈ ys )
+⇐ ⟨ “∃-Introduction” ⟩
+— CalcCheck: Found (9.28) “∃-Introduction”, (9.28.1) “∃-Introduction”
+— CalcCheck: ─ OK
+(ys ⌢ tail xs = xs₀ ∧ x ∈ ys)[ys ≔ us ▹ head xs]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(us ▹ head xs) ⌢ tail xs = xs₀ ∧ x ∈ us ▹ head xs
+= ⟨ “Middle” ⟩
+— CalcCheck: Found “Middle”
+— CalcCheck: ─ OK
+us ⌢ (head xs ◃ tail xs) = xs₀ ∧ x ∈ us ▹ head xs
+= ⟨ “Non-empty-sequence decomposition” with Assumption (2) ⟩
+— CalcCheck: Found “Non-empty-sequence decomposition”
+— CalcCheck: Found assumption (2)
+— CalcCheck: ─ OK
+us ⌢ xs = xs₀ ∧ x ∈ us ▹ head xs
+= ⟨ Assumption (4), “Identity of ∧” ⟩
+— CalcCheck: Found assumption (4)
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+x ∈ us ▹ head xs
+= ⟨ Assumption (1) ⟩
+— CalcCheck: Found assumption (1)
+— CalcCheck: ─ OK
+x ∈ us ▹ x
+= ⟨ “Membership in ▹” ⟩
+
+
+— CalcCheck: Found (13.16) “Membership in ▹”
+Theorem “Invariant for `elem`”:
+— CalcCheck: ─ OK
+(xs ≠ 𝜖) ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b
+x ∈ us ∨ x = x
+⇒⁅
+= ⟨ “Reflexivity of =”, “Zero of ∨” ⟩
+if head xs = x
+— CalcCheck: Found (1.2) “Reflexivity of =”
+then
+— CalcCheck: Found (3.29) “Zero of ∨”
+b := true
+— CalcCheck: ─ OK
+true
+else
+— CalcCheck: All steps OK
+skip
+— CalcCheck: Calculation matches goal ─ OK
+fi ⍮
+⟩
+xs := tail xs
+— CalcCheck: ─ OK
+⁆
+(∃ ys • ys ⌢ tail xs = xs₀ ∧ x ∈ ys )
+(∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys))
+= ⟨ “Identity of ≡” ⟩
+Proof:
+— CalcCheck: Found (3.3) “Identity of ≡”
+Side proof for (T) `(head xs = x) ∧ (xs ≠ 𝜖
+— CalcCheck: ─ OK
+(head xs = x) ∧ (xs ≠ 𝜖) ∧ (∃ ys • ys ⌢
+(∃ ys • ys ⌢ tail xs = xs₀ ∧ (true ≡ x ∈ ys) )
+⇒⟨ Subproof:
+⇒⁅ b := true ⁆ ⟨ “Assignment” with Substitution ⟩
+Assuming (1) `(head xs = x)`,
+— CalcCheck: Found “Assignment”, “Assignment”
+(2) `(xs ≠ 𝜖)`,
+— CalcCheck: ─ OK
+(∃
+ys • ys ⌢ tail xs = xs₀ ∧ (b ≡ x ∈ ys) )
+(3) `(∃ ys • ys ⌢ xs = xs₀
+— CalcCheck: All steps OK
+Assuming witness `us` satisfying (4
+— CalcCheck: Calculation matches goal ─ OK
+∃ ys • ys ⌢ tail xs = xs₀ ∧ x
+Side
+proof for (F) `¬ (head xs = x) ∧ (xs ≠ 𝜖 ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) )) ⇒⁅ skip ⁆ (∃ ys • ys
+⇐⟨ “∃-Introduction”⟩
+⌢ tail xs = xs₀ ∧ (b ≡ x ∈ ys) )`:
+(ys ⌢ tail xs = xs₀ ∧ x ∈ ys)[
+¬ (head xs = x) ∧ (xs ≠ 𝜖 ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) ))
+=⟨ substitution ⟩
+⇒ ⟨ Subproof for expected goal `¬ (head xs = x) ∧ (xs ≠ 𝜖 ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) ))
+((us ▹ head xs) ⌢ tail xs = x
+⇒ (∃ ys • ys ⌢ tail xs = xs₀ ∧ (b ≡ x ∈ ys) )`:
+=⟨ “Middle” ⟩
+Assuming (1) `¬ (head xs = x)` , (2) `xs ≠ 𝜖` , (3) `(∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) )`:
+(us ⌢ (head xs ◃ tail xs) = x
+— CalcCheck: Assumptions match goal
+=⟨ “Non-empty-sequence decomposit
+Assuming witness ` us` satisfying (4) `us ⌢ xs = xs₀ ∧ (b ≡ x ∈ us)`
+(us ⌢ xs) = xs₀ ∧ x ∈ (us ▹ h
+by Assumption (3)
+=⟨ assumption (4), “Identity of ∧
+— CalcCheck: Found assumption (3):
+— CalcCheck: Assumption matches goal
+x ∈ (us ▹ head xs)
+Calculation for expected goal `(∃ ys • ys ⌢ tail xs = xs₀ ∧ (b ≡ x ∈ ys) )`:
+=⟨ assumption (1) ⟩
+(∃ ys • ys ⌢ tail xs = xs₀ ∧ (b ≡ x ∈ ys) )
+x ∈ (us ▹ x)
+⇐
+⟨ “∃-Introduction” ⟩
+=⟨ “Membership in ▹” ⟩
+— CalcCheck: Found (9.28) “∃-Introduction”, (9.28.1) “∃-Introduction”
+x ∈ us ∨ x = x
+— CalcCheck: ─ OK
+=⟨ “Reflexivity of =” , “Zero of
+(ys ⌢ tail xs = xs₀ ∧ (b ≡ x ∈ ys))[ys ≔ us ▹ head xs]
+true
+= ⟨ Substitution ⟩
+⟩
+— CalcCheck: ─ OK
+∃ ys • ys ⌢ tail xs = xs₀ ∧ x ∈ ys
+(us ▹ head xs) ⌢ tail xs = xs₀ ∧ (b ≡ x ∈ us ▹ head xs)
+=⟨ “Identity of ≡”⟩
+
+
+∃ ys • ys ⌢ tail xs = xs₀ ∧ (true ≡ x
+⇒⁅ b := true ⁆⟨ “Assignment” with substit
+∃ ys • ys ⌢ tail xs = xs₀ ∧ (b ≡ x ∈ y
+
+Side proof for (F) `¬(head xs = x) ∧ (xs ≠
+¬(head xs = x) ∧ (xs ≠ 𝜖) ∧ (∃ ys • ys
+⇒⟨ Subproof:
+Assuming (1) `¬(head xs = x)`, (2) `
+Assuming witness `us` satisfying (4
+(∃ ys • ys ⌢ tail xs = xs₀ ∧ (
+⇐⟨ “∃-Introduction”⟩
+(ys ⌢ tail xs = xs₀ ∧ (b ≡ x ∈
+=⟨ substitution ⟩
+((us ▹ head xs) ⌢ tail xs = x
+=⟨ “Middle” ⟩
+(us ⌢ (head xs ◃ tail xs) = x
+=⟨ “Non-empty-sequence decomposit
+((us ⌢ xs) = xs₀) ∧ (b ≡ x ∈ (
+=⟨ “Membership in ▹” , “Double ne
+((us ⌢ xs) = xs₀) ∧ (b ≡ ¬ ¬ (
+=⟨“De Morgan” , assumption (1) ,
+(us ⌢ xs) = xs₀ ∧ (b ≡ ((x ∈ u
+=⟨ “Identity of ∨” ⟩
+(us ⌢ xs) = xs₀ ∧ (b ≡ (x ∈ us
+=⟨ assumption (4) ⟩
+true
+⟩
+(∃ ys • ys ⌢ tail xs = xs₀ ∧ (b ≡ x ∈
+⇒⁅ skip ⁆⟨ “skip” ⟩
+(∃ ys • ys ⌢ tail xs = xs₀ ∧ (b ≡ x ∈
+Continuing:
+(xs ≠ 𝜖) ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b
+⇒⁅ if head xs = x then b := true else sk
+⟨ “Conditional” with Local property
+(∃ ys • ys ⌢ tail xs = xs₀ ∧ (b ≡ x ∈
+⇒⁅ xs := tail xs ⁆ ⟨ “Assignment” with su
+(∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys))
+
+
+= ⟨ “Middle” ⟩
+— CalcCheck: Found “Middle”
+— CalcCheck: ─ OK
+us ⌢ (head xs ◃ tail xs) = xs₀ ∧ (b ≡ x ∈ us ▹ head xs)
+= ⟨ “Non-empty-sequence decomposition” with Assumption (2) ⟩
+— CalcCheck: Found “Non-empty-sequence decomposition”
+— CalcCheck: Found assumption (2)
+— CalcCheck: ─ OK
+us ⌢ xs = xs₀ ∧ (b ≡ x ∈ us ▹ head xs)
+= ⟨ “Membership in ▹”, “Double negation”, “Symmetry of =” ⟩
+— CalcCheck: Found (13.16) “Membership in ▹”
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: Found (1.3) “Symmetry of =”
+— CalcCheck: ─ OK
+us ⌢ xs = xs₀ ∧ (b ≡ ¬ (¬ (x ∈ us ∨ head xs = x)))
+= ⟨ “De Morgan”, Assumption (1), “De Morgan”, “Definition of `false`” ⟩
+— CalcCheck: Found (3.47a) “De Morgan”, (3.47b) “De Morgan”, (3.47c) “De
+Morgan”, (3.47d) “De Morgan”
+— CalcCheck: Found assumption (1)
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: ─ OK
+us ⌢ xs = xs₀ ∧ (b ≡ x ∈ us ∨ false)
+= ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+us ⌢ xs = xs₀ ∧ (b ≡ x ∈ us)
+= ⟨ Assumption (4) ⟩
+— CalcCheck: Found assumption (4)
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+⟩
+— CalcCheck: ─ OK
+(∃ ys • ys ⌢ tail xs = xs₀ ∧ (b ≡ x ∈ ys) )
+⇒⁅ skip ⁆ ⟨ “skip” ⟩
+— CalcCheck: Found “skip”, “skip”
+— CalcCheck: ─ OK
+(∃ ys • ys ⌢ tail xs = xs₀ ∧ (b ≡ x ∈ ys) )
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Continuing:
+Calculation for expected goal `xs ≠ 𝜖 ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) ) ⇒⁅ (if (head xs = x)
+
+
+then (b := true) else skip fi ⍮ xs := tail xs) ⁆ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) )`:
+xs ≠ 𝜖 ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) )
+⇒⁅ if (head xs = x) then (b := true) else skip fi ⍮ xs := tail xs ⁆ ⟨ “Conditional” with Local property (T)
+and Local property (F) ⟩
+— CalcCheck: Found “Conditional”
+— CalcCheck: Found local property (T)
+— CalcCheck: Found local property (F)
+— CalcCheck: Could not justify this step!
+(∃ ys • ys ⌢ tail xs = xs₀ ∧ (b ≡ x ∈ ys) )
+⇒⁅ xs := tail xs ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+(∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) )
+— CalcCheck: 1 out of 2 steps not justified
+— CalcCheck: Could not match calculation with stated goal.
+
+
+[13]
+
+1,1
+
+
+Theorem “Correctness of `elem`”:
+true
+⇒⁅ xs := xs₀ ⍮
+b := false ⍮
+while xs ≠ 𝜖 do
+if head xs = x
+then b := true
+else skip
+fi ⍮
+xs := tail xs
+od
+⁆
+(b ≡ x ∈ xs₀) ╍╍╍ Parentheses needed beca
+Proof:
+true
+╍╍╍ Precondition
+⇒⁅ xs := xs₀ ⍮ b := false ⁆
+⟨ “Initialisation for `elem`”⟩
+(∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys))
+⇒⁅ while xs ≠ 𝜖 do
+if head xs = x
+then b := true
+else skip
+fi ⍮
+xs := tail xs
+od ⁆ ⟨ “While” with “Invariant for `elem
+¬(xs ≠ 𝜖) ∧ (∃ ys • ys ⌢ xs = x
+⇒⟨“Postcondition for `elem`”⟩
+(b ≡ x ∈ xs₀)
+
+Theorem “Correctness of `elem`”: true ⇒⁅ (xs := xs₀ ⍮ (b := false ⍮ while (xs ≠ 𝜖) do (if (head xs =
+x) then (b := true) else skip fi ⍮ xs := tail xs) od)) ⁆ (b ≡ x ∈ xs₀)
+Proof:
+Calculation for expected goal `true ⇒⁅ (xs := xs₀ ⍮ (b := false ⍮ while (xs ≠ 𝜖) do (if (head xs = x)
+then (b := true) else skip fi ⍮ xs := tail xs) od)) ⁆ (b ≡ x ∈ xs₀)`:
+true
+⇒⁅ xs := xs₀ ⍮ b := false ⁆ ⟨ “Initialisation for `elem`” ⟩
+— CalcCheck: Found “Initialisation for `elem`”
+— CalcCheck: ─ OK
+(∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) )
+⇒⁅ while (xs ≠ 𝜖) do (if (head xs = x) then (b := true) else skip fi ⍮ xs := tail xs) od ⁆ ⟨ “While” with
+“Invariant for `elem`” ⟩
+— CalcCheck: Found “While”
+— CalcCheck: Found “Invariant for `elem`”
+— CalcCheck: ─ OK
+¬ (xs ≠ 𝜖) ∧ (∃ ys • ys ⌢ xs = xs₀ ∧ (b ≡ x ∈ ys) )
+⇒ ⟨ “Postcondition for `elem`” ⟩
+— CalcCheck: Found “Postcondition for `elem`”
+— CalcCheck: Could not justify this step!
+b ≡ x ∈ xs₀
+— CalcCheck: 1 out of 3 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

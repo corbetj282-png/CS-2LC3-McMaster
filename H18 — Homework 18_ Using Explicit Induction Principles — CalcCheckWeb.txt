@@ -1,0 +1,721 @@
+[1]
+
+Here we redevelop the theory of the natural numbers from scratch — nothing about the natural numbers is preloaded here.
+Instead of having the successor operator suc, we base induction on 0 and (_+ 1), using an explicitly stated induction principle instead of builtin “By induction”, which is disabled here. (Evaluation is also not available here.)
+Using (_+ 1) instead of suc will make some proofs easier once in particular symmetry of addition is activated. (But not in this notebook.)
+Using (_+ 1) instead of suc also brings the presentation closer to what you will see in many other places, including LADM chapter 12.
+(All propositional logic and predicate logic are preloaded here, and four hint items are allowed per hint.)
+
+[2]
+
+Weak Induction on Natural Numbers
+[3]
+
+The type ℕ of natural numbers is set up here so that natural-number literals (such as “0” and “1”) can be used as constants of type ℕ, but no
+operations on ℕ are registered — not even suc.
+
+
+[4]
+
+Addition
+
+[5]
+
+[6]
+
+[7]
+
+[8]
+
+[9]
+
+[10]
+
+Instead of introducing the constructor suc, we will be using addition of 1, so we need to first introduce addition:
+
+Declaration: _+_ : ℕ → (ℕ → ℕ)
+— CalcCheck: Operator _+_: Associating to the left; precedence
+100
+
+Declaration: _+_ : ℕ → ℕ → ℕ
+
+With this, we can already formulate a first axiom:
+
+Axiom “Zero is not successor”: 0 = n + 1
+
+≡
+
+false
+
+Axiom “Zero is not successor”: 0 = n + 1 ≡ false
+
+A different shape of this is occasionally useful:
+
+Theorem “Zero is not successor”: 0 ≠ n + 1
+Proof:
+0 ≠ n + 1
+=⟨ “Definition of ≠” , “Zero is not successor” ,
+true
+
+
+Theorem “Zero is not successor”: 0 ≠ n + 1
+Proof:
+Calculation for expected goal `0 ≠ n + 1`:
+0 ≠ n+ 1
+“Definition of `fals
+= ⟨ “Definition of ≠”, “Zero is not successor”, “Definition of
+`false`” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: Found “Zero is not successor”
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[11]
+
+[12]
+
+[13]
+
+[14]
+
+[15]
+
+
+Addition is defined by just translating the suc-based definition into using (_+ 1) instead:
+
+Axiom “Definition of +”: 0 + n = n
+Axiom “Definition of +”: (m + 1) + n = (m + n) + 1
+
+Axiom “Definition of +”: 0 + n = n
+Axiom “Definition of +”: (m + 1) + n = (m + n) + 1
+
+In this version, natural induction corresponding to that implemented by “By induction on var : ℕ” relies on the following induction principle:
+
+Axiom “Induction over ℕ”:
+P[n ≔ 0]
+⇒ (∀ n : ℕ ❙ P • P[n ≔ n + 1])
+⇒ (∀ n : ℕ • P)
+
+Axiom “Induction over ℕ”: P[n ≔ 0] ⇒ ((∀ n : ℕ ❙ P • P[n ≔ n + 1] ) ⇒
+(∀ n : ℕ • P ))
+— CalcCheck: Metavariables: P = P〖n〗
+
+This can be used to prove properties of the shape (∀ n : ℕ • P) by supplying subproofs for the base case P[n ≔ 0] and the induction
+step (∀ n : ℕ ❙ P • P[n ≔ n + 1]), as demonstrated in the following example:
+Important: Using “Induction over ℕ” with two subproofs can only prove universally-quantified goals, that is, goals of shape (∀ n : ℕ
+• P)!
+
+
+[16]
+
+[17]
+
+
+Theorem “Right-identity of + (v0)”: ∀ m : ℕ • m + 0 = m
+Proof:
+Using “Induction over ℕ”:
+Subproof for `(m + 0 = m)[m ≔ 0]`:
+By substitution and “Definition of +”
+Subproof for `∀ m : ℕ ❙ m + 0 = m • (m + 0 = m)[m ≔ m + 1]`:
+For any `m : ℕ` satisfying `m + 0 = m`:
+(m + 0 = m)[m ≔ m + 1]
+=⟨ Substitution, “Definition of +” ⟩
+(m + 0) + 1 = m + 1
+=⟨ Assumption `m + 0 = m`, “Reflexivity of =” ⟩
+true
+
+Theorem “Right-identity of + (v0)”: (∀ m : ℕ • m + 0 = m )
+Proof:
+Using “Induction over ℕ”:
+— CalcCheck: Found “Induction over ℕ”
+Subproof for `(m + 0 = m)[m ≔ 0]`:
+By Substitution, “Definition of +”
+— CalcCheck: Found “Definition of +”
+Subproof for `(∀ m : ℕ ❙ m + 0 = m • (m + 0 = m)[m ≔ m +
+1] )`:
+For any ` m : ℕ` satisfying `m + 0 = m`:
+— CalcCheck: Assumptions match quantifier range.
+Calculation for expected goal `(m + 0 = m)[m ≔ m +
+1]`:
+(m + 0 = m)[m ≔ m + 1]
+= ⟨ Substitution, “Definition of +” ⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: ─ OK
+(m + 0) + 1 = m + 1
+= ⟨ Assumption `m + 0 = m`, “Reflexivity of =” ⟩
+— CalcCheck: Found assumption `m + 0 = m`
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+The substitutions in the subproof goals can be taken care of automatically, significantly reducing the overhead of this presentation:
+
+
+[18]
+
+[19]
+
+
+Theorem “Right-identity of + (v1)”: ∀ m : ℕ • m + 0 = m
+Proof:
+Using “Induction over ℕ”:
+Subproof for `0 + 0 = 0`:
+By “Definition of +”
+Subproof for `∀ m : ℕ ❙ m + 0 = m • (m + 1) + 0 = m + 1`:
+For any `m : ℕ` satisfying `m + 0 = m`:
+(m + 1) + 0
+=⟨ “Definition of +” ⟩
+(m + 0) + 1
+=⟨ Assumption `m + 0 = m` ⟩
+m + 1
+
+Theorem “Right-identity of + (v1)”: (∀ m : ℕ • m + 0 = m )
+Proof:
+Using “Induction over ℕ”:
+— CalcCheck: Found “Induction over ℕ”
+Subproof for `0 + 0 = 0`:
+By “Definition of +”
+— CalcCheck: Found “Definition of +”
+Subproof for `(∀ m : ℕ ❙ m + 0 = m • (m + 1) + 0 = m + 1
+)`:
+For any ` m : ℕ` satisfying `m + 0 = m`:
+— CalcCheck: Assumptions match quantifier range.
+Calculation for expected goal `(m + 1) + 0 = m +
+1`:
+(m + 1) + 0
+= ⟨ “Definition of +” ⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: ─ OK
+(m + 0) + 1
+= ⟨ Assumption `m + 0 = m` ⟩
+— CalcCheck: Found assumption `m + 0 = m`
+— CalcCheck: ─ OK
+m+ 1
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+And as long as the subproofs make their goals obvious, the subproof goals can be omitted, too, making the presentation look almost the same
+as in H7:
+
+
+[20]
+
+[21]
+
+
+Theorem “Right-identity of + (v2)”: ∀ m : ℕ • m + 0 = m
+Proof:
+Using “Induction over ℕ”:
+Subproof:
+0 + 0
+=⟨ “Definition of +” ⟩
+0
+Subproof:
+For any `m : ℕ` satisfying “IndHyp” `m + 0 = m`:
+(m + 1) + 0
+=⟨ “Definition of +” ⟩
+(m + 0) + 1
+=⟨ Assumption “IndHyp” ⟩
+m + 1
+
+Theorem “Right-identity of + (v2)”: (∀ m : ℕ • m + 0 = m )
+Proof:
+Using “Induction over ℕ”:
+— CalcCheck: Found “Induction over ℕ”
+Subproof establishing `0 + 0 = 0`:
+0+0
+= ⟨ “Definition of +” ⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: ─ OK
+0
+— CalcCheck: All steps OK
+Subproof establishing `(∀ m : ℕ ❙ m + 0 = m • (m + 1) + 0 = m
++ 1 )`:
+For any ` m : ℕ` satisfying “IndHyp” `m + 0 = m`:
+— CalcCheck: Assumptions match quantifier range.
+Calculation establishing `(m + 1) + 0 = m + 1`:
+(m + 1) + 0
+= ⟨ “Definition of +” ⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: ─ OK
+(m + 0) + 1
+= ⟨ Assumption “IndHyp” ⟩
+— CalcCheck: Found assumption “IndHyp”
+— CalcCheck: ─ OK
+m+ 1
+— CalcCheck: All steps OK
+
+And if a theorem statement without explicit universal quantification is desired, one can just adapt this proof accordingly:
+
+
+[22]
+
+[23]
+
+
+Theorem “Right-identity of +”: m + 0 = m
+Proof:
+m + 0 = m
+≡ ⟨ Substitution ⟩
+(m + 0 = m)[m ≔ m]
+⇐ ⟨ “Instantiation” ⟩
+∀ m : ℕ • m + 0 = m
+Proof for this:
+Using “Induction over ℕ”:
+Subproof:
+0 + 0
+=⟨ “Definition of +” ⟩
+0
+Subproof:
+For any `m : ℕ` satisfying “IndHyp” `m + 0 = m`:
+(m + 1) + 0
+=⟨ “Definition of +” ⟩
+(m + 0) + 1
+=⟨ Assumption “IndHyp” ⟩
+m + 1
+
+Theorem “Right-identity of +”: m + 0 = m
+Proof:
+Calculation for expected goal `m + 0 = m`:
+m+ 0 = m
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(m + 0 = m)[m ≔ m]
+⇐ ⟨ “Instantiation” ⟩
+— CalcCheck: Found (9.13) “Instantiation”, (9.13.2) “Instantiation”,
+(9.13.1) “Instantiation”
+— CalcCheck: ─ OK
+(∀ m : ℕ • m + 0 = m )
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Proof for this:
+Using “Induction over ℕ”:
+— CalcCheck: Found “Induction over ℕ”
+Subproof establishing `0 + 0 = 0`:
+0+0
+= ⟨ “Definition of +” ⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: ─ OK
+0
+— CalcCheck: All steps OK
+Subproof establishing `(∀ m : ℕ ❙ m + 0 = m • (m + 1) + 0 = m + 1 )`:
+For any ` m : ℕ` satisfying “IndHyp” `m + 0 = m`:
+— CalcCheck: Assumptions match quantifier range.
+Calculation establishing `(m + 1) + 0 = m + 1`:
+(m + 1) + 0
+= ⟨ “Definition of +” ⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: ─ OK
+(m + 0) + 1
+= ⟨ Assumption “IndHyp” ⟩
+— CalcCheck: Found assumption “IndHyp”
+— CalcCheck: ─ OK
+m+ 1
+— CalcCheck: All steps OK
+
+(However, as long as no explicit substitution needs to be provided, the version with explicit universal quantification, “Right-identity of + (v2)”,
+is just as useful as the version without, due to automatic instantiation as explained in H12.)
+
+
+[24]
+
+
+In H7, you have used the built-in induction support to prove:
+Theorem “Shifting `suc` over +”: suc m + n = m + suc n
+An application of “Induction over ℕ” for this will be proving a goal of shape “∀ m : ℕ • ...”.
+Since mixing explicit and implicit universal quantification is somewhat dubious stylistically, and also can induce technical problems, a natural
+way to state theorems here will actually quantify all variables explicitly — this mainly means that additional “For any” structures will be needed
+in the proofs. (Feel free to add the subproof goals if you wish.)
+
+
+[25]
+
+[26]
+
+
+Theorem “Shifting successor over +”: ∀ m • ∀ n • (m + 1 Theorem “Shifting successor over +”: (∀ m • (∀ n • (m + 1) + n = m + (n + 1) ) )
+Proof:
+Proof:
+Using “Induction over ℕ”:
+Using “Induction over ℕ”:
+— CalcCheck: Found “Induction over ℕ”
+Subproof:
+Subproof establishing `(∀ n : ℕ • (0 + 1) + n = 0 + (n + 1) )`:
+For any `n : ℕ`:
+For any ` n : ℕ`:
+(0 + 1) + n
+Calculation establishing `(0 + 1) + n = 0 + (n + 1)`:
+=⟨“Definition of +”⟩
+(0 + 1) + n
+1 + n
+= ⟨ “Definition of +” ⟩
+=⟨“Definition of +”⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: ─ OK
+0 + (n + 1)
+1+n
+Subproof:
+= ⟨ “Definition of +” ⟩
+For any `m : ℕ` satisfying “IndHyp” `∀ n • (m + 1
+— CalcCheck: Found “Definition of +”
+For any `n : ℕ`:
+— CalcCheck: ─ OK
+((m + 1) + 1) + n
+0 + (n + 1)
+=⟨“Definition of +”⟩
+— CalcCheck: All steps OK
+((m + 1) + n) + 1
+Subproof establishing `(∀ m : ℕ ❙ (∀ n • (m + 1) + n = m + (n + 1) ) • (∀ n : ℕ • ((m +
+=⟨ Assumption “IndHyp” ⟩
+1) + 1) + n = (m + 1) + (n + 1) ) )`:
+(m + (n + 1)) + 1
+For any ` m : ℕ` satisfying “IndHyp” `(∀ n • (m + 1) + n = m + (n + 1) )`:
+=⟨“Definition of +”⟩
+— CalcCheck: Assumptions match quantifier range.
+(m + 1) + (n + 1)
+For any ` n : ℕ`:
+Calculation establishing `((m + 1) + 1) + n = (m + 1) + (n + 1)`:
+((m + 1) + 1) + n
+= ⟨ “Definition of +” ⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: ─ OK
+((m + 1) + n) + 1
+= ⟨ Assumption “IndHyp” ⟩
+— CalcCheck: Found assumption “IndHyp”
+— CalcCheck: ─ OK
+(m + (n + 1)) + 1
+= ⟨ “Definition of +” ⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: ─ OK
+(m + 1) + (n + 1)
+— CalcCheck: All steps OK
+
+Using this, you can now also prove “Symmetry of +”:
+
+
+[27]
+
+
+Theorem “Symmetry of +”: (∀ m • (∀ n • m + n = n + m ) )
+Theorem “Symmetry of +”: ∀ m • ∀ n • m + n = n + m
+Proof:
+Proof:
+Using “Induction over ℕ”:
+Using “Induction over ℕ”:
+— CalcCheck: Found “Induction over ℕ”
+Subproof:
+Subproof establishing `(∀ n : ℕ • 0 + n = n + 0 )`:
+For any `n : ℕ`:
+For any ` n : ℕ`:
+0 + n
+Calculation establishing `0 + n = n + 0`:
+=⟨“Definition of +”⟩
+0+n
+n
+= ⟨ “Definition of +” ⟩
+=⟨“Right-identity of +”⟩
+— CalcCheck: Found “Definition of +”
+n + 0
+— CalcCheck: ─ OK
+n
+Subproof:
+= ⟨ “Right-identity of +” ⟩
+For any `m : ℕ` satisfying “IndHyp” `∀ n • m + n = n +
+— CalcCheck: Found “Right-identity of +”
+For any `n : ℕ`:
+— CalcCheck: ─ OK
+(m + 1) + n
+n+ 0
+=⟨“Definition of +”⟩
+— CalcCheck: All steps OK
+(m + n) + 1
+Subproof establishing `(∀ m : ℕ ❙ (∀ n • m + n = n + m ) • (∀ n : ℕ • (m + 1)
+=⟨ Assumption “IndHyp”⟩
++ n = n + (m + 1) ) )`:
+(n + m) + 1
+For any ` m : ℕ` satisfying “IndHyp” `(∀ n • m + n = n + m )`:
+=⟨“Definition of +”⟩
+— CalcCheck: Assumptions match quantifier range.
+(n + 1) + m
+For any ` n : ℕ`:
+=⟨ “Shifting successor over +” ⟩
+Calculation establishing `(m + 1) + n = n + (m + 1)`:
+(m + 1) + n
+n + (m + 1)
+= ⟨ “Definition of +” ⟩
+— CalcCheck: Found “Definition of +”
+╍╍╍ “Definition of +”: (m + 1) + n = (m + n) + 1
+— CalcCheck: ─ OK
+(m + n) + 1
+= ⟨ Assumption “IndHyp” ⟩
+— CalcCheck: Found assumption “IndHyp”
+— CalcCheck: ─ OK
+(n + m) + 1
+= ⟨ “Definition of +” ⟩
+— CalcCheck: Found “Definition of +”
+— CalcCheck: ─ OK
+(n + 1) + m
+= ⟨ “Shifting successor over +” ⟩
+— CalcCheck: Found “Shifting successor over +”
+— CalcCheck: ─ OK
+n + (m + 1)
+— CalcCheck: All steps OK
+
+
+[28]
+
+
+Note that symmetry and associativity of addition are not activated here, so their uses will need to be made explicit below where necessary.
+
+[29]
+
+Sequences from the Back
+[30]
+
+[31]
+
+[32]
+
+[33]
+
+[34]
+
+[35]
+
+(Before you continue here, make sure you are familiar with “`By induction on …’” proofs for sequences as explained and practiced
+in Exercises 6.1 amd 6.2!)
+
+In this notebook, we consider the “snoc” constructor _▹_ for sequences as primitive and introduce the sequence type also without setup for
+“By induction on `xs : Seq A`”:
+
+Declaration: Seq : Type → Type
+
+Declaration: Seq : Type → Type
+
+Declaration: 𝜖 : Seq A
+Declaration: _▹_ : Seq A → (A → Seq A)
+— CalcCheck: Operator _▹_: Associating to the left; precedence
+60
+
+Declaration: 𝜖 : Seq A
+Declaration: _▹_ : Seq A → A → Seq A
+
+Axiom “Snoc is not empty”: ∀ xs • ∀ x •
+
+xs ▹ x = 𝜖
+
+≡
+
+false
+
+Axiom “Snoc is not empty”: (∀ xs • (∀ x • xs ▹ x = 𝜖 ≡ false )
+)
+
+Axiom “Equality of ▹” “Injectivity of ▹” “Cancellation of ▹” Axiom “Equality of ▹” “Injectivity of ▹” “Cancellation of ▹”: xs ▹ x = ys
+▹ y ≡ xs = ys ∧ x = y
+xs ▹ x = ys ▹ y
+≡
+xs = ys ∧ x = y
+
+
+[36]
+
+[37]
+
+[38]
+
+[39]
+
+[40]
+
+[41]
+
+
+We only provide the ▹-based induction principle for sequences here:
+
+Axiom “Snoc-induction over sequences”:
+Axiom “Snoc-induction over sequences”: P[xs ≔ 𝜖] ⇒ ((∀ xs : Seq A ❙ P • (∀ x : A • P[xs
+≔ xs ▹ x] ) ) ⇒ (∀ xs : Seq A • P ))
+P[xs ≔ 𝜖]
+— CalcCheck: Metavariables: A = A〖〗, P = P〖xs〗
+⇒ (∀ xs : Seq A ❙ P • (∀ x : A • P[xs ≔ xs ▹ x]))
+— CalcCheck: Proviso: ¬occurs(`x`, `P`), ¬occurs(`xs`, `A`)
+⇒ (∀ xs : Seq A • P)
+
+Then we define cons _◃_ in terms of snoc _▹_:
+
+Declaration: _◃_ : A → Seq A → Seq A
+
+Axiom “Definition of ◃”:
+Axiom “Definition of ◃”:
+
+x ◃ 𝜖 = 𝜖 ▹ x
+x ◃ (xs ▹ y) = (x ◃ xs) ▹ y
+
+Declaration: _◃_ : A → (Seq A → Seq A)
+— CalcCheck: Operator _◃_: Associating to the right;
+precedence 60
+
+Axiom “Definition of ◃”: x ◃ 𝜖 = 𝜖 ▹ x
+Axiom “Definition of ◃”: x ◃ (xs ▹ y) = (x ◃ xs) ▹ y
+
+In this context, “Cons is not empty” does not need to be an axiom, but can be shown as a theorem, and you will need to use “Snoc-induction
+over sequences” to prove it:
+
+
+[42]
+
+[43]
+
+
+Theorem “Cons is not empty”: ∀ xs • ∀ x • x ◃ xs = 𝜖 ≡ Theorem “Cons is not empty”: (∀ xs • (∀ x • x ◃ xs = 𝜖 ≡ false ) )
+Proof:
+Proof:
+Using “Snoc-induction over sequences”:
+Using “Snoc-induction over sequences”:
+— CalcCheck: Found “Snoc-induction over sequences”
+Subproof:
+Subproof establishing `(∀ x : A • x ◃ 𝜖 = 𝜖 ≡ false )`:
+For any `x : A`:
+For any ` x : A`:
+x ◃ 𝜖 = 𝜖
+Calculation establishing `x ◃ 𝜖 = 𝜖 ≡ false`:
+≡⟨“Definition of ◃”⟩
+x◃𝜖= 𝜖
+𝜖 ▹ x = 𝜖
+≡ ⟨ “Definition of ◃” ⟩
+≡⟨“Snoc is not empty”⟩
+— CalcCheck: Found “Definition of ◃”
+false
+— CalcCheck: ─ OK
+Subproof:
+𝜖▹x= 𝜖
+For any `xs : Seq A` satisfying “IndHyp” `∀ x • x
+≡ ⟨ “Snoc is not empty” ⟩
+— CalcCheck: Found “Snoc is not empty”
+For any `y : A`:
+— CalcCheck: ─ OK
+For any `x : A`:
+false
+x ◃ (xs ▹ y) = 𝜖
+— CalcCheck: All steps OK
+≡⟨“Definition of ◃”⟩
+Subproof establishing `(∀ xs : Seq A ❙ (∀ x • x ◃ xs = 𝜖 ≡ false ) • (∀ y : A • (∀ x : A
+(x ◃ xs) ▹ y = 𝜖
+• x ◃ (xs ▹ y) = 𝜖 ≡ false ) ) )`:
+≡⟨“Snoc is not empty”⟩
+For any ` xs : Seq A` satisfying “IndHyp” `(∀ x • x ◃ xs = 𝜖 ≡ false )`:
+false
+— CalcCheck: Assumptions match quantifier range.
+For any ` y : A`:
+For any ` x : A`:
+Calculation establishing `x ◃ (xs ▹ y) = 𝜖 ≡ false`:
+x ◃ (xs ▹ y) = 𝜖
+≡ ⟨ “Definition of ◃” ⟩
+— CalcCheck: Found “Definition of ◃”
+— CalcCheck: ─ OK
+(x ◃ xs) ▹ y = 𝜖
+≡ ⟨ “Snoc is not empty” ⟩
+— CalcCheck: Found “Snoc is not empty”
+— CalcCheck: ─ OK
+false
+— CalcCheck: All steps OK
+
+It turns out that proving “Tail is different” is slightly easier with snoc induction (and can be very similar to the proof of “Cons is not empty”).
+
+
+[44]
+
+1,1
+
+
+Theorem (13.7) “Tail is different”: (∀ xs : Seq A • (∀ x : A • x ◃ xs = xs ≡ false ) )
+— CalcCheck: Metavariables: A = A〖〗
+— CalcCheck: Proviso: ¬occurs(`xs`, `A`)
+Proof:
+Using “Snoc-induction over sequences”:
+— CalcCheck: Found “Snoc-induction over sequences”
+Subproof establishing `(∀ x : A • (x ◃ 𝜖 = 𝜖) = false )`:
+For any ` x : A`:
+Calculation establishing `(x ◃ 𝜖 = 𝜖) = false`:
+x◃𝜖= 𝜖
+= ⟨ “Definition of ◃” ⟩
+— CalcCheck: Found “Definition of ◃”
+— CalcCheck: ─ OK
+𝜖▹x= 𝜖
+= ⟨ “Snoc is not empty” ⟩
+— CalcCheck: Found “Snoc is not empty”
+— CalcCheck: ─ OK
+false
+— CalcCheck: All steps OK
+Subproof establishing `(∀ xs : Seq A ❙ (∀ x : A • x ◃ xs = xs ≡ false ) • (∀ y : A • (∀ x :
+A • x ◃ (xs ▹ y) = xs ▹ y ≡ false ) ) )`:
+For any ` xs : Seq A` satisfying “IndHyp” `(∀ x : A • x ◃ xs = xs ≡ false )`:
+— CalcCheck: Assumptions match quantifier range.
+For any ` y : A`:
+For any ` x : A`:
+Calculation establishing `x ◃ (xs ▹ y) = xs ▹ y ≡ false`:
+x ◃ (xs ▹ y) = xs ▹ y
+≡ ⟨ “Definition of ◃” ⟩
+— CalcCheck: Found “Definition of ◃”
+— CalcCheck: ─ OK
+(x ◃ xs) ▹ y = xs ▹ y
+≡ ⟨ “Cancellation of ▹” ⟩
+— CalcCheck: Found “Equality of ▹”
+— CalcCheck: ─ OK
+x ◃ xs = xs ∧ y = y
+≡ ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+x ◃ xs = xs ∧ true
+≡ ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+
+
+Theorem (13.7) “Tail is different”:
+∀ xs : Seq A • ∀ x : A • x ◃ xs =
+Proof:
+Using “Snoc-induction over sequences”:
+Subproof:
+For any `x : A`:
+x ◃ 𝜖 = 𝜖
+=⟨“Definition of ◃”⟩
+𝜖 ▹ x = 𝜖
+=⟨“Snoc is not empty”⟩
+false
+Subproof:
+For any `xs : Seq A` satisfying “IndHyp” `∀ x
+For any `y : A`:
+For any `x : A`:
+x ◃ (xs ▹ y) = (xs ▹ y)
+≡⟨ “Definition of ◃” ⟩
+(x ◃ xs) ▹ y = (xs ▹ y)
+≡⟨“Cancellation of ▹”⟩
+(x ◃ xs) = xs ∧ y = y
+≡⟨“Reflexivity of =”⟩
+(x ◃ xs) = xs ∧ true
+≡⟨“Identity of ∧”⟩
+(x ◃ xs) = xs
+≡⟨ Assumption “IndHyp” ⟩
+false
+
+x ◃ xs = xs
+≡ ⟨ Assumption “IndHyp” ⟩
+— CalcCheck: Found assumption “IndHyp”
+— CalcCheck: ─ OK
+false
+— CalcCheck: All steps OK
+
+Check and Save
+
+
+Save
+
+

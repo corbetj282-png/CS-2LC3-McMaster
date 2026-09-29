@@ -1,0 +1,814 @@
+[1]
+
+Abstract Kleene Algebra: General Properties of Iteration
+[2]
+
+Reflexive-transitive closure _* of relations satisfies many algebraic properties that it shares with iteration of regular languages, which supplies the
+meaning of _* as an operator in the context of regular expressions.
+Abstract algebraic treatment of “Kleene star” _* usually is set in a context where composition ⨾, identities 𝕀, inclusion ordering ⊆, and union ∪
+are available. Therefore reference notebook 10.1, which is preloaded here, builds, besides on propositional logic, only on the reference
+notebooks 9.2 and 9.5.
+In that context, the iteration operators are declared as follows:
+Declaration: _⁺ , _* : A ↔ A
+
+→
+
+A ↔ A
+
+Abstract Kleene algebra nowadays usually starts from the following three axioms:
+Axiom (KA.1) “Definition of *”:
+R * = 𝕀 ∪ R ∪ R * ⨾ R *
+Axiom (KA.2) “Left-induction for *”: R ⨾ S ⊆ S ⇒ R * ⨾ S ⊆ S
+Axiom (KA.3) “Right-induction for *”: Q ⨾ R ⊆ Q ⇒ Q ⨾ R * ⊆ Q
+The “at-least-one-step version” _⁺ is derived easily:
+Axiom (KA.4) “Definition of ⁺”:
+
+R ⁺ = R ⨾ R *
+
+
+(Remember that ↔ has higher precedence than →, and ⨾ has higher precedence than ∪.)
+
+[3]
+
+From these axioms, numerous properties can be derived, see Ref11.1.
+Here, just prove the selection below of the Ref11.1 theorems.
+Where these theorems have numbers, you are only allowed to use theorems with smaller numbers (or theorems occurring before the
+current theorem in this notebook).
+(Theorems with larger numbers may still be offered by theorem name completion, but will not be accepted by the proof checker.)
+Even though theorem numbers are relevant for which theorems you are allowed to use, you still do not have to refer to theorems by their
+numbers — it remains preferred that you refer to named theorems by (one of) their names.
+
+[4]
+
+Theorem (KA.5) “Reflexivity of *”:
+Proof:
+R *
+=⟨ “Definition of *”⟩
+((𝕀 ∪ R) ∪ (R * ⨾ R *))
+⊇⟨ “Weakening for ∪”⟩
+(𝕀 ∪ R)
+⊇⟨ “Weakening for ∪”⟩
+𝕀
+
+
+𝕀 ⊆ R *
+
+Theorem (KA.5) “Reflexivity of *”: 𝕀 ⊆ R *
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+Calculation for expected goal `𝕀 ⊆ R *`:
+R*
+= ⟨ “Definition of *” ⟩
+— CalcCheck: Found (KA.1) “Definition of *”
+— CalcCheck: ─ OK
+(𝕀 ∪ R) ∪ R * ⨾ R *
+⊇ ⟨ “Weakening for ∪” ⟩
+— CalcCheck: Found “Weakening for ∪”
+— CalcCheck: ─ OK
+𝕀∪R
+⊇ ⟨ “Weakening for ∪” ⟩
+— CalcCheck: Found “Weakening for ∪”
+— CalcCheck: ─ OK
+𝕀
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[5]
+
+
+Theorem (KA.6) “Transitivity of *”: R * ⨾ R * ⊆ R *
+Proof:
+R * ⨾ R *
+=⟨ “Definition of *”⟩
+((𝕀 ∪ R) ∪ (R * ⨾ R *)) ⨾ ((𝕀 ∪ R) ∪ (R * ⨾ R *))
+⊇⟨ “Monotonicity of ⨾” with “Weakening for ∪”⟩
+((𝕀 ∪ R)) ⨾ ((𝕀 ∪ R) ∪ (R * ⨾ R *))
+⊇⟨ “Monotonicity of ⨾” with “Weakening for ∪”⟩
+((𝕀 ∪ R)) ⨾ ((𝕀 ∪ R))
+⊇⟨ “Monotonicity of ⨾” with “Weakening for ∪”⟩
+(𝕀) ⨾ ((𝕀 ∪ R))
+⊇⟨ “Monotonicity of ⨾” with “Weakening for ∪”⟩
+(𝕀) ⨾ 𝕀
+=⟨ “Identity of ⨾”⟩
+𝕀
+
+
+Theorem (KA.6) “Transitivity of *”: R * ⨾ R * ⊆ R *
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+Calculation for expected goal `R * ⨾ R * ⊆ R *`:
+R*⨾R*
+= ⟨ “Definition of *” ⟩
+— CalcCheck: Found (KA.1) “Definition of *”
+— CalcCheck: ─ OK
+((𝕀 ∪ R) ∪ R * ⨾ R *) ⨾ ((𝕀 ∪ R) ∪ R * ⨾ R *)
+⊇ ⟨ “Monotonicity of ⨾” with “Weakening for ∪” ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of ⨾”,
+“Monotonicity of ⨾”
+— CalcCheck: Found “Weakening for ∪”
+— CalcCheck: ─ OK
+(𝕀 ∪ R) ⨾ ((𝕀 ∪ R) ∪ R * ⨾ R *)
+⊇ ⟨ “Monotonicity of ⨾” with “Weakening for ∪” ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of ⨾”,
+“Monotonicity of ⨾”
+— CalcCheck: Found “Weakening for ∪”
+— CalcCheck: ─ OK
+(𝕀 ∪ R) ⨾ (𝕀 ∪ R)
+⊇ ⟨ “Monotonicity of ⨾” with “Weakening for ∪” ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of ⨾”,
+“Monotonicity of ⨾”
+— CalcCheck: Found “Weakening for ∪”
+— CalcCheck: ─ OK
+𝕀 ⨾ (𝕀 ∪ R)
+⊇ ⟨ “Monotonicity of ⨾” with “Weakening for ∪” ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of ⨾”,
+“Monotonicity of ⨾”
+— CalcCheck: Found “Weakening for ∪”
+— CalcCheck: ─ OK
+𝕀⨾𝕀
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+𝕀
+— CalcCheck: Could not match calculation with stated goal.
+
+
+[6]
+
+
+Theorem (KA.7) “⨾-idempotency of *”:
+Proof:
+Using “Mutual inclusion”:
+Subproof for `R * ⨾ R * ⊆ R *`:
+By “Transitivity of *”
+
+R * ⨾ R * = R *
+
+Subproof for `R * ⊆ R * ⨾ R *`:
+R *
+=⟨ “Identity of ⨾”⟩
+R * ⨾ 𝕀
+⊆⟨ “Monotonicity of ⨾” with “Reflexivity of *”⟩
+R * ⨾ R *
+
+
+Theorem (KA.7) “⨾-idempotency of *”: R * ⨾ R * = R *
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+Using “Mutual inclusion”:
+— CalcCheck: Found “Mutual inclusion”
+Subproof for `R * ⨾ R * ⊆ R *`:
+By “Transitivity of *”
+— CalcCheck: Found (KA.6) “Transitivity of *”
+Subproof for `R * ⊆ R * ⨾ R *`:
+R*
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+R*⨾𝕀
+⊆ ⟨ “Monotonicity of ⨾” with “Reflexivity of *” ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of
+⨾”, “Monotonicity of ⨾”
+— CalcCheck: Found (KA.5) “Reflexivity of *”
+— CalcCheck: ─ OK
+R*⨾R*
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[7]
+
+Theorem (KA.8) “* increases”:
+Proof:
+R *
+=⟨ “Definition of *”⟩
+𝕀 ∪ R ∪ R * ⨾ R *
+⊇⟨ “Weakening for ∪”⟩
+𝕀 ∪ R
+⊇⟨ “Weakening for ∪”⟩
+R
+
+
+R ⊆ R *
+
+Theorem (KA.8) “* increases”: R ⊆ R *
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+Calculation for expected goal `R ⊆ R *`:
+R*
+= ⟨ “Definition of *” ⟩
+— CalcCheck: Found (KA.1) “Definition of *”
+— CalcCheck: ─ OK
+𝕀 ∪ (R ∪ R * ⨾ R *)
+⊇ ⟨ “Weakening for ∪” ⟩
+— CalcCheck: Found “Weakening for ∪”
+— CalcCheck: ─ OK
+𝕀∪R
+⊇ ⟨ “Weakening for ∪” ⟩
+— CalcCheck: Found “Weakening for ∪”
+— CalcCheck: ─ OK
+R
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[8]
+
+[9]
+
+
+Theorem (KA.9) “⁺ increases”: R ⊆ R ⁺
+Proof:
+R ⁺
+=⟨ “Definition of ⁺”⟩
+R ⨾ R *
+=⟨ “Definition of *”⟩
+R ⨾ (𝕀 ∪ R ∪ R * ⨾ R *)
+⊇⟨ “Monotonicity of ⨾” with “Weakening for ∪”⟩
+R ⨾ (𝕀 ∪ R)
+⊇⟨ “Monotonicity of ⨾” with “Weakening for ∪”⟩
+R ⨾ (𝕀)
+=⟨ “Identity of ⨾”⟩
+R
+
+Axiom (KA.10) “⁺ ⊆ *”:
+
+
+R ⁺ ⊆ R *
+
+Theorem (KA.9) “⁺ increases”: R ⊆ R ⁺
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+Calculation for expected goal `R ⊆ R ⁺`:
+R⁺
+= ⟨ “Definition of ⁺” ⟩
+— CalcCheck: Found (KA.4) “Definition of ⁺”
+— CalcCheck: ─ OK
+R⨾R*
+= ⟨ “Definition of *” ⟩
+— CalcCheck: Found (KA.1) “Definition of *”
+— CalcCheck: ─ OK
+R ⨾ (𝕀 ∪ (R ∪ R * ⨾ R *))
+⊇ ⟨ “Monotonicity of ⨾” with “Weakening for ∪” ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of ⨾”,
+“Monotonicity of ⨾”
+— CalcCheck: Found “Weakening for ∪”
+— CalcCheck: ─ OK
+R ⨾ (𝕀 ∪ R)
+⊇ ⟨ “Monotonicity of ⨾” with “Weakening for ∪” ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of ⨾”,
+“Monotonicity of ⨾”
+— CalcCheck: Found “Weakening for ∪”
+— CalcCheck: ─ OK
+R⨾𝕀
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+R
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Axiom (KA.10) “⁺ ⊆ *”: R ⁺ ⊆ R *
+— CalcCheck: Metavariables: R = R〖〗
+
+
+[10]
+
+
+Lemma “11-lemma”: (𝕀 ∪ R ⨾ R *) ⨾ R * ⊆ 𝕀 ∪ R ⨾ R *
+Proof:
+Using “Right-induction for *”:
+Subproof for `(𝕀 ∪ R ⨾ R *) ⨾ R ⊆ 𝕀 ∪ R ⨾ R *`:
+(𝕀 ∪ R ⨾ R *) ⨾ R
+=⟨ “Distributivity of ⨾ over ∪”, “Identity of ⨾” ⟩
+R ∪ R ⨾ R * ⨾ R
+⊆⟨ Monotonicity with “Right-iteration ⊆ in *” ⟩
+R ∪ R ⨾ R *
+=⟨ “Identity of ⨾” ⟩
+R ⨾ 𝕀 ∪ R ⨾ R *
+⊆⟨ Monotonicity with “Reflexivity of *” ⟩
+R ⨾ R * ∪ R ⨾ R *
+=⟨ “Idempotency of ∪” ⟩
+R ⨾ R *
+⊆⟨ “Weakening for ∪” ⟩
+𝕀 ∪ R ⨾ R *
+
+
+Lemma “11-lemma”: (𝕀 ∪ R ⨾ R *) ⨾ R * ⊆ 𝕀 ∪ R ⨾ R *
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+Using “Right-induction for *”:
+— CalcCheck: Found (KA.3) “Right-induction for *”
+Subproof for `(𝕀 ∪ R ⨾ R *) ⨾ R ⊆ 𝕀 ∪ R ⨾ R *`:
+(𝕀 ∪ R ⨾ R *) ⨾ R
+= ⟨ “Distributivity of ⨾ over ∪”, “Identity of ⨾” ⟩
+— CalcCheck: Found “Distributivity of ⨾ over ∪”
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+R ∪ R ⨾ (R * ⨾ R)
+⊆ ⟨ Monotonicity with “Right-iteration ⊆ in *” ⟩
+— CalcCheck: Found (KA.17) “Right-iteration ⊆ in
+*”
+— CalcCheck: ─ OK
+R∪R⨾R*
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+R⨾𝕀∪R⨾R*
+⊆ ⟨ Monotonicity with “Reflexivity of *” ⟩
+— CalcCheck: Found (KA.5) “Reflexivity of *”
+— CalcCheck: ─ OK
+R⨾R*∪R⨾R*
+= ⟨ “Idempotency of ∪” ⟩
+— CalcCheck: Found “Idempotency of ∪”
+— CalcCheck: ─ OK
+R⨾R*
+⊆ ⟨ “Weakening for ∪” ⟩
+— CalcCheck: Found “Weakening for ∪”
+— CalcCheck: ─ OK
+𝕀∪R⨾R*
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[11]
+
+
+Lemma (KA.11) “* via ⁺”: R * = 𝕀 ∪ R ⁺
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+Using “Mutual inclusion”:
+— CalcCheck: Found “Mutual inclusion”
+Subproof for `R * ⊆ 𝕀 ∪ R ⁺`:
+R*⊆𝕀∪R⁺
+= ⟨ “Definition of ⁺” ⟩
+— CalcCheck: Found (KA.4) “Definition of ⁺”
+— CalcCheck: ─ OK
+R*⊆𝕀∪R⨾R*
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Proof for this:
+Calculation for expected goal `R * ⊆ 𝕀 ∪ R ⨾ R *`:
+R*
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+𝕀⨾R*
+⊆ ⟨ Monotonicity with “Weakening for ∪” ⟩
+— CalcCheck: Found “Weakening for ∪”
+— CalcCheck: ─ OK
+(𝕀 ∪ R ⨾ R *) ⨾ R *
+⊆ ⟨ “11-lemma” ⟩
+— CalcCheck: Found “11-lemma”
+— CalcCheck: ─ OK
+𝕀∪R⨾R*
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `𝕀 ∪ R ⁺ ⊆ R *`:
+𝕀∪R⁺
+⊆ ⟨ Monotonicity with “⁺ ⊆ *” ⟩
+— CalcCheck: Found (KA.10) “⁺ ⊆ *”
+— CalcCheck: ─ OK
+𝕀∪R*
+⊆ ⟨ “Weakening for ∪” ⟩
+— CalcCheck: Found “Weakening for ∪”
+— CalcCheck: ─ OK
+𝕀 ∪ (R ∪ R *)
+= ⟨ “⨾-idempotency of *”, “Definition of *” ⟩
+— CalcCheck: Found (KA.7) “⨾-idempotency of
+
+
+Lemma (KA.11) “* via ⁺”: R * = 𝕀 ∪ R ⁺
+Proof:
+Using “Mutual inclusion”:
+Subproof for `R * ⊆ 𝕀 ∪ R ⁺`:
+R * ⊆ 𝕀 ∪ R ⁺
+=⟨ “Definition of ⁺” ⟩
+R * ⊆ 𝕀 ∪ R ⨾ R *
+Proof for this:
+R *
+=⟨ “Identity of ⨾” ⟩
+𝕀 ⨾ R *
+⊆⟨ Monotonicity with “Weakening for ∪” ⟩
+(𝕀 ∪ R ⨾ R *) ⨾ R *
+⊆⟨ “11-lemma” ⟩
+𝕀 ∪ R ⨾ R *
+Subproof for `𝕀 ∪ R ⁺ ⊆ R *`:
+𝕀 ∪ R ⁺
+⊆⟨ Monotonicity with “⁺ ⊆ *” ⟩
+𝕀 ∪ R *
+⊆⟨ “Weakening for ∪” ⟩
+𝕀 ∪ R ∪ R *
+=⟨ “⨾-idempotency of *” , “Definition of *” ⟩
+R *
+
+[12]
+
+Theorem (KA.12) “Left-iteration for *”:
+Proof:
+By “* via ⁺”, “Definition of ⁺”
+
+
+R * = 𝕀 ∪ R ⨾ R *
+
+*”
+— CalcCheck: Found (KA.1) “Definition of *”
+— CalcCheck: ─ OK
+R*
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem (KA.12) “Left-iteration for *”: R * = 𝕀 ∪ R ⨾ R *
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+By “* via ⁺”, “Definition of ⁺”
+— CalcCheck: Found (KA.11) “* via ⁺”
+— CalcCheck: Found (KA.4) “Definition of ⁺”
+
+
+[13]
+
+
+Theorem “Right-iteration ⊆ in *”: R * ⨾ R ⊆ R *
+Proof:
+R * ⨾ R
+⊆⟨ Monotonicity with “* increases” ⟩
+R * ⨾ R *
+=⟨ “⨾-idempotency of *” ⟩
+R *
+
+
+Theorem “Right-iteration ⊆ in *”: R * ⨾ R ⊆ R *
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+Calculation for expected goal `R * ⨾ R ⊆ R *`:
+R*⨾R
+⊆ ⟨ Monotonicity with “* increases” ⟩
+— CalcCheck: Found (KA.8) “* increases”
+— CalcCheck: ─ OK
+R*⨾R*
+= ⟨ “⨾-idempotency of *” ⟩
+— CalcCheck: Found (KA.7) “⨾-idempotency of *”
+— CalcCheck: ─ OK
+R*
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[14]
+
+
+Theorem (KA.14) “Shuffle *”: R ⨾ R * = R * ⨾ R
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+Using “Mutual inclusion”:
+— CalcCheck: Found “Mutual inclusion”
+Subproof for `R ⨾ R * ⊆ R * ⨾ R`:
+R⨾R*
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+𝕀 ⨾ (R ⨾ R *)
+⊆ ⟨ “Monotonicity of ⨾” with “Reflexivity of *” ⟩
+— CalcCheck: Found “Left-monotonicity of ⨾”, “Right-monotonicity of
+⨾”, “Monotonicity of ⨾”
+— CalcCheck: Found (KA.5) “Reflexivity of *”
+— CalcCheck: ─ OK
+R * ⨾ (R ⨾ R *)
+⊆ ⟨ “Right-induction for *” with Subproof for `R * ⨾ (R ⨾ R) ⊆ R * ⨾ R`:
+R * ⨾ (R ⨾ R)
+⊆ ⟨ Monotonicity with “Right-iteration ⊆ in *” ⟩
+— CalcCheck: Found “Right-iteration ⊆ in *”
+— CalcCheck: ─ OK
+R*⨾R
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+⟩
+— CalcCheck: Found (KA.3) “Right-induction for *”
+— CalcCheck: ─ OK
+R*⨾R
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `R * ⨾ R ⊆ R ⨾ R *`:
+R*⨾R
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+R * ⨾ (R ⨾ 𝕀)
+⊆ ⟨ Monotonicity with “Reflexivity of *” ⟩
+— CalcCheck: Found (KA.5) “Reflexivity of *”
+— CalcCheck: ─ OK
+R * ⨾ (R ⨾ R *)
+⊆ ⟨ “Left-induction for *” with Subproof for `R ⨾ (R ⨾ R *) ⊆ R ⨾ R *`:
+
+
+Theorem (KA.14) “Shuffle *”: R ⨾ R * = R * ⨾ R
+Proof:
+Using “Mutual inclusion”:
+Subproof for `R ⨾ R * ⊆ R * ⨾ R`:
+R ⨾ R *
+=⟨ “Identity of ⨾”⟩
+𝕀 ⨾ R ⨾ R *
+⊆⟨ “Monotonicity of ⨾” with “Reflexivity of *”⟩
+R * ⨾ R ⨾ R *
+⊆⟨ “Right-induction for *” with
+Subproof for `R * ⨾ R ⨾ R ⊆ R * ⨾ R`:
+R * ⨾ R ⨾ R
+⊆⟨ Monotonicity with “Right-iteration ⊆ in *” ⟩
+R * ⨾ R
+⟩
+R * ⨾ R
+
+R ⨾ (R ⨾ R *)
+⊆ ⟨ Monotonicity with “Left-iteration ⊆ in *” ⟩
+— CalcCheck: Found (KA.13) “Left-iteration ⊆ in *”
+— CalcCheck: ─ OK
+R⨾R*
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+⟩
+— CalcCheck: Found (KA.2) “Left-induction for *”
+— CalcCheck: ─ OK
+R⨾R*
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Subproof for `R * ⨾ R ⊆ R ⨾ R *`:
+R * ⨾ R
+=⟨ “Identity of ⨾” ⟩
+R * ⨾ R ⨾ 𝕀
+⊆⟨ Monotonicity with “Reflexivity of *” ⟩
+R * ⨾ R ⨾ R *
+⊆⟨ “Left-induction for *” with
+Subproof for `R ⨾ R ⨾ R * ⊆ R ⨾ R *`:
+R ⨾ R ⨾ R *
+⊆⟨ Monotonicity with “Left-iteration ⊆ in *” ⟩
+R ⨾ R *
+⟩
+R ⨾ R *
+
+
+[15]
+
+
+Theorem (KA.18) “Monotonicity of *”: R ⊆ S ⇒ R * ⊆ S *
+Proof:
+Assuming `R ⊆ S`:
+R *
+=⟨ “Identity of ⨾” ⟩
+R * ⨾ 𝕀
+⊆⟨ Monotonicity with “Reflexivity of *” ⟩
+R * ⨾ S *
+⊆⟨ Subproof for `R * ⨾ S * ⊆ S *`:
+Using “Left-induction for *”:
+Subproof for `R ⨾ S * ⊆ S *`:
+R ⨾ S *
+⊆⟨ Monotonicity with Assumption `R ⊆ S` ⟩
+S ⨾ S *
+⊆⟨ “Left-iteration ⊆ in *” ⟩
+S *
+⟩
+S *
+
+Theorem (KA.18) “Monotonicity of *”: R ⊆ S ⇒ R * ⊆ S *
+— CalcCheck: Metavariables: R = R〖〗, S = S〖〗
+Proof:
+Assuming `R ⊆ S`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `R * ⊆ S *`:
+R*
+= ⟨ “Identity of ⨾” ⟩
+— CalcCheck: Found “Identity of ⨾”
+— CalcCheck: ─ OK
+R*⨾𝕀
+⊆ ⟨ Monotonicity with “Reflexivity of *” ⟩
+— CalcCheck: Found (KA.5) “Reflexivity of *”
+— CalcCheck: ─ OK
+R*⨾S*
+⊆ ⟨ Subproof for `R * ⨾ S * ⊆ S *`:
+Using “Left-induction for *”:
+— CalcCheck: Found (KA.2) “Left-induction for *”
+Subproof for `R ⨾ S * ⊆ S *`:
+R⨾S*
+⊆ ⟨ Monotonicity with Assumption `R ⊆ S` ⟩
+— CalcCheck: Found assumption `R ⊆ S`
+— CalcCheck: ─ OK
+S⨾S*
+⊆ ⟨ “Left-iteration ⊆ in *” ⟩
+— CalcCheck: Found (KA.13) “Left-iteration
+⊆ in *”
+— CalcCheck: ─ OK
+S*
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+⟩
+— CalcCheck: ─ OK
+S*
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[16]
+
+Activate monotonicity property “Monotonicity of *”
+
+
+Activate monotonicity property “Monotonicity of *”
+— CalcCheck: Found monotonicity of `_*` in argument position 0 from
+`_⊆_` to `_⊆_`
+
+
+[17]
+
+[18]
+
+[19]
+
+
+Theorem (KA.19) “Monotonicity of ⁺”: R ⊆ S ⇒
+Proof:
+Assuming `R ⊆ S`:
+R ⁺
+=⟨ “Definition of ⁺” ⟩
+R ⨾ R *
+⊆⟨ Monotonicity with Assumption `R ⊆ S` ⟩
+S ⨾ R *
+⊆⟨ Monotonicity with Assumption `R ⊆ S` ⟩
+S ⨾ S *
+=⟨ “Definition of ⁺” ⟩
+S ⁺
+
+R ⁺ ⊆ S ⁺
+
+Activate monotonicity property “Monotonicity of ⁺”
+
+Theorem (KA.19) “Monotonicity of ⁺”: R ⊆ S ⇒ R ⁺ ⊆ S ⁺
+— CalcCheck: Metavariables: R = R〖〗, S = S〖〗
+Proof:
+Assuming `R ⊆ S`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `R ⁺ ⊆ S ⁺`:
+R⁺
+= ⟨ “Definition of ⁺” ⟩
+— CalcCheck: Found (KA.4) “Definition of ⁺”
+— CalcCheck: ─ OK
+R⨾R*
+⊆ ⟨ Monotonicity with Assumption `R ⊆ S` ⟩
+— CalcCheck: Found assumption `R ⊆ S`
+— CalcCheck: ─ OK
+S⨾R*
+⊆ ⟨ Monotonicity with Assumption `R ⊆ S` ⟩
+— CalcCheck: Found assumption `R ⊆ S`
+— CalcCheck: ─ OK
+S⨾S*
+= ⟨ “Definition of ⁺” ⟩
+— CalcCheck: Found (KA.4) “Definition of ⁺”
+— CalcCheck: ─ OK
+S⁺
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Activate monotonicity property “Monotonicity of ⁺”
+— CalcCheck: Found monotonicity of `_⁺` in argument position 0 from
+`_⊆_` to `_⊆_`
+
+The following theorem about Kleene star of union is hard to prove, but useful to understand and remember!
+It is included here just for drawing attention to it; consider proving it as optional.
+
+
+[20]
+
+
+Proposition (KA.20) “Union *”: (R ∪ S) * = (R * ⨾ S) * ⨾ R
+*
+— CalcCheck: Metavariables: R = R〖〗, S = S〖〗
+Proof:
+
+Proposition (KA.20) “Union *”:
+(R ∪ S) * = (R * ⨾ S) * ⨾ R *
+Proof:
+
+— CalcCheck: Proof: No proof there!
+
+[21]
+
+Theorem (KA.22) “Subidentity decomposition entering * f
+G ⨾ F ⊆ 𝕀
+⇒ (F ⨾ R ⨾ G) * ⨾ F ⊆ F ⨾ R *
+Proof:
+
+Theorem (KA.22) “Subidentity decomposition entering * from left”: G ⨾ F ⊆ 𝕀 ⇒
+(F ⨾ (R ⨾ G)) * ⨾ F ⊆ F ⨾ R *
+— CalcCheck: Metavariables: F = F〖〗, G = G〖〗, R = R〖〗
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[22]
+
+Theorem (KA.26) “Composition * shifting”: (R ⨾ S) * ⨾ R = R ⨾ (S ⨾ R) * Theorem (KA.26) “Composition * shifting”: (R ⨾ S) * ⨾ R = R ⨾ (S ⨾
+R) *
+Proof:
+— CalcCheck: Metavariables: R = R〖〗, S = S〖〗
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[23]
+
+Theorem (KA.27) “Composition *”:
+Proof:
+
+(R ⨾ S) * = 𝕀 ∪ R ⨾ (S ⨾ R) * ⨾ S
+
+Theorem (KA.27) “Composition *”: (R ⨾ S) * = 𝕀 ∪ R ⨾ ((S ⨾ R) *
+⨾ S)
+— CalcCheck: Metavariables: R = R〖〗, S = S〖〗
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[24]
+
+Theorem (KA.28) “Reflexive closure *”: (𝕀 ∪ R) * = R *
+Proof:
+
+Theorem (KA.28) “Reflexive closure *”: (𝕀 ∪ R) * = R *
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+— CalcCheck: Proof: No proof there!
+
+
+[25]
+
+
+Theorem (KA.30) “Subidentity *”: R ⊆ 𝕀
+Proof:
+
+⇒
+
+R * = 𝕀
+
+Theorem (KA.30) “Subidentity *”: R ⊆ 𝕀 ⇒ R * = 𝕀
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[26]
+
+Theorem (KA.31) “Refl-trans *”:
+reflexive R ∧ transitive R ⇒
+Proof:
+
+R * = R
+
+Theorem (KA.31) “Refl-trans *”: reflexive R ∧ transitive R ⇒ R *
+=R
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[27]
+
+Theorem (KA.32) “Refl-trans closure minimality”:
+R ⊆ S ∧ reflexive S ∧ transitive S ⇒ R * ⊆ S
+Proof:
+
+1,1
+
+Theorem (KA.32) “Refl-trans closure minimality”: R ⊆ S ∧ (reflexive S ∧
+transitive S) ⇒ R * ⊆ S
+— CalcCheck: Metavariables: R = R〖〗, S = S〖〗
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[28]
+
+Theorem (KA.34) “Left-induction with ∪ for *”:
+R ⨾ S ∪ T ⊆ S ⇒ R * ⨾ T ⊆ S
+Proof:
+
+Theorem (KA.34) “Left-induction with ∪ for *”: R ⨾ S ∪ T ⊆ S ⇒ R *
+⨾ T⊆S
+— CalcCheck: Metavariables: R = R〖〗, S = S〖〗, T = T〖〗
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[29]
+
+Theorem (KA.36) “Idempotency of *”:
+Proof:
+
+R * * = R *
+
+Theorem (KA.36) “Idempotency of *”: (R *) * = R *
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+— CalcCheck: Proof: No proof there!
+
+Check and Save
+
+
+Save
+
+

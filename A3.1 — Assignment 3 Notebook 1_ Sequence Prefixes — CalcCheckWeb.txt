@@ -1,0 +1,575 @@
+[1]
+
+[2]
+
+[3]
+
+[4]
+
+The set-up here is the same as in Ex9.3: Preloaded are all propositional logic, predicate logic, program correctness material, integers, and
+sequence material from Ex6.1 and Ex6.2, as well as the definitions of any, all, and sum seen in Exercise 9.3 (here via module
+Midterm2.Sequences).
+
+We define the binary predicate _isPrefixOf_ via “Definition of isPrefixOf”, which can be considered as a functional program — it is
+straightforward to render this is Haskell.
+
+Precedence 50 for: _isPrefixOf_
+Conjunctional:
+_isPrefixOf_
+Declaration:
+_isPrefixOf_ : Seq A → Seq A → 𝔹
+
+Axiom “Definition of `isPrefixOf`”:
+Axiom “Definition of `isPrefixOf`”:
+Axiom “Definition of `isPrefixOf`”:
+
+
+𝜖 isPrefixOf ys
+(x ◃ xs) isPrefixOf (y ◃ ys
+(x ◃ xs) isPrefixOf 𝜖
+
+Precedence 50 for: _isPrefixOf_
+Conjunctional: _isPrefixOf_
+Declaration: _isPrefixOf_ : Seq A → (Seq A → 𝔹)
+— CalcCheck: Operator _isPrefixOf_: Conjunctional; precedence
+50
+
+Axiom “Definition of `isPrefixOf`”: 𝜖 isPrefixOf ys
+Axiom “Definition of `isPrefixOf`”: x ◃ xs isPrefixOf y ◃ ys ≡ x = y ∧ xs
+isPrefixOf ys
+Axiom “Definition of `isPrefixOf`”: x ◃ xs isPrefixOf 𝜖 ≡ false
+
+
+[5]
+
+
+The name _isPrefixOf_ suggests the intended functionality — proving the following theorem therefore constitutes a correctness proof for the
+functional program above.
+
+
+[6]
+
+
+Theorem “Specification of `isPrefixOf`”: xs isPrefixOf zs ≡ (∃ ys • xs ⌢ ys = zs )
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+Calculation for expected goal `𝜖 isPrefixOf zs ≡ (∃ ys • 𝜖 ⌢ ys = zs )`:
+𝜖 isPrefixOf zs ≡ (∃ ys • 𝜖 ⌢ ys = zs )
+= ⟨ “Definition of `isPrefixOf`”, “Left-identity of ⌢”, “Identity of ≡” ⟩
+— CalcCheck: Found “Definition of `isPrefixOf`”
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+(∃ ys • ys = zs )
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+true
+— CalcCheck: 1 out of 2 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ y : A • y ◃ xs isPrefixOf zs ≡ (∃ ys • (y ◃ xs) ⌢ ys = zs )
+)`:
+For any ` y : A`:
+By induction on `zs : Seq A`:
+Base case:
+Calculation for expected goal `y ◃ xs isPrefixOf 𝜖 ≡ (∃ ys • (y ◃ xs)
+⌢ ys = 𝜖 )`:
+y ◃ xs isPrefixOf 𝜖 ≡ (∃ ys • (y ◃ xs) ⌢ ys = 𝜖 )
+= ⟨ “Definition of `isPrefixOf`” ⟩
+— CalcCheck: Found “Definition of `isPrefixOf`”
+— CalcCheck: ─ OK
+false ≡ (∃ ys • (y ◃ xs) ⌢ ys = 𝜖 )
+= ⟨ “Mutual associativity of ◃ with ⌢” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with
+⌢”
+— CalcCheck: ─ OK
+false ≡ (∃ ys • y ◃ (xs ⌢ ys) = 𝜖 )
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+true
+— CalcCheck: 1 out of 3 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+For any ` d : A`:
+Calculation for expected goal `y ◃ xs isPrefixOf d ◃ zs ≡ (∃ ys •
+(y ◃ xs) ⌢ ys = d ◃ zs )`:
+
+
+Theorem “Specification of `isPrefixOf`”: xs isPrefixOf
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+𝜖 isPrefixOf zs ≡ (∃ ys • 𝜖 ⌢ ys = zs)
+=⟨ “Definition of `isPrefixOf`” , “Left-identity of
+(∃ ys • ys = zs )
+=⟨?⟩
+true
+Induction step `∀ y : A • (y ◃ xs) isPrefixOf zs ≡ (
+For any `y : A`:
+By induction on `zs : Seq A`:
+Base case:
+(y ◃ xs) isPrefixOf 𝜖 ≡ (∃ ys • (y ◃ xs)
+=⟨ “Definition of `isPrefixOf`”⟩
+false ≡ (∃ ys • (y ◃ xs) ⌢ ys = 𝜖)
+=⟨ “Mutual associativity of ◃ with ⌢”⟩
+false ≡ (∃ ys • y ◃ (xs ⌢ ys) = 𝜖)
+=⟨ ? ⟩
+true
+Induction step:
+For any `d : A`:
+(y ◃ xs) isPrefixOf (d ◃ zs) ≡ (∃ ys •
+=⟨ “Definition of `isPrefixOf`”⟩
+y = d ∧ xs isPrefixOf zs ≡ (∃ ys • (y ◃
+=⟨ Induction hypothesis⟩
+y = d ∧ (∃ ys • xs ⌢ ys = zs) ≡ (∃ ys •
+=⟨ “Distributivity of ∧ over ∃”⟩
+(∃ ys • (y = d) ∧ xs ⌢ ys = zs) ≡ (∃ ys
+
+y ◃ xs isPrefixOf d ◃ zs ≡ (∃ ys • (y ◃ xs) ⌢ ys = d ◃ zs )
+= ⟨ “Definition of `isPrefixOf`” ⟩
+— CalcCheck: Found “Definition of `isPrefixOf`”
+— CalcCheck: ─ OK
+y = d ∧ xs isPrefixOf zs ≡ (∃ ys • (y ◃ xs) ⌢ ys = d ◃ zs )
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: There are 2 induction hypotheses in scope!
+— CalcCheck: ─ OK
+y = d ∧ (∃ ys • xs ⌢ ys = zs ) ≡ (∃ ys • (y ◃ xs) ⌢ ys = d ◃ zs
+)
+= ⟨ “Distributivity of ∧ over ∃” ⟩
+— CalcCheck: Found (9.21) “Distributivity of ∧ over ∃”
+— CalcCheck: ─ OK
+(∃ ys • y = d ∧ xs ⌢ ys = zs ) ≡ (∃ ys • (y ◃ xs) ⌢ ys = d ◃ zs
+)
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+true
+— CalcCheck: 1 out of 4 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof not fully justified:
+— CalcCheck: 2 empty hints
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof not fully justified:
+— CalcCheck: 2 empty hints
+— CalcCheck: 3 empty hints
+— CalcCheck: This proof contains the following free variables:
+`A`
+Are any of these perhaps typos?
+
+=⟨ ? ⟩
+true
+
+[7]
+
+The preloaded “Replacement” theorems now include also the following, corresponding to inference rule (1.8) “Leibniz” in LADM:
+“Leibniz” (3.83.1):
+
+
+d = e ⇒ f d = f e
+
+
+“Leibniz” (3.83.6):
+
+d₁ = d₂ ∧ e₁ = e₂ ⇒ (p d₁ e₁ ≡ p d₂ e₂)
+
+In addition you also have the following “Replacement” variant (with similar usage pattern, between explicit Substitution steps) available:
+“Indirect replacement”:
+
+(p ⇒ e = f) ⇒ (p ∧ E[z ≔ e] ≡ p ∧ E[z ≔ f])
+
+(This has so far been seen under the name “Conditional replacement”.)
+Note that for sequences, you have in particular
+“Non-empty-sequence decomposition”:
+
+xs ≠ 𝜖 ⇒ xs = head xs ◃ tail xs
+
+from Ex6.1. Using “Indirect replacement” (from above) with this may be useful for proving the theorem below.
+
+[8]
+
+We also consider an imperative implementation of isPrefixOf, and the theorem below states its correctness with respect to an appropriate
+pre-postcondition specification:
+xs = xs₀ ∧ zs = zs₀
+⇒⁅ r := true ⍮
+while r ∧ xs ≠ 𝜖
+do
+if zs = 𝜖
+then
+r := false
+else
+r := (head xs = head zs) ⍮
+xs := tail xs ⍮
+zs := tail zs
+fi
+od
+⁆
+(r ≡ xs₀ isPrefixOf zs₀)
+The postcondition makes it clear that the result is communicated via variable r.
+For the proof, you may use the following invariant:
+(r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀)
+
+
+(Be aware that ≡ has lowest precedence, so these parentheses are needed in many places.)
+[9]
+
+[10]
+
+Theorem “Initialisation for elem”: xs = xs₀ ∧ zs = zs₀ ⇒⁅ r := true ⁆ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) Proof: xs = xs₀ ∧ zs = zs₀ =⟨?⟩ (∃
+ys • xs ⌢ ys = zs) ≡ (∃ ys • xs₀ ⌢ ys = zs₀) =⟨ “Specification of isPrefixOf” ⟩ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀ =⟨“Identity of ∧”⟩ (true
+∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ⇒⁅ r := true ⁆⟨ “Assignment” with substitution⟩ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀)
+
+Theorem “Initialisation for elem”:
+xs = xs₀ ∧ zs = zs₀
+⇒⁅ r := true ⁆
+(r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀)
+Proof:
+xs = xs₀ ∧ zs = zs₀
+=⟨ ? ⟩
+(∃ ys • xs ⌢ ys = zs) ≡ (∃ ys • xs₀ ⌢ ys = zs₀)
+=⟨ “Specification of `isPrefixOf`” ⟩
+xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀
+=⟨“Identity of ∧”⟩
+(true ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀)
+⇒⁅ r := true ⁆⟨ “Assignment” with substitution⟩
+(r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀)
+
+
+Theorem “Initialisation for elem”: xs = xs₀ ∧ zs = zs₀ ⇒⁅ (r := true) ⁆ (r ∧ xs
+isPrefixOf zs ≡ xs₀ isPrefixOf zs₀)
+Proof:
+Calculation for expected goal `xs = xs₀ ∧ zs = zs₀ ⇒⁅ (r := true) ⁆ (r ∧ xs isPrefixOf
+zs ≡ xs₀ isPrefixOf zs₀)`:
+xs = xs₀ ∧ zs = zs₀
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+(∃ ys • xs ⌢ ys = zs ) ≡ (∃ ys • xs₀ ⌢ ys = zs₀ )
+= ⟨ “Specification of `isPrefixOf`” ⟩
+— CalcCheck: Found “Specification of `isPrefixOf`”
+— CalcCheck: ─ OK
+xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+true ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀
+⇒⁅ r := true ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀
+— CalcCheck: 1 out of 4 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[11]
+
+
+Theorem “Postcondition for `elem`”: ¬ (r ∧ xs ≠ 𝜖) ∧ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ⇒ (r ≡
+xs₀ isPrefixOf zs₀)
+Proof:
+Calculation for expected goal `¬ (r ∧ xs ≠ 𝜖) ∧ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ⇒ (r ≡ xs₀
+isPrefixOf zs₀)`:
+¬ (r ∧ xs ≠ 𝜖) ∧ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀)
+= ⟨ “Definition of ≠”, “De Morgan”, “Double negation” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: Found (3.47a) “De Morgan”, (3.47b) “De Morgan”, (3.47c) “De Morgan”,
+(3.47d) “De Morgan”
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+(¬ r ∨ xs = 𝜖) ∧ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀)
+= ⟨ “Distributivity of ∧ over ∨” ⟩
+— CalcCheck: Found (3.46) “Distributivity of ∧ over ∨”
+— CalcCheck: ─ OK
+((r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ∧ xs = 𝜖) ∨ (¬ r ∧ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf
+zs₀))
+= ⟨ “Associativity of ∧” ⟩
+— CalcCheck: Found (3.37) “Associativity of ∧”
+— CalcCheck: Could not justify this step!
+((r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ∧ xs = 𝜖) ∨ ((¬ r ∧ r) ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf
+zs₀)
+= ⟨ “Contradiction” ⟩
+— CalcCheck: Found (3.42) “Contradiction”
+— CalcCheck: Could not justify this step!
+((r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ∧ xs = 𝜖) ∨ (false ∧ (xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀))
+= ⟨ “Zero of ∧” ⟩
+— CalcCheck: Found (3.40) “Zero of ∧”
+— CalcCheck: ─ OK
+((r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ∧ xs = 𝜖) ∨ false
+= ⟨ Substitution, “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”,
+(3.84b≡) “Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+((r ∧ z isPrefixOf zs ≡ xs₀ isPrefixOf zs₀)[z ≔ 𝜖] ∧ xs = 𝜖) ∨ false
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+((r ∧ 𝜖 isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ∧ xs = 𝜖) ∨ false
+= ⟨ “Definition of `isPrefixOf`” ⟩
+— CalcCheck: Found “Definition of `isPrefixOf`”
+— CalcCheck: ─ OK
+
+
+Theorem “Postcondition for `elem`”:
+¬(r ∧ xs ≠ 𝜖) ∧ (r ∧ xs isPrefixOf zs
+⇒ (r ≡ xs₀ isPrefixOf zs₀)
+Proof:
+¬(r ∧ xs ≠ 𝜖) ∧ (r ∧ xs isPrefixOf zs ≡
+=⟨ “Definition of ≠” , “De Morgan” , “Doub
+(¬ r ∨ (xs = 𝜖)) ∧ (r ∧ xs isPrefixOf zs
+=⟨ “Distributivity of ∧ over ∨” ⟩
+((r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf
+=⟨ “Associativity of ∧”⟩
+((r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf
+=⟨ “Contradiction”⟩
+((r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf
+=⟨ “Zero of ∧”⟩
+((r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf
+=⟨ substitution , “Replacement”⟩
+((r ∧ z isPrefixOf zs ≡ xs₀ isPrefixOf z
+=⟨ substitution⟩
+((r ∧ 𝜖 isPrefixOf zs ≡ xs₀ isPrefixOf z
+=⟨ “Definition of `isPrefixOf`”⟩
+((r ∧ true ≡ xs₀ isPrefixOf zs₀) ∧ (xs =
+=⟨ “Identity of ∧”⟩
+((r ≡ xs₀ isPrefixOf zs₀) ∧ (xs = 𝜖)) ∨
+⇒⟨ “Monotonicity of ∨” with “Weakening”⟩
+(r ≡ xs₀ isPrefixOf zs₀) ∨ (false )
+=⟨ “Identity of ∨”⟩
+(r ≡ xs₀ isPrefixOf zs₀)
+
+
+((r ∧ true ≡ xs₀ isPrefixOf zs₀) ∧ xs = 𝜖) ∨ false
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+((r ≡ xs₀ isPrefixOf zs₀) ∧ xs = 𝜖) ∨ false
+⇒ ⟨ “Monotonicity of ∨” with “Weakening” ⟩
+— CalcCheck: Found “Monotonicity of ∨”, “Left-monotonicity of ∨”
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”,
+(3.76b) “Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+(r ≡ xs₀ isPrefixOf zs₀) ∨ false
+= ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+r ≡ xs₀ isPrefixOf zs₀
+— CalcCheck: 2 out of 11 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[12]
+
+
+Theorem “Invariant for `elem`”: (r ∧ xs ≠ 𝜖) ∧ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ⇒⁅ if (zs = 𝜖) then (r := false) else (r
+:= head xs = head zs ⍮ (xs := tail xs ⍮ zs := tail zs)) fi ⁆ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀)
+Proof:
+Calculation for expected goal `(r ∧ xs ≠ 𝜖) ∧ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ⇒⁅ if (zs = 𝜖) then (r := false) else (r
+:= head xs = head zs ⍮ (xs := tail xs ⍮ zs := tail zs)) fi ⁆ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀)`:
+(r ∧ xs ≠ 𝜖) ∧ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀)
+⇒⁅ if (zs = 𝜖) then (r := false) else (r := head xs = head zs ⍮ (xs := tail xs ⍮ zs := tail zs)) fi ⁆ ⟨ Subproof for expected goal `(r
+∧ xs ≠ 𝜖) ∧ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ⇒⁅ if (zs = 𝜖) then (r := false) else (r := head xs = head zs ⍮ (xs := tail xs ⍮
+zs := tail zs)) fi ⁆ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀)`:
+Using “Conditional”:
+— CalcCheck: Found “Conditional”
+Subproof establishing `(r ∧ xs ≠ 𝜖) ∧ ((r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ∧ zs = 𝜖) ⇒ (r ∧ xs isPrefixOf zs ≡
+xs₀ isPrefixOf zs₀)`:
+(r ∧ xs ≠ 𝜖) ∧ ((r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ∧ zs = 𝜖)
+= ⟨ Substitution, “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”, (3.84b≡)
+“Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+(r ∧ xs ≠ 𝜖) ∧ ((r ∧ xs isPrefixOf z ≡ xs₀ isPrefixOf zs₀)[z ≔ 𝜖] ∧ zs = 𝜖)
+= ⟨ Substitution, “Definition of `isPrefixOf`” ⟩
+— CalcCheck: Found “Definition of `isPrefixOf`”
+— CalcCheck: ─ OK
+(r ∧ xs ≠ 𝜖) ∧ ((r ∧ xs isPrefixOf 𝜖 ≡ xs₀ isPrefixOf zs₀) ∧ zs = 𝜖)
+= ⟨ “Specification of `isPrefixOf`”, “Empty concatenation”, “Symmetry of ∧” ⟩
+— CalcCheck: Found “Specification of `isPrefixOf`”
+— CalcCheck: Found (13.23) “Empty concatenation”
+— CalcCheck: Found (3.36) “Symmetry of ∧”
+— CalcCheck: ─ OK
+(r ∧ xs ≠ 𝜖) ∧ ((r ∧ (∃ ys • ys = 𝜖 ∧ xs = 𝜖 ) ≡ xs₀ isPrefixOf zs₀) ∧ zs = 𝜖)
+= ⟨ “Trading for ∃”, “One-point rule for ∃”, Substitution ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading for ∃”
+— CalcCheck: Found (8.14) “One-point rule for ∃”
+— CalcCheck: ─ OK
+(r ∧ xs ≠ 𝜖) ∧ ((r ∧ xs = 𝜖 ≡ xs₀ isPrefixOf zs₀) ∧ zs = 𝜖)
+= ⟨ Substitution, “Replacement” ⟩
+— CalcCheck: Found (3.84b) “Replacement”, (3.84a) “Replacement”, (3.84c) “Replacement”, (3.84b≡)
+“Replacement”, (3.84a≡) “Replacement”, (3.51) “Replacement”
+— CalcCheck: ─ OK
+(r ∧ xs ≠ 𝜖) ∧ ((r ∧ xs = z ≡ xs₀ isPrefixOf zs₀)[z ≔ zs] ∧ zs = 𝜖)
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(r ∧ xs ≠ 𝜖) ∧ ((r ∧ xs = zs ≡ xs₀ isPrefixOf zs₀) ∧ zs = 𝜖)
+
+
+Theorem “Invariant for `elem`”
+(r ∧ xs ≠ 𝜖) ∧ (r ∧ xs i
+⇒⁅
+if zs = 𝜖
+then
+r := false
+else
+r := (head xs = head
+xs := tail xs ⍮
+zs := tail zs
+fi
+⁆
+(r ∧ xs isPrefixOf zs ≡
+Proof:
+(r ∧ xs ≠ 𝜖) ∧ (r ∧ xs isP
+⇒⁅ if zs = 𝜖 then r := false
+Using “Conditional”:
+Subproof:
+(r ∧ xs ≠ 𝜖) ∧ (r
+=⟨ substitution , “R
+(r ∧ xs ≠ 𝜖) ∧ (r
+=⟨ substitution , “D
+(r ∧ xs ≠ 𝜖) ∧ (r
+=⟨ “Specification of
+(r ∧ xs ≠ 𝜖) ∧ (r
+=⟨ “Trading for ∃” ,
+(r ∧ xs ≠ 𝜖) ∧ (r
+=⟨ substitution , “R
+(r ∧ xs ≠ 𝜖) ∧ (r
+=⟨ substitution⟩
+(r ∧ xs ≠ 𝜖) ∧ (r
+⇒⟨ “Monotonicity of
+(r ∧ xs ≠ 𝜖) ∧ (r
+⇒⟨ “Weakening”⟩
+(r ∧ (xs = zs) ≡ x
+=⟨ “Right-identity o
+(r ∧ (xs ⌢ 𝜖 = zs
+=⟨ substitution⟩
+(r ∧ (xs ⌢ ys = z
+=⟨ “One-point rule f
+
+
+⇒ ⟨ “Monotonicity of ∧” with “Weakening” ⟩
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Left-monotonicity of ∧”
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”, (3.76b)
+“Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+(r ∧ xs ≠ 𝜖) ∧ (r ∧ xs = zs ≡ xs₀ isPrefixOf zs₀)
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”, (3.76b)
+“Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+r ∧ xs = zs ≡ xs₀ isPrefixOf zs₀
+= ⟨ “Right-identity of ⌢” ⟩
+— CalcCheck: Found (13.19) “Right-identity of ⌢”
+— CalcCheck: ─ OK
+r ∧ xs ⌢ 𝜖 = zs ≡ xs₀ isPrefixOf zs₀
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+r ∧ (xs ⌢ ys = zs)[ys ≔ 𝜖] ≡ xs₀ isPrefixOf zs₀
+= ⟨ “One-point rule for ∃” ⟩
+— CalcCheck: Found (8.14) “One-point rule for ∃”
+— CalcCheck: Could not justify this step!
+r ∧ (∃ ys • ys = 𝜖 ∧ xs ⌢ ys = zs ) ≡ xs₀ isPrefixOf zs₀
+⇒ ⟨ “Monotonicity of ∧” with “Body weakening for ∃” ⟩
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Left-monotonicity of ∧”
+— CalcCheck: Found (9.26) “Body weakening for ∃”, (9.26.1) “Body weakening for ∃”
+— CalcCheck: Could not justify this step!
+r ∧ (∃ ys • xs ⌢ ys = zs ) ≡ xs₀ isPrefixOf zs₀
+= ⟨ “Specification of `isPrefixOf`” ⟩
+— CalcCheck: Found “Specification of `isPrefixOf`”
+— CalcCheck: ─ OK
+r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀
+— CalcCheck: 2 out of 13 steps not justified
+Subproof establishing `((r ∧ xs ≠ 𝜖) ∧ ((r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ∧ ¬ (zs = 𝜖))) = (r ∧ xs isPrefixOf zs
+≡ xs₀ isPrefixOf zs₀)`:
+(r ∧ xs ≠ 𝜖) ∧ ((r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ∧ ¬ (zs = 𝜖))
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀
+— CalcCheck: 1 out of 1 steps not justified
+— CalcCheck: Could not justify this `Using` application!
+
+⟩
+r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀
+
+
+(r ∧ (∃ ys • ys =
+⇒⟨ “Monotonicity of
+(r ∧ (∃ ys • xs ⌢
+=⟨ “Specification of
+(r ∧ xs isPrefixO
+Subproof:
+(r ∧ xs ≠ 𝜖) ∧ (r
+=⟨?⟩
+(r ∧ xs isPrefixOf
+⟩
+(r ∧ xs isPrefixOf zs ≡ xs
+— CalcCheck: 1 out of 1 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[13]
+
+1,1
+
+Theorem “Correctness
+xs = xs₀ ∧ zs
+⇒⁅ r := true ⍮
+while r ∧ xs
+do
+if zs =
+then
+r := f
+else
+r := (
+xs :=
+zs :=
+fi
+od
+⁆
+(r ≡ xs₀ isPre
+Proof:
+xs = xs₀ ∧ zs
+⇒⁅ r := true ⁆
+⟨ “Initialis
+(r ∧ xs isPref
+⇒⁅ while r ∧ xs
+if zs = 𝜖
+then r :=
+else r :=
+xs :
+zs :
+fi
+od ⁆ ⟨ “While”
+¬(r ∧ xs ≠ 𝜖)
+⇒⟨“Postcondition
+(r ≡ xs₀ isPre
+
+
+Theorem “Correctness of `isPrefixOf`”: xs = xs₀ ∧ zs = zs₀ ⇒⁅ (r := true ⍮ while (r ∧ xs ≠ 𝜖) do (if (zs = 𝜖) then (r := false) else (r := head
+xs = head zs ⍮ (xs := tail xs ⍮ zs := tail zs)) fi) od) ⁆ (r ≡ xs₀ isPrefixOf zs₀)
+— CalcCheck: Correctness of this proof depends on the following not-yet-proven theorems: “Initialisation for elem”: `xs = xs₀ ∧ zs = zs₀ ⇒⁅
+(r := true) ⁆ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀)`, “Invariant for `elem`”: `(r ∧ xs ≠ 𝜖) ∧ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ⇒⁅ if (zs =
+𝜖) then (r := false) else (r := head xs = head zs ⍮ (xs := tail xs ⍮ zs := tail zs)) fi ⁆ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀)`, “Postcondition for
+`elem`”: `¬ (r ∧ xs ≠ 𝜖) ∧ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀) ⇒ (r ≡ xs₀ isPrefixOf zs₀)`.
+Proof:
+Calculation for expected goal `xs = xs₀ ∧ zs = zs₀ ⇒⁅ (r := true ⍮ while (r ∧ xs ≠ 𝜖) do (if (zs = 𝜖) then (r := false) else (r := head xs = head
+zs ⍮ (xs := tail xs ⍮ zs := tail zs)) fi) od) ⁆ (r ≡ xs₀ isPrefixOf zs₀)`:
+xs = xs₀ ∧ zs = zs₀
+⇒⁅ r := true ⁆ ⟨ “Initialisation for elem” ⟩
+— CalcCheck: Found “Initialisation for elem”
+— CalcCheck: ─ OK
+r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀
+⇒⁅ while (r ∧ xs ≠ 𝜖) do (if (zs = 𝜖) then (r := false) else (r := head xs = head zs ⍮ (xs := tail xs ⍮ zs := tail zs)) fi) od ⁆ ⟨ “While” with
+“Invariant for `elem`” ⟩
+— CalcCheck: Found “While”
+— CalcCheck: Found “Invariant for `elem`”
+— CalcCheck: ─ OK
+¬ (r ∧ xs ≠ 𝜖) ∧ (r ∧ xs isPrefixOf zs ≡ xs₀ isPrefixOf zs₀)
+⇒ ⟨ “Postcondition for `elem`” ⟩
+— CalcCheck: Found “Postcondition for `elem`”
+— CalcCheck: ─ OK
+r ≡ xs₀ isPrefixOf zs₀
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+
+Save
+
+

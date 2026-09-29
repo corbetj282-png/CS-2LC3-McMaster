@@ -1,0 +1,894 @@
+[1]
+
+Inductive Theory of Sequences
+[2]
+
+Here we develop a theory of sequences essentially along the lines of LADM chapter 13. At the type level, we have the new type constructor Seq:
+Declaration: Seq : Type → Type
+For example, “Seq ℕ” is the type of finite sequences of natural numbers, and “Seq (Seq 𝔹)” is the type of finite sequences of finite
+sequences of Boolean values, which can be used to model the type of finite sequences of words of bits.
+Sequences are introduced as an inductive type with the following constructors named as in LADM:
+Declaration: 𝜖 : Seq A
+Declaration: _◃_ : A → Seq A → Seq A
+“𝜖” (type \emptySeq or \eps) stands for the empty sequence.
+For an element x : A and a sequence xs : Seq a, the sequence x ◃ xs has x as its first element, also called “head”, and xs as its “tail”.
+For the symbol “◃”, type \cons.
+The binary operator ◃ associates to the right.
+Informally, we use Haskell notation for lists, e.g. “[5, 3, 6]”, where LADM uses (very occasionally) angle brackets: “⟨ 5, 3, 6 ⟩”.
+
+
+This informal Haskell-like notation is not supported by CalcCheck!
+We just use it to “informally visualise” the behaviour of sequence operations, for example:
+[5, 3, 6]
+=⟨ Informal list notation ⟩
+5 ◃ [3, 6]
+=⟨ Informal list notation ⟩
+5 ◃ (3 ◃ [6])
+=⟨ Informal list notation ⟩
+5 ◃ (3 ◃ (6 ◃ []))
+=⟨ Informal list notation ⟩
+5 ◃ (3 ◃ (6 ◃ 𝜖))
+=⟨ ◃ associates to the right ⟩
+5 ◃ 3 ◃ 6 ◃ 𝜖
+
+[3]
+
+[4]
+
+[5]
+
+[6]
+
+In this notebook, you are allowed only one hint item per hint.
+
+Corresponding to “Zero is not successor” on the natural numbers, here we have:
+
+Axiom (13.3) “Cons is not empty”: x ◃ xs ≠ 𝜖
+
+Axiom (13.3) “Cons is not empty”: x ◃ xs ≠ 𝜖
+— CalcCheck: Variable types: x : A᎑₇, xs : Seq A᎑₇
+
+Just like “Zero is not successor”, this is also useful to have in different shapes:
+
+
+[7]
+
+[8]
+
+[9]
+
+Corollary “Cons is not empty”: x ◃ xs = 𝜖
+Proof:
+x ◃ xs = 𝜖 ≡ false
+=⟨ “Definition of `false`” ⟩
+x ◃ xs = 𝜖 ≡ ¬ true
+=⟨ “¬ connection”⟩
+¬ (x ◃ xs = 𝜖) ≡ true
+=⟨ “Definition of ≠”⟩
+(x ◃ xs ≠ 𝜖) ≡ true
+=⟨ “Cons is not empty”⟩
+true ≡ true
+=⟨ “Identity of ≡”⟩
+true
+
+
+≡
+
+false
+
+Corollary “Cons is not empty”: x ◃ xs = 𝜖 ≡ false
+— CalcCheck: Variable types: x : A᎑₈, xs : Seq A᎑₈
+Proof:
+Calculation for expected goal `x ◃ xs = 𝜖 ≡ false`:
+x ◃ xs = 𝜖 ≡ false
+= ⟨ “Definition of `false`” ⟩
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: ─ OK
+x ◃ xs = 𝜖 ≡ ¬ true
+= ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+¬ (x ◃ xs = 𝜖) ≡ true
+= ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of
+≠”
+— CalcCheck: ─ OK
+x ◃ xs ≠ 𝜖 ≡ true
+= ⟨ “Cons is not empty” ⟩
+— CalcCheck: Found (13.3) “Cons is not empty”
+— CalcCheck: ─ OK
+true ≡ true
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+The axiom corresponding to “Cancellation of successor” on the natural number then rounds off the characterisation of sequence equality as
+being equality of construction from 𝜖 and ◃:
+
+Axiom (13.4) “Cancellation of ◃”:
+x ◃ xs = y ◃ ys ≡ x = y ∧ xs = ys
+
+
+Axiom (13.4) “Cancellation of ◃”: x ◃ xs = y ◃ ys ≡ x = y ∧ xs =
+ys
+— CalcCheck: Variable types: x : ty᎑₁₅, xs : Seq ty᎑₁₅, y : ty᎑₁₅, ys :
+Seq ty᎑₁₅
+
+
+[10]
+
+
+The induction principle for sequences implemented in 🙶By induction🙷 proofs is the following:
+P[xs ≔ 𝜖]
+(∀ xs : Seq A ❙ P • (∀ x : A • P[xs ≔ x ◃ xs]))
+(∀ xs : Seq A • P)
+
+⇒
+⇒
+
+Later, we will be using this directly.
+For now, we use the built-in 🙶By induction on🙷 support for sequences: An induction proof for either just P, or for ∀ xs : Seq A • P (it
+works the same for both goal statements), takes the following shape:
+By induction on `xs : Seq A`:
+Base case:
+⟪ Proof for `P[xs ≔ 𝜖]` ⟫
+Induction step:
+⟪ Proof for `∀ x : A • P[xs ≔ x ◃ xs]` ⟫
+⟪ using: Induction hypothesis `P` ⟫
+Be careful to introduce a fresh variable instead of x for proving theorems that mention x!
+(When the type of the sequence elements is specified, then use that type, for example:
+By induction on `xs : Seq ℕ`:
+However, where the type of the sequence element is not specified, use A to stand for that type, and ignore the resulting “free variables” warning.)
+
+[11]
+
+Snoc
+[12]
+
+While cons _◃_ adds an element to the beginning of a sequence, snoc _▹_ adds an element at the end, for example, [2, 5, 3] ▹ 7 = [2,
+5, 3, 7].
+The operator ▹ (type “\snoc”) associates to the left; it has the same precedence as ◃, and ◃ mutually associates to the right also with ▹, that
+is:
+
+
+x ◃ xs ▹ y
+[13]
+
+[14]
+
+[15]
+
+[16]
+
+=
+
+x ◃ (xs ▹ y)
+
+Declaration: _▹_ : Seq A → (A → Seq A)
+— CalcCheck: Operator _▹_: Associating to the left; precedence
+60
+
+Declaration: _▹_ : Seq A → A → Seq A
+
+Axiom (13.12) “Definition of ▹ for 𝜖”:
+Axiom (13.13) “Definition of ▹ for ◃”:
+
+𝜖 ▹ a = a ◃ 𝜖
+(a ◃ s) ▹ b = a ◃ (s ▹ b)
+
+Axiom (13.12) “Definition of ▹ for 𝜖”: 𝜖 ▹ a = a ◃ 𝜖
+— CalcCheck: Variable types: a : A᎑₁₁
+Axiom (13.13) “Definition of ▹ for ◃”: (a ◃ s) ▹ b = a ◃ (s ▹
+b)
+— CalcCheck: Variable types: a : ty᎑₁₅, b : ty᎑₁₅, s : Seq ty᎑₁₅
+
+With this definition, you can calculate the above example:
+
+Fact (H13a): (7 ◃ 1 ◃ 9 ◃ 𝜖) ▹ 5
+Proof:
+(7 ◃ 1 ◃ 9 ◃ 𝜖) ▹ 5
+=⟨ “Definition of ▹ for ◃” ⟩
+7 ◃ 1 ◃ 9 ◃ (𝜖 ▹ 5)
+=⟨ “Definition of ▹ for 𝜖” ⟩
+7 ◃ 1 ◃ 9 ◃ (5 ◃ 𝜖)
+=⟨ “Definition of ▹ for ◃” ⟩
+7 ◃ 1 ◃ 9 ◃ 5 ◃ 𝜖
+
+
+= 7 ◃ 1 ◃ 9 ◃ 5 ◃ 𝜖
+
+Fact (H13a): (7 ◃ (1 ◃ (9 ◃ 𝜖))) ▹ 5 = 7 ◃ (1 ◃ (9 ◃ (5 ◃ 𝜖)))
+Proof:
+Calculation for expected goal `(7 ◃ (1 ◃ (9 ◃ 𝜖))) ▹ 5 = 7 ◃ (1 ◃ (9
+◃ (5 ◃ 𝜖)))`:
+(7 ◃ (1 ◃ (9 ◃ 𝜖))) ▹ 5
+= ⟨ “Definition of ▹ for ◃” ⟩
+— CalcCheck: Found (13.13) “Definition of ▹ for ◃”
+— CalcCheck: ─ OK
+7 ◃ (1 ◃ (9 ◃ (𝜖 ▹ 5)))
+= ⟨ “Definition of ▹ for 𝜖” ⟩
+— CalcCheck: Found (13.12) “Definition of ▹ for 𝜖”
+— CalcCheck: ─ OK
+7 ◃ (1 ◃ (9 ◃ (5 ◃ 𝜖)))
+= ⟨ “Definition of ▹ for ◃” ⟩
+— CalcCheck: Found (13.13) “Definition of ▹ for ◃”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+7 ◃ (1 ◃ (9 ◃ (5 ◃ 𝜖)))
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[17]
+
+
+Currently the most convenient way to prove “Snoc is not empty” is by induction — see above for the pattern of induction proofs for
+sequences.
+You probably won’t actually need the induction hypothesis here:
+
+
+[18]
+
+
+Theorem (13.14) “Snoc is not empty”: xs ▹ x ≠ 𝜖
+Proof:
+By induction on `xs : Seq A`:
+Base case `𝜖 ▹ x ≠ 𝜖`:
+𝜖 ▹ x ≠ 𝜖
+=⟨ “Definition of ▹ for 𝜖”⟩
+(x ◃ 𝜖) ≠ 𝜖
+=⟨ “Cons is not empty”⟩
+true
+Induction step `∀ y : A • (y ◃ xs) ▹ x ≠ 𝜖`:
+For any `y : A`:
+(y ◃ xs) ▹ x ≠ 𝜖
+=⟨ “Definition of ▹ for ◃”⟩
+y ◃ xs ▹ x ≠ 𝜖
+=⟨ “Definition of ▹ for ◃” ⟩
+y ◃ (xs ▹ x) ≠ 𝜖
+=⟨ “Cons is not empty” ⟩
+true
+
+
+Theorem (13.14) “Snoc is not empty”: xs ▹ x ≠ 𝜖
+— CalcCheck: Variable types: x : A᎑₇, xs : Seq A᎑₇
+Proof:
+By induction on `xs : Seq A`:
+Base case `𝜖 ▹ x ≠ 𝜖`:
+Calculation for expected goal `𝜖 ▹ x ≠ 𝜖`:
+𝜖▹x≠ 𝜖
+= ⟨ “Definition of ▹ for 𝜖” ⟩
+— CalcCheck: Found (13.12) “Definition of ▹ for 𝜖”
+— CalcCheck: ─ OK
+x◃𝜖≠ 𝜖
+= ⟨ “Cons is not empty” ⟩
+— CalcCheck: Found “Cons is not empty”, (13.3) “Cons is
+not empty”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ y : A • (y ◃ xs) ▹ x ≠ 𝜖 )`:
+For any ` y : A`:
+Calculation for expected goal `(y ◃ xs) ▹ x ≠ 𝜖`:
+(y ◃ xs) ▹ x ≠ 𝜖
+= ⟨ “Definition of ▹ for ◃” ⟩
+— CalcCheck: Found (13.13) “Definition of ▹ for ◃”
+— CalcCheck: ─ OK
+y ◃ (xs ▹ x) ≠ 𝜖
+= ⟨ “Definition of ▹ for ◃” ⟩
+— CalcCheck: Found (13.13) “Definition of ▹ for ◃”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+y ◃ (xs ▹ x) ≠ 𝜖
+= ⟨ “Cons is not empty” ⟩
+— CalcCheck: Found “Cons is not empty”, (13.3) “Cons is
+not empty”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[19]
+
+[20]
+
+
+You can quickly transform “Snoc is not empty” into an alternate shape:
+
+Corollary “Snoc is not empty”:
+Proof:
+xs ▹ x = 𝜖 ≡ false
+=⟨ “Definition of `false`”⟩
+xs ▹ x = 𝜖 ≡ ¬ true
+=⟨ “¬ connection”⟩
+¬ (xs ▹ x = 𝜖) ≡ true
+=⟨ “Identity of ≡”⟩
+¬ (xs ▹ x = 𝜖)
+=⟨ “Definition of ≠”⟩
+(xs ▹ x ≠ 𝜖)
+=⟨ “Snoc is not empty”⟩
+true
+
+xs ▹ x = 𝜖
+
+≡
+
+false
+
+Corollary “Snoc is not empty”: xs ▹ x = 𝜖 ≡ false
+— CalcCheck: Variable types: x : A᎑₈, xs : Seq A᎑₈
+Proof:
+Calculation for expected goal `xs ▹ x = 𝜖 ≡ false`:
+xs ▹ x = 𝜖 ≡ false
+= ⟨ “Definition of `false`” ⟩
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: ─ OK
+xs ▹ x = 𝜖 ≡ ¬ true
+= ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+¬ (xs ▹ x = 𝜖) ≡ true
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+¬ (xs ▹ x = 𝜖)
+= ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of
+≠”
+— CalcCheck: ─ OK
+xs ▹ x ≠ 𝜖
+= ⟨ “Snoc is not empty” ⟩
+— CalcCheck: Found (13.14) “Snoc is not empty”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[21]
+
+Catenation
+[22]
+
+For the catenation symbol ⌢, type \catenate (or at least “\cat⟪TAB⟫”).
+For example, [2, 7, 5] ⌢ [1, 9] = [2, 7, 5, 1, 9].
+
+
+[23]
+
+[24]
+
+
+Declaration: _⌢_ : Seq A → Seq A → Seq A
+
+Declaration: _⌢_ : Seq A → (Seq A → Seq A)
+— CalcCheck: Operator _⌢_: Associating to the right;
+precedence 60
+
+The catenation operator ⌢ associates to the right, and mutual association is set up as follows:
+xs ⌢ y ◃ ys
+x ◃ xs ⌢ ys
+xs ⌢ ys ▹ z
+xs ▹ y ⌢ ys
+
+=
+=
+=
+=
+
+xs ⌢ (y ◃ ys)
+x ◃ (xs ⌢ ys)
+xs ⌢ (ys ▹ z)
+(xs ▹ y) ⌢ ys
+
+This probably means: In doubt, add parentheses!
+
+[25]
+
+[26]
+
+Axiom (13.17) “Left-identity of ⌢” “Definition of ⌢ for 𝜖”: 𝜖 ⌢ ys = ys
+Axiom (13.17)
+— CalcCheck: Variable types: ys : Seq A᎑₅
+“Left-identity of ⌢”
+Axiom (13.18) “Mutual associativity of ◃ with ⌢” “Definition of ⌢ for ◃”: (x ◃
+“Definition of ⌢ for 𝜖”:
+𝜖 ⌢ ys = ys
+xs) ⌢ ys = x ◃ (xs ⌢ ys)
+Axiom (13.18)
+— CalcCheck: Variable types: x : A᎑₁₃, xs : Seq A᎑₁₃, ys : Seq A᎑₁₃
+“Mutual associativity of ◃ with ⌢”
+“Definition of ⌢ for ◃”:
+(x ◃ xs) ⌢ ys = x ◃
+
+Calculate the example:
+
+
+[27]
+
+[28]
+
+
+Fact (H13b): (4 ◃ 1 ◃ 𝜖) ⌢ (8 ◃ 5 ◃ 2 ◃ 𝜖) = 4 ◃ 1 ◃ 8
+Proof:
+(4 ◃ 1 ◃ 𝜖) ⌢ (8 ◃ 5 ◃ 2 ◃ 𝜖)
+=⟨ “Mutual associativity of ◃ with ⌢” ⟩
+4 ◃ 1 ◃ (𝜖 ⌢ (8 ◃ 5 ◃ 2 ◃ 𝜖))
+=⟨ “Left-identity of ⌢” ⟩
+4 ◃ 1 ◃ (8 ◃ 5 ◃ 2 ◃ 𝜖)
+
+Fact (H13b): (4 ◃ (1 ◃ 𝜖)) ⌢ (8 ◃ (5 ◃ (2 ◃ 𝜖))) = 4 ◃ (1 ◃ (8 ◃ (5 ◃ (2 ◃
+𝜖))))
+Proof:
+Calculation for expected goal `(4 ◃ (1 ◃ 𝜖)) ⌢ (8 ◃ (5 ◃ (2 ◃ 𝜖))) = 4 ◃ (1
+◃ (8 ◃ (5 ◃ (2 ◃ 𝜖))))`:
+(4 ◃ (1 ◃ 𝜖)) ⌢ (8 ◃ (5 ◃ (2 ◃ 𝜖)))
+= ⟨ “Mutual associativity of ◃ with ⌢” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with ⌢”
+— CalcCheck: ─ OK
+4 ◃ (1 ◃ (𝜖 ⌢ (8 ◃ (5 ◃ (2 ◃ 𝜖)))))
+= ⟨ “Left-identity of ⌢” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: ─ OK
+4 ◃ (1 ◃ (8 ◃ (5 ◃ (2 ◃ 𝜖))))
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+For the following basic properties, single induction over “xs : Seq A” will again be sufficient:
+
+
+[29]
+
+
+Theorem (13.19) “Right-identity of ⌢”:
+xs ⌢ 𝜖 = xs
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+𝜖 ⌢ 𝜖
+=⟨ “Left-identity of ⌢” ⟩
+𝜖
+Induction step `∀ y : A • (y ◃ xs) ⌢ 𝜖 = y ◃ xs`:
+For any `y : A`:
+(y ◃ xs) ⌢ 𝜖
+=⟨ “Mutual associativity of ◃ with ⌢” ⟩
+y ◃ (xs ⌢ 𝜖)
+=⟨ Induction hypothesis ⟩
+y ◃ (xs)
+
+
+Theorem (13.19) “Right-identity of ⌢”: xs ⌢ 𝜖 = xs
+— CalcCheck: Variable types: xs : Seq A᎑₆
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+Calculation for expected goal `𝜖 ⌢ 𝜖 = 𝜖`:
+𝜖⌢𝜖
+= ⟨ “Left-identity of ⌢” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: ─ OK
+𝜖
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ y : A • (y ◃ xs) ⌢ 𝜖 = y ◃ xs )`:
+For any ` y : A`:
+Calculation for expected goal `(y ◃ xs) ⌢ 𝜖 = y ◃ xs`:
+(y ◃ xs) ⌢ 𝜖
+= ⟨ “Mutual associativity of ◃ with ⌢” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃
+with ⌢”
+— CalcCheck: ─ OK
+y ◃ (xs ⌢ 𝜖)
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `xs ⌢ 𝜖 =
+xs`
+— CalcCheck: ─ OK
+y ◃ xs
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[30]
+
+
+Theorem (13.20) “Associativity of ⌢”: (xs ⌢ ys) ⌢ zs = xs ⌢ (ys ⌢ zs)
+— CalcCheck: Variable types: xs : Seq A᎑₁₃, ys : Seq A᎑₁₃, zs : Seq A᎑₁₃
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+Calculation for expected goal `(𝜖 ⌢ ys) ⌢ zs = 𝜖 ⌢ (ys ⌢ zs)`:
+(𝜖 ⌢ ys) ⌢ zs
+= ⟨ “Left-identity of ⌢” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: ─ OK
+ys ⌢ zs
+= ⟨ “Left-identity of ⌢” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: ─ OK
+𝜖 ⌢ (ys ⌢ zs)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ b : A • ((b ◃ xs) ⌢ ys) ⌢ zs = (b ◃ xs) ⌢ (ys ⌢
+zs) )`:
+For any ` b : A`:
+Calculation for expected goal `((b ◃ xs) ⌢ ys) ⌢ zs = (b ◃ xs) ⌢
+(ys ⌢ zs)`:
+((b ◃ xs) ⌢ ys) ⌢ zs
+= ⟨ “Mutual associativity of ◃ with ⌢” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with
+⌢”
+— CalcCheck: ─ OK
+(b ◃ (xs ⌢ ys)) ⌢ zs
+= ⟨ “Mutual associativity of ◃ with ⌢” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with
+⌢”
+— CalcCheck: ─ OK
+b ◃ ((xs ⌢ ys) ⌢ zs)
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `(xs ⌢ ys) ⌢ zs =
+xs ⌢ (ys ⌢ zs)`
+— CalcCheck: ─ OK
+b ◃ (xs ⌢ (ys ⌢ zs))
+= ⟨ “Mutual associativity of ◃ with ⌢” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with
+⌢”
+— CalcCheck: ─ OK
+
+
+Theorem (13.20) “Associativity of ⌢”:
+(xs ⌢ ys) ⌢ zs = xs ⌢ (ys ⌢ zs)
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+(𝜖 ⌢ ys) ⌢ zs
+=⟨ “Left-identity of ⌢”⟩
+(ys ⌢ zs)
+=⟨ “Left-identity of ⌢”⟩
+𝜖 ⌢ (ys ⌢ zs)
+Induction step `∀ b : A • ((b ◃ xs) ⌢ ys) ⌢ zs = (b ◃ x
+For any `b : A`:
+((b ◃ xs) ⌢ ys) ⌢ zs
+=⟨ “Mutual associativity of ◃ with ⌢”⟩
+(b ◃ (xs ⌢ ys)) ⌢ zs
+=⟨ “Mutual associativity of ◃ with ⌢”⟩
+b ◃ ((xs ⌢ ys) ⌢ zs)
+=⟨ Induction hypothesis ⟩
+b ◃ (xs ⌢ (ys ⌢ zs))
+=⟨ “Mutual associativity of ◃ with ⌢”⟩
+(b ◃ xs) ⌢ (ys ⌢ zs)
+
+[31]
+
+(b ◃ xs) ⌢ (ys ⌢ zs)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+For the theorem corresponding to “Zero sum”, again induction on “xs : Seq A” is sufficient, and the induction hypothesis will not be needed:
+
+
+[32]
+
+
+Theorem (13.23) “Empty concatenation”: xs ⌢ ys = 𝜖 ≡ xs = 𝜖 ∧ ys = 𝜖
+— CalcCheck: Variable types: xs : Seq A᎑₁₉, ys : Seq A᎑₁₉
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+Calculation for expected goal `𝜖 ⌢ ys = 𝜖 ≡ 𝜖 = 𝜖 ∧ ys = 𝜖`:
+𝜖 ⌢ ys = 𝜖
+= ⟨ “Left-identity of ⌢” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: ─ OK
+ys = 𝜖
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+true ∧ ys = 𝜖
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+𝜖 = 𝜖 ∧ ys = 𝜖
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ b : A • (b ◃ xs) ⌢ ys = 𝜖 ≡ b ◃ xs = 𝜖 ∧ ys = 𝜖
+)`:
+For any ` b : A`:
+Calculation for expected goal `(b ◃ xs) ⌢ ys = 𝜖 ≡ b ◃ xs = 𝜖
+∧ ys = 𝜖`:
+(b ◃ xs) ⌢ ys = 𝜖
+= ⟨ “Mutual associativity of ◃ with ⌢” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃
+with ⌢”
+— CalcCheck: ─ OK
+b ◃ (xs ⌢ ys) = 𝜖
+= ⟨ “Cons is not empty” ⟩
+— CalcCheck: Found “Cons is not empty”, (13.3) “Cons is
+not empty”
+— CalcCheck: ─ OK
+false
+= ⟨ “Zero of ∧” ⟩
+— CalcCheck: Found (3.40) “Zero of ∧”
+— CalcCheck: ─ OK
+false ∧ ys = 𝜖
+
+
+Theorem (13.23) “Empty concatenation”:
+xs ⌢ ys = 𝜖 ≡ xs = 𝜖 ∧ ys = 𝜖
+Proof:
+By induction on `xs : Seq A`:
+Base case :
+𝜖 ⌢ ys = 𝜖
+=⟨ “Left-identity of ⌢” ⟩
+ys = 𝜖
+=⟨ “Identity of ∧” ⟩
+true ∧ ys = 𝜖
+=⟨ “Reflexivity of =” ⟩
+𝜖 = 𝜖 ∧ ys = 𝜖
+Induction step `∀ b : A • (b ◃ xs) ⌢ ys = 𝜖
+For any `b : A`:
+(b ◃ xs) ⌢ ys = 𝜖
+=⟨ “Mutual associativity of ◃ with ⌢” ⟩
+b ◃ xs ⌢ ys = 𝜖
+=⟨ “Cons is not empty” ⟩
+false
+=⟨ “Zero of ∧” ⟩
+false ∧ ys = 𝜖
+=⟨ “Cons is not empty” ⟩
+(b ◃ xs) = 𝜖 ∧ ys = 𝜖
+
+= ⟨ “Cons is not empty” ⟩
+— CalcCheck: Found “Cons is not empty”, (13.3) “Cons is
+not empty”
+— CalcCheck: ─ OK
+b ◃ xs = 𝜖 ∧ ys = 𝜖
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+≡
+
+(b ◃ xs) =
+
+[33]
+
+Head and Tail
+[34]
+
+We introduce the head and tail functions that extract the constituents of non-empty sequences:
+
+
+[35]
+
+[36]
+
+[37]
+
+[38]
+
+
+Declaration: head : Seq A → A
+Declaration: tail : Seq A → Seq A
+
+Declaration: head : Seq A → A
+Declaration: tail : Seq A → Seq A
+
+Note that the following axioms leave “head 𝜖” and “tail 𝜖” unspecified — nothing interesting can be proven about these expressions. (Only
+boring things like “head 𝜖 = head 𝜖”…)
+
+Axiom “Definition of `head`”: head (x ◃ xs) = x
+Axiom “Definition of `tail`”: tail (x ◃ xs) = xs
+
+Axiom “Definition of `head`”: head (x ◃ xs) = x
+— CalcCheck: Variable types: x : ty᎑₁₁, xs : Seq ty᎑₁₁
+Axiom “Definition of `tail`”: tail (x ◃ xs) = xs
+— CalcCheck: Variable types: x : ty᎑₉, xs : Seq ty᎑₉
+
+The following decomposition property will frequently be useful:
+
+
+[39]
+
+
+Theorem “Non-empty-sequence decomposition”: xs ≠ 𝜖 ⇒ xs = head xs ◃
+tail xs
+— CalcCheck: Variable types: xs : Seq A᎑₂₁
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+Calculation for expected goal `𝜖 ≠ 𝜖 ⇒ 𝜖 = head 𝜖 ◃ tail 𝜖`:
+𝜖 ≠ 𝜖 ⇒ 𝜖 = head 𝜖 ◃ tail 𝜖
+= ⟨ “Definition of ≠” ⟩
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+¬ (𝜖 = 𝜖) ⇒ 𝜖 = head 𝜖 ◃ tail 𝜖
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+¬ true ⇒ 𝜖 = head 𝜖 ◃ tail 𝜖
+= ⟨ “Definition of `false`” ⟩
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: ─ OK
+false ⇒ 𝜖 = head 𝜖 ◃ tail 𝜖
+= ⟨ “ex falso quodlibet” ⟩
+— CalcCheck: Found (3.75) “ex falso quodlibet”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ y : A • y ◃ xs ≠ 𝜖 ⇒ y ◃ xs = head (y ◃ xs) ◃ tail
+(y ◃ xs) )`:
+For any ` y : A`:
+Calculation for expected goal `y ◃ xs ≠ 𝜖 ⇒ y ◃ xs = head (y ◃
+xs) ◃ tail (y ◃ xs)`:
+y ◃ xs ≠ 𝜖 ⇒ y ◃ xs = head (y ◃ xs) ◃ tail (y ◃ xs)
+= ⟨ “Definition of `head`” ⟩
+— CalcCheck: Found “Definition of `head`”
+— CalcCheck: ─ OK
+y ◃ xs ≠ 𝜖 ⇒ y ◃ xs = y ◃ tail (y ◃ xs)
+= ⟨ “Definition of `tail`” ⟩
+— CalcCheck: Found “Definition of `tail`”
+— CalcCheck: ─ OK
+y ◃ xs ≠ 𝜖 ⇒ y ◃ xs = y ◃ xs
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+
+
+Theorem “Non-empty-sequence decomposition”:
+xs ≠ 𝜖 ⇒ xs = head xs ◃ tail xs
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+𝜖 ≠ 𝜖 ⇒ 𝜖 = head 𝜖 ◃ tail 𝜖
+=⟨ “Definition of ≠”⟩
+¬(𝜖 = 𝜖) ⇒ 𝜖 = head 𝜖 ◃ tail 𝜖
+=⟨ “Reflexivity of =”⟩
+¬ true ⇒ 𝜖 = head 𝜖 ◃ tail 𝜖
+=⟨ “Definition of `false`”⟩
+false ⇒ 𝜖 = head 𝜖 ◃ tail 𝜖
+=⟨ “ex falso quodlibet”⟩
+true
+Induction step `∀ y : A • (y ◃ xs) ≠ 𝜖 ⇒ (y ◃ xs) = h
+For any `y : A`:
+(y ◃ xs) ≠ 𝜖 ⇒ (y ◃ xs) = head (y ◃ xs) ◃ tail
+=⟨ “Definition of `head`” ⟩
+(y ◃ xs) ≠ 𝜖 ⇒ (y ◃ xs) = y ◃ tail (y ◃ xs)
+=⟨ “Definition of `tail`” ⟩
+(y ◃ xs) ≠ 𝜖 ⇒ (y ◃ xs) = y ◃ xs
+=⟨ “Reflexivity of =” ⟩
+(y ◃ xs) ≠ 𝜖 ⇒ true
+=⟨ “Right-zero of ⇒” ⟩
+true
+
+
+— CalcCheck: ─ OK
+y ◃ xs ≠ 𝜖 ⇒ true
+= ⟨ “Right-zero of ⇒” ⟩
+— CalcCheck: Found (3.72) “Right-zero of ⇒”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[40]
+
+
+Corollary “Sequence cases”: xs = 𝜖 ∨ xs = head xs ◃ tail xs
+— CalcCheck: Variable types: xs : Seq A᎑₂₁
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+Calculation for expected goal `𝜖 = 𝜖 ∨ 𝜖 = head 𝜖 ◃ tail 𝜖`:
+𝜖 = 𝜖 ∨ 𝜖 = head 𝜖 ◃ tail 𝜖
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+true ∨ 𝜖 = head 𝜖 ◃ tail 𝜖
+= ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step `(∀ y : A • y ◃ xs = 𝜖 ∨ y ◃ xs = head (y ◃ xs) ◃ tail
+(y ◃ xs) )`:
+For any ` y : A`:
+Calculation for expected goal `y ◃ xs = 𝜖 ∨ y ◃ xs = head (y ◃ xs)
+◃ tail (y ◃ xs)`:
+y ◃ xs = 𝜖 ∨ y ◃ xs = head (y ◃ xs) ◃ tail (y ◃ xs)
+= ⟨ “Definition of `head`” ⟩
+— CalcCheck: Found “Definition of `head`”
+— CalcCheck: ─ OK
+y ◃ xs = 𝜖 ∨ y ◃ xs = y ◃ tail (y ◃ xs)
+= ⟨ “Definition of `tail`” ⟩
+— CalcCheck: Found “Definition of `tail`”
+— CalcCheck: ─ OK
+y ◃ xs = 𝜖 ∨ y ◃ xs = y ◃ xs
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: ─ OK
+y ◃ xs = 𝜖 ∨ true
+= ⟨ “Zero of ∨” ⟩
+— CalcCheck: Found (3.29) “Zero of ∨”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+Corollary “Sequence cases”:
+xs = 𝜖 ∨ xs = head xs ◃ tail xs
+Proof:
+By induction on `xs : Seq A`:
+Base case:
+𝜖 = 𝜖 ∨ 𝜖 = head 𝜖 ◃ tail 𝜖
+=⟨ “Reflexivity of =”⟩
+true ∨ 𝜖 = head 𝜖 ◃ tail 𝜖
+=⟨ “Zero of ∨” ⟩
+true
+Induction step `∀ y : A • (y ◃ xs) = 𝜖 ∨ (y ◃ xs) = he
+For any `y : A`:
+(y ◃ xs) = 𝜖 ∨ (y ◃ xs) = head (y ◃ xs) ◃ tail
+=⟨ “Definition of `head`”⟩
+(y ◃ xs) = 𝜖 ∨ (y ◃ xs) = y ◃ tail (y ◃ xs)
+=⟨ “Definition of `tail`”⟩
+(y ◃ xs) = 𝜖 ∨ (y ◃ xs) = (y ◃ xs)
+=⟨ “Reflexivity of =”⟩
+(y ◃ xs) = 𝜖 ∨ true
+=⟨ “Zero of ∨”⟩
+true
+
+[41]
+
+Theorem “Strict sequence cases”:
+xs = 𝜖 ≢ xs = head xs ◃ tail xs
+Proof:
+
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+Theorem “Strict sequence cases”: xs = 𝜖 ≢ xs = head xs ◃ tail
+xs
+— CalcCheck: Variable types: xs : Seq A᎑₂₁
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[42]
+
+Note that
+head xs ◃ tail xs
+
+=
+
+xs
+
+is not valid in general, since we can prove
+
+
+¬ (head 𝜖 ◃ tail 𝜖
+
+=
+
+𝜖)
+
+by “Cons is not empty”, even though we know nothing about the two arguments of ◃ in the expression head 𝜖 ◃ tail 𝜖.
+
+Check and Save
+
+
+Save
+
+

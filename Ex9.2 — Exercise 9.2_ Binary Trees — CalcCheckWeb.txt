@@ -1,0 +1,750 @@
+[1]
+
+Binary Trees
+[2]
+
+Here we continue the development started in H19, where the type constructor Tree : Type → Type has been introduced with the following
+constructors:
+Declaration:
+Declaration:
+
+◬
+: Tree A
+_◿_◺_ : Tree A → A → Tree A → Tree A
+
+For the symbols used here:
+◬ — type: \emptytree or \t0
+◿ — type: \lbranch
+◺ — type: \rbranch
+Everything from H9.2 is preloaded here, including the induction principle for these trees:
+Axiom “Tree induction”:
+P[t ≔ ◬]
+∧ ( ∀ l, r : Tree A; x : A
+• P[t ≔ l] ∧ P[t ≔ r]
+)
+⇒ (∀ t : Tree A • P)
+
+⇒
+
+P[t ≔ l ◿ x ◺ r]
+
+
+[3]
+
+[4]
+
+[5]
+
+[6]
+
+
+We define the size function for our trees inductively over the possible shapes of the argument trees:
+
+Declaration: size : Tree A → ℕ
+Axiom “Tree size”: size ◬ = 0
+Axiom “Tree size”: size (l ◿ x ◺ r)
+
+=
+
+size l + 1 + size r
+
+Lemma “Singleton tree size”: size ｢ x ｣ = 1
+Proof:
+size ｢ x ｣
+=⟨ “Singleton tree” ⟩
+size (◬ ◿ x ◺ ◬)
+=⟨ “Tree size” ⟩
+0 + 1 + 0
+=⟨ Evaluation ⟩
+1
+
+Declaration: size : Tree A → ℕ
+Axiom “Tree size”: size ◬ = 0
+Axiom “Tree size”: size (l ◿ x ◺ r) = (size l + 1) + size r
+
+Lemma “Singleton tree size”: size ｢ x ｣ = 1
+Proof:
+Calculation for expected goal `size ｢ x ｣ = 1`:
+size ｢ x ｣
+= ⟨ “Singleton tree” ⟩
+— CalcCheck: Found “Singleton tree”
+— CalcCheck: ─ OK
+size (◬ ◿ x ◺ ◬)
+= ⟨ “Tree size” ⟩
+— CalcCheck: Found “Tree size”
+— CalcCheck: ─ OK
+(0 + 1) + 0
+= ⟨ Evaluation ⟩
+— CalcCheck: ─ OK
+1
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+For example (as long as the current search depth is used for CalcCheck proofs):
+
+
+[7]
+
+[8]
+
+Fact “Size of `t1`”: size t1 = 6
+Proof:
+size t1
+=⟨ “Alternative definition of `t1`”,
+“Singleton tree size”, “Tree size”,
+“Identity of +” ⟩
+1 + 1 + 1 + 1 + 1 + 1
+=⟨ Evaluation ⟩
+6
+
+
+Fact “Size of `t1`”: size t1 = 6
+Proof:
+Calculation for expected goal `size t1 = 6`:
+size t1
+= ⟨ “Alternative definition of `t1`”, “Singleton tree size”, “Tree size”,
+“Identity of +” ⟩
+— CalcCheck: Found “Alternative definition of `t1`”
+— CalcCheck: Found “Singleton tree size”
+— CalcCheck: Found “Tree size”
+— CalcCheck: Found “Identity of +”
+— CalcCheck: ─ OK
+((((1 + 1) + 1) + 1) + 1) + 1
+= ⟨ Evaluation ⟩
+— CalcCheck: ─ OK
+6
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Mirroring preserves size:
+
+
+[9]
+
+
+Theorem “Size of mirrored tree”: (∀ t : Tree A • size (t ˘) = size t )
+— CalcCheck: Metavariables: A = A〖〗
+Proof:
+Using “Tree induction”:
+— CalcCheck: Found “Tree induction”
+Subproof for `size (◬ ˘) = size ◬`:
+By “Mirror”
+— CalcCheck: Found “Mirror”
+Subproof for `(∀ l : Tree A; r : Tree A; x : A • size (l ˘) = size l ∧ size (r ˘) = size r ⇒ size
+((l ◿ t ◺ r) ˘) = size (l ◿ t ◺ r) )`:
+For any ` l, r, x`:
+Assuming “IHL” `size (l ˘) = size l`:
+— CalcCheck: Assumption matches goal
+Assuming “IHR” `size (r ˘) = size r`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `size ((l ◿ t ◺ r) ˘) = size (l ◿ t ◺ r)`:
+size ((l ◿ t ◺ r) ˘)
+= ⟨ “Mirror” ⟩
+— CalcCheck: Found “Mirror”
+— CalcCheck: ─ OK
+size (r ˘ ◿ t ◺ l ˘)
+= ⟨ “Tree size” ⟩
+— CalcCheck: Found “Tree size”
+— CalcCheck: ─ OK
+(size (r ˘) + size (l ˘)) + 1
+= ⟨ Assumption “IHL” ⟩
+— CalcCheck: Found assumption “IHL”
+— CalcCheck: ─ OK
+(size (r ˘) + size l) + 1
+= ⟨ Assumption “IHR” ⟩
+— CalcCheck: Found assumption “IHR”
+— CalcCheck: ─ OK
+(size r + size l) + 1
+= ⟨ “Symmetry of +” ⟩
+— CalcCheck: Found “Symmetry of +”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(size l + size r) + 1
+= ⟨ “Tree size” ⟩
+— CalcCheck: Found “Tree size”
+— CalcCheck: ─ OK
+size (l ◿ t ◺ r)
+
+
+Theorem “Size of mirrored tree”:
+∀ t : Tree A • size (t ˘) = size t
+Proof:
+Using “Tree induction” :
+Subproof for `size (◬ ˘) = size (◬)`: By “Mirror
+Subproof for `∀ l, r : Tree A ; x : A
+• size (l ˘) = size (l) ∧ size (r ˘) = size
+⇒ size ((l ◿ t ◺ r) ˘) = size (l ◿ t ◺ r)`
+For any `l, r, x`:
+Assuming “IHL” `size (l ˘) = size (l)`:
+Assuming “IHR” `size (r ˘) = size (r)`:
+size ((l ◿ t ◺ r) ˘)
+=⟨“Mirror”⟩
+size ((r ˘) ◿ t ◺ (l ˘))
+=⟨“Tree size”⟩
+size (r ˘) + size (l ˘) + 1
+=⟨ Assumption “IHL”⟩
+size (r ˘) + size (l ) + 1
+=⟨ Assumption “IHR”⟩
+size (r) + size (l ) + 1
+=⟨ “Symmetry of +”⟩
+size (l) + size (r) + 1
+=⟨“Tree size”⟩
+size (l ◿ t ◺ r)
+
+[10]
+
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Similar to the map function you have seen on sequences, we also define a map function on tree, which creates a copy with “updated” elements:
+
+
+[11]
+
+[12]
+
+
+Declaration: map : (A → B) → Tree A → Tree B
+Axiom “Tree map”: map f ◬ = ◬
+Axiom “Tree map”: map f (l ◿ x ◺ r) = (map f l) ◿ (f x) ◺ (map f r)
+
+Declaration: map : (A → B) → (Tree A → Tree B)
+Axiom “Tree map”: (map f) ◬ = ◬
+Axiom “Tree map”: (map f) (l ◿ x ◺ r) = (map f) l ◿ f x ◺ (map
+f) r
+
+This also preserves tree size:
+
+
+[13]
+
+
+Theorem “Size of mapped tree”: (∀ t • size ((map f) t) = size t )
+Theorem “Size of mapped tree”:
+Proof:
+∀ t • size (map f t) = size t
+Using “Tree induction”:
+Proof:
+— CalcCheck: Found “Tree induction”
+Using “Tree induction”:
+Subproof for `size ((map f) ◬) = size ◬`:
+Subproof for `size (map f ◬) = size ◬`: By “Tr
+By “Tree map”
+Subproof for `∀ l, r : Tree A ; x : A
+— CalcCheck: Found “Tree map”
+• size (map f l) = size (l) ∧ size (map f
+Subproof for `(∀ l : Tree A; r : Tree A; x : A • size ((map f) l) = size l ∧ size ((map f) r) = size r
+⇒ size (map f (l ◿ x ◺ r)) = size (l ◿ ⇒ size ((map f) (l ◿ x ◺ r)) = size (l ◿ x ◺ r) )`:
+For any `l, r, x`:
+For any ` l, r, x`:
+Assuming “IHL” `size ((map f) l) = size l`:
+Assuming “IHL” `size (map f l) = size (l)`
+— CalcCheck: Assumption matches goal
+Assuming “IHR” `size (map f r) = size (r
+Assuming “IHR” `size ((map f) r) = size r`:
+size (map f (l ◿ x ◺ r))
+— CalcCheck: Assumption matches goal
+=⟨ “Tree map” ⟩
+Calculation for expected goal `size ((map f) (l ◿ x ◺ r)) = size (l ◿ x ◺ r)`:
+size ((map f l) ◿ (f x) ◺ (map f r)
+size ((map f) (l ◿ x ◺ r))
+=⟨ “Tree size” ⟩
+= ⟨ “Tree map” ⟩
+size (map f l) + 1 + size (map f r)
+— CalcCheck: Found “Tree map”
+=⟨ Assumption “IHL”⟩
+— CalcCheck: ─ OK
+size (l) + 1 + size (map f r)
+size ((map f) l ◿ f x ◺ (map f) r)
+=⟨ Assumption “IHR”⟩
+= ⟨ “Tree size” ⟩
+size (l) + 1 + size (r)
+— CalcCheck: Found “Tree size”
+=⟨ “Tree size”⟩
+— CalcCheck: ─ OK
+(size ((map f) l) + 1) + size ((map f) r)
+size (l ◿ x ◺ r)
+= ⟨ Assumption “IHL” ⟩
+— CalcCheck: Found assumption “IHL”
+— CalcCheck: ─ OK
+(size l + 1) + size ((map f) r)
+= ⟨ Assumption “IHR” ⟩
+— CalcCheck: Found assumption “IHR”
+— CalcCheck: ─ OK
+(size l + 1) + size r
+= ⟨ “Tree size” ⟩
+— CalcCheck: Found “Tree size”
+— CalcCheck: ─ OK
+size (l ◿ x ◺ r)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+[14]
+
+Tree Traversals — Seqentialising the Nodes
+
+
+[15]
+
+
+The previously-seen material on sequences is preloaded here, too.
+We define the three standard ways to sequentialise the tree elements while for each node keeping all elements of the left subtree before the
+elements of the right subtree (remember the names!):
+
+[16]
+
+[17]
+
+[18]
+
+Declaration: preOrder, inOrder, postOrder : Tree A → Seq A
+
+Declaration: preOrder , inOrder , postOrder : Tree A → Seq
+A
+
+Axiom “Definition of `preOrder`”:
+preOrder ◬ = 𝜖
+∧ preOrder (l ◿ x ◺ r) = x ◃ preOrder l ⌢ preOrder r
+
+Axiom “Definition of `preOrder`”: preOrder ◬ = 𝜖 ∧ preOrder (l ◿ x ◺ r) = x ◃
+(preOrder l ⌢ preOrder r)
+
+Lemma “Singleton `preOrder`”: preOrder ｢ x ｣ = x ◃ 𝜖
+Proof:
+preOrder ｢ x ｣
+=⟨ “Singleton tree” ⟩
+preOrder (◬ ◿ x ◺ ◬)
+=⟨ “Definition of `preOrder`” ⟩
+x ◃ preOrder ◬ ⌢ preOrder ◬
+=⟨ “Definition of `preOrder`” ⟩
+x ◃ 𝜖 ⌢ 𝜖
+=⟨ “Left-identity of ⌢” ⟩
+x ◃ 𝜖
+
+
+Lemma “Singleton `preOrder`”: preOrder ｢ x ｣ = x ◃ 𝜖
+Proof:
+Calculation for expected goal `preOrder ｢ x ｣ = x ◃ 𝜖`:
+preOrder ｢ x ｣
+= ⟨ “Singleton tree” ⟩
+— CalcCheck: Found “Singleton tree”
+— CalcCheck: ─ OK
+preOrder (◬ ◿ x ◺ ◬)
+= ⟨ “Definition of `preOrder`” ⟩
+— CalcCheck: Found “Definition of `preOrder`”
+— CalcCheck: ─ OK
+x ◃ (preOrder ◬ ⌢ preOrder ◬)
+= ⟨ “Definition of `preOrder`” ⟩
+— CalcCheck: Found “Definition of `preOrder`”
+— CalcCheck: ─ OK
+x ◃ (𝜖 ⌢ 𝜖)
+= ⟨ “Left-identity of ⌢” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: ─ OK
+x◃𝜖
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[19]
+
+[20]
+
+
+Fact: preOrder t1 = 7 ◃ 3 ◃ 2 ◃ 5 ◃ 10 ◃ 11 ◃ 𝜖
+Proof:
+preOrder t1
+=⟨ “Alternative definition of `t1`”,
+“Definition of `preOrder`”,
+“Singleton `preOrder`” ⟩
+7 ◃ (3 ◃ (2 ◃ 𝜖) ⌢ 5 ◃ 𝜖) ⌢ (10 ◃ 𝜖 ⌢ 11 ◃ 𝜖)
+=⟨ “Definition of ⌢ for 𝜖”, “Definition of ⌢ for ◃” ⟩
+7 ◃ 3 ◃ 2 ◃ 5 ◃ 10 ◃ 11 ◃ 𝜖
+
+Axiom “Definition of `inOrder`”:
+inOrder ◬ = 𝜖
+∧ inOrder (l ◿ x ◺ r) = inOrder l ⌢ x ◃ inOrder r
+
+
+Fact: preOrder t1 = 7 ◃ (3 ◃ (2 ◃ (5 ◃ (10 ◃ (11 ◃ 𝜖)))))
+Proof:
+Calculation for expected goal `preOrder t1 = 7 ◃ (3 ◃ (2 ◃ (5 ◃ (10 ◃
+(11 ◃ 𝜖)))))`:
+preOrder t1
+= ⟨ “Alternative definition of `t1`”, “Definition of `preOrder`”, “Singleton
+`preOrder`” ⟩
+— CalcCheck: Found “Alternative definition of `t1`”
+— CalcCheck: Found “Definition of `preOrder`”
+— CalcCheck: Found “Singleton `preOrder`”
+— CalcCheck: ─ OK
+7 ◃ ((3 ◃ ((2 ◃ 𝜖) ⌢ (5 ◃ 𝜖))) ⌢ (10 ◃ (𝜖 ⌢ (11 ◃ 𝜖))))
+= ⟨ “Definition of ⌢ for 𝜖”, “Definition of ⌢ for ◃” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with ⌢”
+— CalcCheck: ─ OK
+7 ◃ (3 ◃ (2 ◃ (5 ◃ (10 ◃ (11 ◃ 𝜖)))))
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Axiom “Definition of `inOrder`”: inOrder ◬ = 𝜖 ∧ inOrder (l ◿ x ◺ r) = inOrder
+l ⌢ (x ◃ inOrder r)
+
+
+[21]
+
+
+Lemma “Singleton `inOrder`”: inOrder ｢ x ｣ = x ◃ 𝜖
+Proof:
+inOrder ｢ x ｣
+=⟨ “Singleton tree” ⟩
+inOrder (◬ ◿ x ◺ ◬)
+=⟨ “Definition of `inOrder`” ⟩
+inOrder ◬ ⌢ x ◃ inOrder ◬
+=⟨ “Definition of `inOrder`” ⟩
+𝜖 ⌢ x ◃ 𝜖
+=⟨ “Left-identity of ⌢” ⟩
+x ◃ 𝜖
+
+
+Lemma “Singleton `inOrder`”: inOrder ｢ x ｣ = x ◃ 𝜖
+Proof:
+Calculation for expected goal `inOrder ｢ x ｣ = x ◃ 𝜖`:
+inOrder ｢ x ｣
+= ⟨ “Singleton tree” ⟩
+— CalcCheck: Found “Singleton tree”
+— CalcCheck: ─ OK
+inOrder (◬ ◿ x ◺ ◬)
+= ⟨ “Definition of `inOrder`” ⟩
+— CalcCheck: Found “Definition of `inOrder`”
+— CalcCheck: ─ OK
+inOrder ◬ ⌢ (x ◃ inOrder ◬)
+= ⟨ “Definition of `inOrder`” ⟩
+— CalcCheck: Found “Definition of `inOrder`”
+— CalcCheck: ─ OK
+𝜖 ⌢ (x ◃ 𝜖)
+= ⟨ “Left-identity of ⌢” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: ─ OK
+x◃𝜖
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[22]
+
+[23]
+
+
+Fact: inOrder t1 = 2 ◃ 3 ◃ 5 ◃ 7 ◃ 10 ◃ 11 ◃ 𝜖
+Proof:
+inOrder t1
+=⟨ “Alternative definition of `t1`” , “Definition of `inOrder`”
+inOrder (｢ 2 ｣ ◿ 3 ◺ ｢ 5 ｣) ⌢ 7 ◃ (inOrder ◬ ⌢ 10 ◃ (inOrd
+=⟨ “Definition of `inOrder`” ⟩
+(inOrder (｢ 2 ｣) ⌢ 3 ◃ inOrder (｢ 5 ｣)) ⌢ 7 ◃ (𝜖 ⌢ 10 ◃ (in
+=⟨ “Singleton `inOrder`” ⟩
+((2 ◃ 𝜖) ⌢ 3 ◃ (5 ◃ 𝜖)) ⌢ 7 ◃ (𝜖 ⌢ 10 ◃ ( 11 ◃ 𝜖))
+=⟨ “Definition of ⌢ for 𝜖”, “Definition of ⌢ for ◃” ⟩
+2 ◃ 3 ◃ 5 ◃ 7 ◃ 10 ◃ 11 ◃ 𝜖
+
+Fact: inOrder t1 = 2 ◃ (3 ◃ (5 ◃ (7 ◃ (10 ◃ (11 ◃ 𝜖)))))
+Proof:
+Calculation for expected goal `inOrder t1 = 2 ◃ (3 ◃ (5 ◃ (7 ◃ (10 ◃
+(11 ◃ 𝜖)))))`:
+inOrder t1
+= ⟨ “Alternative definition of `t1`”, “Definition of `inOrder`”, “Definition of
+`inOrder`” ⟩
+— CalcCheck: Found “Alternative definition of `t1`”
+— CalcCheck: Found “Definition of `inOrder`”
+— CalcCheck: ─ OK
+inOrder (｢ 2 ｣ ◿ 3 ◺ ｢ 5 ｣) ⌢ (7 ◃ (inOrder ◬ ⌢ (10 ◃ inOrder ｢
+11 ｣)))
+= ⟨ “Definition of `inOrder`” ⟩
+— CalcCheck: Found “Definition of `inOrder`”
+— CalcCheck: ─ OK
+(inOrder ｢ 2 ｣ ⌢ (3 ◃ inOrder ｢ 5 ｣)) ⌢ (7 ◃ (𝜖 ⌢ (10 ◃ inOrder ｢ 11
+｣)))
+= ⟨ “Singleton `inOrder`” ⟩
+— CalcCheck: Found “Singleton `inOrder`”
+— CalcCheck: ─ OK
+((2 ◃ 𝜖) ⌢ (3 ◃ (5 ◃ 𝜖))) ⌢ (7 ◃ (𝜖 ⌢ (10 ◃ (11 ◃ 𝜖))))
+= ⟨ “Definition of ⌢ for 𝜖”, “Definition of ⌢ for ◃” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with ⌢”
+— CalcCheck: ─ OK
+2 ◃ (3 ◃ (5 ◃ (7 ◃ (10 ◃ (11 ◃ 𝜖)))))
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Axiom “Definition of `postOrder`”: postOrder ◬ = 𝜖 ∧ postOrder (l ◿ x ◺ r) =
+Axiom “Definition of `postOrder`”:
+postOrder l ⌢ (postOrder r ▹ x)
+postOrder ◬ = 𝜖
+∧ postOrder (l ◿ x ◺ r) = postOrder l ⌢ postOrder r ▹
+
+
+[24]
+
+
+Lemma “Singleton `postOrder`”: postOrder ｢ x ｣ = x ◃ 𝜖
+Proof:
+postOrder ｢ x ｣
+=⟨ “Singleton tree” ⟩
+postOrder (◬ ◿ x ◺ ◬)
+=⟨ “Definition of `postOrder`” ⟩
+(postOrder ◬) ⌢ (postOrder ◬) ▹ x
+=⟨ “Definition of `postOrder`” ⟩
+𝜖 ⌢ 𝜖 ▹ x
+=⟨ “Left-identity of ⌢” , “Definition of ▹ for 𝜖” ⟩
+x ◃ 𝜖
+
+
+Lemma “Singleton `postOrder`”: postOrder ｢ x ｣ = x ◃ 𝜖
+Proof:
+Calculation for expected goal `postOrder ｢ x ｣ = x ◃ 𝜖`:
+postOrder ｢ x ｣
+= ⟨ “Singleton tree” ⟩
+— CalcCheck: Found “Singleton tree”
+— CalcCheck: ─ OK
+postOrder (◬ ◿ x ◺ ◬)
+= ⟨ “Definition of `postOrder`” ⟩
+— CalcCheck: Found “Definition of `postOrder`”
+— CalcCheck: ─ OK
+postOrder ◬ ⌢ (postOrder ◬ ▹ x)
+= ⟨ “Definition of `postOrder`” ⟩
+— CalcCheck: Found “Definition of `postOrder`”
+— CalcCheck: ─ OK
+𝜖 ⌢ (𝜖 ▹ x)
+= ⟨ “Left-identity of ⌢”, “Definition of ▹ for 𝜖” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: Found (13.12) “Definition of ▹ for 𝜖”
+— CalcCheck: ─ OK
+x◃𝜖
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[25]
+
+
+Fact: postOrder t1 = 2 ◃ (5 ◃ (3 ◃ (11 ◃ (10 ◃ (7 ◃ 𝜖)))))
+Proof:
+Calculation for expected goal `postOrder t1 = 2 ◃ (5 ◃ (3 ◃ (11 ◃ (10 ◃ (7
+◃ 𝜖)))))`:
+postOrder t1
+= ⟨ “Alternative definition of `t1`” ⟩
+— CalcCheck: Found “Alternative definition of `t1`”
+— CalcCheck: ─ OK
+postOrder ((｢ 2 ｣ ◿ 3 ◺ ｢ 5 ｣) ◿ 7 ◺ (◬ ◿ 10 ◺ ｢ 11 ｣))
+= ⟨ “Definition of `postOrder`” ⟩
+— CalcCheck: Found “Definition of `postOrder`”
+— CalcCheck: ─ OK
+postOrder (｢ 2 ｣ ◿ 3 ◺ ｢ 5 ｣) ⌢ (postOrder (◬ ◿ 10 ◺ ｢ 11 ｣) ▹ 7)
+= ⟨ “Definition of `postOrder`” ⟩
+— CalcCheck: Found “Definition of `postOrder`”
+— CalcCheck: ─ OK
+(postOrder ｢ 2 ｣ ⌢ (postOrder ｢ 5 ｣ ▹ 3)) ⌢ ((postOrder ◬ ⌢
+(postOrder ｢ 11 ｣ ▹ 10)) ▹ 7)
+= ⟨ “Singleton `postOrder`”, “Definition of `postOrder`” ⟩
+— CalcCheck: Found “Singleton `postOrder`”
+— CalcCheck: Found “Definition of `postOrder`”
+— CalcCheck: ─ OK
+((2 ◃ 𝜖) ⌢ ((5 ◃ 𝜖) ▹ 3)) ⌢ ((𝜖 ⌢ ((11 ◃ 𝜖) ▹ 10)) ▹ 7)
+= ⟨ “Left-identity of ⌢” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: ─ OK
+((2 ◃ 𝜖) ⌢ ((5 ◃ 𝜖) ▹ 3)) ⌢ (((11 ◃ 𝜖) ▹ 10) ▹ 7)
+= ⟨ “Definition of ▹ for ◃”, “Definition of ▹ for 𝜖” ⟩
+— CalcCheck: Found (13.13) “Definition of ▹ for ◃”
+— CalcCheck: Found (13.12) “Definition of ▹ for 𝜖”
+— CalcCheck: ─ OK
+((2 ◃ 𝜖) ⌢ (5 ◃ (3 ◃ 𝜖))) ⌢ (11 ◃ (10 ◃ (7 ◃ 𝜖)))
+= ⟨ “Definition of ⌢ for ◃” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with ⌢”
+— CalcCheck: ─ OK
+2 ◃ ((𝜖 ⌢ (5 ◃ (3 ◃ 𝜖))) ⌢ (11 ◃ (10 ◃ (7 ◃ 𝜖))))
+= ⟨ “Definition of ⌢ for 𝜖” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: ─ OK
+2 ◃ ((5 ◃ (3 ◃ 𝜖)) ⌢ (11 ◃ (10 ◃ (7 ◃ 𝜖))))
+= ⟨ “Definition of ⌢ for ◃” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with ⌢”
+
+
+Fact: postOrder t1 = 2 ◃ 5 ◃ 3 ◃ 11 ◃ 10 ◃ 7 ◃ 𝜖
+Proof:
+postOrder t1
+=⟨ “Alternative definition of `t1`” ⟩
+postOrder ((｢ 2 ｣ ◿ 3 ◺ ｢ 5 ｣)
+◿ 7 ◺
+(◬ ◿ 10 ◺ ｢ 11 ｣))
+=⟨ “Definition of `postOrder`” ⟩
+postOrder (｢ 2 ｣ ◿ 3 ◺ ｢ 5 ｣)
+⌢ postOrder (◬ ◿ 10 ◺ ｢ 11 ｣) ▹ 7
+=⟨ “Definition of `postOrder`” ⟩
+(postOrder ｢ 2 ｣ ⌢ postOrder ｢ 5 ｣ ▹ 3)
+⌢ (postOrder ◬ ⌢ postOrder ｢ 11 ｣ ▹ 10) ▹ 7
+=⟨ “Singleton `postOrder`”, “Definition of `postOrder`” ⟩
+((2 ◃ 𝜖) ⌢ (5 ◃ 𝜖) ▹ 3)
+⌢ (𝜖 ⌢ (11 ◃ 𝜖) ▹ 10) ▹ 7
+=⟨ “Left-identity of ⌢” ⟩
+((2 ◃ 𝜖) ⌢ (5 ◃ 𝜖) ▹ 3)
+⌢ ((11 ◃ 𝜖) ▹ 10) ▹ 7
+=⟨ “Definition of ▹ for ◃”, “Definition of ▹ for 𝜖” ⟩
+((2 ◃ 𝜖) ⌢ 5 ◃ 3 ◃ 𝜖)
+⌢ 11 ◃ 10 ◃ 7 ◃ 𝜖
+=⟨ “Definition of ⌢ for ◃” ⟩
+2 ◃ (𝜖 ⌢ 5 ◃ 3 ◃ 𝜖)
+⌢ 11 ◃ 10 ◃ 7 ◃ 𝜖
+=⟨ “Definition of ⌢ for 𝜖” ⟩
+2 ◃ (5 ◃ 3 ◃ 𝜖)
+⌢ 11 ◃ 10 ◃ 7 ◃ 𝜖
+=⟨ “Definition of ⌢ for ◃” ⟩
+2 ◃ (5 ◃ (3 ◃ 𝜖) ⌢ 11 ◃ 10 ◃ 7 ◃ 𝜖)
+=⟨ “Definition of ⌢ for ◃” ⟩
+2 ◃ (5 ◃ (3 ◃ (𝜖 ⌢ 11 ◃ 10 ◃ 7 ◃ 𝜖)))
+=⟨ “Definition of ⌢ for 𝜖” ⟩
+2 ◃ 5 ◃ 3 ◃ 11 ◃ 10 ◃ 7 ◃ 𝜖
+
+[26]
+
+— CalcCheck: ─ OK
+2 ◃ (5 ◃ ((3 ◃ 𝜖) ⌢ (11 ◃ (10 ◃ (7 ◃ 𝜖)))))
+= ⟨ “Definition of ⌢ for ◃” ⟩
+— CalcCheck: Found (13.18) “Mutual associativity of ◃ with ⌢”
+— CalcCheck: ─ OK
+2 ◃ (5 ◃ (3 ◃ (𝜖 ⌢ (11 ◃ (10 ◃ (7 ◃ 𝜖))))))
+= ⟨ “Definition of ⌢ for 𝜖” ⟩
+— CalcCheck: Found (13.17) “Left-identity of ⌢”
+— CalcCheck: ─ OK
+2 ◃ (5 ◃ (3 ◃ (11 ◃ (10 ◃ (7 ◃ 𝜖)))))
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Note that in the theorem statement of “map commutes with inOrder”, the first map is the one from the theory of sequences, while the second
+map is the one from the current notebook.
+
+
+(A problem of this calibre could easily be on the second midterm and/or the final exam.)
+
+
+[27]
+
+1,1
+
+
+Theorem “map commutes with inOrder”: (∀ f : (A → B) • (∀ t : Tree A • (map f) (inOrder t) = inOrder
+((map f) t) ) )
+— CalcCheck: Metavariables: A = A〖〗, B = B〖〗
+— CalcCheck: Proviso: ¬occurs(`f`, `A`)
+Proof:
+Using “Tree induction”:
+— CalcCheck: Found “Tree induction”
+Subproof for `(map f) (inOrder ◬) = inOrder ((map f) ◬)`:
+(map f) (inOrder ◬)
+= ⟨ “Definition of `inOrder`” ⟩
+— CalcCheck: Found “Definition of `inOrder`”
+— CalcCheck: ─ OK
+(map f) 𝜖
+= ⟨ “Definition of `map` for 𝜖” ⟩
+— CalcCheck: Found “Definition of `map` for 𝜖”
+— CalcCheck: ─ OK
+𝜖
+= ⟨ “Definition of `inOrder`” ⟩
+— CalcCheck: Found “Definition of `inOrder`”
+— CalcCheck: ─ OK
+inOrder ◬
+= ⟨ “Tree map” ⟩
+— CalcCheck: Found “Tree map”
+— CalcCheck: ─ OK
+inOrder ((map f) ◬)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Subproof for `(∀ l : Tree A; r : Tree A; x : A • (map f) (inOrder l) = inOrder ((map f) l) ∧ (map f) (inOrder
+r) = inOrder ((map f) r) ⇒ (map f) (inOrder (l ◿ t ◺ r)) = inOrder ((map f) (l ◿ t ◺ r)) )`:
+For any ` l, r, x`:
+Assuming “IHL” `(map f) (inOrder l) = inOrder ((map f) l)`:
+— CalcCheck: Assumption matches goal
+Assuming “IHR” `(map f) (inOrder r) = inOrder ((map f) r)`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `(map f) (inOrder (l ◿ t ◺ r)) = inOrder ((map f) (l ◿ t ◺ r))`:
+(map f) (inOrder (l ◿ t ◺ r))
+= ⟨ “Definition of `inOrder`” ⟩
+— CalcCheck: Found “Definition of `inOrder`”
+— CalcCheck: ─ OK
+(map f) (inOrder l ⌢ (t ◃ inOrder r))
+= ⟨ “Distributivity of `map` over ⌢” ⟩
+— CalcCheck: Found “Distributivity of `map` over ⌢”
+
+
+Theorem “map commutes with inOrder”:
+∀ f : A → B • ∀ t : Tree A
+• map f (inOrder t) = inOrder (map f t
+Proof:
+Using “Tree induction”:
+Subproof for `map f (inOrder ◬) = in
+map f (inOrder ◬)
+=⟨ “Definition of `inOrder`”⟩
+map f (𝜖)
+=⟨ “Definition of `map` for 𝜖”⟩
+𝜖
+=⟨ “Definition of `inOrder`”⟩
+inOrder ◬
+=⟨ “Tree map” ⟩
+inOrder (map f ◬)
+Subproof for `∀ l, r : Tree A ; x : A
+• map f (inOrder l) = inOrder(ma
+⇒ map f (inOrder (l ◿ t ◺ r))
+For any `l, r, x`:
+Assuming “IHL” `map f (inOrder l
+Assuming “IHR” `map f (inOrder
+map f (inOrder (l ◿ t ◺ r)
+=⟨ “Definition of `inOrder`”
+map f ((inOrder l) ⌢ t ◃
+=⟨ “Distributivity of `map` o
+map f (inOrder l) ⌢ map f
+=⟨ “Definition of `map` for ◃
+map f (inOrder l) ⌢ f t ◃
+=⟨ Assumption “IHL” ⟩
+inOrder (map f l) ⌢ (f t ◃
+=⟨ Assumption “IHR” ⟩
+inOrder (map f l) ⌢ (f t ◃
+=⟨ “Definition of `inOrder`”
+inOrder (map f l ◿ f t ◺ m
+=⟨ “Tree map” ⟩
+inOrder (map f (l ◿ t ◺ r)
+
+
+— CalcCheck: ─ OK
+(map f) (inOrder l) ⌢ (map f) (t ◃ inOrder r)
+= ⟨ “Definition of `map` for ◃” ⟩
+— CalcCheck: Found “Definition of `map` for ◃”
+— CalcCheck: ─ OK
+(map f) (inOrder l) ⌢ (f t ◃ (map f) (inOrder r))
+= ⟨ Assumption “IHL” ⟩
+— CalcCheck: Found assumption “IHL”
+— CalcCheck: ─ OK
+inOrder ((map f) l) ⌢ (f t ◃ (map f) (inOrder r))
+= ⟨ Assumption “IHR” ⟩
+— CalcCheck: Found assumption “IHR”
+— CalcCheck: ─ OK
+inOrder ((map f) l) ⌢ (f t ◃ inOrder ((map f) r))
+= ⟨ “Definition of `inOrder`” ⟩
+— CalcCheck: Found “Definition of `inOrder`”
+— CalcCheck: ─ OK
+inOrder ((map f) l ◿ f t ◺ (map f) r)
+= ⟨ “Tree map” ⟩
+— CalcCheck: Found “Tree map”
+— CalcCheck: ─ OK
+inOrder ((map f) (l ◿ t ◺ r))
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Could not justify this `Using` application!
+
+
+Check and Save
+
+
+Save
+
+

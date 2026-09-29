@@ -1,0 +1,273 @@
+Variables
+
+[1]
+
+The set-up here is the same as in Ex2.6. This includes:
+The same set-up for commands and dynamic-logic assertions about command correctness as in H3:
+For calculating with Booleans, all the material of Exercises 2.1 to 2.3 (LADM chapter 3 up to conjunction) is preloaded.
+
+[2]
+
+For all correctness proofs, proceed again from the bottom up, starting from the postcondition written at the bottom of your calculation, and
+adding lines on top of that until finally arriving at the provided preconditions.
+Note that you are expected to be able to write such proofs without having examples available!
+
+
+[3]
+
+[4]
+
+
+Lemma (A1.2a):
+false ⇒⁅ q := (¬ p ∧ q) ⁆
+Proof:
+false
+≡ ⟨“Zero of ∧”⟩
+(q ∧ false)
+≡ ⟨“Contradiction”⟩
+(q ∧ (¬ p ∧ p))
+≡ ⟨“Associativity of ∧”⟩
+(p ∧ (¬ p ∧ q))
+≡ ⟨Substitution⟩
+(p ∧ q) [q ≔ (¬ p ∧ q)]
+⇒⁅ q := (¬ p ∧ q) ⁆ ⟨ “Assignment” ⟩
+(p ∧ q)
+
+(p ∧ q)
+
+Lemma (A1.2a): false ⇒⁅ (q := ¬ p ∧ q) ⁆ p ∧ q
+Proof:
+Calculation for expected goal `false ⇒⁅ (q := ¬ p ∧ q) ⁆ p ∧
+q`:
+false
+≡ ⟨ “Zero of ∧” ⟩
+— CalcCheck: Found (3.40) “Zero of ∧”
+— CalcCheck: ─ OK
+q ∧ false
+≡ ⟨ “Contradiction” ⟩
+— CalcCheck: Found (3.42) “Contradiction”
+— CalcCheck: ─ OK
+q ∧ (¬ p ∧ p)
+≡ ⟨ “Associativity of ∧” ⟩
+— CalcCheck: Found (3.37) “Associativity of ∧”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+p ∧ (¬ p ∧ q)
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(p ∧ q)[q ≔ ¬ p ∧ q]
+⇒⁅ q := ¬ p ∧ q ⁆ ⟨ “Assignment” ⟩
+— CalcCheck: Found “Assignment”
+— CalcCheck: ─ OK
+p∧q
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+A correctness statement of shape
+false ⇒⁅ C ⁆ Q
+asserts…
+… nothing
+… that the postcondition Q is a contradiction
+… that the command C will always terminate in states satisfying the postcondition Q
+… that the command C will only terminate in states satisfying the postcondition Q
+… that the command C will only start in states satisfying the precondition false
+… that the command C, for terminating in a state satisfying the postcondition Q, needs to be started in a state satisfying the
+precondition false
+
+
+… that the command C, for terminating in a state satisfying the postcondition Q, can be started in a state satisfying the precondition
+false
+(Select all valid continuations.)
+
+
+[5]
+
+
+Lemma (A1.2b): (p ∧ q ≡ p₀ ∧ q₀) ∧ (p ∨ q ≡ p₀ ∨ q₀) ⇒⁅ (p := p ≡ q ⍮ (q := (p ≡ q) ∨ q ⍮ p := p
+≡ q)) ⁆ (p ≡ p₀ ∧ q₀) ∧ (q ≡ p₀ ∨ q₀)
+Proof:
+Calculation for expected goal `(p ∧ q ≡ p₀ ∧ q₀) ∧ (p ∨ q ≡ p₀ ∨ q₀) ⇒⁅ (p := p ≡ q ⍮ (q := (p ≡
+q) ∨ q ⍮ p := p ≡ q)) ⁆ (p ≡ p₀ ∧ q₀) ∧ (q ≡ p₀ ∨ q₀)`:
+(p ∧ q ≡ p₀ ∧ q₀) ∧ (p ∨ q ≡ p₀ ∨ q₀)
+≡ ⟨ “Golden rule” ⟩
+Proof:
+— CalcCheck: Found (3.35) “Golden rule”
+(p ∧ q ≡ p₀ ∧ q₀) ∧ (p ∨ q ≡ p₀ ∨ q₀)
+— CalcCheck: ─ OK
+≡ ⟨“Golden rule”⟩
+(p ≡ (q ≡ (p ∨ q ≡ p₀ ∧ q₀))) ∧ (p ∨ q ≡ p₀ ∨ q₀)
+((p ≡ q ≡ (p ∨ q) ≡ p₀ ∧ q₀) ∧ ((p ∨ q) ≡ p₀ ∨
+≡ ⟨ “Identity of ≡” ⟩
+≡ ⟨“Identity of ≡”⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+((p ≡ q ≡ ((p ≡ q ≡ q) ∨ q) ≡ p₀ ∧ q₀) ∧ (((p
+— CalcCheck: ─ OK
+(p ≡ (q ≡ ((p ≡ (q ≡ q)) ∨ q ≡ p₀ ∧ q₀))) ∧ ((p ≡ (q ≡ q)) ∨ q ≡ p₀ ∨ q₀)
+≡ ⟨Substitution⟩
+≡ ⟨ Substitution ⟩
+((p ≡ ((p ≡ q) ∨ q) ≡ p₀ ∧ q₀) ∧ (((p ≡ q) ∨ q
+— CalcCheck: ─ OK
+⇒⁅ p := p ≡ q ⁆ ⟨ “Assignment” ⟩
+((p
+≡ ((p ≡ q) ∨ q ≡ p₀ ∧ q₀)) ∧ ((p ≡ q) ∨ q ≡ p₀ ∨ q₀))[p ≔ p ≡ q]
+((p ≡ ((p ≡ q) ∨ q) ≡ p₀ ∧ q₀) ∧ (((p ≡ q) ∨ q
+⇒⁅
+p
+:=
+p ≡ q ⁆ ⟨ “Assignment” ⟩
+≡ ⟨Substitution⟩
+— CalcCheck: Found “Assignment”
+((p ≡ q ≡ p₀ ∧ q₀) ∧ (q ≡ p₀ ∨ q₀))[q ≔ (p ≡
+— CalcCheck: ─ OK
+⇒⁅ q := (p ≡ q) ∨ q ⁆ ⟨ “Assignment” ⟩
+(p ≡ ((p ≡ q) ∨ q ≡ p₀ ∧ q₀)) ∧ ((p ≡ q) ∨ q ≡ p₀ ∨ q₀)
+((p ≡ q ≡ p₀ ∧ q₀) ∧ (q ≡ p₀ ∨ q₀))
+≡ ⟨ Substitution ⟩
+≡ ⟨Substitution⟩
+— CalcCheck: ─ OK
+((p ≡ p₀ ∧ q₀) ∧ (q ≡ p₀ ∨ q₀))[p ≔ p ≡ q]
+((p ≡ (q ≡ p₀ ∧ q₀)) ∧ (q ≡ p₀ ∨ q₀))[q ≔ (p ≡ q) ∨ q]
+⇒⁅ p := p ≡ q ⁆ ⟨ “Assignment” ⟩
+⇒⁅ q := (p ≡ q) ∨ q ⁆ ⟨ “Assignment” ⟩
+(p ≡ p₀ ∧ q₀) ∧ (q ≡ p₀ ∨ q₀)
+— CalcCheck: Found “Assignment”
+— CalcCheck: ─ OK
+(p ≡ (q ≡ p₀ ∧ q₀)) ∧ (q ≡ p₀ ∨ q₀)
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+((p ≡ p₀ ∧ q₀) ∧ (q ≡ p₀ ∨ q₀))[p ≔ p ≡ q]
+⇒⁅ p := p ≡ q ⁆ ⟨ “Assignment” ⟩
+— CalcCheck: Found “Assignment”
+— CalcCheck: ─ OK
+(p ≡ p₀ ∧ q₀) ∧ (q ≡ p₀ ∨ q₀)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Lemma (A1.2b):
+
+
+(p ∧ q ≡ p₀ ∧ q₀) ∧ (p ∨ q ≡
+⇒⁅ p := p ≡ q
+⍮ q := (p ≡ q) ∨ q
+⍮ p := p ≡ q
+⁆
+(p ≡ p₀ ∧ q₀) ∧ (q ≡ p₀ ∨ q₀)
+
+
+[6]
+
+
+Be aware that adding your own auxiliary theorems or lemmas is allowed — see the “Getting Started with CalcCheckWeb” page for the keyboard
+shortcuts for adding cells. (Adding axioms is not allowed.)
+
+
+[7]
+
+19,27
+
+
+Lemma (A1.2c): (p ≡ p₀) ∧ (q ≡ q₀) ⇒⁅ (p := p ≢ q ⍮ (q := p ≢ q ⍮ p := p ≢ q)) ⁆ (p ≡
+q₀) ∧ (q ≡ p₀)
+Proof:
+Calculation for expected goal `(p ≡ p₀) ∧ (q ≡ q₀) ⇒⁅ (p := p ≢ q ⍮ (q := p ≢ q ⍮ p
+:= p ≢ q)) ⁆ (p ≡ q₀) ∧ (q ≡ p₀)`:
+(q ≡ q₀) ∧ (p ≡ p₀)
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+— CalcCheck: Found (3.15) “Definition of ¬ from ≡”
+— CalcCheck: ─ OK
+(q ≡ q₀) ∧ ((¬ p ≡ false) ≡ p₀)
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+— CalcCheck: Found (3.15) “Definition of ¬ from ≡”
+— CalcCheck: ─ OK
+(q ≡ q₀) ∧ ((¬ p ≡ (q ≡ ¬ q)) ≡ p₀)
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(q ≡ q₀) ∧ (((¬ p ≡ q) ≡ ¬ q) ≡ p₀)
+≡ ⟨ “¬ connection” ⟩
+— CalcCheck: Found (3.11) “¬ connection”
+— CalcCheck: ─ OK
+(q ≡ q₀) ∧ ((¬ (¬ p ≡ q) ≡ q) ≡ p₀)
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+((¬ (p ≢ q) ≡ (¬ (p ≢ q) ≡ q)) ≡ q₀) ∧ ((¬ (¬ p ≡ q) ≡ q) ≡ p₀)
+≡ ⟨ “Associativity of ≡” ⟩
+— CalcCheck: Found (3.1) “Associativity of ≡”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+((¬ (p ≢ q) ≡ (¬ (p ≢ q) ≡ q)) ≡ q₀) ∧ ((¬ (¬ p ≡ q) ≡ q) ≡ p₀)
+≡ ⟨ (3.14) ⟩
+— CalcCheck: Found (3.14) `(p ≢ q) ≡ (¬ p ≡ q)`
+— CalcCheck: ─ OK
+(((p ≢ q) ≢ ((p ≢ q) ≢ q)) ≡ q₀) ∧ (((p ≢ q) ≢ q) ≡ p₀)
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(((p ≢ (p ≢ q)) ≡ q₀) ∧ ((p ≢ q) ≡ p₀))[p ≔ p ≢ q]
+⇒⁅ p := p ≢ q ⁆ ⟨ “Assignment” ⟩
+— CalcCheck: Found “Assignment”
+— CalcCheck: ─ OK
+
+
+Lemma (A1.2c):
+
+
+(p ≡ p₀) ∧ (q ≡ q₀)
+⇒⁅ p := p ≢q
+⍮ q := p ≢q
+⍮ p := p ≢q
+⁆
+(p ≡ q₀) ∧ (q ≡ p₀)
+
+Proof:
+(q ≡ q₀) ∧ (p ≡ p₀)
+≡ ⟨“Definition of ¬ from ≡”⟩
+(q ≡ q₀) ∧ ((¬ p ≡ false) ≡ p₀)
+≡ ⟨“Definition of ¬ from ≡”⟩
+(q ≡ q₀) ∧ ((¬ p ≡ q ≡ ¬ q) ≡ p₀)
+≡ ⟨“Identity of ≡”⟩
+(q ≡ q₀) ∧ (((¬ p ≡ q) ≡ ¬ q) ≡ p₀)
+≡ ⟨“¬ connection”⟩
+(q ≡ q₀) ∧ ((¬(¬ p ≡ q) ≡ q) ≡ p₀)
+≡ ⟨“Identity of ≡”⟩
+(((¬ (p ≢q) ≡ ¬ (p ≢q) ≡ q) ≡ q₀) ∧ ((¬(¬ p ≡ q)
+≡ ⟨“Associativity of ≡”⟩
+(((¬ (p ≢q) ≡ (¬ (p ≢q) ≡ q)) ≡ q₀) ∧ ((¬(¬ p ≡ q
+≡ ⟨(3.14)⟩
+((((p ≢q) ≢((p ≢q) ≢q)) ≡ q₀) ∧ (((p ≢q) ≢q)
+≡ ⟨Substitution⟩
+(((p ≢(p ≢q)) ≡ q₀) ∧ ((p ≢q) ≡ p₀))[p ≔ p ≢q]
+⇒⁅ p := p ≢q ⁆ ⟨ “Assignment” ⟩
+(((p ≢(p ≢q)) ≡ q₀) ∧ ((p ≢q) ≡ p₀))
+≡ ⟨Substitution⟩
+(((p ≢q) ≡ q₀) ∧ (q ≡ p₀))[q ≔ p ≢q]
+⇒⁅ q := p ≢q ⁆ ⟨ “Assignment” ⟩
+(((p ≢q) ≡ q₀) ∧ (q ≡ p₀))
+≡ ⟨Substitution⟩
+((p ≡ q₀) ∧ (q ≡ p₀))[p ≔ p ≢q]
+⇒⁅ p := p ≢q ⁆ ⟨ “Assignment” ⟩
+(p ≡ q₀) ∧ (q ≡ p₀)
+
+((p ≢ (p ≢ q)) ≡ q₀) ∧ ((p ≢ q) ≡ p₀)
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(((p ≢ q) ≡ q₀) ∧ (q ≡ p₀))[q ≔ p ≢ q]
+⇒⁅ q := p ≢ q ⁆ ⟨ “Assignment” ⟩
+— CalcCheck: Found “Assignment”
+— CalcCheck: ─ OK
+((p ≢ q) ≡ q₀) ∧ (q ≡ p₀)
+≡ ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+((p ≡ q₀) ∧ (q ≡ p₀))[p ≔ p ≢ q]
+⇒⁅ p := p ≢ q ⁆ ⟨ “Assignment” ⟩
+— CalcCheck: Found “Assignment”
+— CalcCheck: ─ OK
+(p ≡ q₀) ∧ (q ≡ p₀)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Check and Save
+
+Save
+
+

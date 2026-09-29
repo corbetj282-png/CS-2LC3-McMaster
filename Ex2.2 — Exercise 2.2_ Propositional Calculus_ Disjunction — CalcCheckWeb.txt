@@ -1,0 +1,273 @@
+Disjunction
+
+[1]
+
+Following LADM Section 3.4, disjunction _∨_ (“logical or”, enter “\lor”) is characterised using a
+number of axioms.
+This development is set in the context of the preceding sections, the material of which is preloaded here,
+in the shape in which it is presented in Exercise 2.1.
+
+[2]
+
+[3]
+
+[4]
+
+[5]
+
+[6]
+
+[7]
+
+Axiom (3.24) “Symmetry of ∨”: p ∨ q ≡ q ∨ p
+Axiom (3.24) “Symmetry of ∨”: p ∨ q ≡ q ∨ p
+Axiom (3.25) “Associativity of ∨”: (p ∨ q) ∨ r ≡ p Axiom (3.25) “Associativity of ∨”: (p ∨ q) ∨ r ≡ p
+∨ (q ∨ r)
+
+As usual, associativity and symmetry laws are used implicitly as soon as they have been introduced:
+
+Activate associativity property (3.25)
+Activate symmetry property (3.24)
+
+Activate associativity property (3.25)
+— CalcCheck: Found associativity of
+`_∨_`
+Activate symmetry property (3.24)
+— CalcCheck: Found symmetry of `_∨_`
+
+Three additional axioms finish the characterisation of disjunction and relate it with the operators seen in
+Exercise 2.5 and Homework 3:
+
+Axiom (3.26) “Idempotency of ∨”: p ∨ p ≡ p
+Axiom (3.26) “Idempotency of ∨”: p ∨ p ≡ p
+Axiom (3.27) “Distributivity of ∨ over ≡”: p ∨ Axiom (3.27) “Distributivity of ∨ over ≡”: p ∨ (q ≡ r) ≡
+(p ∨ q ≡ p ∨ r)
+Axiom (3.28) “Excluded middle” “LEM”: p ∨ ¬ p
+Axiom (3.28) “Excluded middle” “LEM”: p ∨ ¬ p
+
+Now it is quite straight-forward to prove some additional properties of disjunction:
+
+
+[8]
+
+
+Theorem (3.29) “Zero of ∨”: p ∨ true ≡ true
+Proof:
+p ∨ true
+≡⟨“Identity of ≡”⟩
+p ∨ (p ≡ p)
+≡⟨“Distributivity of ∨ over ≡”⟩
+p ∨ p ≡ p ∨ p
+≡⟨“Identity of ≡”⟩
+true ≡ true
+≡⟨“Identity of ≡”⟩
+true
+
+
+Theorem (3.29) “Zero of ∨”: p ∨ true ≡ true
+Proof:
+Calculation for expected goal `p ∨ true ≡ true`:
+p ∨ true
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+p ∨ (p ≡ p)
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of
+∨ over ≡”
+— CalcCheck: ─ OK
+p∨p≡p∨p
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true ≡ true
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[9]
+
+
+Theorem (3.30) “Identity of ∨”: p ∨ false ≡ p
+Proof:
+p ∨ false
+≡⟨“Definition of `false`”⟩
+p ∨ (¬ true)
+≡⟨“Identity of ≡”⟩
+p ∨ (¬ (p ≡ p))
+≡⟨“Commutativity of ¬ with ≡”⟩
+p ∨ (¬ p ≡ p)
+≡⟨“Distributivity of ∨ over ≡”⟩
+(p ∨ ¬ p) ≡ (p ∨ p)
+≡⟨“Excluded middle”⟩
+true ≡ (p ∨ p)
+≡⟨“Identity of ≡”⟩
+(p ∨ p)
+≡⟨“Idempotency of ∨”⟩
+p
+
+
+Theorem (3.30) “Identity of ∨”: p ∨ false ≡ p
+Proof:
+Calculation for expected goal `p ∨ false ≡ p`:
+p ∨ false
+≡ ⟨ “Definition of `false`” ⟩
+— CalcCheck: Found (3.8) “Definition of
+`false`”
+— CalcCheck: ─ OK
+p ∨ ¬ true
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+p ∨ ¬ (p ≡ p)
+≡ ⟨ “Commutativity of ¬ with ≡” ⟩
+— CalcCheck: Found (3.9) “Commutativity
+of ¬ with ≡”
+— CalcCheck: ─ OK
+p ∨ (¬ p ≡ p)
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of
+∨ over ≡”
+— CalcCheck: ─ OK
+p∨¬p≡p∨p
+≡ ⟨ “Excluded middle” ⟩
+— CalcCheck: Found (3.28) “Excluded
+middle”
+— CalcCheck: ─ OK
+true ≡ p ∨ p
+≡ ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+p∨p
+≡ ⟨ “Idempotency of ∨” ⟩
+— CalcCheck: Found (3.26) “Idempotency
+of ∨”
+— CalcCheck: ─ OK
+p
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[10]
+
+[11]
+
+[12]
+
+[13]
+
+
+Theorem (3.31) “Distributivity of ∨ over ∨”:
+Proof:
+p ∨ (q ∨ r)
+≡⟨“Idempotency of ∨”⟩
+(p ∨ q) ∨ (r ∨ p ∨ p)
+≡⟨“Idempotency of ∨”⟩
+(p ∨ q) ∨ (r ∨ p ∨ p ∨ p)
+≡⟨“Idempotency of ∨”⟩
+(p ∨ q) ∨ (r ∨ p)
+
+Theorem (3.31) “Distributivity of ∨ over ∨”: p ∨ (q ∨ r)
+≡ (p ∨ q) ∨ (p ∨ r)
+Proof:
+Calculation for expected goal `p ∨ (q ∨ r) ≡ (p ∨ q) ∨
+(p ∨ r)`:
+p ∨ (q ∨ r)
+≡ ⟨ “Idempotency of ∨” ⟩
+— CalcCheck: Found (3.26) “Idempotency of ∨”
+— CalcCheck: ─ OK
+(p ∨ q) ∨ (r ∨ (p ∨ p))
+≡ ⟨ “Idempotency of ∨” ⟩
+— CalcCheck: Found (3.26) “Idempotency of ∨”
+— CalcCheck: ─ OK
+(p ∨ q) ∨ (r ∨ (p ∨ (p ∨ p)))
+≡ ⟨ “Idempotency of ∨” ⟩
+— CalcCheck: Found (3.26) “Idempotency of ∨”
+— CalcCheck: ─ OK
+(p ∨ q) ∨ (r ∨ p)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem (3.32) is one of the few name-less theorems that is definitely worth remembering!
+
+Theorem (3.32): p ∨ q ≡ p ∨ ¬ q ≡ p
+Proof:
+p ∨ q ≡ p ∨ ¬ q
+≡⟨“Distributivity of ∨ over ≡”⟩
+p ∨ (q ≡ ¬ q)
+≡⟨“Definition of ¬ from ≡”⟩
+p ∨ (false)
+≡⟨“Identity of ∨”⟩
+p
+
+Theorem (3.32): p ∨ q ≡ (p ∨ ¬ q ≡ p)
+Proof:
+Calculation for expected goal `p ∨ q ≡ (p ∨ ¬ q ≡
+p)`:
+p∨q≡p∨¬q
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of
+∨ over ≡”
+— CalcCheck: ─ OK
+p ∨ (q ≡ ¬ q)
+≡ ⟨ “Definition of ¬ from ≡” ⟩
+— CalcCheck: Found (3.15) “Definition of ¬
+from ≡”
+— CalcCheck: ─ OK
+p ∨ false
+≡ ⟨ “Identity of ∨” ⟩
+— CalcCheck: Found (3.30) “Identity of ∨”
+— CalcCheck: ─ OK
+p
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Since the presence of “Distributivity of ∨ over ≡” is possibly surprising here, you may want to ask
+whether we also have distributivity of ≡ over ∨. You can investigate this by stating the putative law as in
+the calculation start below, and simplifying it to either true or an expression that is clearly not valid (that
+is, that clearly does not evaluate to true for all possible values of p, q, and r).
+
+
+[14]
+
+
+Calculation:
+p ≡ (q ∨ r) ≡ (p ≡ q) ∨ (p ≡ r)
+≡⟨“Distributivity of ∨ over ≡”⟩
+p ≡ (q ∨ r) ≡ (p ≡ q) ∨ p ≡ (p ≡ q) ∨ r
+≡⟨“Distributivity of ∨ over ≡”⟩
+p ≡ (q ∨ r) ≡ (p ∨ p ≡ q ∨ p) ≡ (p ∨ r ≡ q ∨
+≡⟨“Idempotency of ∨”⟩
+p ≡ (q ∨ r) ≡ (p ≡ q ∨ p) ≡ (p ∨ r ≡ q ∨ r)
+
+1,1
+
+Calculation:
+p ≡ (q ∨ r ≡ (p ≡ q) ∨ (p ≡ r))
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of
+∨ over ≡”
+— CalcCheck: ─ OK
+p ≡ (q ∨ r ≡ ((p ≡ q) ∨ p ≡ (p ≡ q) ∨ r))
+≡ ⟨ “Distributivity of ∨ over ≡” ⟩
+— CalcCheck: Found (3.27) “Distributivity of
+∨ over ≡”
+— CalcCheck: ─ OK
+p ≡ (q ∨ r ≡ ((p ∨ p ≡ q ∨ p) ≡ (p ∨ r ≡ q ∨ r)))
+≡ ⟨ “Idempotency of ∨” ⟩
+— CalcCheck: Found (3.26) “Idempotency of
+∨”
+— CalcCheck: ─ OK
+p ≡ (q ∨ r ≡ ((p ≡ q ∨ p) ≡ (p ∨ r ≡ q ∨ r)))
+— CalcCheck: All steps OK
+
+Check and Save
+
+
+Save
+
+

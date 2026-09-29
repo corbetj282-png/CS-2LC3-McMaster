@@ -1,0 +1,450 @@
+[1]
+
+Here we develop from scratch the theory of integers that is preloaded in Homework 2, and that you
+already worked on in Homework 1.
+This is that part of LADM’s “Theory of Integers” that only requires equational reasoning on the integers
+only, with no other logical symbols besides “=”, not even “≡”.
+
+[2]
+
+The first few properties involve only addition and multiplication.
+We introduce the infix operators for these operations with declarations that specify them as binary infix
+operators on type ℤ:
+
+[3]
+
+[4]
+
+[5]
+
+Declaration: _+_ : ℤ → ℤ → ℤ
+Declaration: _·_ : ℤ → ℤ → ℤ
+
+Declaration: _+_ : ℤ → (ℤ → ℤ)
+— CalcCheck: Operator _+_: Associating to the left;
+precedence 100
+Declaration: _·_ : ℤ → (ℤ → ℤ)
+— CalcCheck: Operator _·_: Associating to the left;
+precedence 110
+
+Axiom (15.1) (15.1a) “Associativity of +”: (
+Axiom (15.1) (15.1b) “Associativity of ·”: (
+Axiom (15.2) (15.2a) “Symmetry of +”: a + b
+Axiom (15.2) (15.2b) “Symmetry of ·”: a · b
+
+Axiom (15.1) (15.1a) “Associativity of +”: (a + b) + c
+= a + (b + c)
+Axiom (15.1) (15.1b) “Associativity of ·”: (a · b) · c =
+a · (b · c)
+Axiom (15.2) (15.2a) “Symmetry of +”: a + b = b + a
+Axiom (15.2) (15.2b) “Symmetry of ·”: a · b = b · a
+
+Unless mentioned otherwise, we follow the practice of LADM that once associativity and symmetry
+properties of an operator are available, their use does not have to be made explicit anymore. In
+CalcCheck, this is achieved using Activate … property instructions:
+
+
+[6]
+
+[7]
+
+
+Activate associativity property (15.1)
+— CalcCheck: Found associativity of
+`_+_`
+— CalcCheck: Found associativity of `_·_`
+Activate symmetry property (15.2)
+— CalcCheck: Found symmetry of `_+_`
+— CalcCheck: Found symmetry of `_·_`
+
+Activate associativity property (15.1)
+Activate symmetry property (15.2)
+
+LADM lists both identity laws, but after introducing symmetry, and long after starting to use symmetry
+properties implicitly.
+We could follow that, but since we already activated the symmetry above, explicitly listing both identity
+laws “0 + a = a” and “a + 0 = a” with the same name would only mean that everywhere one of these
+applies, both are found, and both would be tried successfully as non-last steps, which would only slow
+down proof checking.
+
+[8]
+
+[9]
+
+[10]
+
+[11]
+
+[12]
+
+Axiom (15.3) “Additive identity” “Identi
+Axiom (15.4) “Multiplicative identity” “
+Axiom (15.5) “Distributivity” “Distribut
+Axiom (15.9) “Zero of ·”: a · 0 = 0
+
+Axiom (15.3) “Additive identity” “Identity of +”: 0 + a = a
+Axiom (15.4) “Multiplicative identity” “Identity of ·”: 1 · a
+=a
+Axiom (15.5) “Distributivity” “Distributivity of · over +”: a
+· (b + c) = a · b + a · c
+Axiom (15.9) “Zero of ·”: a · 0 = 0
+
+Unary minus and binary subtraction are now added to the language:
+
+Declaration: -_ : ℤ → ℤ
+Declaration: _-_ : ℤ → ℤ → ℤ
+
+Axiom (15.13) “Unary minus”: a + (- a) = 0
+Axiom (15.14) “Subtraction”: a - b = a + (- b)
+
+Declaration: -_ : ℤ → ℤ
+— CalcCheck: Operator -_: Non-associating;
+precedence 130
+Declaration: _-_ : ℤ → (ℤ → ℤ)
+— CalcCheck: Operator _-_: Associating to the left;
+precedence 100
+
+Axiom (15.13) “Unary minus”: a + - a = 0
+Axiom (15.14) “Subtraction”: a - b = a + b
+
+For reference, the proof of the first theorem is presented in “Getting Started with CalcCheck”.
+Use of Fact or Evaluation is not supported here (and not necessary).
+
+
+[13]
+
+[14]
+
+
+Theorem (15.17) “Self-inverse of unary minus”:
+- (- a) = a
+Proof:
+- (- a)
+=⟨“Additive identity”⟩
+0 + (- (- a))
+=⟨“Unary minus”⟩
+a + (- a) + (-(- a))
+=⟨“Unary minus”⟩
+a + 0
+=⟨“Additive identity”⟩
+a
+
+Theorem (15.17) “Self-inverse of unary minus”: (- a) = a
+Proof:
+Calculation for expected goal `- (- a) = a`:
+- (- a)
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive
+identity”
+— CalcCheck: ─ OK
+0 + - (- a)
+= ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary
+minus”
+— CalcCheck: ─ OK
+(a + - a) + - (- a)
+= ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary
+minus”
+— CalcCheck: ─ OK
+a+0
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive
+identity”
+— CalcCheck: ─ OK
+a
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Prove the remaining theorems!
+In each case, you are allowed to use all preceding theorems. (Alt-p in a code cell pops up a list of the
+preceding material introduced in the current notebook. So you don’t need to scroll all the time to look up
+what has been done so far.)
+If you get stuck on one, you can still use it in your proofs for the theorems after it.
+
+[15]
+
+Theorem (15.18) “Fixpoint of unary minus”: - 0 = 0
+Proof:
+- 0
+=⟨ “Additive identity” ⟩
+0 + - 0
+=⟨ “Unary minus” ⟩
+0
+
+
+Theorem (15.18) “Fixpoint of unary minus”: - 0
+=0
+Proof:
+Calculation for expected goal `- 0 = 0`:
+-0
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive
+identity”
+— CalcCheck: ─ OK
+0+-0
+= ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary
+minus”
+— CalcCheck: ─ OK
+0
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[16]
+
+
+Theorem (15.19) “Distributivity of unary min Theorem (15.19) “Distributivity of unary minus over +”:
+- (a + b) = - a + - b
+- (a + b) = (- a) + (- b)
+Proof:
+Proof:
+Calculation for expected goal `- (a + b) = - a + - b`:
+- (a + b)
+- (a + b)
+=⟨ “Additive identity” ⟩
+= ⟨ “Additive identity” ⟩
+0 + - (a + b)
+— CalcCheck: Found (15.3) “Additive identity”
+=⟨ “Additive identity” ⟩
+— CalcCheck: ─ OK
+0 + 0 + - (a + b)
+0 + - (a + b)
+=⟨ “Unary minus” ⟩
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+(- a + a) + 0 + (- (a + b))
+— CalcCheck: ─ OK
+=⟨ “Unary minus” ⟩
+(0
++ 0) + - (a + b)
+(- a + a) + (- b + b) + (- (a + b))
+=
+⟨
+“Unary
+minus” ⟩
+=⟨ “Associativity of +” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+(- a + (- b) + a + b) + (- (a + b))
+— CalcCheck: ─ OK
+=⟨ “Subtraction” ⟩
+((- a + a) + 0) + - (a + b)
+(- a - b + a + b) + (- (a + b))
+= ⟨ “Unary minus” ⟩
+=⟨ “Associativity of +” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+(- a - b) + (a + b) + (- (a + b))
+— CalcCheck: ─ OK
+=⟨ “Unary minus” ⟩
+((- a + a) + (- b + b)) + - (a + b)
+( - a - b) + 0
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found (15.1a) “Associativity of +”
+=⟨ “Additive identity” ⟩
+— CalcCheck: OK (no change)
+( - a - b)
+— CalcCheck: ─ OK
+=⟨“Subtraction”⟩
+(((a + - b) + a) + b) + - (a + b)
+- a + (- b)
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+(((- a - b) + a) + b) + - (a + b)
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found (15.1a) “Associativity of +”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+((- a - b) + (a + b)) + - (a + b)
+= ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary minus”
+— CalcCheck: ─ OK
+(- a - b) + 0
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive identity”
+— CalcCheck: ─ OK
+-a-b
+= ⟨ “Subtraction” ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+-a+-b
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[17]
+
+
+Theorem (15.20): - a = (- 1) · a
+Proof:
+(- 1) · a
+=⟨ “Additive identity” ⟩
+0 + (- 1) · a
+=⟨ “Unary minus” ⟩
+-(1 · a) + 1 · a + (- 1) · a
+=⟨ “Multiplicative identity” ⟩
+(- a) + 1 · a + (- 1) · a
+=⟨ “Distributivity of · over +” ⟩
+(- a) + (1 + (- 1)) · a
+=⟨ “Unary minus” ⟩
+(- a) + 0 · a
+=⟨ “Zero of ·” ⟩
+(- a) + 0
+=⟨ “Additive identity” ⟩
+- a
+
+
+Theorem (15.20): - a = - 1 · a
+Proof:
+Calculation for expected goal `- a = - 1 · a`:
+-1·a
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive
+identity”
+— CalcCheck: ─ OK
+0+-1·a
+= ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary
+minus”
+— CalcCheck: ─ OK
+(- (1 · a) + 1 · a) + - 1 · a
+= ⟨ “Multiplicative identity” ⟩
+— CalcCheck: Found (15.4) “Multiplicative
+identity”
+— CalcCheck: ─ OK
+(- a + 1 · a) + - 1 · a
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity”
+— CalcCheck: ─ OK
+- a + (1 + - 1) · a
+= ⟨ “Unary minus” ⟩
+— CalcCheck: Found (15.13) “Unary
+minus”
+— CalcCheck: ─ OK
+-a+0·a
+= ⟨ “Zero of ·” ⟩
+— CalcCheck: Found (15.9) “Zero of ·”
+— CalcCheck: ─ OK
+-a+0
+= ⟨ “Additive identity” ⟩
+— CalcCheck: Found (15.3) “Additive
+identity”
+— CalcCheck: ─ OK
+-a
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[18]
+
+[19]
+
+
+Theorem (15.21): (- a) · b = a · (- b)
+Proof:
+(- a) · b
+=⟨ “” ⟩
+((- 1) · a) · b
+=⟨ “Associativity of ·” ⟩
+a · ((- 1) · b)
+=⟨ “Negation as multiplication” ⟩
+a · (- b)
+
+Theorem (15.22): a · (- b) = - (a · b)
+Proof:
+
+Theorem (15.21): - a · b = a · - b
+Proof:
+Calculation for expected goal `- a · b = a · - b`:
+-a·b
+=⟨
+— CalcCheck: Parse error (inside offset 4):
+(line 4, column 7):
+unexpected "”" ⟩
+— CalcCheck: Could not justify this step!
+(- 1 · a) · b
+= ⟨ “Associativity of ·” ⟩
+— CalcCheck: Found (15.1b) “Associativity of ·”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+a · (- 1 · b)
+= ⟨ “Negation as multiplication” ⟩
+— CalcCheck: Could not resolve theorem reference
+“Negation as multiplication”!
+— CalcCheck: Could not justify this step!
+a·-b
+— CalcCheck: 2 out of 3 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem (15.22): a · - b = - (a · b)
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[20]
+
+Theorem (15.23): (- a) · (- b) = a · b
+Proof:
+
+Theorem (15.23): - a · - b = a · b
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[21]
+
+Theorem (15.24) “Right-identity of -”:
+a - 0 = a
+Proof:
+
+Theorem (15.24) “Right-identity of -”: a - 0
+=a
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[22]
+
+Theorem (15.25): (a - b) + (c - d) = (a + c) - (b + d Theorem (15.25): (a - b) + (c - d) = (a + c) - (b
++ d)
+Proof:
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[23]
+
+Theorem (15.26): (a - b) - (c - d) = (a + d) - (b + c Theorem (15.26): (a - b) - (c - d) = (a + d) - (b
++ c)
+Proof:
+Proof:
+— CalcCheck: Proof: No proof there!
+
+
+[24]
+
+
+Theorem (15.27): (a - b) · (c - d) = (a · c + b
+Proof:
+
+Theorem (15.27): (a - b) · (c - d) = (a · c + b · d) - (a
+· d + b · c)
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[25]
+
+1,1
+
+Theorem (15.29) “Distributivity of · over -”:
+(a - b) · c = a · c - b · c
+Proof:
+
+Theorem (15.29) “Distributivity of · over -”: (a - b) · c
+=a·c-b·c
+Proof:
+— CalcCheck: Proof: No proof there!
+
+Check and Save
+
+
+Save
+
+

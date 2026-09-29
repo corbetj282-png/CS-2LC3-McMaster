@@ -1,0 +1,867 @@
+[1]
+
+Preloaded here are
+propositional and predicate logic,
+set theory as presented in Reference Notebook “Set Theory” (with activated symmetry, associativity, and transitivity properties) and Ex7.2,
+relation operations as presented in H15.2 only.
+Up to four hint items are allowed per hint.
+
+
+[2]
+
+Theorem “Converse of {}”:
+{} ˘
+Proof:
+Using “Relation extensionality”:
+For any `a`, `b`:
+a ⦗ {} ˘ ⦘ b ≡ a ⦗ {} ⦘ b
+=⟨ “Empty relation” ⟩
+a ⦗ {} ˘ ⦘ b ≡ false
+=⟨ “Relation converse”⟩
+b ⦗ {} ⦘ a ≡ false
+=⟨ “Empty relation” ⟩
+false ≡ false
+=⟨ “Identity of ≡” ⟩
+true
+
+
+=
+
+{}
+
+Theorem “Converse of {}”: {} ˘ = {}
+Proof:
+Using “Relation extensionality”:
+— CalcCheck: Found “Relation extensionality”
+Subproof establishing `(∀ a • (∀ b • a ⦗ {} ˘ ⦘ b ≡ a ⦗ {} ⦘ b )
+)`:
+For any ` a`:
+For any ` b`:
+Calculation establishing `a ⦗ {} ˘ ⦘ b ≡ a ⦗ {} ⦘ b`:
+a ⦗ {} ˘ ⦘ b ≡ a ⦗ {} ⦘ b
+= ⟨ “Empty relation” ⟩
+— CalcCheck: Found “Empty relation”
+— CalcCheck: ─ OK
+a ⦗ {} ˘ ⦘ b ≡ false
+= ⟨ “Relation converse” ⟩
+— CalcCheck: Found “Relation converse”
+— CalcCheck: ─ OK
+b ⦗ {} ⦘ a ≡ false
+= ⟨ “Empty relation” ⟩
+— CalcCheck: Found “Empty relation”
+— CalcCheck: ─ OK
+false ≡ false
+= ⟨ “Identity of ≡” ⟩
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+
+
+[3]
+
+
+Theorem “Converse of ×”:
+(A × B) ˘
+= B × A
+Proof:
+Using “Relation extensionality”:
+For any `x`, `y`:
+x ⦗ (A × B) ˘ ⦘ y ≡ x ⦗ (B × A) ⦘ y
+=⟨ “Relation converse” ⟩
+y ⦗ (A × B) ⦘ x ≡ x ⦗ (B × A) ⦘ y
+=⟨ “Relationship via ×” , “Symmetry of ∧” , “Relationship
+true
+
+
+Theorem “Converse of ×”: (A × B) ˘ = B × A
+— CalcCheck: Metavariables: A = A〖〗, B = B〖〗
+Proof:
+Using “Relation extensionality”:
+— CalcCheck: Found “Relation extensionality”
+Subproof establishing `(∀ x • (∀ y • x ⦗ (A × B) ˘ ⦘ y ≡ x ⦗ B × A ⦘ y ) )`:
+For any ` x`:
+For any ` y`:
+Calculation establishing `x ⦗ (A × B) ˘ ⦘ y ≡ x ⦗ B × A ⦘ y`:
+x ⦗ (A × B) ˘ ⦘ y ≡ x ⦗ B × A ⦘ y
+= ⟨ “Relation converse” ⟩
+— CalcCheck: Found “Relation converse”
+— CalcCheck: ─ OK
+y⦗A× B ⦘ x≡ x⦗ B ×A⦘ y
+= ⟨ “Relationship via ×”, “Symmetry of ∧”, “Relationship via ×”,
+“Identity of ≡” ⟩
+— CalcCheck: Found “Relationship via ×”
+— CalcCheck: Found (3.36) “Symmetry of ∧”
+— CalcCheck: Found (3.3) “Identity of ≡”
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+
+
+[4]
+
+[5]
+
+
+Theorem “Relationship chaining”: a ⦗ R ⦘ b ⦗ S ⦘ c ⇒ a ⦗ R ⨾ S ⦘ c
+Proof:
+Assuming `a ⦗ R ⦘ b ∧ b ⦗ S ⦘ c`:
+a ⦗ R ⨾ S ⦘ c
+=⟨ “Relation composition”⟩
+∃ b • a ⦗ R ⦘ b ∧ b ⦗ S ⦘ c
+⇐⟨ “∃-Introduction” ⟩
+(a ⦗ R ⦘ b ∧ b ⦗ S ⦘ c)[b ≔ b]
+=⟨ substitution ⟩
+(a ⦗ R ⦘ b ∧ b ⦗ S ⦘ c)
+=⟨ Assumption `a ⦗ R ⦘ b ∧ b ⦗ S ⦘ c` ⟩
+true
+
+Activate transitivity property “Relationship chaining”
+
+
+Theorem “Relationship chaining”: a ⦗ R ⦘ b ⦗ S ⦘ c ⇒ a ⦗ R ⨾ S ⦘ c
+— CalcCheck: Metavariables: R = R〖〗, S = S〖〗
+Proof:
+Assuming `a ⦗ R ⦘ b ∧ b ⦗ S ⦘ c`:
+— CalcCheck: Assumption matches goal
+Calculation for expected goal `a ⦗ R ⨾ S ⦘ c`:
+a⦗R⨾S⦘c
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+(∃ b • a ⦗ R ⦘ b ∧ b ⦗ S ⦘ c )
+⇐ ⟨ “∃-Introduction” ⟩
+— CalcCheck: Found (9.28) “∃-Introduction”, (9.28.1) “∃Introduction”
+— CalcCheck: ─ OK
+(a ⦗ R ⦘ b ∧ b ⦗ S ⦘ c)[b ≔ b]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+a⦗R⦘b∧b⦗S⦘c
+= ⟨ Assumption `a ⦗ R ⦘ b ∧ b ⦗ S ⦘ c` ⟩
+— CalcCheck: Found assumption `a ⦗ R ⦘ b ∧ b ⦗ S ⦘ c`
+— CalcCheck: ─ OK
+true
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Activate transitivity property “Relationship chaining”
+— CalcCheck: Found transitivity combining ⦗R⦘ with ⦗S⦘ to ⦗R ⨾
+S⦘
+
+
+[6]
+
+
+Theorem “Associativity of ⨾”: (Q ⨾ R) ⨾ S = Q ⨾ (R ⨾ S)
+Proof:
+Using “Relation extensionality”:
+For any `a`, `b`:
+a ⦗ ((Q ⨾ R) ⨾ S) ⦘ b
+=⟨ “Relation composition” ⟩
+∃ c • (a ⦗ (Q ⨾ R) ⦘ c ∧ c ⦗ S ⦘ b)
+=⟨ “Relation composition” ⟩
+∃ c • ((∃ d • a ⦗ Q ⦘ d ∧ d ⦗ R ⦘ c) ∧ c ⦗ S ⦘ b)
+=⟨ “Distributivity of ∧ over ∃” ⟩
+∃ c • ∃ d • (a ⦗ Q ⦘ d ∧ d ⦗ R ⦘ c ∧ c ⦗ S ⦘ b)
+=⟨ “Interchange of dummies for ∃” ⟩
+∃ d • ∃ c • (a ⦗ Q ⦘ d ∧ d ⦗ R ⦘ c ∧ c ⦗ S ⦘ b)
+=⟨ “Distributivity of ∧ over ∃” ⟩
+∃ d • (a ⦗ Q ⦘ d ∧ (∃ c • d ⦗ R ⦘ c ∧ c ⦗ S ⦘ b))
+=⟨ “Relation composition” ⟩
+∃ d • (a ⦗ Q ⦘ d ∧ d ⦗ (R ⨾ S) ⦘ b)
+=⟨ “Relation composition” ⟩
+a ⦗ (Q ⨾ (R ⨾ S)) ⦘ b
+
+
+Theorem “Associativity of ⨾”: (Q ⨾ R) ⨾ S = Q ⨾ (R ⨾ S)
+— CalcCheck: Metavariables: Q = Q〖〗, R = R〖〗, S = S〖〗
+Proof:
+Using “Relation extensionality”:
+— CalcCheck: Found “Relation extensionality”
+Subproof establishing `(∀ a • (∀ b • (a ⦗ (Q ⨾ R) ⨾ S ⦘ b) = (a ⦗ Q ⨾ (R
+⨾ S) ⦘ b) ) )`:
+For any ` a`:
+For any ` b`:
+Calculation establishing `(a ⦗ (Q ⨾ R) ⨾ S ⦘ b) = (a ⦗ Q ⨾ (R ⨾
+S) ⦘ b)`:
+a ⦗ (Q ⨾ R) ⨾ S ⦘ b
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+(∃ c • a ⦗ Q ⨾ R ⦘ c ∧ c ⦗ S ⦘ b )
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+(∃ c • (∃ d • a ⦗ Q ⦘ d ∧ d ⦗ R ⦘ c ) ∧ c ⦗ S ⦘ b )
+= ⟨ “Distributivity of ∧ over ∃” ⟩
+— CalcCheck: Found (9.21) “Distributivity of ∧ over ∃”
+— CalcCheck: ─ OK
+(∃ c • (∃ d • a ⦗ Q ⦘ d ∧ (d ⦗ R ⦘ c ∧ c ⦗ S ⦘ b) ) )
+= ⟨ “Interchange of dummies for ∃” ⟩
+— CalcCheck: Found (8.19) “Interchange of dummies
+for ∃”
+— CalcCheck: ─ OK
+(∃ d • (∃ c • a ⦗ Q ⦘ d ∧ (d ⦗ R ⦘ c ∧ c ⦗ S ⦘ b) ) )
+= ⟨ “Distributivity of ∧ over ∃” ⟩
+— CalcCheck: Found (9.21) “Distributivity of ∧ over ∃”
+— CalcCheck: ─ OK
+(∃ d • a ⦗ Q ⦘ d ∧ (∃ c • d ⦗ R ⦘ c ∧ c ⦗ S ⦘ b ) )
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+(∃ d • a ⦗ Q ⦘ d ∧ d ⦗ R ⨾ S ⦘ b )
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+a ⦗ Q ⨾ (R ⨾ S) ⦘ b
+— CalcCheck: All steps OK
+
+
+[7]
+
+[8]
+
+[9]
+
+
+Activate associativity property “Associativity of ⨾”
+
+Activate associativity property “Associativity of ⨾”
+— CalcCheck: Found associativity of `_⨾_`
+
+The fact that “Relationship chaining” is activated as a transitivity property (together with the activated associativity of ⨾) makes it possible to use
+⦗ R ⦘ as a calculation operator:
+
+Theorem “Co-difunctionality” “Hesitation”:
+R ⊆ R ⨾ R ˘ ⨾ R
+Proof:
+Using “Relation inclusion”:
+For any `a`, `b`:
+Assuming (1) `a ⦗ R ⦘ b`:
+a
+⦗ R ⦘
+⟨ assumption `a ⦗ R ⦘ b` ⟩
+b
+⦗ R ˘ ⦘ ⟨ assumption `a ⦗ R ⦘ b` with “Relation converse” ⟩
+a
+⦗ R ⦘
+⟨ assumption `a ⦗ R ⦘ b` ⟩
+b
+
+
+Theorem “Co-difunctionality” “Hesitation”: R ⊆ R ⨾ (R ˘ ⨾ R)
+— CalcCheck: Metavariables: R = R〖〗
+Proof:
+Using “Relation inclusion”:
+— CalcCheck: Found “Relation inclusion”
+Subproof establishing `(∀ a • (∀ b • a ⦗ R ⦘ b ⇒ a ⦗ (R ⨾ R ˘) ⨾ R
+⦘ b ) )`:
+For any ` a`:
+For any ` b`:
+Assuming (1) `a ⦗ R ⦘ b`:
+Calculation establishing `a ⦗ (R ⨾ R ˘) ⨾ R ⦘ b`:
+a
+⦗ R ⦘ ⟨ Assumption `a ⦗ R ⦘ b` ⟩
+— CalcCheck: Found assumption `a ⦗ R ⦘ b`
+— CalcCheck: A cycle of length 2 begins here.
+— CalcCheck: ─ OK
+b
+⦗ R ˘ ⦘ ⟨ Assumption `a ⦗ R ⦘ b` with “Relation
+converse” ⟩
+— CalcCheck: Found assumption `a ⦗ R ⦘ b`
+— CalcCheck: Found “Relation converse”
+— CalcCheck: A cycle of length 2 begins here.
+— CalcCheck: ─ OK
+a
+⦗ R ⦘ ⟨ Assumption `a ⦗ R ⦘ b` ⟩
+— CalcCheck: Found assumption `a ⦗ R ⦘ b`
+— CalcCheck: ─ OK
+b
+— CalcCheck: All steps OK
+
+
+[10]
+
+
+Theorem “Distributivity of ⨾ over ∪”: (Q ∪ R) ⨾ S = Q ⨾ S ∪ R Theorem “Distributivity of ⨾ over ∪”: (Q ∪ R) ⨾ S = Q ⨾ S ∪ R ⨾ S
+— CalcCheck: Metavariables: Q = Q〖〗, R = R〖〗, S = S〖〗
+Proof:
+Proof:
+Using “Relation extensionality”:
+Using “Relation extensionality”:
+For any `a`, `b`:
+— CalcCheck: Found “Relation extensionality”
+a ⦗ ((Q ∪ R) ⨾ S) ⦘ b
+Subproof establishing `(∀ a • (∀ b • (a ⦗ (Q ∪ R) ⨾ S ⦘ b) = (a ⦗ Q ⨾ S ∪
+= ⟨ “Relation composition” ⟩
+R ⨾ S ⦘ b) ) )`:
+∃ c • (a ⦗ (Q ∪ R) ⦘ c ∧ c ⦗ S ⦘ b)
+For any ` a`:
+= ⟨ “Relation union” ⟩
+For any ` b`:
+∃ c • ((a ⦗ Q ⦘ c ∨ a ⦗ R ⦘ c) ∧ c ⦗ S ⦘ b)
+Calculation establishing `(a ⦗ (Q ∪ R) ⨾ S ⦘ b) = (a ⦗ Q ⨾ S ∪ R
+= ⟨ “Distributivity of ∧ over ∨” ⟩
+⨾ S ⦘ b)`:
+(∃ c • ((a ⦗ Q ⦘ c ∧ c ⦗ S ⦘ b) ∨ (a ⦗ R ⦘ c ∧ c ⦗ S ⦘ b)))
+a ⦗ (Q ∪ R) ⨾ S ⦘ b
+= ⟨ “Distributivity of ∃ over ∨” ⟩
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+(∃ c • (a ⦗ Q ⦘ c ∧ c ⦗ S ⦘ b)) ∨ (∃ c • (a ⦗ R ⦘ c ∧ c ⦗ S
+— CalcCheck: ─ OK
+= ⟨ “Relation composition” , “Relation union” ⟩
+(∃
+c• a⦗Q ∪R⦘c∧c⦗S⦘b)
+((a ⦗ ((Q ⨾ S) ∪ (R ⨾ S)) ⦘ b))
+= ⟨ “Relation union” ⟩
+— CalcCheck: Found “Relation union”
+— CalcCheck: ─ OK
+(∃ c • (a ⦗ Q ⦘ c ∨ a ⦗ R ⦘ c) ∧ c ⦗ S ⦘ b )
+= ⟨ “Distributivity of ∧ over ∨” ⟩
+— CalcCheck: Found (3.46) “Distributivity of ∧ over ∨”
+— CalcCheck: ─ OK
+(∃ c • (a ⦗ Q ⦘ c ∧ c ⦗ S ⦘ b) ∨ (a ⦗ R ⦘ c ∧ c ⦗ S ⦘ b) )
+= ⟨ “Distributivity of ∃ over ∨” ⟩
+— CalcCheck: Found (8.15) “Distributivity of ∃ over ∨”
+— CalcCheck: ─ OK
+(∃ c • a ⦗ Q ⦘ c ∧ c ⦗ S ⦘ b ) ∨ (∃ c • a ⦗ R ⦘ c ∧ c ⦗ S ⦘ b )
+= ⟨ “Relation composition”, “Relation union” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: Found “Relation union”
+— CalcCheck: ─ OK
+a⦗Q ⨾S∪R⨾S⦘b
+— CalcCheck: All steps OK
+
+
+[11]
+
+
+Theorem “Sub-distributivity of ⨾ over ∩”: (Q ∩ R) ⨾ S ⊆ Theorem “Sub-distributivity of ⨾ over ∩”: (Q ∩ R) ⨾ S ⊆ Q ⨾ S ∩ R ⨾ S
+— CalcCheck: Metavariables: Q = Q〖〗, R = R〖〗, S = S〖〗
+Proof:
+Proof:
+Using “Relation inclusion”:
+Using “Relation inclusion”:
+For any `a`, `b`:
+— CalcCheck: Found “Relation inclusion”
+a ⦗ ((Q ∩ R) ⨾ S) ⦘ b
+Subproof establishing `(∀ a • (∀ b • a ⦗ (Q ∩ R) ⨾ S ⦘ b ⇒ a ⦗ Q ⨾ S ∩ R ⨾ S ⦘ b ) )`:
+= ⟨ “Relation composition” ⟩
+For any ` a`:
+∃ c • (a ⦗ (Q ∩ R) ⦘ c ∧ c ⦗ S ⦘ b)
+For any ` b`:
+= ⟨ “Relation intersection” , “Distributivity of
+Calculation establishing `a ⦗ (Q ∩ R) ⨾ S ⦘ b ⇒ a ⦗ Q ⨾ S ∩ R ⨾ S ⦘ b`:
+(∃ c • ((a ⦗ Q ⦘ c ∧ c ⦗ S ⦘ b) ∧ (a ⦗ R ⦘ c ∧ c
+a ⦗ (Q ∩ R) ⨾ S ⦘ b
+⇒ ⟨ “Monotonicity of ∧” with “Body weakening for
+= ⟨ “Relation composition” ⟩
+(∃ c • ((a ⦗ Q ⦘ c ∧ c ⦗ S ⦘ b))) ∧ (∃ c • ((a ⦗
+— CalcCheck: Found “Relation composition”
+= ⟨ “Relation composition” , “Relation intersecti
+— CalcCheck: ─ OK
+(∃ c • a ⦗ Q ∩ R ⦘ c ∧ c ⦗ S ⦘ b )
+a ⦗ (Q ⨾ S ∩ R ⨾ S) ⦘ b
+= ⟨ “Relation intersection”, “Distributivity of ∧ over ∧”, “Idempotency of ∧” ⟩
+— CalcCheck: Found “Relation intersection”
+— CalcCheck: Found (3.41) “Distributivity of ∧ over ∧”
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+(∃ c • (a ⦗ Q ⦘ c ∧ c ⦗ S ⦘ b) ∧ (a ⦗ R ⦘ c ∧ c ⦗ S ⦘ b) ) ∧ (∃ c • (a ⦗ Q ⦘ c ∧
+c ⦗ S ⦘ b) ∧ (a ⦗ R ⦘ c ∧ c ⦗ S ⦘ b) )
+⇒ ⟨ “Monotonicity of ∧” with “Body weakening for ∃” ⟩
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Left-monotonicity of
+∧”
+— CalcCheck: Found (9.26) “Body weakening for ∃”, (9.26.1) “Body
+weakening for ∃”
+— CalcCheck: ─ OK
+(∃ c • a ⦗ Q ⦘ c ∧ c ⦗ S ⦘ b ) ∧ (∃ c • a ⦗ R ⦘ c ∧ c ⦗ S ⦘ b )
+= ⟨ “Relation composition”, “Relation intersection” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: Found “Relation intersection”
+— CalcCheck: ─ OK
+a⦗Q ⨾S∩R⨾S⦘b
+— CalcCheck: All steps OK
+
+
+[12]
+
+
+Theorem “Monotonicity of ⨾”: Q ⊆ R ⇒ Q ⨾ S ⊆ R ⨾ S
+Theorem “Monotonicity of ⨾”: Q ⊆ R ⇒ Q ⨾ S ⊆ R ⨾ S
+— CalcCheck: Metavariables: Q = Q〖〗, R = R〖〗, S = S〖〗
+Proof:
+Proof:
+Assuming `Q ⊆ R` and using with “Relation inclusion”:
+Assuming `Q ⊆ R` and using with “Relation inclusion”
+Using “Relation inclusion”:
+— CalcCheck: Found “Relation inclusion”:
+For any `a`, `b`:
+— CalcCheck: Assumption matches goal
+a ⦗ (Q ⨾ S) ⦘ b
+Using “Relation inclusion”:
+=⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation inclusion”
+∃ c • (a ⦗ Q ⦘ c ∧ c ⦗ S ⦘ b)
+Subproof establishing `(∀ a • (∀ b • a ⦗ Q ⨾ S ⦘ b ⇒ a ⦗ R ⨾ S ⦘ b ) )`:
+⇒⟨ “Monotonicity of ∃” with “Monotonicity of ∧” with As
+For any ` a`:
+∃ c • (a ⦗ R ⦘ c ∧ c ⦗ S ⦘ b)
+For any ` b`:
+Calculation establishing `a ⦗ Q ⨾ S ⦘ b ⇒ a ⦗ R ⨾ S ⦘ b`:
+=⟨ “Relation composition” ⟩
+a⦗Q⨾S⦘b
+a ⦗ (R ⨾ S) ⦘ b
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+(∃ c • a ⦗ Q ⦘ c ∧ c ⦗ S ⦘ b )
+⇒ ⟨ “Monotonicity of ∃” with “Monotonicity of ∧” with
+Assumption `Q ⊆ R` ⟩
+— CalcCheck: Found (9.27) “Monotonicity of ∃”
+— CalcCheck: Found “Monotonicity of ∧”, (4.3) “Leftmonotonicity of ∧”
+— CalcCheck: Found assumption `Q ⊆ R`
+— CalcCheck: ─ OK
+(∃ c • a ⦗ R ⦘ c ∧ c ⦗ S ⦘ b )
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+a⦗R⨾S⦘b
+— CalcCheck: All steps OK
+
+
+[13]
+
+
+Theorem “Modal rule”: Q ⨾ R ∩ S ⊆ Q ⨾ (R ∩ Q ˘ ⨾ S)
+— CalcCheck: Metavariables: Q = Q〖〗, R = R〖〗, S = S〖〗
+Proof:
+Using “Relation inclusion”:
+— CalcCheck: Found “Relation inclusion”
+Subproof for `(∀ x • (∀ y • x ⦗ Q ⨾ R ∩ S ⦘ y ⇒ x ⦗ Q ⨾ (R ∩ Q ˘ ⨾ S) ⦘ y ) )`:
+For any ` x`:
+For any ` y`:
+Calculation for expected goal `x ⦗ Q ⨾ R ∩ S ⦘ y ⇒ x ⦗ Q ⨾ (R ∩ Q ˘ ⨾ S) ⦘
+y`:
+x⦗Q ⨾ R∩S ⦘y
+= ⟨ “Relation intersection” ⟩
+— CalcCheck: Found “Relation intersection”
+— CalcCheck: ─ OK
+x⦗Q ⨾ R⦘y∧x⦗S ⦘y
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+(∃ z • x ⦗ Q ⦘ z ∧ z ⦗ R ⦘ y ) ∧ x ⦗ S ⦘ y
+= ⟨ “Distributivity of ∧ over ∃” ⟩
+— CalcCheck: Found (9.21) “Distributivity of ∧ over ∃”
+— CalcCheck: ─ OK
+(∃ z • x ⦗ Q ⦘ z ∧ (z ⦗ R ⦘ y ∧ x ⦗ S ⦘ y) )
+= ⟨ “Idempotency of ∧” ⟩
+— CalcCheck: Found (3.38) “Idempotency of ∧”
+— CalcCheck: ─ OK
+(∃ z • x ⦗ Q ⦘ z ∧ (x ⦗ Q ⦘ z ∧ (z ⦗ R ⦘ y ∧ x ⦗ S ⦘ y)) )
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(∃ z • (x ⦗ Q ⦘ z ∧ (t ⦗ Q ⦘ z ∧ (z ⦗ R ⦘ y ∧ t ⦗ S ⦘ y)))[t ≔ x] )
+⇒ ⟨ “Monotonicity of ∃” with “∃-Introduction” ⟩
+— CalcCheck: Found (9.27) “Monotonicity of ∃”
+— CalcCheck: Found (9.28) “∃-Introduction”, (9.28.1) “∃Introduction”
+— CalcCheck: ─ OK
+(∃ z • (∃ t • x ⦗ Q ⦘ z ∧ (t ⦗ Q ⦘ z ∧ (z ⦗ R ⦘ y ∧ t ⦗ S ⦘ y)) ) )
+= ⟨ “Relation converse” ⟩
+— CalcCheck: Found “Relation converse”
+— CalcCheck: ─ OK
+(∃ z • (∃ t • x ⦗ Q ⦘ z ∧ (z ⦗ R ⦘ y ∧ (z ⦗ Q ˘ ⦘ t ∧ t ⦗ S ⦘ y)) ) )
+= ⟨ “Distributivity of ∧ over ∃”, “Distributivity of ∧ over ∃”, “Relation
+composition”, “Relation intersection” ⟩
+
+
+Theorem “Modal rule”:
+(Q ⨾ R) ∩ S ⊆ Q ⨾ (R ∩ Q ˘ ⨾ S)
+Proof:
+Using “Relation inclusion”:
+Subproof for `∀ x • (∀ y • x ⦗ (Q ⨾ R) ∩ S ⦘ y ⇒ x
+For any `x`, `y`:
+x ⦗ (Q ⨾ R) ∩ S ⦘ y
+=⟨ “Relation intersection” ⟩
+x ⦗ Q ⨾ R ⦘ y ∧ x ⦗ S ⦘ y
+=⟨ “Relation composition” ⟩
+(∃ z • x ⦗ Q ⦘ z ∧ z ⦗ R ⦘ y) ∧ x ⦗ S ⦘ y
+=⟨ “Distributivity of ∧ over ∃” ⟩
+∃ z • (x ⦗ Q ⦘ z ∧ z ⦗ R ⦘ y ∧ x ⦗ S ⦘ y)
+=⟨ “Idempotency of ∧” ⟩
+∃ z • x ⦗ Q ⦘ z ∧ x ⦗ Q ⦘ z ∧ z ⦗ R ⦘ y ∧ x ⦗ S
+=⟨ Substitution ⟩
+∃ z • (x ⦗ Q ⦘ z ∧ t ⦗ Q ⦘ z ∧ z ⦗ R ⦘ y ∧ t ⦗
+⇒⟨ “Monotonicity of ∃” with “∃-Introduction” ⟩
+∃ z • ∃ t • (x ⦗ Q ⦘ z ∧ t ⦗ Q ⦘ z ∧ z ⦗ R ⦘ y
+=⟨ “Relation converse” ⟩
+∃ z • ∃ t • (x ⦗ Q ⦘ z ∧ z ⦗ R ⦘ y ∧ z ⦗ Q ˘ ⦘
+=⟨ “Distributivity of ∧ over ∃” , “Distributivi
+∃ z • x ⦗ Q ⦘ z ∧ z ⦗ R ∩ Q ˘ ⨾ S ⦘ y
+=⟨ “Relation composition” ⟩
+x ⦗ (Q ⨾ (R ∩ Q ˘ ⨾ S)) ⦘ y
+
+
+— CalcCheck: Found (9.21) “Distributivity of ∧ over ∃”
+— CalcCheck: Found “Relation composition”
+— CalcCheck: Found “Relation intersection”
+— CalcCheck: ─ OK
+(∃ z • x ⦗ Q ⦘ z ∧ z ⦗ R ∩ Q ˘ ⨾ S ⦘ y )
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+x ⦗ Q ⨾ (R ∩ Q ˘ ⨾ S) ⦘ y
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+[14]
+
+
+Theorem “Dedekind rule”: Q ⨾ R ∩ S ⊆ (Q ∩ S ⨾ R ˘) ⨾ (R ∩ Q ˘ ⨾ S)
+— CalcCheck: Metavariables: Q = Q〖〗, R = R〖〗, S = S〖〗
+Proof:
+Using “Relation inclusion”:
+— CalcCheck: Found “Relation inclusion”
+Subproof for `(∀ x • (∀ y • x ⦗ Q ⨾ R ∩ S ⦘ y ⇒ x ⦗ (Q ∩ S ⨾ R ˘) ⨾ (R ∩ Q ˘ ⨾ S) ⦘ y ) )`:
+For any ` x`:
+For any ` y`:
+Calculation for expected goal `x ⦗ Q ⨾ R ∩ S ⦘ y ⇒ x ⦗ (Q ∩ S ⨾ R ˘) ⨾ (R ∩ Q ˘ ⨾ S) ⦘ y`:
+x⦗Q ⨾ R∩S ⦘y
+= ⟨ “Relation intersection” ⟩
+— CalcCheck: Found “Relation intersection”
+— CalcCheck: ─ OK
+x⦗Q ⨾ R⦘y∧x⦗S ⦘y
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: Due to parse error in the expression below, this calculation step cannot be checked.
+⟪ Parse error: (line 11, column 52):
+unexpected end of input
+expecting "#_", "+_", "-_", "_#_", "_*", "_+_", "_-_", "_/_", "_<_", "_=_", "_>_", "__", "_|_", "_²", "_³", "_·_", "_¹", "_×_", "_˘", "_⁰",
+"_⁴", "_⁵", "_⁶", "_⁷", "_⁸", "_⁹", "_⁺", "_⁻", "_⁼", "_↑_", "_→_", "_↓_", "_↔_", "_⇍_", "_⇏_", "_⇐_", "_⇒_", "_∈_", "_∉_", "_∋_", "_∌_", "_∘_",
+"_∧_", "_∨_", "_∩_", "_∪_", "_∷_", "_≠_", "_≡_", "_≢_", "_≤_", "_≥_", "_≮_", "_≯_", "_≰_", "_≱_", "_⊂_", "_⊃_", "_⊄_", "_⊅_", "_⊆_", "_⊇_",
+"_⊈_", "_⊉_", "_⊍_", "_⊓_", "_⊔_", "_⊕_", "_⊖_", "_⊗_", "_⊛_", "_⋯_", "_⌢_", "_➝_", "_➩_", "_⦗_⦘_", "_⨾_", "_／_", "_＼_", "id_", "~_",
+"¬_", "¶_", "†_", "‡_", "ℙ_", "∼_", "⌜_⌝", "⌞_⌟", white space, 𝕀, 𝔹, 𝐔, ⌞, ⌜, true, swap-×, snd, set, fst, false, Type, Ran, Dom, "⟅", «BigOp», λ,
+ℿ, «integer», «char», «string», "⟨", "❰", "⦉", "【", «variable», "(", "（", "{", ⁼, ⁻, ⁺, ⁹, ⁸, ⁷, ⁶, ⁵, ⁴, ⁰, ˘, ¹, ³, ², *, end of input, ·, /, ＼, ／, ⨾, ➩, ➝, ⊛,
+⊗, ⊖, ⊕, ⊍, ∪, ∩, ∘, ×, -, +, ↔, →, ⊔, ⊓, ↓, ↑, ⋯, #, ⌢, ∷, ⦗, ⊉, ⊈, ⊇, ⊆, ⊅, ⊄, ⊃, ⊂, ≱, ≰, ≯, ≮, ≥, ≤, ≠, ∌, ∋, ∉, ∈, |, >, =, <, ∨, ∧, ⇒,
+⇐, ⇏, ⇍, ≢, ≡, ":", or ⦘
+⟫
+= ⟨ “Distributivity of ∧ over ∃” ⟩
+— CalcCheck: Found (9.21) “Distributivity of ∧ over ∃”
+— CalcCheck: Due to parse errors in the expressions above and below, this calculation step cannot be checked.
+⟪ Parse error: (line 13, column 51):
+unexpected ")"
+expecting "#_", "+_", "-_", "_#_", "_*", "_+_", "_-_", "_/_", "_<_", "_=_", "_>_", "__", "_|_", "_²", "_³", "_·_", "_¹", "_×_", "_˘", "_⁰",
+"_⁴", "_⁵", "_⁶", "_⁷", "_⁸", "_⁹", "_⁺", "_⁻", "_⁼", "_↑_", "_→_", "_↓_", "_↔_", "_⇍_", "_⇏_", "_⇐_", "_⇒_", "_∈_", "_∉_", "_∋_", "_∌_", "_∘_",
+"_∧_", "_∨_", "_∩_", "_∪_", "_∷_", "_≠_", "_≡_", "_≢_", "_≤_", "_≥_", "_≮_", "_≯_", "_≰_", "_≱_", "_⊂_", "_⊃_", "_⊄_", "_⊅_", "_⊆_", "_⊇_",
+"_⊈_", "_⊉_", "_⊍_", "_⊓_", "_⊔_", "_⊕_", "_⊖_", "_⊗_", "_⊛_", "_⋯_", "_⌢_", "_➝_", "_➩_", "_⦗_⦘_", "_⨾_", "_／_", "_＼_", "id_", "~_",
+"¬_", "¶_", "†_", "‡_", "ℙ_", "∼_", "⌜_⌝", "⌞_⌟", white space, 𝕀, 𝔹, 𝐔, ⌞, ⌜, true, swap-×, snd, set, fst, false, Type, Ran, Dom, "⟅", «BigOp», λ,
+ℿ, «integer», «char», «string», "⟨", "❰", "⦉", "【", «variable», "(", "（", "{", ⁼, ⁻, ⁺, ⁹, ⁸, ⁷, ⁶, ⁵, ⁴, ⁰, ˘, ¹, ³, ², *, end of input, ·, /, ＼, ／, ⨾, ➩, ➝, ⊛,
+⊗, ⊖, ⊕, ⊍, ∪, ∩, ∘, ×, -, +, ↔, →, ⊔, ⊓, ↓, ↑, ⋯, #, ⌢, ∷, ⦗, ⊉, ⊈, ⊇, ⊆, ⊅, ⊄, ⊃, ⊂, ≱, ≰, ≯, ≮, ≥, ≤, ≠, ∌, ∋, ∉, ∈, |, >, =, <, ∨, ∧, ⇒,
+⇐, ⇏, ⇍, ≢, ≡, ":", or ⦘
+⟫
+
+
+Theorem “Dedekind
+(Q ⨾ R) ∩ S ⊆
+Proof:
+Using “Relation
+Subproof for
+For any `x`
+x ⦗ (Q ⨾
+=⟨ “Relati
+x ⦗ Q ⨾
+=⟨ “Relati
+(∃ z • x
+=⟨ “Distri
+∃ z • (x
+=⟨ “Relati
+∃ z • (x
+=⟨ “Relati
+∃ z • (x
+=⟨ “∃-Intr
+∃ z • (x
+=⟨ “∃-Intr
+∃ z • (x
+=⟨ “Distri
+∃ z • x
+=⟨ “Relati
+∃ z • x
+=⟨ “Relati
+∃ z • x
+=⟨ “Relati
+x ⦗ (Q ∩
+
+[15]
+
+
+— CalcCheck: Parse error (inside offset 10):
+(line 14, column 32):
+unexpected "o"
+expecting white space, or "⟩"
+— CalcCheck: 2 out of 3 steps not justified
+— CalcCheck: Could not match calculation with stated goal.
+— CalcCheck: Parse error (inside offset 8):
+(line 16, column 9):
+Unexpected trailing material in block: ⟪=⟨ “Relation converse” on `x ⦗ Q ⟘ z` and “Mo...⟫ — perhaps missing indentation?
+
+The natural way to prove “Schröder” in the current context is via an equivalence chain from left to right, with “Relation inclusion” as the first
+and last steps.
+
+
+[16]
+
+
+Theorem “Schröder”: Q ⨾ R ⊆ S ≡ ~ S ⨾ R ˘ ⊆ ~ Q
+— CalcCheck: Metavariables: Q = Q〖〗, R = R〖〗, S = S〖〗
+Proof:
+Calculation for expected goal `Q ⨾ R ⊆ S ≡ ~ S ⨾ R ˘ ⊆ ~ Q`:
+Q ⨾R⊆S
+= ⟨ “Relation inclusion” ⟩
+— CalcCheck: Found “Relation inclusion”
+— CalcCheck: ─ OK
+(∀ a • (∀ b • a ⦗ Q ⨾ R ⦘ b ⇒ a ⦗ S ⦘ b ) )
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+(∀ a • (∀ b • (∃ c • a ⦗ Q ⦘ c ∧ c ⦗ R ⦘ b ) ⇒ a ⦗ S ⦘ b ) )
+= ⟨ “Contrapositive” (3.61) ⟩
+— CalcCheck: Found (3.61) “Contrapositive”
+— CalcCheck: ─ OK
+(∀ a • (∀ b • ¬ (a ⦗ S ⦘ b) ⇒ ¬ (∃ c • a ⦗ Q ⦘ c ∧ c ⦗ R ⦘ b ) ) )
+= ⟨ “Generalised De Morgan” (9.18b) ⟩
+— CalcCheck: Found (9.18b) “Generalised De Morgan”
+— CalcCheck: ─ OK
+(∀ a • (∀ b • ¬ (a ⦗ S ⦘ b) ⇒ (∀ c • ¬ (a ⦗ Q ⦘ c ∧ c ⦗ R ⦘ b) ) ) )
+= ⟨ “De Morgan” (3.47a) ⟩
+— CalcCheck: Found (3.47a) “De Morgan”
+— CalcCheck: ─ OK
+(∀ a • (∀ b • ¬ (a ⦗ S ⦘ b) ⇒ (∀ c • ¬ (a ⦗ Q ⦘ c) ∨ ¬ (c ⦗ R ⦘ b) ) ) )
+= ⟨ “Disjunction as implication”, “Double negation” ⟩
+— CalcCheck: Found “Disjunction as implication”
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: ─ OK
+(∀ a • (∀ b • ¬ (a ⦗ S ⦘ b) ⇒ (∀ c • a ⦗ Q ⦘ c ⇒ ¬ (c ⦗ R ⦘ b) ) ) )
+= ⟨ “¬-connection for ⇒” ⟩
+— CalcCheck: Found (3.61.1) “¬-connection for ⇒”, (3.61.2) “¬connection for ⇒”
+— CalcCheck: ─ OK
+(∀ a • (∀ b • ¬ (a ⦗ S ⦘ b) ⇒ (∀ c • c ⦗ R ⦘ b ⇒ ¬ (a ⦗ Q ⦘ c) ) ) )
+= ⟨ “Shunting” (3.65) ⟩
+— CalcCheck: Found (3.65) “Shunting”
+— CalcCheck: Could not justify this step!
+(∀ a • (∀ b • (∀ c • ¬ (a ⦗ S ⦘ b) ∧ c ⦗ R ⦘ b ) ⇒ ¬ (a ⦗ Q ⦘ c) ) )
+= ⟨ ?, “Relation converse”, “Interchange of dummies for ∀”, “Relation
+complement” ⟩
+— CalcCheck: Found “Relation converse”
+
+
+Theorem “Schröder”:
+Q ⨾ R ⊆ S ≡ ~ S ⨾ R ˘ ⊆ ~ Q
+Proof:
+Q ⨾ R ⊆ S
+=⟨ “Relation inclusion” ⟩
+∀ a • ∀ b • (a ⦗ Q ⨾ R ⦘ b ⇒ a ⦗ S ⦘ b)
+=⟨ “Relation composition” ⟩
+∀ a • ∀ b • ((∃ c • a ⦗ Q ⦘ c ∧ c ⦗ R ⦘ b) ⇒ a ⦗ S ⦘ b)
+=⟨ “Contrapositive” (3.61) ⟩
+∀ a • ∀ b • (¬ (a ⦗ S ⦘ b) ⇒ ¬ (∃ c • a ⦗ Q ⦘ c ∧ c ⦗ R ⦘
+=⟨ “Generalised De Morgan” (9.18b) ⟩
+∀ a • ∀ b • (¬ (a ⦗ S ⦘ b) ⇒ (∀ c • ¬ (a ⦗ Q ⦘ c ∧ c ⦗ R
+=⟨ “De Morgan” (3.47a) ⟩
+∀ a • ∀ b • (¬ (a ⦗ S ⦘ b) ⇒ (∀ c • ( ¬ (a ⦗ Q ⦘ c) ∨ ¬
+=⟨ “Disjunction as implication” , “Double negation” ⟩
+∀ a • ∀ b • (¬ (a ⦗ S ⦘ b) ⇒ (∀ c • ( (a ⦗ Q ⦘ c) ⇒ ¬ (
+=⟨ “¬-connection for ⇒”
+⟩
+∀ a • ∀ b • (¬ (a ⦗ S ⦘ b) ⇒ (∀ c • ((c ⦗ R ⦘ b) ⇒ ¬ (a
+=⟨ “Shunting” (3.65) ⟩
+∀ a • ∀ b • (∀ c • ¬ (a ⦗ S ⦘ b) ∧ c ⦗ R ⦘ b) ⇒ ¬ (a ⦗ Q
+=⟨ ?, “Relation converse” , “Interchange of dummies for ∀”
+∀ a • ∀ c • (∀ b • (a ⦗ ~ S ⦘ b) ∧ b ⦗ R ˘ ⦘ c) ⇒ (a ⦗ ~
+=⟨ “Relation composition” ⟩
+∀ a • ∀ c • (a ⦗ ~ S ⨾ R ˘ ⦘ c ⇒ a ⦗ ~ Q ⦘ c)
+=⟨ “Relation inclusion” ⟩
+~ S ⨾ R ˘ ⊆ ~ Q
+
+— CalcCheck: Found (8.19) “Interchange of dummies for ∀”
+— CalcCheck: Found “Relation complement”
+— CalcCheck: “?” does not prove anything!
+— CalcCheck: Incomplete hint, not checked.
+(∀ a • (∀ c • (∀ b • a ⦗ ~ S ⦘ b ∧ b ⦗ R ˘ ⦘ c ) ⇒ a ⦗ ~ Q ⦘ c ) )
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: Could not justify this step!
+(∀ a • (∀ c • a ⦗ ~ S ⨾ R ˘ ⦘ c ⇒ a ⦗ ~ Q ⦘ c ) )
+= ⟨ “Relation inclusion” ⟩
+— CalcCheck: Found “Relation inclusion”
+— CalcCheck: ─ OK
+~ S⨾R˘⊆~ Q
+— CalcCheck: 3 out of 11 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: This proof contains the following free variables:
+`c`
+Are any of these perhaps typos?
+
+[17]
+
+Right Residuals
+[18]
+
+The “right residual” operator is introduced via a characterisation that follows the same pattern as that of the pseudocomplement operator _➩_
+at the end of the Reference Notebook “Set Theory”.
+
+
+[19]
+
+[20]
+
+[21]
+
+[22]
+
+Declaration: _＼_ : A ↔ B
+
+
+→
+
+A ↔ C
+
+→ B ↔ C
+
+╍╍╍ type `\rres` or
+
+Explanation: R ＼ S ≔ “The right-residual of `S` by `R`”
+Explanation: R ＼ S ≔ “Left-division of `S` by `R`”
+Explanation: R ＼ S ≔ “`R` under `S`”
+
+Axiom “Characterisation of right residual”
+“Characterisation of ＼”:
+X ⊆ R ＼ S ≡ R ⨾ X ⊆ S
+
+Declaration: _＼_ : A ↔ B → (A ↔ C → B ↔ C)
+— CalcCheck: Operator _＼_: Non-associating; precedence
+105
+
+Explanation: R ＼ S ≔ “The right-residual of `S` by `R`”
+Explanation: R ＼ S ≔ “Left-division of `S` by `R`”
+Explanation: R ＼ S ≔ “`R` under `S`”
+
+Axiom “Characterisation of right residual” “Characterisation of ＼”: X ⊆ R
+＼S≡R⨾X⊆S
+— CalcCheck: Metavariables: R = R〖〗, S = S〖〗, X = X〖〗
+
+The following theorem closely correspond to “Membership in ➩”, and therefore can also be proven in similar ways.
+
+
+[23]
+
+
+Theorem “Relationship via right residual” “Relationship via ＼”: b ⦗ R ＼ S ⦘ c ≡ (∀ a • a ⦗ R ⦘ b ⇒ a ⦗ S
+⦘c)
+— CalcCheck: Metavariables: R = R〖〗, S = S〖〗
+— CalcCheck: Proviso: ¬occurs(`a`, `R, S`)
+Proof:
+Calculation for expected goal `b ⦗ R ＼ S ⦘ c ≡ (∀ a • a ⦗ R ⦘ b ⇒ a ⦗ S ⦘ c )`:
+b⦗R＼S⦘c
+= ⟨ “Infix relationship” ⟩
+— CalcCheck: Found “Infix relationship”
+— CalcCheck: ─ OK
+⟨b, c⟩ ∈ R ＼ S
+= ⟨ “Singleton set inclusion” ⟩
+— CalcCheck: Found (11.102) “Singleton set inclusion”
+— CalcCheck: ─ OK
+{ ⟨b, c⟩ } ⊆ R ＼ S
+= ⟨ “Characterisation of ＼” ⟩
+— CalcCheck: Found “Characterisation of right residual”
+— CalcCheck: ─ OK
+R ⨾ { ⟨b, c⟩ } ⊆ S
+= ⟨ “Relation inclusion” ⟩
+— CalcCheck: Found “Relation inclusion”
+— CalcCheck: ─ OK
+(∀ x • (∀ y • x ⦗ R ⨾ { ⟨b, c⟩ } ⦘ y ⇒ x ⦗ S ⦘ y ) )
+= ⟨ “Relation composition” ⟩
+— CalcCheck: Found “Relation composition”
+— CalcCheck: ─ OK
+(∀ x • (∀ y • (∃ z • x ⦗ R ⦘ z ∧ z ⦗ { ⟨b, c⟩ } ⦘ y ) ⇒ x ⦗ S ⦘ y ) )
+= ⟨ “Singleton relation” ⟩
+— CalcCheck: Found “Singleton relation”
+— CalcCheck: ─ OK
+(∀ x • (∀ y • (∃ z • x ⦗ R ⦘ z ∧ (z = b ∧ y = c) ) ⇒ x ⦗ S ⦘ y ) )
+= ⟨ “Trading for ∃” ⟩
+— CalcCheck: Found (9.19) “Trading for ∃”, (9.20) “Trading for ∃”
+— CalcCheck: ─ OK
+(∀ x • (∀ y • (∃ z ❙ z = b • x ⦗ R ⦘ z ∧ y = c ) ⇒ x ⦗ S ⦘ y ) )
+= ⟨ “One-point rule for ∃”, Substitution ⟩
+— CalcCheck: Found (8.14) “One-point rule for ∃”
+— CalcCheck: ─ OK
+(∀ x • (∀ y • x ⦗ R ⦘ b ∧ y = c ⇒ x ⦗ S ⦘ y ) )
+= ⟨ “Trading for ∀” ⟩
+— CalcCheck: Found (9.3a) “Trading for ∀”, (9.3b) “Trading for ∀”, (9.3c) “Trading for ∀”, (9.4a)
+
+
+Theorem “Relationship via right residua
+“Relationship via ＼”:
+b ⦗ R ＼ S ⦘ c ≡ ∀ a • a ⦗ R ⦘ b ⇒
+Proof:
+b ⦗ R ＼ S ⦘ c
+=⟨ “Infix relationship” ⟩
+⟨ b, c ⟩ ∈ (R ＼ S)
+=⟨ “Singleton set inclusion” ⟩
+{ ⟨ b, c ⟩ } ⊆ (R ＼ S)
+=⟨ “Characterisation of ＼” ⟩
+R ⨾ { ⟨ b, c ⟩ } ⊆ S
+=⟨ “Relation inclusion” ⟩
+∀ x • (∀ y • x ⦗ R ⨾ { ⟨ b, c ⟩ } ⦘
+=⟨ “Relation composition” ⟩
+∀ x • (∀ y • (∃ z • x ⦗ R ⦘ z ∧ z ⦗
+=⟨ “Singleton relation” ⟩
+∀ x • (∀ y • (∃ z • x ⦗ R ⦘ z ∧ z =
+=⟨ “Trading for ∃” ⟩
+∀ x • (∀ y • (∃ z ❙ z = b • x ⦗ R ⦘
+=⟨ “One-point rule for ∃”, Substituti
+∀ x • (∀ y • x ⦗ R ⦘ b ∧ y = c ⇒ x
+=⟨ “Trading for ∀” ⟩
+∀ x • (∀ y ❙ y = c • x ⦗ R ⦘ b ⇒ x
+=⟨ “One-point rule for ∀” , Substitut
+∀ x • x ⦗ R ⦘ b ⇒ x ⦗ S ⦘ c
+
+[24]
+
+“Trading for ∀”, (9.4b) “Trading for ∀”, (9.4c) “Trading for ∀”, (9.4d) “Trading for ∀”, (9.2) “Trading for ∀”
+— CalcCheck: ─ OK
+(∀ x • (∀ y ❙ y = c • x ⦗ R ⦘ b ⇒ x ⦗ S ⦘ y ) )
+= ⟨ “One-point rule for ∀”, Substitution ⟩
+— CalcCheck: Found (8.14) “One-point rule for ∀”
+— CalcCheck: ─ OK
+(∀ x • x ⦗ R ⦘ b ⇒ x ⦗ S ⦘ c )
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Calculate an explicit definition for R ＼ S from that, that is, complete the calculation below, and complete the theorem by replacing the “?”
+appropriately.
+
+
+[25]
+
+
+Theorem “Definition of right residual”
+“Definition of ＼”:
+R ＼ S = ?
+Proof:
+
+Theorem “Definition of right residual” “Definition of ＼”: R ＼ S =
+?
+— CalcCheck: `?` in theorem statements need to be instantiated
+appropriately!
+— CalcCheck: Metavariables: ? = ?〖〗, R = R〖〗, S = S〖〗
+Proof:
+— CalcCheck: Proof: No proof there!
+
+Check and Save
+
+
+Save
+
+

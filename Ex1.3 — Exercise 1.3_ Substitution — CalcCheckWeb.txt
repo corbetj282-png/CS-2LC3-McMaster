@@ -1,0 +1,440 @@
+[1]
+
+The equational theory of integers is preloaded here in the same way as in Homework 2.
+In addition to the Fact hint items described in Exercise 1.1, the current notebook also has the keyword
+hint item Evaluation enabled, which can apply several Facts at once, without mentioning them
+explicitly. (Evaluation still can only evaluate expressions without variables.)
+For performing substitution application, there is the keyword hint item Substitution.
+If you want to add a step that only adds or removes parentheses, you can refer to the following theorem:
+“Reflexivity of =”: x = x
+From the given starting points, calculate simplifications, in particular performing all substitutions.
+In each hint, only one hint item is allowed.
+Finish only when there are no substitutions left, and no opportunities to apply a distributivity law from left
+to right. (The right-hand side of distributivity laws is considered simpler then the left-hand side actually in
+a precise technical sense.)
+Also, don’t leave obvious opportunities for simplification unused, even if the way to perform these
+simplifications may not be obvious under the current constraints. “Obvious simplifications” include
+grouping subexpressions like in 3 · x + 4 · x together and simplifying to 7 · x.
+In particular, finish with an expression that can be written without any parentheses.
+
+[2]
+
+The example provided here is quite a bit longer than “necessary” — presenting the proof in a way that is
+easier to follow may well be worth a few additional steps (which here are flagged with “(no change)” since
+the two expressions involved have the same internal representation):
+
+
+[3]
+
+[4]
+
+
+Calculation:
+(3 · x + 4 · y)[x ≔ y + 2]
+=⟨ Substitution ⟩
+3 · (y + 2) + 4 · y
+=⟨ “Distributivity of · over +” ⟩
+(3 · y + 3 · 2) + 4 · y
+=⟨ “Reflexivity of =” ⟩
+3 · y + 3 · 2 + 4 · y
+=⟨ “Symmetry of +” ⟩
+(3 · y + 4 · y) + 3 · 2
+=⟨ “Distributivity of · over +” ⟩
+(3 + 4) · y + 3 · 2
+=⟨ Evaluation ⟩
+7 · y + 6
+
+Calculation:
+(3 · x + 4 · y)[x ≔ y + 2]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+3 · (y + 2) + 4 · y
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of
+· over +”
+— CalcCheck: ─ OK
+(3 · y + 3 · 2) + 4 · y
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(3 · y + 3 · 2) + 4 · y
+= ⟨ “Symmetry of +” ⟩
+— CalcCheck: Found (15.2a) “Symmetry of
++”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(3 · y + 4 · y) + 3 · 2
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of
+· over +”
+— CalcCheck: ─ OK
+(3 + 4) · y + 3 · 2
+= ⟨ Evaluation ⟩
+— CalcCheck: ─ OK
+7 ·y+ 6
+— CalcCheck: All steps OK
+
+Calculation:
+(2 · x + 3 · y)[y ≔ x + 5]
+=⟨ Substitution ⟩
+(2 · x + 3 · ( x + 5))
+=⟨“Distributivity of · over +”⟩
+(2 · x + (3 · x) + (3 · 5))
+=⟨Fact `3 · 5 = 15`⟩
+(2 · x + 3 · x) + 15
+=⟨“Distributivity of · over +”⟩
+(x · (2 + 3)) + 15
+=⟨Fact `2 + 3 = 5`⟩
+( x · 5) + 15
+
+Calculation:
+(2 · x + 3 · y)[y ≔ x + 5]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+2 · x + 3 · (x + 5)
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of
+· over +”
+— CalcCheck: ─ OK
+(2 · x + 3 · x) + 3 · 5
+= ⟨ Fact `3 · 5 = 15` ⟩
+— CalcCheck: ─ OK
+(2 · x + 3 · x) + 15
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of
+· over +”
+— CalcCheck: ─ OK
+x · (2 + 3) + 15
+= ⟨ Fact `2 + 3 = 5` ⟩
+— CalcCheck: ─ OK
+x · 5 + 15
+— CalcCheck: All steps OK
+
+
+[5]
+
+
+Calculation:
+(2 · x + 3 · y)[y ≔ x + 6][x ≔ y + 7]
+=⟨ “Reflexivity of =” ⟩
+((2 · x + 3 · y)[y ≔ x + 6])[x ≔ y + 7]
+=⟨ Substitution ⟩
+(2 · x + 3 · (x + 6))[x ≔ y + 7]
+=⟨ “Distributivity of · over +” ⟩
+(2 · x + (3 · x) + (3 · 6))[x ≔ y + 7]
+=⟨ Fact `3 · 6 = 18` ⟩
+(2 · x + (3 · x) + (18))[x ≔ y + 7]
+=⟨ “Distributivity of · over +” ⟩
+( x · (2 + 3) + 18 )[x ≔ y + 7]
+=⟨ Substitution ⟩
+((y + 7) · (2 + 3) + 18)
+=⟨ Fact `2 + 3 = 5` ⟩
+((y + 7) · 5 + 18)
+=⟨ “Distributivity of · over +” ⟩
+( 5 · y + 7 · 5) + 18
+=⟨ “Associativity of +” ⟩
+( 5 · y + 7 · 5 + 18 )
+=⟨ Fact `7 · 5 + 18 = 53` ⟩
+( 5 · y + 53)
+=⟨ “Reflexivity of =” ⟩
+5 · y + 53
+
+
+Calculation:
+(2 · x + 3 · y)[y ≔ x + 6][x ≔ y + 7]
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(2 · x + 3 · y)[y ≔ x + 6][x ≔ y + 7]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(2 · x + 3 · (x + 6))[x ≔ y + 7]
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of
+· over +”
+— CalcCheck: ─ OK
+((2 · x + 3 · x) + 3 · 6)[x ≔ y + 7]
+= ⟨ Fact `3 · 6 = 18` ⟩
+— CalcCheck: ─ OK
+((2 · x + 3 · x) + 18)[x ≔ y + 7]
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of
+· over +”
+— CalcCheck: ─ OK
+(x · (2 + 3) + 18)[x ≔ y + 7]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(y + 7) · (2 + 3) + 18
+= ⟨ Fact `2 + 3 = 5` ⟩
+— CalcCheck: ─ OK
+(y + 7) · 5 + 18
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of
+· over +”
+— CalcCheck: ─ OK
+(5 · y + 7 · 5) + 18
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found (15.1a) “Associativity
+of +”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(5 · y + 7 · 5) + 18
+= ⟨ Fact `7 · 5 + 18 = 53` ⟩
+— CalcCheck: ─ OK
+5 · y + 53
+= ⟨ “Reflexivity of =” ⟩
+— CalcCheck: Found (1.2) “Reflexivity of =”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+5 · y + 53
+— CalcCheck: All steps OK
+
+
+[6]
+
+
+Calculation:
+(2 · x + 3 · y)[x ≔ y + 7][y ≔ x + 6]
+=⟨ Substitution ⟩
+(2 · (y + 7) + 3 · y)[y ≔ x + 6]
+=⟨ “Distributivity of · over +” ⟩
+((2 · y) + (2 · 7) + (3 · y))[y ≔ x + 6]
+=⟨ Fact `2 · 7 = 14` ⟩
+((2 · y) + (3 · y) + 14)[y ≔ x + 6]
+=⟨ “Distributivity of · over +” ⟩
+(y · (2 + 3) + 14)[y ≔ x + 6]
+=⟨ Fact `2 + 3 = 5` ⟩
+(y · (5) + 14)[y ≔ x + 6]
+=⟨ Substitution ⟩
+((x + 6) · 5 + 14 )
+=⟨ “Distributivity of · over +” ⟩
+((x · 5) + (6 · 5) + 14)
+=⟨ Fact `6 · 5 = 30` ⟩
+((x · 5) + (30) + 14)
+=⟨ “Associativity of +” ⟩
+((x · 5) + 30 + 14)
+=⟨ Fact `30 + 14 = 44` ⟩
+((x · 5) + 44)
+
+
+Calculation:
+(2 · x + 3 · y)[x ≔ y + 7][y ≔ x + 6]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(2 · (y + 7) + 3 · y)[y ≔ x + 6]
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of
+· over +”
+— CalcCheck: ─ OK
+((2 · y + 2 · 7) + 3 · y)[y ≔ x + 6]
+= ⟨ Fact `2 · 7 = 14` ⟩
+— CalcCheck: ─ OK
+((2 · y + 3 · y) + 14)[y ≔ x + 6]
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of
+· over +”
+— CalcCheck: ─ OK
+(y · (2 + 3) + 14)[y ≔ x + 6]
+= ⟨ Fact `2 + 3 = 5` ⟩
+— CalcCheck: ─ OK
+(y · 5 + 14)[y ≔ x + 6]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+(x + 6) · 5 + 14
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of
+· over +”
+— CalcCheck: ─ OK
+(x · 5 + 6 · 5) + 14
+= ⟨ Fact `6 · 5 = 30` ⟩
+— CalcCheck: ─ OK
+(x · 5 + 30) + 14
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found (15.1a) “Associativity
+of +”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(x · 5 + 30) + 14
+= ⟨ Fact `30 + 14 = 44` ⟩
+— CalcCheck: ─ OK
+x · 5 + 44
+— CalcCheck: All steps OK
+
+
+[7]
+
+[8]
+
+
+Calculation:
+(2 · x + 3 · y)[x, y ≔ y + 7, x + 6]
+=⟨ Substitution ⟩
+( 2 · (y + 7) + 3 · (x + 6))
+=⟨ “Distributivity of · over +” ⟩
+( 2 · y + 3 · x + 2 · 7 + 3 · 6)
+=⟨ Fact `2 · 7 + 3 · 6 = 32 ` ⟩
+( 2 · y + 3 · x + 32)
+
+Calculation:
+(2 · x + 3 · y)[x, y ≔ y + 7, x + 6]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+2 · (y + 7) + 3 · (x + 6)
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of
+· over +”
+— CalcCheck: ─ OK
+((2 · y + 3 · x) + 2 · 7) + 3 · 6
+= ⟨ Fact `2 · 7 + 3 · 6 = 32` ⟩
+— CalcCheck: ─ OK
+(2 · y + 3 · x) + 32
+— CalcCheck: All steps OK
+
+Calculation:
+(2 · x + 3 · y)[x, y ≔ y + 1, (x + 4)[x ≔ y
+=⟨ Substitution ⟩
+(2 · (y + 1) + 3 · (y + 5 + 4))
+=⟨ Fact `5 + 4 = 9 ` ⟩
+(2 · (y + 1) + 3 · (y + 9))
+=⟨ “Distributivity of · over +” ⟩
+( (2 · y) + ( 2 · 1) + (3 · y) + (3 · 9))
+=⟨ Fact `2 · 1 + 3 · 9 = 29 ` ⟩
+( (2 · y) + (3 · y) + (29))
+=⟨ “Distributivity of · over +” ⟩
+( y · ( 2 + 3) + (29))
+=⟨ Fact `2 + 3 = 5 ` ⟩
+( y · 5 + 29)
+
+Calculation:
+(2 · x + 3 · y)[x, y ≔ y + 1, (x + 4)[x ≔ y + 5]]
+= ⟨ Substitution ⟩
+— CalcCheck: ─ OK
+2 · (y + 1) + 3 · ((y + 5) + 4)
+= ⟨ Fact `5 + 4 = 9` ⟩
+— CalcCheck: ─ OK
+2 · (y + 1) + 3 · (y + 9)
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of
+· over +”
+— CalcCheck: ─ OK
+((2 · y + 2 · 1) + 3 · y) + 3 · 9
+= ⟨ Fact `2 · 1 + 3 · 9 = 29` ⟩
+— CalcCheck: ─ OK
+(2 · y + 3 · y) + 29
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found (15.5) “Distributivity of
+· over +”
+— CalcCheck: ─ OK
+y · (2 + 3) + 29
+= ⟨ Fact `2 + 3 = 5` ⟩
+— CalcCheck: ─ OK
+y · 5 + 29
+— CalcCheck: All steps OK
+
+
+[9]
+
+[10]
+
+[11]
+
+[12]
+
+
+Calculation:
+Calculation:
+(2 · x + 3 · y) · (x + 4 · (y - 1))[x, y ≔ y + 7, x + 6]
+(2 · x + 3 · y) · (x + 4 · (y
+=
+⟨
+“Subtraction” (15.14) ⟩
+=⟨ “Subtraction” (15.14) ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+(2 · x + 3 · y) · (x + 4 · (y
+— CalcCheck: ─ OK
+=⟨ “Distributivity of · over +”
+(2 · x + 3 · y) · (x + 4 · (y + - 1))[x, y ≔ y + 7, x + 6]
+(2 · x + 3 · y) · (x + (4 · y
+= ⟨ “Distributivity of · over +” (15.5) ⟩
+=⟨ “Associativity of +” (15.1a)
+— CalcCheck: Found (15.5) “Distributivity of · over +”
+(2 · x + 3 · y) · ((x + 4 · y
+— CalcCheck: ─ OK
+=⟨ ?, “Distributivity of · over
+(2 · x + 3 · y) · (x + (4 · y + 4 · - 1))[x, y ≔ y + 7, x + 6]
+(2 · x + 3 · y) · (x + 4 · y)
+= ⟨ “Associativity of +” (15.1a) ⟩
+=⟨ “Associativity of ·” (15.1b)
+— CalcCheck: Found (15.1a) “Associativity of +”
+(2 · x + 3 · y) · (x + 4 · y)
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+=⟨ “Commutativity of unary minus
+(2
+· x + 3 · y) · ((x + 4 · y) + 4 · - 1)[x, y ≔ y + 7, x + 6]
+(2 · x + 3 · y) · (x + 4 · y)
+= ⟨ ?, “Distributivity of · over +” (15.5) ⟩
+=⟨ “Subtraction” (15.14) ⟩
+— CalcCheck: Found (15.5) “Distributivity of · over +”
+(2 · x + 3 · y) · (x + 4 · y)
+— CalcCheck: “?” does not prove anything!
+=⟨ ?, “Distributivity of · over
+— CalcCheck: Incomplete hint, not checked.
+(2 · x + 3 · y) · x[x, y ≔ y
+(2 · x + 3 · y) · (x + 4 · y) + (2 · x + 3 · y) · (4 · - 1)[x, y ≔ y + 7, x + 6]
+= ⟨ “Associativity of ·” (15.1b) ⟩
+— CalcCheck: Found (15.1b) “Associativity of ·”
+— CalcCheck: Could not justify this step!
+(2 · x + 3 · y) · (x + 4 · y) + ((2 · x + 3 · y) · 4) · - 1[x, y ≔ y + 7, x + 6]
+= ⟨ “Commutativity of unary minus with ·” (15.22) ⟩
+— CalcCheck: Found (15.22) “Commutativity of unary minus with ·”
+— CalcCheck: Could not justify this step!
+(2 · x + 3 · y) · (x + 4 · y)[x, y ≔ y + 7, x + 6] + - ((2 · x + 3 · y) · 4)[x,
+y ≔ y + 7, x + 6]
+= ⟨ “Subtraction” (15.14) ⟩
+— CalcCheck: Found (15.14) “Subtraction”
+— CalcCheck: ─ OK
+(2 · x + 3 · y) · (x + 4 · y)[x, y ≔ y + 7, x + 6] - ((2 · x + 3 · y) · 4)[x, y
+≔ y + 7, x + 6]
+= ⟨ ?, “Distributivity of · over +” (15.5) ⟩
+— CalcCheck: Found (15.5) “Distributivity of · over +”
+— CalcCheck: “?” does not prove anything!
+— CalcCheck: Incomplete hint, not checked.
+((2 · x + 3 · y) · x[x, y ≔ y + 7, x + 6] + (2 · x + 3 · y) · (4 · y)[x, y ≔ y
++ 7, x + 6]) - ((2 · x) · 4 + (3 · y) · 4)[x, y ≔ y + 7, x + 6]
+— CalcCheck: 4 out of 8 steps not justified
+
+Create and simplify your own examples:
+
+Calculation:
+
+Top-Level Reports:
+— CalcCheck: (line 1, column 1) Calculation:
+Nothing there!
+
+Calculation:
+
+Top-Level Reports:
+— CalcCheck: (line 1, column 1) Calculation:
+Nothing there!
+
+1,1
+
+
+[13]
+
+Calculation:
+
+
+Top-Level Reports:
+— CalcCheck: (line 1, column 1) Calculation:
+Nothing there!
+
+Check and Save
+
+
+Save
+
+

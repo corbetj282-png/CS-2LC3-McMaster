@@ -1,0 +1,468 @@
+[1]
+
+Preloaded here are logic, sets, relations, bags, natural numbers, and command correctness material.
+This notebook mainly gives opportunity to experiment with some of the material recently shown in lectures.
+
+[2]
+
+[3]
+
+[4]
+
+For the two-dot operator “‥”, type “\..”, that is, backslash followed by two dots.
+
+Precedence 100 for: _‥_
+Non-associating: _‥_
+Declaration: _‥_ : ℕ → ℕ → set ℕ
+
+Axiom “Definition of ‥”:
+
+m ‥ n
+
+╍╍╍ type: `\..`
+
+=
+
+{ i ❙ m ≤ i ≤ n }
+
+Precedence 100 for: _‥_
+Non-associating: _‥_
+Declaration: _‥_ : ℕ → (ℕ → set ℕ)
+— CalcCheck: Operator _‥_: Non-associating; precedence
+100
+
+Axiom “Definition of ‥”: m ‥ n = { i ❙ m ≤ i ≤ n }
+
+[5]
+
+
+[6]
+
+[7]
+
+[8]
+
+[9]
+
+
+Theorem “Membership in ‥”: i ∈ m ‥ n ≡
+Proof:
+i ∈ m ‥ n
+=⟨ “Definition of ‥”⟩
+i ∈ { i ❙ m ≤ i ≤ n }
+=⟨ “Simple membership” , substitution ⟩
+(m ≤ i ≤ n)
+
+m ≤ i ≤ n
+
+Theorem “Membership in ‥”: i ∈ m ‥ n ≡ m ≤ i ≤ n
+Proof:
+Calculation for expected goal `i ∈ m ‥ n ≡ m ≤ i ≤ n`:
+i∈ m‥ n
+= ⟨ “Definition of ‥” ⟩
+— CalcCheck: Found “Definition of ‥”
+— CalcCheck: ─ OK
+i∈ {i❙ m≤ i≤ n}
+= ⟨ “Simple membership”, Substitution ⟩
+— CalcCheck: Found (11.7b) “Simple membership”, (11.7∀)
+“Simple membership”
+— CalcCheck: ─ OK
+m≤ i≤ n
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Theorem “Membership in 0 ‥”: i ∈ 0 ‥ n ≡ i ≤ n
+Proof:
+i ∈ 0 ‥ n
+=⟨ “Membership in ‥”⟩
+0 ≤ i ∧ i ≤ n
+=⟨“Zero is least element” , “Identity of ∧”⟩
+i ≤ n
+
+Theorem “Membership in 0 ‥”: i ∈ 0 ‥ n ≡ i ≤ n
+Proof:
+Calculation for expected goal `i ∈ 0 ‥ n ≡ i ≤ n`:
+i∈ 0 ‥ n
+= ⟨ “Membership in ‥” ⟩
+— CalcCheck: Found “Membership in ‥”
+— CalcCheck: ─ OK
+0 ≤ i∧ i≤ n
+= ⟨ “Zero is least element”, “Identity of ∧” ⟩
+— CalcCheck: Found “Zero is least element”
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+i≤ n
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+Axiom “ZERO”: Ran ((0 ‥ 0) ◁ xs) = { xs @ 0 }
+
+Axiom “ZERO”: Ran ((0 ‥ 0) ◁ xs) = { xs @ 0 }
+
+For sets of “total functions from set A to set B”, Reference Notebook “Z Arrows” introduces the “circled arrow” that has been in use already
+for some time in the lectures, with:
+
+
+Precedence 100 for: _⇴_
+Associating to the right: _⇴_
+Declaration: _⇴_ : set A → set B → set (A ↔ B)
+Theorem “Definition of ⇴”:
+X ⇴ Y = { f ❙ f ˘ ⨾ f ⊆ id Y
+
+∧
+
+Dom f = X }
+
+Lemma “Membership in ⇴” “Total functions”:
+f ∈ (A ⇴ B) ≡ f ˘ ⨾ f ⊆ id B ∧ Dom f = A
+
+[10]
+
+The type of length-(k + 1) arrays with element type A can then be modeled as the following set:
+(0 ‥ k) ⇴ ⌞ A ⌟
+Array lookup a[i] then is just partial function application, as seen in A2.1:
+a @ i
+Array update a[i] := E can be formalised via relation override _⊕_ (seen in Ex8.2 and in the Reference Notebookk “Operators Combining
+Sets and Relations”):
+a := a ⊕ { ⟨ i , E ⟩ }
+There is no easier way to reason about array manipulations in Hoare logic!
+
+[11]
+
+Array Swap
+[12]
+
+Using conventional array notation, the program in the following theorem would look as follows:
+z := xs[i] ⍮
+xs[i] := xs[j] ⍮
+xs[j] := z
+
+
+To prove this correctness theorem, you may need to prove additional properties beyond what is provided in the Reference Notebookk
+“Operators Combining Sets and Relations” about ⊕ etc.:
+[13]
+
+Theorem “Array swap”:
+i ≤ k ≥ j ∧ xs = xs₀ ∈ (0 ‥ k) ⇴
+⇒⁅ z := xs @ i ⍮
+xs := xs ⊕ { ⟨ i, xs @ j ⟩ } ⍮
+xs := xs ⊕ { ⟨ j, z ⟩ }
+⁆
+xs = xs₀ ⊕ { ⟨ i , xs₀ @ j ⟩, ⟨ j , x
+Proof:
+((i ≤ k) ∧ (k ≥ j)) ∧ xs = xs₀ ∈ ((0
+=⟨ ? ⟩
+
+( xs ⊕ { ⟨ i, xs @ j ⟩ } ) ⊕ { ⟨ j, (x
+⇒⁅ z := xs @ i
+⁆⟨“Assignment” with sub
+( xs ⊕ { ⟨ i, xs @ j ⟩ } ) ⊕ { ⟨ j, z
+⇒⁅ xs := xs ⊕ { ⟨ i, xs @ j ⟩ } ⁆⟨“Assig
+xs ⊕ { ⟨ j, z ⟩ } = (xs₀ ⊕ { ⟨ i , xs₀
+⇒⁅ xs := xs ⊕ { ⟨ j, z ⟩ } ⁆⟨“Assignment”
+xs = (xs₀ ⊕ { ⟨ i , xs₀ @ j ⟩, ⟨ j , xs
+
+Theorem “Array swap”: i ≤ k ≥ j ∧ xs = xs₀ ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ⇒⁅ (z := xs @ i ⍮ (xs := xs ⊕ { ⟨i, xs @
+j⟩ } ⍮ xs := xs ⊕ { ⟨j, z⟩ })) ⁆ xs = xs₀ ⊕ { ⟨i, xs₀ @ j⟩, ⟨j, xs₀ @ i⟩ }
+Proof:
+Calculation for expected goal `i ≤ k ≥ j ∧ xs = xs₀ ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ⇒⁅ (z := xs @ i ⍮ (xs := xs ⊕ {
+⟨i, xs @ j⟩ } ⍮ xs := xs ⊕ { ⟨j, z⟩ })) ⁆ xs = xs₀ ⊕ { ⟨i, xs₀ @ j⟩, ⟨j, xs₀ @ i⟩ }`:
+(i ≤ k ∧ k ≥ j) ∧ xs = xs₀ ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+(xs ⊕ { ⟨i, xs @ j⟩ }) ⊕ { ⟨j, xs @ i⟩ } = xs₀ ⊕ { ⟨i, xs₀ @ j⟩, ⟨j, xs₀ @ i⟩ }
+⇒⁅ z := xs @ i ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+(xs ⊕ { ⟨i, xs @ j⟩ }) ⊕ { ⟨j, z⟩ } = xs₀ ⊕ { ⟨i, xs₀ @ j⟩, ⟨j, xs₀ @ i⟩ }
+⇒⁅ xs := xs ⊕ { ⟨i, xs @ j⟩ } ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+xs ⊕ { ⟨j, z⟩ } = xs₀ ⊕ { ⟨i, xs₀ @ j⟩, ⟨j, xs₀ @ i⟩ }
+⇒⁅ xs := xs ⊕ { ⟨j, z⟩ } ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+xs = xs₀ ⊕ { ⟨i, xs₀ @ j⟩, ⟨j, xs₀ @ i⟩ }
+— CalcCheck: 1 out of 4 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+[14]
+
+Sorting
+[15]
+
+[16]
+
+Declaration: sorted : ℕ ↔ ℕ → 𝔹
+Declaration: sorted : (ℕ ↔ ℕ) → 𝔹
+Axiom “Definition of `sorted`”: sorted R ≡ (∀ i • (∀ j ❙ i < j • (∀ m • (∀ n ❙ i ⦗ R ⦘ m
+Axiom “Definition of `sorted`”:
+sorted R
+≡
+∀ i • ∀ j ❙ i < j • ∀ m • ∀ n ❙ i ⦗ R ⦘ m ∧ j ⦗ R ⦘ n• m≤ n) ) ) )
+— CalcCheck: Proviso: ¬occurs(`i, j, m, n`, `R`)
+
+Using conventional array notation, the program in the following theorem would look as follows:
+
+
+p := 0 ⍮
+while p ≠ k + 1 do
+xs[p] := 42 ⍮
+p := p + 1
+
+[17]
+
+[18]
+
+[19]
+
+For fun, you may complete the partial correctness proof sketched in the lecture — this will require quite a few auxiliary theorems.
+
+Axiom “BSPROP”: true ≡ (∀ i • ∀ j ❙ i < j • ∀ m • ∀ n ❙ i ⦗ xs ⦘
+
+Axiom “BSPROP2”: (xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟
+
+
+Axiom “BSPROP”: true ≡ (∀ i • (∀ j ❙ i < j • (∀ m • (∀ n ❙ i ⦗ xs ⦘ m ∧ j ⦗ xs ⦘
+n• m≤ n) ) ) )
+
+Axiom “BSPROP2”: xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ Ran ((0 ‥ p) ◁ xs) = { xs @ 0 } ≡ xs ⊕ { ⟨p, 42⟩ } ∈ 0 ‥ k
+⇴ ⌞ ℕ ⌟ ∧ Ran ((0 ‥ (p + 1)) ◁ (xs ⊕ { ⟨p, 42⟩ })) = { (xs ⊕ { ⟨p, 42⟩ }) @ 0 }
+
+
+[20]
+
+
+Theorem “Sorting 0”: xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ⇒⁅ (p := 0 ⍮ while (p ≠ k + 1) do (xs := xs ⊕ { ⟨p, 42⟩ } ⍮ p := p + 1) od)
+⁆ xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ sorted xs
+Proof:
+Calculation for expected goal `xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ⇒⁅ (p := 0 ⍮ while (p ≠ k + 1) do (xs := xs ⊕ { ⟨p, 42⟩ } ⍮ p :=
+p + 1) od) ⁆ xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ sorted xs`:
+xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ true
+= ⟨ “ZERO” ⟩
+— CalcCheck: Found “ZERO”
+— CalcCheck: ─ OK
+xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ Ran ((0 ‥ 0) ◁ xs) = { xs @ 0 }
+⇒⁅ p := 0 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ Ran ((0 ‥ p) ◁ xs) = { xs @ 0 }
+⇒⁅ while (p ≠ k + 1) do (xs := xs ⊕ { ⟨p, 42⟩ } ⍮ p := p + 1) od ⁆ ⟨ “While” with Subproof establishing `(xs ∈ 0 ‥ k ⇴
+⌞ ℕ ⌟ ∧ Ran ((0 ‥ p) ◁ xs) = { xs @ 0 }) ∧ p ≠ k + 1 ⇒⁅ (xs := xs ⊕ { ⟨p, 42⟩ } ⍮ p := p + 1) ⁆ xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧
+Ran ((0 ‥ p) ◁ xs) = { xs @ 0 }`:
+(xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ Ran ((0 ‥ p) ◁ xs) = { xs @ 0 }) ∧ p ≠ k + 1
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”, (3.76b)
+“Weakening”, (3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ Ran ((0 ‥ p) ◁ xs) = { xs @ 0 }
+= ⟨ “BSPROP2” ⟩
+— CalcCheck: Found “BSPROP2”
+— CalcCheck: ─ OK
+xs ⊕ { ⟨p, 42⟩ } ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ Ran ((0 ‥ (p + 1)) ◁ (xs ⊕ { ⟨p, 42⟩ })) = { (xs ⊕ { ⟨p, 42⟩ }) @ 0 }
+⇒⁅ xs := xs ⊕ { ⟨p, 42⟩ } ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ Ran ((0 ‥ (p + 1)) ◁ xs) = { xs @ 0 }
+⇒⁅ p := p + 1 ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: ─ OK
+xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ Ran ((0 ‥ p) ◁ xs) = { xs @ 0 }
+— CalcCheck: All steps OK
+
+⟩
+— CalcCheck: Found “While”
+
+
+Theorem “Sorting 0”:
+xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟
+⇒⁅ p := 0 ⍮
+while p ≠ k + 1 do
+xs := xs ⊕ { ⟨ p, 42 ⟩ }
+p := p + 1
+od
+⁆
+xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟ ∧ s
+Proof:
+xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟
+=⟨ “Identity of ∧” ⟩
+(xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟ ) ∧
+=⟨ “ZERO” ⟩
+xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟ ∧ R
+⇒⁅ p := 0 ⁆ ⟨ “Assignment” with
+xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟ ∧ R
+⇒⁅ while p ≠ k + 1 do
+xs := xs ⊕ { ⟨ p, 42 ⟩ }
+p := p + 1
+od
+⁆ ⟨ “While” with subproof:
+(xs ∈ (0 ‥ k) ⇴ ⌞ ℕ
+⇒ ⟨ “Weakening” ⟩
+(xs ∈ (0 ‥ k) ⇴ ⌞ ℕ
+=⟨ “BSPROP2”⟩
+(xs ⊕ { ⟨ p, 42 ⟩ }
+⇒⁅ xs := xs ⊕ { ⟨ p,
+(xs ∈ (0 ‥ k) ⇴ ⌞ ℕ
+⇒⁅ p := p + 1 ⁆⟨ “Assig
+(xs ∈ (0 ‥ k) ⇴ ⌞ ℕ
+⟩
+¬ (p ≠ k + 1) ∧ xs ∈ (0 ‥ k
+=⟨ “Double negation” , “Defini
+(p = k + 1) ∧ xs ∈ (0 ‥ k)
+⇒⟨ “Weakening”⟩
+xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟ ∧ R
+⇒⟨ “Weakening”⟩
+xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟
+=⟨ “Identity of ∧” , “BSPROP”
+
+
+— CalcCheck: ─ OK
+¬ (p ≠ k + 1) ∧ (xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ Ran ((0 ‥ p) ◁ xs) = { xs @ 0 })
+= ⟨ “Double negation”, “Definition of ≠” ⟩
+— CalcCheck: Found (3.12) “Double negation”
+— CalcCheck: Found “Definition of ≠”, “Definition of ≠”
+— CalcCheck: ─ OK
+p = k + 1 ∧ (xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ Ran ((0 ‥ p) ◁ xs) = { xs @ 0 })
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”, (3.76b) “Weakening”,
+(3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ Ran ((0 ‥ p) ◁ xs) = { xs @ 0 }
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”, (3.76b) “Weakening”,
+(3.76c) “Weakening”, “Weakening”
+— CalcCheck: ─ OK
+xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟
+= ⟨ “Identity of ∧”, “BSPROP” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: Found “BSPROP”
+— CalcCheck: ─ OK
+(∀ i • (∀ j ❙ i < j • (∀ m • (∀ n ❙ i ⦗ xs ⦘ m ∧ j ⦗ xs ⦘ n • m ≤ n ) ) ) ) ∧ xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟
+= ⟨ “Symmetry of ∧” ⟩
+— CalcCheck: Found (3.36) “Symmetry of ∧”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ (∀ i • (∀ j ❙ i < j • (∀ m • (∀ n ❙ i ⦗ xs ⦘ m ∧ j ⦗ xs ⦘ n • m ≤ n ) ) ) )
+= ⟨ “Definition of `sorted`” ⟩
+— CalcCheck: Found “Definition of `sorted`”
+— CalcCheck: ─ OK
+xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ sorted xs
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+
+
+(∀ i • ∀ j ❙ i < j • ∀ m • ∀
+=⟨ “Symmetry of ∧”⟩
+xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟ ∧ (
+=⟨“Definition of `sorted`”⟩
+xs ∈ (0 ‥ k) ⇴ ⌞ ℕ ⌟ ∧ s
+
+[21]
+
+The following partial correctness proof is much easier:
+
+
+[22]
+
+
+Theorem “Sorting 0′”: xs₀ = xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ⇒⁅ while true do (xs := xs ⊕ { ⟨0, 42⟩ }) od ⁆ xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ (sorted xs ∧ (∃ f ❙ f
+∈ 0 ‥ k ⤖ 0 ‥ k • xs = f ⨾ xs₀ ))
+Proof:
+Calculation for expected goal `xs₀ = xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ⇒⁅ while true do (xs := xs ⊕ { ⟨0, 42⟩ }) od ⁆ xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ (sorted xs
+∧ (∃ f ❙ f ∈ 0 ‥ k ⤖ 0 ‥ k • xs = f ⨾ xs₀ ))`:
+xs₀ = xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+xs₀ = xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ (true ∧ true)
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ (sorted xs ∧ (∃ f ❙ f ∈ 0 ‥ k ⤖ 0 ‥ k • xs = f ⨾ xs₀ ))
+⇒⁅ while true do (xs := xs ⊕ { ⟨0, 42⟩ }) od ⁆ ⟨ “While” with Subproof establishing `true ∧ (xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ (sorted xs ∧ (∃ f ❙ f ∈ 0
+‥ k ⤖ 0 ‥ k • xs = f ⨾ xs₀ ))) ⇒⁅ (xs := xs ⊕ { ⟨0, 42⟩ }) ⁆ xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ (sorted xs ∧ (∃ f ❙ f ∈ 0 ‥ k ⤖ 0 ‥ k • xs = f ⨾ xs₀ ))`:
+true ∧ (xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ (sorted xs ∧ (∃ f ❙ f ∈ 0 ‥ k ⤖ 0 ‥ k • xs = f ⨾ xs₀ )))
+= ⟨ “Identity of ∧” ⟩
+— CalcCheck: Found (3.39) “Identity of ∧”
+— CalcCheck: ─ OK
+xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ (sorted xs ∧ (∃ f ❙ f ∈ 0 ‥ k ⤖ 0 ‥ k • xs = f ⨾ xs₀ ))
+=⟨?⟩
+— CalcCheck: “?” does not prove anything!
+⟪ Parse error: (line 23, column 116):
+unexpected ")"
+expecting "🏷", white space, [ «substitution» ], "#_", "+_", "-_", "_#_", "_*", "_**_", "_+_", "_-_", "_/_", "_:=_", "_<_", "_=_",
+"_>_", "_@_", "__", "_|_", "_²", "_³", "_·_", "_¹", "_×_", "_˘", "_‥_", "_⁰", "_⁴", "_⁵", "_⁶", "_⁷", "_⁸", "_⁹", "_⁺", "_⁻", "_⁼", "_↑_", "_→_", "_↓_",
+"_↔_", "_↠_", "_↣_", "_⇍_", "_⇏_", "_⇐_", "_⇒_", "_⇒⁅_⁆_", "_⇴_", "_⇸_", "_∈_", "_∉_", "_∋_", "_∌_", "_∘_", "_∧_", "_∨_", "_∩_",
+"_∪_", "_∷_", "_≠_", "_≡_", "_≢_", "_≤_", "_≥_", "_≮_", "_≯_", "_≰_", "_≱_", "_⊂_", "_⊃_", "_⊄_", "_⊅_", "_⊆_", "_⊇_", "_⊈_", "_⊉_", "_⊍_",
+"_⊓_", "_⊔_", "_⊕_", "_⊖_", "_⊗_", "_⊛_", "_⋯_", "_⌢_", "_⍮_", "_▷_", "_◁_", "_➝_", "_➩_", "_⤀_", "_⤔_", "_⤖_", "_⤗_", "_⥈_", "_⦇_⦈",
+"_⦗_⦘_", "_⨾_", "_⩤_", "_⩥_", "_／_", "_＼_", "id_", "suc_", "while_do_od", "~_", "¬_", "¶_", "†_", "‡_", "ℙ_", "∼_", "⌜_⌝", "⌞_⌟", 𝕀, 𝔹, 𝐔, ⌞, ⌜,
+ℕ, while, univalent, true, triangleArea, total, swap-×, surjective, sorted, snd, skip, set, ran, pred, injective, fst, false, dom, Type, Ran, Dom, Cmd,
+"⟅", «BigOp», λ, ℿ, «integer», «char», «string», "⟨", "❰", "⦉", "【", «variable», "(", "（", "{", ⦇, ⁼, ⁻, ⁺, ⁹, ⁸, ⁷, ⁶, ⁵, ⁴, ⁰, ˘, ¹, ³, ², *, @, end of input, **,
+·, /, ＼, ／, ⨾, ⩥, ⩤, ➩, ➝, ◁, ▷, ⊛, ⊗, ⊖, ⊕, ⊍, ∪, ∩, ∘, ‥, ×, -, +, ⥈, ⤗, ⤖, ⤔, ⤀, ⇸, ⇴, ↣, ↠, ↔, →, ⊔, ⊓, ↓, ↑, ⋯, #, ⌢, ∷, ⦗, ⊉,
+⊈, ⊇, ⊆, ⊅, ⊄, ⊃, ⊂, ≱, ≰, ≯, ≮, ≥, ≤, ≠, ∌, ∋, ∉, ∈, |, >, =, <, ∨, ∧, ⇒⁅, ⇒, ⇐, ⇏, ⇍, ≢, ≡, :=, ⍮, ":", ",", or "}"
+⟫
+⇒⁅ xs := xs ⊕ { ⟨0, 42⟩ } ⁆ ⟨ “Assignment” with Substitution ⟩
+— CalcCheck: Found “Assignment”, “Assignment”
+— CalcCheck: Due to parse error in the expression above, this calculation step cannot be checked.
+xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ (sorted xs ∧ (∃ f ❙ f ∈ 0 ‥ k ⤖ 0 ‥ k • xs = f ⨾ xs₀ ))
+— CalcCheck: 2 out of 3 steps not justified
+
+⟩
+
+
+Theorem “Sorting 0
+xs₀ = xs ∈ (0
+⇒⁅ while true d
+xs := xs
+od
+⁆
+xs ∈ (0 ‥ k)
+∧ (∃ f ❙ f ∈
+Proof:
+xs₀ = xs ∈ (0
+=⟨ “Identity of
+(xs₀ = xs ∈ (
+=⟨ ? ⟩
+xs ∈ (0 ‥ k)
+⇒⁅ while true d
+xs := xs
+od
+⁆ ⟨ “While” wi
+true ∧
+= ⟨ “Ide
+xs ∈
+= ⟨?⟩
+(xs ⊕
+⇒⁅ xs :
+xs ∈
+
+— CalcCheck: Found “While”
+¬ true ∧ (xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ (sorted xs ∧ (∃ f ❙ f ∈ 0 ‥ k ⤖ 0 ‥ k • xs = f ⨾ xs₀ )))
+= ⟨ “Definition of `false`” ⟩
+— CalcCheck: Found (3.8) “Definition of `false`”
+— CalcCheck: ─ OK
+false ∧ (xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ (sorted xs ∧ (∃ f ❙ f ∈ 0 ‥ k ⤖ 0 ‥ k • xs = f ⨾ xs₀ )))
+⇒ ⟨ “Weakening” ⟩
+— CalcCheck: Found (3.76e) “Weakening”, (3.76d) “Weakening”, (3.76a) “Weakening”, (3.76b) “Weakening”, (3.76c) “Weakening”,
+“Weakening”
+— CalcCheck: ─ OK
+xs ∈ 0 ‥ k ⇴ ⌞ ℕ ⌟ ∧ (sorted xs ∧ (∃ f ❙ f ∈ 0 ‥ k ⤖ 0 ‥ k • xs = f ⨾ xs₀ ))
+— CalcCheck: 2 out of 5 steps not justified
+— CalcCheck: Calculation matches goal ─ OK
+
+⟩
+¬ (true) ∧ xs
+=⟨ “Definition o
+false ∧ xs ∈
+⇒⟨ “Weakening”
+xs ∈ (0 ‥ k)
+
+Check and Save
+
+
+Save
+
+

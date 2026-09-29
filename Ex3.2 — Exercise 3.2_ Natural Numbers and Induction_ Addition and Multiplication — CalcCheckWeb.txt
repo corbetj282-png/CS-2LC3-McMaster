@@ -1,0 +1,509 @@
+Multiplication
+
+[1]
+
+The setup here is essentially that of the end of H4.1 — you are expected to have read the explanations in H4.1, so we do not need to repeat
+them here.
+We continue to develop a theory of the natural numbers based on induction over zero 0 and successor suc_.
+Equality _=_ is preloaded here, and you also have the content of H4.1, except for the theorem “Successor”.
+Evaluation is not available here, and Facts only can involve natural-number literals and suc_, for example, “Fact `suc suc 1 = 3`”.
+Symmetry and associativity of + and · are not activated here.
+Only one item is allowed per hint.
+Prove the theorems below, using induction where necessary. Nested induction will not be needed here, and all calculations can be done in less
+than ten steps. (Note that a simple induction proof contains two calculations…)
+
+[2]
+
+Addition
+
+
+[3]
+
+[4]
+
+
+The theorem “Successor” has been shown in Homework 7 by induction — if you look through the theorems available now, you should find a
+more direct way to prove “Successor” without an induction proof. Prove it again, without using the version of “Successor” from Homework 7,
+which is not available here.
+
+Theorem “Successor”: suc n = n + 1
+Proof:
+By induction on `n : ℕ`:
+Base case:
+suc 0
+= ⟨Fact `suc 0 = 1`⟩
+1
+= ⟨“Left-identity of +”⟩
+0 + 1
+Induction step:
+suc(suc n)
+=⟨induction hypothesis⟩
+suc(n + 1)
+=⟨“Definition of + for `suc`”⟩
+suc(n) + 1
+
+
+Theorem “Successor”: suc n = n + 1
+Proof:
+By induction on `n : ℕ`:
+Base case:
+Calculation for expected goal `suc 0 = 0 + 1`:
+suc 0
+= ⟨ Fact `suc 0 = 1` ⟩
+— CalcCheck: ─ OK
+1
+= ⟨ “Left-identity of +” ⟩
+— CalcCheck: Found “Definition of + for 0”
+— CalcCheck: ─ OK
+0+1
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `suc (suc n) = suc n + 1`:
+suc (suc n)
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `suc n = n
++ 1`
+— CalcCheck: ─ OK
+suc (n + 1)
+= ⟨ “Definition of + for `suc`” ⟩
+— CalcCheck: Found “Definition of + for `suc`”
+— CalcCheck: ─ OK
+suc n + 1
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+
+[5]
+
+
+Theorem “Associativity of +”: (a + b) + c = a + (b + c)
+Proof:
+
+Theorem “Associativity of +”: (a + b) + c = a + (b + c)
+Proof:
+— CalcCheck: Proof: No proof there!
+
+[6]
+
+Multiplication
+[7]
+
+[8]
+
+Declaration: _·_ : ℕ → ℕ → ℕ
+
+Axiom “Definition of · for 0”: 0 · n = 0
+Axiom “Definition of · for `suc`”: (suc m) · n = n + m · n
+
+
+Declaration: _·_ : ℕ → (ℕ → ℕ)
+— CalcCheck: Operator _·_: Associating to the left; precedence
+110
+
+Axiom “Definition of · for 0”: 0 · n = 0
+Axiom “Definition of · for `suc`”: suc m · n = n + m · n
+
+
+[9]
+
+
+Theorem “Left-identity of ·”: 1 · n = n
+Proof:
+By induction on `n : ℕ`:
+Base case:
+Calculation for expected goal `1 · 0 = 0`:
+1·0
+= ⟨ Fact `1 = suc 0` ⟩
+— CalcCheck: ─ OK
+suc 0 · 0
+= ⟨ “Definition of · for `suc`” ⟩
+— CalcCheck: Found “Definition of · for `suc`”
+— CalcCheck: ─ OK
+0+0·0
+= ⟨ “Left-identity of +” ⟩
+— CalcCheck: Found “Definition of + for 0”
+— CalcCheck: ─ OK
+0·0
+= ⟨ “Definition of · for 0” ⟩
+— CalcCheck: Found “Definition of · for 0”
+— CalcCheck: ─ OK
+0
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `1 · suc n = suc n`:
+1 · suc n
+= ⟨ Fact `1 = suc 0` ⟩
+— CalcCheck: ─ OK
+suc 0 · suc n
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+suc 0 · (n + 1)
+= ⟨ “Definition of · for `suc`” ⟩
+— CalcCheck: Found “Definition of · for `suc`”
+— CalcCheck: ─ OK
+(n + 1) + 0 · (n + 1)
+= ⟨ “Definition of · for 0” ⟩
+— CalcCheck: Found “Definition of · for 0”
+— CalcCheck: ─ OK
+(n + 1) + 0
+= ⟨ “Right-identity of +” ⟩
+— CalcCheck: Found “Right-identity of +”
+
+
+Theorem “Left-identity of ·”: 1 · n = n
+Proof:
+By induction on `n : ℕ`:
+Base case:
+1 · 0
+=⟨Fact `1 = suc 0`⟩
+suc 0 · 0
+=⟨“Definition of · for `suc`”⟩
+0 + 0 · 0
+=⟨“Left-identity of +”⟩
+0 · 0
+=⟨“Definition of · for 0”⟩
+0
+Induction step:
+1 · suc(n)
+=⟨Fact `1 = suc 0`⟩
+suc 0 · suc(n)
+=⟨“Successor”⟩
+suc 0 · (n + 1)
+=⟨“Definition of · for `suc`”⟩
+n + 1 + 0 · (n + 1)
+=⟨“Definition of · for 0”⟩
+n + 1 + 0
+=⟨“Right-identity of +”⟩
+n + 1
+=⟨“Successor”⟩
+suc n
+
+[10]
+
+Theorem “Right-zero of ·”: m · 0 = 0
+Proof:
+
+— CalcCheck: ─ OK
+n+ 1
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+suc n
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof OK
+
+Theorem “Right-zero of ·”: m · 0 = 0
+Proof:
+— CalcCheck: Proof: No proof there!
+
+
+[11]
+
+
+Theorem “Multiplying the successor”: m · suc n = m + m · n
+Proof:
+By induction on `m : ℕ`:
+Base case:
+Calculation for expected goal `0 · suc n = 0 + 0 · n`:
+0 · suc n
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+0 · (n + 1)
+= ⟨ “Definition of · for 0” ⟩
+— CalcCheck: Found “Definition of · for 0”
+— CalcCheck: ─ OK
+0
+= ⟨ “Right-identity of +” ⟩
+— CalcCheck: Found “Right-identity of +”
+— CalcCheck: ─ OK
+0+0
+= ⟨ “Definition of · for 0” ⟩
+— CalcCheck: Found “Definition of · for 0”
+— CalcCheck: ─ OK
+0+0·n
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `suc m · suc n = suc m + suc m ·
+n`:
+suc m · suc n
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+suc m · (n + 1)
+= ⟨ “Definition of · for `suc`” ⟩
+— CalcCheck: Found “Definition of · for `suc`”
+— CalcCheck: ─ OK
+(n + 1) + m · (n + 1)
+= ⟨ “Definition of · for `suc`” ⟩
+— CalcCheck: Found “Definition of · for `suc`”
+— CalcCheck: OK (no change)
+— CalcCheck: ─ OK
+(n + 1) + m · (n + 1)
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+
+
+Theorem “Multiplying the successor”: m · (suc n) = m + m · n
+Proof:
+By induction on `m : ℕ`:
+Base case:
+0 · suc n
+=⟨“Successor”⟩
+0 · (n + 1)
+=⟨“Definition of · for 0”⟩
+0
+=⟨“Right-identity of +”⟩
+0 + 0
+=⟨“Definition of · for 0”⟩
+0 + 0 · n
+Induction step:
+suc m · suc n
+=⟨“Successor”⟩
+suc m · (n + 1)
+=⟨“Definition of · for `suc`”⟩
+n + 1 + m · (n + 1)
+=⟨“Definition of · for `suc`”⟩
+n + 1 + m · (n + 1)
+=⟨“Successor”⟩
+n + 1 + m · (suc n)
+=⟨Induction hypothesis⟩
+n + 1 + (m + m · n)
+=⟨“Associativity of +”⟩
+(n + (1 + m) + m · n)
+=⟨“Symmetry of +”⟩
+(n + (m + 1) + m · n)
+=⟨“Successor”⟩
+(n + suc(m) + m · n)
+=⟨“Symmetry of +”⟩
+(suc(m) + n + m · n)
+=⟨“Associativity of +”⟩
+(suc(m) + (n + m · n))
+=⟨“Definition of · for `suc`”⟩
+suc(m) + (suc m · n)
+
+
+— CalcCheck: ─ OK
+(n + 1) + m · suc n
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `m · suc n = m
++ m · n`
+— CalcCheck: ─ OK
+(n + 1) + (m + m · n)
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found “Associativity of +”
+— CalcCheck: ─ OK
+(n + (1 + m)) + m · n
+= ⟨ “Symmetry of +” ⟩
+— CalcCheck: Found “Symmetry of +”
+— CalcCheck: ─ OK
+(n + (m + 1)) + m · n
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+(n + suc m) + m · n
+= ⟨ “Symmetry of +” ⟩
+— CalcCheck: Found “Symmetry of +”
+— CalcCheck: ─ OK
+(suc m + n) + m · n
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found “Associativity of +”
+— CalcCheck: ─ OK
+suc m + (n + m · n)
+= ⟨ “Definition of · for `suc`” ⟩
+— CalcCheck: Found “Definition of · for `suc`”
+— CalcCheck: ─ OK
+suc m + suc m · n
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof not fully justified:
+
+
+[12]
+
+
+[13]
+
+
+Theorem “Distributivity of · over +”: (k + m) · n = k · n + m · n
+Proof:
+By induction on `k : ℕ`:
+Base case:
+Calculation for expected goal `(0 + m) · n = 0 · n + m · n`:
+(0 + m) · n
+= ⟨ “Left-identity of +” ⟩
+— CalcCheck: Found “Definition of + for 0”
+— CalcCheck: ─ OK
+m· n
+= ⟨ “Left-identity of +” ⟩
+— CalcCheck: Found “Definition of + for 0”
+— CalcCheck: ─ OK
+0 + m· n
+= ⟨ “Definition of · for 0” ⟩
+— CalcCheck: Found “Definition of · for 0”
+— CalcCheck: ─ OK
+0 · n+ m· n
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `(suc k + m) · n = suc k · n + m ·
+n`:
+(suc k + m) · n
+= ⟨ “Definition of + for `suc`” ⟩
+— CalcCheck: Found “Definition of + for `suc`”
+— CalcCheck: ─ OK
+suc (k + m) · n
+= ⟨ “Definition of · for `suc`” ⟩
+— CalcCheck: Found “Definition of · for `suc`”
+— CalcCheck: ─ OK
+n + (k + m) · n
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `(k + m) · n = k ·
+n + m · n`
+— CalcCheck: ─ OK
+n + (k · n + m · n)
+= ⟨ “Associativity of +” ⟩
+— CalcCheck: Found “Associativity of +”
+— CalcCheck: ─ OK
+(n + k · n) + m · n
+= ⟨ “Definition of · for `suc`” ⟩
+— CalcCheck: Found “Definition of · for `suc`”
+
+
+Theorem “Distributivity of · over +”: (k + m) · n = k · n + m · n
+Proof:
+By induction on `k : ℕ`:
+Base case:
+(0 + m) · n
+=⟨“Left-identity of +”⟩
+m · n
+=⟨“Left-identity of +”⟩
+0 + (m · n)
+=⟨“Definition of · for 0”⟩
+0 · n + (m · n)
+Induction step:
+(suc(k) + m) · n
+= ⟨“Definition of + for `suc`”⟩
+(suc(k + m)) · n
+= ⟨“Definition of · for `suc`”⟩
+n + (k + m) · n
+= ⟨Induction hypothesis⟩
+n + (k · n + m · n)
+= ⟨“Associativity of +”⟩
+(n + k · n) + m · n
+= ⟨“Definition of · for `suc`”⟩
+(suc(k) · n) + m · n
+
+
+— CalcCheck: ─ OK
+suc k · n + m · n
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof not fully justified:
+
+
+[14]
+
+1,1
+
+
+Theorem “Associativity of ·”: (k · m) · n = k · (m · n)
+Proof:
+By induction on `k : ℕ`:
+Base case:
+Calculation for expected goal `(0 · m) · n = 0 · (m · n)`:
+(0 · m) · n
+= ⟨ “Definition of · for 0” ⟩
+— CalcCheck: Found “Definition of · for 0”
+— CalcCheck: ─ OK
+0·n
+= ⟨ “Definition of · for 0” ⟩
+— CalcCheck: Found “Definition of · for 0”
+— CalcCheck: ─ OK
+0
+= ⟨ “Definition of · for 0” ⟩
+— CalcCheck: Found “Definition of · for 0”
+— CalcCheck: ─ OK
+0 · (m · n)
+— CalcCheck: All steps OK
+— CalcCheck: Calculation matches goal ─ OK
+Induction step:
+Calculation for expected goal `(suc k · m) · n = suc k · (m · n)`:
+(suc k · m) · n
+= ⟨ “Definition of · for `suc`” ⟩
+— CalcCheck: Found “Definition of · for `suc`”
+— CalcCheck: ─ OK
+(m + k · m) · n
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found “Distributivity of · over +”
+— CalcCheck: ─ OK
+m · n + (k · m) · n
+= ⟨ Induction hypothesis ⟩
+— CalcCheck: Found induction hypothesis `(k · m) · n = k
+· (m · n)`
+— CalcCheck: ─ OK
+m · n + k · (m · n)
+= ⟨ “Left-identity of ·” ⟩
+— CalcCheck: Found “Left-identity of ·”
+— CalcCheck: ─ OK
+1 · (m · n) + k · (m · n)
+= ⟨ “Distributivity of · over +” ⟩
+— CalcCheck: Found “Distributivity of · over +”
+— CalcCheck: ─ OK
+
+
+Theorem “Associativity of ·”: (k · m) · n = k · (m · n)
+Proof:
+By induction on `k : ℕ`:
+Base case:
+(0 · m) · n
+= ⟨“Definition of · for 0”⟩
+(0) · n
+= ⟨“Definition of · for 0”⟩
+(0)
+= ⟨“Definition of · for 0”⟩
+(0 · (m · n))
+Induction step:
+(suc(k) · m) · n
+= ⟨“Definition of · for `suc`”⟩
+(m + k · m) · n
+= ⟨“Distributivity of · over +”⟩
+(m · n) + (k · m) · n
+= ⟨Induction hypothesis⟩
+(m · n) + k · (m · n)
+= ⟨“Left-identity of ·”⟩
+1 · (m · n) + k · (m · n)
+= ⟨“Distributivity of · over +”⟩
+(1 + k) · (m · n)
+= ⟨“Symmetry of +”⟩
+(k + 1) · (m · n)
+= ⟨“Successor”⟩
+suc(k) · (m · n)
+
+(1 + k) · (m · n)
+= ⟨ “Symmetry of +” ⟩
+— CalcCheck: Found “Symmetry of +”
+— CalcCheck: ─ OK
+(k + 1) · (m · n)
+= ⟨ “Successor” ⟩
+— CalcCheck: Found “Successor”
+— CalcCheck: ─ OK
+suc k · (m · n)
+— CalcCheck: Calculation matches goal ─ OK
+— CalcCheck: Base case and induction step both present
+— CalcCheck: Induction proof not fully justified:
+
+Check and Save
+
+
+Save
+
+
